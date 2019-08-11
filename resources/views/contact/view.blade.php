@@ -85,7 +85,7 @@
                                    class="form-check-input" />
 
                             <label class="form-check-label" for="contactme">
-                                Doy el consentimiento para ser contactado
+                                &nbsp;&nbsp;Doy el consentimiento para ser contactado
                             </label>
                         </div>
                     </div>
@@ -98,7 +98,7 @@
                                    class="form-check-input" />
 
                             <label class="form-check-label" for="privacity">
-                                He leído y acepto las
+                                &nbsp;&nbsp;He leído y acepto las
                                 <a href="{{route('privacity')}}" 
                                    title="Declaración de Privacidad">
                                     <strong>

@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="{{route('index')}}">
-            El Tiempo Desde Chipiona
+            {{config('app.name')}}
         </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -35,38 +35,26 @@
                        data-toggle="dropdown"
                        aria-haspopup="true"
                        aria-expanded="false">
-                        Ver el tiempo
+                        Secciones
                     </a>
                     <!-- Here's the magic. Add the .animate and .slide-in classes to your .dropdown-menu and you're all set! -->
                     <div class="dropdown-menu dropdown-menu-right animate slideIn" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">
-                            El clima en tiempo real
+                            Sección 1
                         </a>
 
                         <a class="dropdown-item" href="#">
-                            Comparar días
+                            Sección 2
                         </a>
 
                         <a class="dropdown-item" href="#">
-                            Esta semana
-                        </a>
-
-                        <a class="dropdown-item" href="#">
-                            Este mes
-                        </a>
-
-                        <a class="dropdown-item" href="#">
-                            Tabla de Mareas
-                        </a>
-
-                        <a class="dropdown-item" href="#">
-                            Calidad del aire
+                            Sección 3
                         </a>
 
                         <div class="dropdown-divider"></div>
 
                         <a class="dropdown-item" href="#">
-                            Ver pronósticos
+                            Otra sección
                         </a>
                     </div>
                 </li>
