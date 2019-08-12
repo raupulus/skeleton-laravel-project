@@ -14,6 +14,14 @@
                 a la página anterior o ir a la
                 <a href="{{route('index')}}">página principal</a>.</p>
         </div>
+
+        <div>
+            @yield('code')
+        </div>
+
+        <div>
+            @yield('message')
+        </div>
     </div>
 
 

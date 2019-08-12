@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ContactRequest;
 use App\Mail\ContactMail;
 use App\Http\Requests\ContactoRequest;
+use Illuminate\Support\Facades\Log;
 use function config;
 use Exception;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+use Lunaweb\RecaptchaV3\Facades\RecaptchaV3;
+use function dd;
 use function view;
 
 /**
@@ -34,10 +39,31 @@ class ContactController extends Controller
      *
      * @param \App\Http\Requests\ContactRequest $request
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     * @throws \ReflectionException
      */
     public function send(ContactRequest $request)
     {
+        ## Validación del captcha
+        $score = RecaptchaV3::verify($request->get('g-recaptcha-response'), 'contact');
+
+        if($score > 0.7) {
+            // Perfecto
+        } elseif($score > 0.3) {
+            // TODO → Pedir confirmación adicional por email antes de enviar
+        } else {
+            //return abort(400, 'You are most likely a bot');
+            return view('contact.after_send')->with([
+                'message' => 'El mensaje no se ha enviado, tienes una puntuación de spam elevada según google. Si crees que es un error contacta con el administrador del sitio',
+            ]);
+        }
+
+        $validar = Validator::make(Input::all(), [
+            ## Valido el score de la petición con puntuación mínima de 0.3
+            'g-recaptcha-response' => 'required|recaptchav3:contacto,0.3'
+        ]);
+
+
         $data = [
             'name' => $request->get('name'),
             'email' => $request->get('email'),
@@ -56,12 +82,13 @@ class ContactController extends Controller
         try {
             Mail::send($contact);
         } catch (Exception $e) {
-            dd($e);
+            Log::error(['Intentando enviar email de contacto: ' . $e]);
         }
 
         $this->dbStore($data);
         $this->apiStore($data);
 
+        dd('final');
         return view('contact.after_send')->with([
             'message' => 'El mensaje ha sido enviado correctamente',
         ]);

@@ -99,7 +99,7 @@
 
                             <label class="form-check-label" for="privacity">
                                 &nbsp;&nbsp;He leído y acepto las
-                                <a href="{{route('privacity')}}" 
+                                <a href="{{route('privacity')}}"
                                    title="Declaración de Privacidad">
                                     <strong>
                                         políticas de privacidad
@@ -112,7 +112,7 @@
                     {{-- Captcha --}}
                     <div class="col-md-12">
                         <div class="form-group">
-                            Captcha aquí
+                            {!! RecaptchaV3::field('contact') !!}
                         </div>
                     </div>
 
@@ -140,4 +140,7 @@
             background: -webkit-linear-gradient(left, #0072ff, #00c6ff);
         }
     </style>
+@endsection
+
+@section('js')
 @endsection
