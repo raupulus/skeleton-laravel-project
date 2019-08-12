@@ -33,10 +33,10 @@ class ContactRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:220',
+            'name' => 'required|min:4|max:220',
             'email' => 'email',
             'phone' => 'numeric|nullable',
-            'message' => 'required',
+            'message' => 'required|min:50',
             'privacity' => 'accepted',
         ];
     }
@@ -52,7 +52,9 @@ class ContactRequest extends FormRequest
             'email' => 'Se requiere un formato de email válido',
             'required' => 'El campo :attribute es obligatorio',
             'accepted' => 'El campo :attribute debe ser aceptado',
-            'numeric' => 'El campo :attribute tiene que ser numérico'
+            'numeric' => 'El campo :attribute tiene que ser numérico',
+            'min' => 'El campo :attribute no cumple con la longitud mínima',
+            'max' => 'El campo :attribute supera la longitud máxima',
         ];
     }
 }

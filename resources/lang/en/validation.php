@@ -147,4 +147,11 @@ return [
 
     'attributes' => [],
 
+
+
+    /**
+     * Customs
+     */
+    'recaptchav3' => 'Incorrect Captcha',
+
 ];

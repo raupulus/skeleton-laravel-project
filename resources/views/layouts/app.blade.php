@@ -20,7 +20,7 @@ E-mail: dev@fryntiz.es
 
     <body>
          @include('layouts.navbar')
-
+         @include('layouts.alerts')
          @yield('header')
 
          <div id="app" class="container">

@@ -26,9 +26,10 @@
 
     <div id="box-content">
         <h2 style="margin: auto">Mensaje</h2>
-        <p>
+
+        <div>
             {{ $data['message'] }}
-        </p>
+        </div>
     </div>
 
     <hr />
@@ -80,6 +81,11 @@
                     <tr>
                         <td>Ip cliente</td>
                         <td>{{ $data['client_ip'] }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Puntuación confianza ReCaptchaV3</td>
+                        <td>{{ $data['recaptcha_score'] }}</td>
                     </tr>
                 </tbody>
             </table>

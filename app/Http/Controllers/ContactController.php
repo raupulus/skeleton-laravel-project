@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ContactRequest;
 use App\Mail\ContactMail;
 use App\Http\Requests\ContactoRequest;
+use function back;
 use Illuminate\Support\Facades\Log;
 use function config;
 use Exception;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Lunaweb\RecaptchaV3\Facades\RecaptchaV3;
 use function dd;
+use function response;
 use function view;
 
 /**
@@ -37,10 +39,6 @@ class ContactController extends Controller
     /**
      * Envía el mensaje y además lo almacena en la db y envía a la api.
      *
-     * @param \App\Http\Requests\ContactRequest $request
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
-     * @throws \ReflectionException
      */
     public function send(ContactRequest $request)
     {
@@ -52,17 +50,19 @@ class ContactController extends Controller
         } elseif($score > 0.3) {
             // TODO → Pedir confirmación adicional por email antes de enviar
         } else {
-            //return abort(400, 'You are most likely a bot');
-            return view('contact.after_send')->with([
-                'message' => 'El mensaje no se ha enviado, tienes una puntuación de spam elevada según google. Si crees que es un error contacta con el administrador del sitio',
+            return view('contact.view')->with([
+                'message' => [
+                    'danger' => [
+                        'El mensaje no se ha enviado, tienes una puntuación de spam elevada según google. Si crees que es un error contacta con el administrador del sitio y/o con google'
+                    ],
+                ],
             ]);
         }
 
         $validar = Validator::make(Input::all(), [
             ## Valido el score de la petición con puntuación mínima de 0.3
-            'g-recaptcha-response' => 'required|recaptchav3:contacto,0.3'
+            'g-recaptcha-response' => 'required|recaptchav3:contact,0.3'
         ]);
-
 
         $data = [
             'name' => $request->get('name'),
@@ -74,11 +74,14 @@ class ContactController extends Controller
             'server_ip' => $request->ip(),  // Ip del servidor
             'client_ip' => $request->getClientIp(),  // Ip del cliente
             'subject' => 'Formulario de contacto en ' . config('app.name'),
+            'recaptcha_score' => $score,
         ];
 
         $contact = new ContactMail($data);
 
-        return $contact->render();
+        // Para testear resultado de email
+        //return $contact->render();
+
         try {
             Mail::send($contact);
         } catch (Exception $e) {
@@ -88,9 +91,9 @@ class ContactController extends Controller
         $this->dbStore($data);
         $this->apiStore($data);
 
-        dd('final');
         return view('contact.after_send')->with([
             'message' => 'El mensaje ha sido enviado correctamente',
+            'email' => $contact->render(),
         ]);
     }
 

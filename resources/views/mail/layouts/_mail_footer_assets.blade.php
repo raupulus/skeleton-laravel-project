@@ -1,4 +1,8 @@
 <style>
+    * {
+        word-wrap: break-word;
+    }
+
     h2 {
         margin: 10px auto;
         text-align: center;
@@ -51,8 +55,7 @@
     }
 
     #box-content {
-        margin: 10px 15px;
-        padding: 5px;
+        padding: 15 20px;
     }
 
     #box-primary {

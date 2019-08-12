@@ -21,8 +21,8 @@
 
 @section('content')
     @include('layouts.breadcrumbs')
-    <div class="row">
 
+    <div class="row">
         <div class="col-md-8 mb-5 contact-form">
             <div class="contact-image">
                 <img src="{{asset('images/icons/rocket-187x187.png')}}"
@@ -30,7 +30,7 @@
                      title="Rocket icon contact" />
             </div>
 
-            <form method="post" action="{{route('contact-send')}}">
+            <form method="post" action="{{route('contact-send')}}" class="was-validated">
 
                 @csrf
 
@@ -45,25 +45,30 @@
                                    name="name"
                                    class="form-control"
                                    placeholder="Nombre *"
-                                   value="" />
+                                   required
+                                   minlength="4"
+                                   maxlength="220"
+                                   value="{{ old('name') }}" />
                         </div>
 
                         {{-- Email --}}
                         <div class="form-group">
-                            <input type="text"
+                            <input type="email"
                                    name="email"
                                    class="form-control"
                                    placeholder="Email *"
-                                   value="" />
+                                   required
+                                   value="{{ old('email') }}"
+                                   aria-describedby="emailHelp" />
                         </div>
 
                         {{-- Teléfono --}}
                         <div class="form-group">
-                            <input type="text"
+                            <input type="number"
                                    name="phone"
                                    class="form-control"
-                                   placeholder="Teléfono*"
-                                   value="" />
+                                   placeholder="Teléfono"
+                                   value="{{ old('phone') }}" />
                         </div>
                     </div>
 
@@ -73,39 +78,47 @@
                             <textarea name="message"
                                       class="form-control"
                                       placeholder="Mensaje *"
-                                      style="width: 100%; height: 150px;"></textarea>
+                                      required
+                                      minlength="50"
+                                      style="width: 100%; height: 150px;">{{ old('message') }}</textarea>
                         </div>
                     </div>
 
                     {{-- Consentimiento contactar--}}
                     <div class="col-md-12">
                         <div class="form-group form-check">
-                            <input type="checkbox"
-                                   name="contactme"
-                                   class="form-check-input" />
+                            <div class="form-check-inline">
+                                <input type="checkbox"
+                                       name="contactme"
+                                       class="form-check-input" />
 
-                            <label class="form-check-label" for="contactme">
-                                &nbsp;&nbsp;Doy el consentimiento para ser contactado
-                            </label>
+                                <label class="form-check-label" for="contactme">
+                                    Doy el consentimiento para ser contactado
+                                </label>
+                            </div>
                         </div>
                     </div>
 
                     {{-- Consentimiento privacidad--}}
                     <div class="col-md-12">
                         <div class="form-group form-check">
-                            <input type="checkbox"
-                                   name="privacity"
-                                   class="form-check-input" />
+                            <div class="form-check-inline">
+                                <input type="checkbox"
+                                       name="privacity"
+                                       class="form-check-input"
+                                       required />
 
-                            <label class="form-check-label" for="privacity">
-                                &nbsp;&nbsp;He leído y acepto las
-                                <a href="{{route('privacity')}}"
-                                   title="Declaración de Privacidad">
-                                    <strong>
-                                        políticas de privacidad
-                                    </strong>
-                                </a>
-                            </label>
+                                <label class="form-check-label" for="privacity">
+                                    He leído y acepto las
+                                    <a href="{{route('privacity')}}"
+                                       title="Declaración de Privacidad">
+                                        <strong>
+                                            políticas de privacidad
+                                        </strong>
+                                    </a>
+                                    *
+                                </label>
+                            </div>
                         </div>
                     </div>
 
@@ -114,6 +127,19 @@
                         <div class="form-group">
                             {!! RecaptchaV3::field('contact') !!}
                         </div>
+                    </div>
+
+                    <div class="col-md-12 mt-1 mb-5 text-center">
+                        <small>
+                            <em>
+                                <strong>
+                                    <span style="color: #f00">
+                                        *
+                                    </span>
+                                    Campos requeridos
+                                </strong>
+                            </em>
+                        </small>
                     </div>
 
                     <div class="col-md-12 text-center">
@@ -140,7 +166,4 @@
             background: -webkit-linear-gradient(left, #0072ff, #00c6ff);
         }
     </style>
-@endsection
-
-@section('js')
 @endsection
