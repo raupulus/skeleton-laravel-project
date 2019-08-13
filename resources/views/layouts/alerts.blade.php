@@ -19,7 +19,15 @@
             @else
                 <div class="row">
                     <div class="col-12">
-                        @dd($message)
+                        <div class="alert alert-warning alert-dismissable">
+                            <button type="button"
+                                    class="close"
+                                    aria-hidden="true">
+                                &times;
+                            </button>
+
+                            <p>{!! $message !!}</p>
+                        </div>
                     </div>
                 </div>
             @endif

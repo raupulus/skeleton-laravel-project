@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Email;
 use App\Http\Requests\ContactRequest;
 use App\Mail\ContactMail;
 use App\Http\Requests\ContactoRequest;
@@ -13,8 +14,6 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Lunaweb\RecaptchaV3\Facades\RecaptchaV3;
-use function dd;
-use function response;
 use function view;
 
 /**
@@ -45,7 +44,7 @@ class ContactController extends Controller
         ## Validación del captcha
         $score = RecaptchaV3::verify($request->get('g-recaptcha-response'), 'contact');
 
-        if($score > 0.7) {
+        if ($score > 0.7) {
             // Perfecto
         } elseif($score > 0.3) {
             // TODO → Pedir confirmación adicional por email antes de enviar
@@ -75,6 +74,7 @@ class ContactController extends Controller
             'client_ip' => $request->getClientIp(),  // Ip del cliente
             'subject' => 'Formulario de contacto en ' . config('app.name'),
             'recaptcha_score' => $score,
+            'app_name' => config('app.name'),
         ];
 
         $contact = new ContactMail($data);
@@ -88,8 +88,8 @@ class ContactController extends Controller
             Log::error(['Intentando enviar email de contacto: ' . $e]);
         }
 
-        $this->dbStore($data);
-        $this->apiStore($data);
+        $email = $this->dbStore($data);
+        $api_response = $this->apiStore($data);
 
         return view('contact.after_send')->with([
             'message' => 'El mensaje ha sido enviado correctamente',
@@ -101,10 +101,18 @@ class ContactController extends Controller
      * Almacena el mensaje enviado en la base de datos.
      *
      * @param array $data
+     *
+     * @return \App\Email
      */
     private function dbStore(array $data)
     {
+        $email = new Email($data);
+        if (! $email->save()) {
+            Log::error('Ha fallado al guardar email de contacto');
+            return null;
+        }
 
+        return $email;
     }
 
     /**
@@ -117,5 +125,7 @@ class ContactController extends Controller
         // TODO → La API esperará: to, from, message, created_at
         // TODO → Crear política para que solo pueda ejecutarse si hay api
         // configurada
+
+        return null;
     }
 }
