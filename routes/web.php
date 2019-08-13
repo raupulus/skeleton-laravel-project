@@ -51,9 +51,19 @@ Route::group(['prefix' => 'error'], function() {
 });
 
 /******************************************
+ *            LOGIN/LOGOUT
+ ******************************************/
+
+
+/******************************************
  *            PANEL DE GESTIÓN
  ******************************************/
-Route::group(['prefix' => 'panel'], function() {
+Route::group([
+    'prefix' => 'panel',
+    'middleware' => [
+        'auth'
+    ]
+], function() {
     Route::get('/', function() {
         return view('panel.index');
     })->name('panel-index');
@@ -93,3 +103,7 @@ Route::group(['prefix' => 'panel'], function() {
         })->name('panel-demo-tables');
     });
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
