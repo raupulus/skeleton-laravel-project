@@ -11,7 +11,13 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        ## Creo rol para el usuario administrador principal
+        ## Creo rol para el usuario administrador principal.
+        DB::table('users_roles')->insert([
+            'name' => 'superadmin',
+            'display_name' => 'SuperAdministrador',
+        ]);
+
+        ## Creo rol para los demás administradores.
         DB::table('users_roles')->insert([
             'name' => 'admin',
             'display_name' => 'Administrador',
