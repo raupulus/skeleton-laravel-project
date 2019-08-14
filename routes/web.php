@@ -51,11 +51,6 @@ Route::group(['prefix' => 'error'], function() {
 });
 
 /******************************************
- *            LOGIN/LOGOUT
- ******************************************/
-
-
-/******************************************
  *            PANEL DE GESTIÓN
  ******************************************/
 Route::group([
@@ -80,6 +75,20 @@ Route::group([
         return view('panel.register');
     })->name('panel-register');
 
+    ## Usuarios
+    Route::group([
+        'prefix' => 'user',
+        'middleware' => [
+
+        ]
+    ], function() {
+        ## Ver un usuario concreto.
+        Route::get('/view', function () {
+            return view('panel.users.view');
+        })->name('user-view');
+    });
+
+    ## Errores
     Route::get('/404', function() {
         return view('panel.errors.404');
     })->name('panel-404');
