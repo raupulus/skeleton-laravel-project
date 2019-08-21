@@ -3,7 +3,6 @@
 @section('title', 'Panel Admin - Dashboard')
 
 @section('content')
-    @include('panel.layouts.breadcrumbs')
     @include('panel.layouts.top-cards')
 
     <!-- Area Chart Example-->

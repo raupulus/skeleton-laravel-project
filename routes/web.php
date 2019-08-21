@@ -83,9 +83,14 @@ Route::group([
         ]
     ], function() {
         ## Ver un usuario concreto.
-        Route::get('/view', function () {
-            return view('panel.users.view');
-        })->name('user-view');
+        Route::get('/view/{id}/{slug}?', 'UserController@view')->name('user-view');
+
+        ## Ver todos los usuarios.
+        Route::get('/index', 'UserController@index')->name('user-index');
+
+        ## Añadir o edita un nuevo usuario.
+        Route::get('/add', 'UserController@add')->name('user-add');
+        Route::post('/add', 'UserController@add')->name('user-add');
     });
 
     ## Errores

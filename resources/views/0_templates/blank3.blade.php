@@ -20,7 +20,19 @@
 @section('active-index', 'active')
 
 @section('content')
-    @include('layouts.breadcrumbs')
+    @include('panel.layouts.breadcrumbs', [
+        'breadcrumbs' => [
+            [
+                'title' => 'Test 1',
+                'url' => route('panel-index'),
+                'icon' => 'fa fa-star'
+            ],
+            [
+                'title' => 'Test 2',
+                'url' => route('panel-index'),
+            ],
+        ]
+    ])
 
     <div class="row mt-5 mb-5">
         <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">

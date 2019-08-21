@@ -20,7 +20,19 @@
 @section('active-index', 'active')
 
 @section('content')
-    @include('layouts.breadcrumbs')
+    @include('panel.layouts.breadcrumbs', [
+        'breadcrumbs' => [
+            [
+                'title' => 'Test 1',
+                'url' => route('panel-index'),
+                'icon' => 'fa fa-star'
+            ],
+            [
+                'title' => 'Test 2',
+                'url' => route('panel-index'),
+            ],
+        ]
+    ])
     <div class="row">
         <div class="col-md-8 mb-5">
             Página de pruebas en blanco

@@ -32,15 +32,3 @@
         </ol>
     </nav>
 @endif
-
-{{--
-@include('panel.layouts.breadcrumbs', [
-    'breadcrumbs' => [
-        [
-            'title' => 'Test 1',
-            'url' => route('panel-index'),
-            'icon' => 'fa fa-star',
-        ],
-    ]
-])
---}}

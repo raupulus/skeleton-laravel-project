@@ -20,10 +20,10 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">Usuarios WEB:</h6>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="{{route('user-add')}}">
                 Añadir Usuario
             </a>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="{{route('user-index')}}">
                 Gestionar Usuarios
             </a>
 

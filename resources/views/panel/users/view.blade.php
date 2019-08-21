@@ -10,7 +10,6 @@
 @section('active-index', 'active')
 
 @section('content')
-    @php($x='test99')
     @include('panel.layouts.breadcrumbs', [
         'breadcrumbs' => [
             [
@@ -24,6 +23,7 @@
             ],
         ]
     ])
+
     <div>
 
     </div>

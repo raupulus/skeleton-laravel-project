@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
     <a class="navbar-brand mr-1" href="{{route('panel-index')}}">
-        API Fryntiz
+        {{ config('app.name') }}
     </a>
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0"
@@ -57,11 +57,19 @@
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-user-circle fa-fw"></i>
             </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">Perfil</a>
+            <div class="dropdown-menu dropdown-menu-right"
+                 aria-labelledby="userDropdown">
+                <a class="dropdown-item"
+                   href="{{route('user-view', auth()->id())}}">
+                    Perfil
+                </a>
+
                 <a class="dropdown-item" href="#">Configuración</a>
+
                 <a class="dropdown-item" href="#">Log de Actividad</a>
+
                 <div class="dropdown-divider"></div>
+
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
             </div>
         </li>
