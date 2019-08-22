@@ -21,7 +21,7 @@ class UserController extends Controller
     /**
      * Vista individual de usuario.
      */
-    public function view($id = null)
+    public function view($id = null, $nick = null)
     {
         $user_id = $id ?: auth()->id();
         $user = User::find($user_id);
@@ -35,6 +35,7 @@ class UserController extends Controller
         return view('panel.users.view')->with([
             'user_id' => $user_id,
             'user' => $user,
+            'nick' => $user->nick,
         ]);
     }
 

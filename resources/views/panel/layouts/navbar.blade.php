@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href="{{route('panel-index')}}">
+    <a class="navbar-brand mr-1" href="{{route('panel.index')}}">
         {{ config('app.name') }}
     </a>
 
@@ -60,7 +60,10 @@
             <div class="dropdown-menu dropdown-menu-right"
                  aria-labelledby="userDropdown">
                 <a class="dropdown-item"
-                   href="{{route('user-view', auth()->id())}}">
+                   href="{{route('panel.users.view', [
+                           auth()->id(),
+                           auth()->user()->nick
+                   ])}}">
                     Perfil
                 </a>
 

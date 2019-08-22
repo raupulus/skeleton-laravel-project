@@ -1,10 +1,8 @@
 @extends('panel.layouts.app')
 
-@section('title', 'Panel Admin - Dashboard')
-
 {{-- Descripción sobre esta página --}}
-@section('title', 'Viendo usuario')
-@section('description', 'Vista individual de usuario')
+@section('title', 'Viendo usuarios')
+@section('description', 'Vista de todos los usuarios')
 
 {{-- Marca el elemento del menú que se encuentra activo --}}
 @section('active-index', 'active')
@@ -14,12 +12,12 @@
         'breadcrumbs' => [
             [
                 'title' => 'Test 1',
-                'url' => route('panel-index'),
+                'url' => route('panel.index'),
                 'icon' => 'fa fa-star'
             ],
             [
                 'title' => 'Test 2',
-                'url' => route('panel-index'),
+                'url' => route('panel.index'),
             ],
         ]
     ])
