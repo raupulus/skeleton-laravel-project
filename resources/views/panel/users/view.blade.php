@@ -41,11 +41,7 @@
                             </div>
 
                             <div class="col-6 col-md-4 profile-header-section1 text-right pull-rigth">
-                                <a href="{{route('panel.users.add')}}"
-                                   class="btn btn-dark btn-block">
-                                    <i class="fas fa-user-edit"></i>
-                                    Editar Perfil
-                                </a>
+                                Text Right
                             </div>
                         </div>
                     </div>
@@ -66,124 +62,30 @@
 
                                     <li class="nav-item">
                                         <a class="nav-link"
-                                           href="#buzz"
+                                           href="#details"
                                            role="tab"
                                            data-toggle="tab">
                                             <i class="fas fa-info-circle"></i>
                                             Detalles
                                         </a>
                                     </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link"
+                                           href="#social"
+                                           role="tab"
+                                           data-toggle="tab">
+                                            <i class="fas fa-info-circle"></i>
+                                            Redes Sociales
+                                        </a>
+                                    </li>
                                 </ul>
 
                                 <!-- Tab panes -->
                                 <div class="tab-content">
-                                    <div role="tabpanel"
-                                         class="tab-pane fade show active"
-                                         id="profile">
-
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label>ID</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>509230671</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label>Nombre</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Juan Perez</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label>Email</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>juanp@gmail.com</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label>Teléfono</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>12345678</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label>Profesion</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Developer</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div role="tabpanel"
-                                         class="tab-pane fade"
-                                         id="buzz">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Experience</label>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <p>Expert</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Hourly Rate</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>10$/hr</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Total Projects</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>230</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>English Level</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Expert</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Availability</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>6 months</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label>Your Bio</label>
-                                                <br/>
-                                                <p>Your detail description</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @include('panel.users.layouts._content_profile')
+                                    @include('panel.users.layouts._content_details')
+                                    @include('panel.users.layouts._content_social')
                                 </div>
                             </div>
 

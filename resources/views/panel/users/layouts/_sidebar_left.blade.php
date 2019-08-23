@@ -29,6 +29,18 @@
                 <i class="fas fa-envelope-open"></i>
                 Enviar Mensaje
             </button>
+
+            <a href="{{route('panel.users.add')}}"
+               class="btn btn-primary btn-block">
+                <i class="fas fa-user-edit"></i>
+                Editar Perfil
+            </a>
+
+            <a href="{{route('panel.users.add')}}"
+               class="btn btn-danger btn-block">
+                <i class="fas fa-trash"></i>
+                Eliminar Cuenta
+            </a>
         </div>
 
         {{-- Seguidores --}}

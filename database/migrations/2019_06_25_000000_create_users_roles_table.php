@@ -21,13 +21,6 @@ class CreateUsersRolesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', '255');
             $table->string('display_name');
-
-            /*
-            $table->foreign('translation_display_name_token')
-                ->references('token')->on('translations')
-                ->onUpdate('cascade')
-                ->onDelete('set null');
-            */
             $table->timestamps();
         });
     }
@@ -40,7 +33,7 @@ class CreateUsersRolesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('users_roles', function (Blueprint $table) {
-            $table->dropForeign(['translation_display_name_token']);
+            //$table->dropForeign(['']);
         });
     }
 }
