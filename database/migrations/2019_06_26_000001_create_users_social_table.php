@@ -14,9 +14,17 @@ class CreateUsersSocialTable extends Migration
     public function up()
     {
         Schema::create('users_social', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->string('name');
-            $table->string('nick');
+            $table->string('nick')->nullable();
             $table->string('url');
             $table->timestamps();
         });
@@ -29,6 +37,8 @@ class CreateUsersSocialTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_social');
+        Schema::dropIfExists('users_social', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
     }
 }
