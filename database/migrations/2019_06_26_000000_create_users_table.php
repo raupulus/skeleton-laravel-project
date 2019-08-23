@@ -22,7 +22,19 @@ class CreateUsersTable extends Migration
             $table->foreign('role_id')
                 ->references('id')->on('users_roles')
                 ->onUpdate('cascade')
-                ->onDelete('no action');
+                ->onDelete('set null');
+            $table->foreign('detail_id')
+                ->references('id')->on('users_detail')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
+            $table->foreign('data_id')
+                ->references('id')->on('users_data')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
+            $table->foreign('configuration_id')
+                ->references('id')->on('users_configuration')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
             $table->string('name');
             $table->string('nick')->unique();
             $table->string('email')->unique();
@@ -41,7 +53,10 @@ class CreateUsersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('users', function (Blueprint $table) {
-            $table->dropForeign(['users_roles']);
+            $table->dropForeign(['role_id']);
+            $table->dropForeign(['detail_id']);
+            $table->dropForeign(['data_id']);
+            $table->dropForeign(['configuration_id']);
         });
     }
 }
