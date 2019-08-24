@@ -23,17 +23,17 @@ class CreateUsersTable extends Migration
                 ->references('id')->on('users_roles')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
-            $table->unsignedBigInteger('detail_id');
+            $table->unsignedBigInteger('detail_id')->nullable();
             $table->foreign('detail_id')
                 ->references('id')->on('users_detail')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
-            $table->unsignedBigInteger('data_id');
+            $table->unsignedBigInteger('data_id')->nullable();
             $table->foreign('data_id')
                 ->references('id')->on('users_data')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
-            $table->unsignedBigInteger('configuration_id');
+            $table->unsignedBigInteger('configuration_id')->nullable();
             $table->foreign('configuration_id')
                 ->references('id')->on('users_configuration')
                 ->onUpdate('cascade')
