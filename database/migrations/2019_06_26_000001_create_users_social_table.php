@@ -23,7 +23,11 @@ class CreateUsersSocialTable extends Migration
                 ->references('id')->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('name');
+            $table->unsignedBigInteger('social_network_id');
+            $table->foreign('social_network_id')
+                ->references('id')->on('social_network_id')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->string('nick')->nullable();
             $table->string('url');
             $table->timestamps();
@@ -39,6 +43,7 @@ class CreateUsersSocialTable extends Migration
     {
         Schema::dropIfExists('users_social', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
+            $table->dropForeign(['social_network_id']);
         });
     }
 }
