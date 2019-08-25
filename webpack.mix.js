@@ -14,6 +14,7 @@ const mix = require('laravel-mix');
 mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
   .scripts('resources/js/panel/scripts.js', 'public/admin-panel/js/scripts.js')
   .scripts('resources/js/panel/functions.js', 'public/admin-panel/js/functions.js')
+  .scripts('resources/js/panel/theme.js', 'public/admin-panel/js/theme.js')
   .scripts('resources/js/panel/login/scripts.js', 'public/admin-panel/login/js/scripts.js')
   .scripts('resources/js/panel/login/functions.js', 'public/admin-panel/login/js/functions.js')
   .scripts('resources/js/header.js', 'public/js/header.js')

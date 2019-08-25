@@ -21,10 +21,17 @@ class UserController extends Controller
     /**
      * Vista individual de usuario.
      */
-    public function view($id = null, $nick = null)
+    public function view($id = null)
     {
         $user_id = $id ?: auth()->id();
-        $user = User::find($user_id);
+
+        ## Obtengo el usuario (Así no repite consultas al ver mi propio user)
+        if ((int) $id === (int) auth()->id()) {
+            $user = auth()->user();
+        } else {
+            $user = User::find($user_id);
+        }
+
 
         if (! $user) {
             return redirect()->back()->with([

@@ -16,6 +16,7 @@
     "/js/scripts.js": "/js/scripts.js",
     "/admin-panel/js/scripts.js": "/admin-panel/js/scripts.js",
     "/admin-panel/js/functions.js": "/admin-panel/js/functions.js",
+    "/admin-panel/js/theme.js": "/admin-panel/js/theme.js",
     "/admin-panel/login/js/scripts.js": "/admin-panel/login/js/scripts.js",
     "/admin-panel/login/js/functions.js": "/admin-panel/login/js/functions.js",
     "/js/header.js": "/js/header.js",

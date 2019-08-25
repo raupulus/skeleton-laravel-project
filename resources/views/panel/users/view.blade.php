@@ -13,11 +13,11 @@
             [
                 'title' => 'Usuarios',
                 'url' => route('panel.users.index'),
-                'icon' => 'fa fa-people'
+                'icon' => 'fas fa-users'
             ],
             [
                 'title' => $nick,
-                'url' => route('panel.index'),
+                'icon' => 'fas fa-user'
             ],
         ]
     ])
@@ -36,13 +36,38 @@
                     <div class="col-md-12 profile-header">
                         <div class="row">
                             <div class="col-6 col-md-8 profile-header-section1 pull-left">
-                                <h1>Juan Perez</h1>
-                                <h5>Developer</h5>
+                                <h1>{{ $user->name }} | {{ $user->nick }}</h1>
+                                <h5>{{ $user->role->name }}</h5>
                             </div>
 
                             <div class="col-6 col-md-4 profile-header-section1 text-right pull-rigth">
-                                Text Right
+                                <a href="#" title="Web Personal">
+                                    <i class="fas fa-globe"></i>
+                                </a>
+
+                                <a href="#" title="Facebook">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+
+                                <a href="#" title="Twitter">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+
+                                <a href="#" title="Telegram">
+                                    <i class="fa fa-telegram"></i>
+                                </a>
+
+                                <a href="#" title="Instagram">
+                                    <i class="fa fa-instagram"></i>
+                                </a>
                             </div>
+
+                            <style>
+                                .profile-header-section1 a i.fa,
+                                .profile-header-section1 a i.fas {
+                                    font-size: 2.4rem
+                                }
+                            </style>
                         </div>
                     </div>
 

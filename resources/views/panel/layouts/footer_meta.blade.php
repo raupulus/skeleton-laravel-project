@@ -33,6 +33,7 @@
 
     <script src="{{ mix('admin-panel/js/functions.js') }}"></script>
     <script src="{{ mix('admin-panel/js/scripts.js') }}"></script>
+    <script src="{{ mix('admin-panel/js/theme.js') }}"></script>
 
 
 @show
