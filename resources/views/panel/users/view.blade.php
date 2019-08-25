@@ -39,33 +39,32 @@
                                 <h1>{{ $user->name }} | {{ $user->nick }}</h1>
                                 <h5>{{ $user->role->name }}</h5>
                             </div>
-
                             <div class="col-6 col-md-4 profile-header-section1 text-right pull-rigth">
-                                <a href="#" title="Web Personal">
-                                    <i class="fas fa-globe"></i>
-                                </a>
-
-                                <a href="#" title="Facebook">
-                                    <i class="fa fa-facebook"></i>
-                                </a>
-
-                                <a href="#" title="Twitter">
-                                    <i class="fa fa-twitter"></i>
-                                </a>
-
-                                <a href="#" title="Telegram">
-                                    <i class="fa fa-telegram"></i>
-                                </a>
-
-                                <a href="#" title="Instagram">
-                                    <i class="fa fa-instagram"></i>
-                                </a>
+                                @foreach($user->social as $social)
+                                    <a href="{{ $social->personal->url }}"
+                                       title="{{ $social->name }}"
+                                       style="color: {{ $social->color }};" >
+                                        <i class="{{ $social->icon }}"></i>
+                                    </a>
+                                @endforeach
                             </div>
 
                             <style>
+                                .profile-header-section1 a:hover {
+                                    background-color: transparent;
+                                    text-decoration: none;
+                                }
+
                                 .profile-header-section1 a i.fa,
                                 .profile-header-section1 a i.fas {
-                                    font-size: 2.4rem
+                                    padding: 5px 8px;
+                                    font-size: 2.4rem;
+                                    border-radius: 3px;
+                                }
+
+                                .profile-header-section1 a i.fa:hover,
+                                .profile-header-section1 a i.fas:hover {
+                                    background-color: #343A40;
                                 }
                             </style>
                         </div>

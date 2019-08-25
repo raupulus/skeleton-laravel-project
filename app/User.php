@@ -22,7 +22,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $with = [
-        'role'
+        'role',
+        'social',
+        'social.personal',
     ];
 
     /**
@@ -60,6 +62,17 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
+
+    /**
+     * Relaciona con las redes sociales a las que pertenece usando de tabla
+     * pivote la tabla "users_social" para llegar a la tabla "social_networks"
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function social()
+    {
+        return $this->belongsToMany(SocialNetwork::class, 'users_social', 'user_id', 'social_network_id');
     }
 
     /*

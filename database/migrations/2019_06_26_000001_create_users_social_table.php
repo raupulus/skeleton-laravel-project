@@ -25,7 +25,7 @@ class CreateUsersSocialTable extends Migration
                 ->onDelete('cascade');
             $table->unsignedBigInteger('social_network_id');
             $table->foreign('social_network_id')
-                ->references('id')->on('social_network_id')
+                ->references('id')->on('social_networks')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('nick')->nullable();
@@ -43,7 +43,7 @@ class CreateUsersSocialTable extends Migration
     {
         Schema::dropIfExists('users_social', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
-            $table->dropForeign(['social_network_id']);
+            $table->dropForeign(['social_networks']);
         });
     }
 }
