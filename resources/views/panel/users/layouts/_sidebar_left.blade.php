@@ -3,7 +3,9 @@
     <div class="row ">
         <div class="col-12 user-image text-center">
             <img class="rounded-circle"
-                 src="https://www.jamf.com/jamf-nation/img/default-avatars/generic-user-purple.png">
+                 src="{{ $user->urlImage }}"
+                 title="Imagen de {{ $user->name }}"
+                 alt="Imagen de {{ $user->name }}" />
         </div>
 
         <div class="col-12 user-detail-section1 text-center">

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use function asset;
 use function func_get_args;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -93,6 +94,23 @@ class User extends Authenticatable
     public function details()
     {
         return $this->belongsTo(UserDetail::class, 'detail_id', 'id');
+    }
+
+
+    /**
+     * Devuelve el enlace hacia la imagen/avatar del usuario.
+     *
+     * @return string
+     */
+    public function getUrlImageAttribute()
+    {
+        if ($this->image) {
+            $url = asset('storage/' . $this->image);
+        } else {
+            $url = asset('images/users/profile-avatars/default.png');
+        }
+
+        return $url;
     }
 
     /*

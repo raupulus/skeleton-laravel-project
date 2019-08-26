@@ -24,7 +24,9 @@
 
     <div class="row">
         <div class="col-12 image-section">
-            <img src="https://png.pngtree.com/thumb_back/fw800/back_pic/00/08/57/41562ad4a92b16a.jpg">
+            <img src="{{ asset('images/users/profile-backgrounds/default.jpg') }}"
+                 title="Background Profile"
+                 alt="Background Profile" />
         </div>
 
         <div class="row user-left-part">

@@ -1,21 +1,31 @@
 <div class="col-md-4 img-main-rightPart">
-    <div class="row">
+    {{-- Sección 1 --}}
+    <div class="row mt-5 mb-5">
         <div class="col-md-12">
-            <div class="row image-right-part">
-                <div class="col-md-6 pull-left image-right-detail">
-                    <h6>PUBLICIDAD</h6>
-                </div>
-            </div>
+            <h6 class="text-center">
+                Section Right 1
+            </h6>
         </div>
 
-        <a href="#">
-            <div class="col-md-12 image-right">
-                <img src="http://pluspng.com/img-png/bootstrap-png-bootstrap-512.png">
-            </div>
-        </a>
+        <div class="col-md-12 text-center">
+            <a href="{{ route('index') }}">
+                <img src="{{ asset('images/icons/programming-languages/laravel.png') }}">
+            </a>
+        </div>
+    </div>
 
-        <div class="col-md-12 image-right-detail-section2">
-            Section 2
+    {{-- Sección 2 --}}
+    <div class="row mt-5 mb-5">
+        <div class="col-md-12">
+            <h6 class="text-center">
+                Section Right 2
+            </h6>
+        </div>
+
+        <div class="col-md-12 text-center">
+            <a href="{{ route('index') }}">
+                <img src="{{ asset('images/icons/programming-languages/vue.png') }}">
+            </a>
         </div>
     </div>
 </div>

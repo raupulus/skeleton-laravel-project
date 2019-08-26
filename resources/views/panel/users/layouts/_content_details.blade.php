@@ -18,9 +18,10 @@
             <label>Web</label>
         </div>
         <div class="col-md-6">
-            <p>
+            <a href="{{ $user->details->web }}"
+               title="Web de {{ $user->name }}">
                 {{ $user->details->web }}
-            </p>
+            </a>
         </div>
     </div>
 </div>
