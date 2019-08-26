@@ -26,6 +26,7 @@ class User extends Authenticatable
         'social',
         'social.personal',
         'data',
+        'details'
     ];
 
     /**
@@ -84,6 +85,14 @@ class User extends Authenticatable
     public function data()
     {
         return $this->belongsTo(UserData::class, 'data_id', 'id');
+    }
+
+    /**
+     * Devuelve la relación con los detalles, datos complementarios del usuario.
+     */
+    public function details()
+    {
+        return $this->belongsTo(UserDetail::class, 'detail_id', 'id');
     }
 
     /*

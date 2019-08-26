@@ -74,25 +74,29 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <ul class="nav nav-tabs" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active"
-                                           href="#profile"
-                                           role="tab"
-                                           data-toggle="tab">
-                                            <i class="fas fa-user-circle"></i>
-                                            Perfil
-                                        </a>
-                                    </li>
+                                    @if ($user->data)
+                                        <li class="nav-item">
+                                            <a class="nav-link active"
+                                               href="#profile"
+                                               role="tab"
+                                               data-toggle="tab">
+                                                <i class="fas fa-user-circle"></i>
+                                                Perfil
+                                            </a>
+                                        </li>
+                                    @endif
 
-                                    <li class="nav-item">
-                                        <a class="nav-link"
-                                           href="#details"
-                                           role="tab"
-                                           data-toggle="tab">
-                                            <i class="fas fa-info-circle"></i>
-                                            Detalles
-                                        </a>
-                                    </li>
+                                    @if ($user->details)
+                                        <li class="nav-item">
+                                            <a class="nav-link"
+                                               href="#details"
+                                               role="tab"
+                                               data-toggle="tab">
+                                                <i class="fas fa-info-circle"></i>
+                                                Detalles
+                                            </a>
+                                        </li>
+                                    @endif
 
                                     <li class="nav-item">
                                         <a class="nav-link"
@@ -108,7 +112,7 @@
                                 <!-- Tab panes -->
                                 <div class="tab-content">
                                     @includeWhen($user->data, 'panel.users.layouts._content_profile')
-                                    @include('panel.users.layouts._content_details')
+                                    @includeWhen($user->details, 'panel.users.layouts._content_details')
                                     @include('panel.users.layouts._content_social')
                                 </div>
                             </div>
