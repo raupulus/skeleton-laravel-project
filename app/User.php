@@ -25,6 +25,7 @@ class User extends Authenticatable
         'role',
         'social',
         'social.personal',
+        'data',
     ];
 
     /**
@@ -73,6 +74,16 @@ class User extends Authenticatable
     public function social()
     {
         return $this->belongsToMany(SocialNetwork::class, 'users_social', 'user_id', 'social_network_id');
+    }
+
+    /**
+     * Devuelve la relación con los datos principales del usuario.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function data()
+    {
+        return $this->belongsTo(UserData::class, 'data_id', 'id');
     }
 
     /*

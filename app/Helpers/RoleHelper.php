@@ -54,4 +54,18 @@ class RoleHelper
     {
         return !self::isAdmin($role_id);
     }
+
+    /**
+     * Comprueba si el usuario actual puede editar el usuario.
+     *
+     * @param null $user_id
+     * @param null $role_id
+     *
+     * @return bool
+     */
+    public static function canUserEdit($user_id = null, $role_id = null)
+    {
+        // TODO → Controlar si soy usuario normal y edito mi propio perfil.
+        return self::isAdmin($role_id);
+    }
 }

@@ -2,48 +2,62 @@
      class="tab-pane fade show active"
      id="profile">
 
+    @if(RoleHelper::isAdmin())
+        <div class="row">
+            <div class="col-md-2">
+                <label>
+                    ID
+                </label>
+            </div>
+
+            <div class="col-md-6">
+                <p>
+                    {{ $user->id }}
+                </p>
+            </div>
+        </div>
+    @endif
+
     <div class="row">
         <div class="col-md-2">
-            <label>ID</label>
+            <label>
+                Teléfono
+            </label>
         </div>
+
         <div class="col-md-6">
-            <p>509230671</p>
+            <p>
+                {{ $user->data->phone }}
+            </p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-2">
-            <label>Nombre</label>
+            <label>
+                Descripción
+            </label>
         </div>
+
         <div class="col-md-6">
-            <p>Juan Perez</p>
+            <p>
+                {{ $user->data->description }}
+            </p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-2">
-            <label>Email</label>
+            <label>
+                Biografía
+            </label>
         </div>
+
         <div class="col-md-6">
-            <p>juanp@gmail.com</p>
+            <p>
+                {{ $user->data->bio }}
+            </p>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-2">
-            <label>Teléfono</label>
-        </div>
-        <div class="col-md-6">
-            <p>12345678</p>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-2">
-            <label>Profesion</label>
-        </div>
-        <div class="col-md-6">
-            <p>Developer</p>
-        </div>
-    </div>
 </div>

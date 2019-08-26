@@ -107,7 +107,7 @@
 
                                 <!-- Tab panes -->
                                 <div class="tab-content">
-                                    @include('panel.users.layouts._content_profile')
+                                    @includeWhen($user->data, 'panel.users.layouts._content_profile')
                                     @include('panel.users.layouts._content_details')
                                     @include('panel.users.layouts._content_social')
                                 </div>
