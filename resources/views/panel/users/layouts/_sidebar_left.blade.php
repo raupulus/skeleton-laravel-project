@@ -9,15 +9,7 @@
         </div>
 
         <div class="col-12 user-detail-section1 text-center">
-            <button id="btn-contact"
-                    data-toggle="modal"
-                    data-target="#contact"
-                    class="btn btn-primary btn-block follow">
-                <i class="fas fa-globe"></i>
-                Redes Sociales¿?
-            </button>
-
-            <button class="btn btn-warning btn-block">
+            <button class="btn btn-warning btn-block follow">
                 <i class="fas fa-file-download"></i>
                 Descargar Curriculum
             </button>

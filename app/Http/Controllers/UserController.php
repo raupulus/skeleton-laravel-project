@@ -13,9 +13,11 @@ class UserController extends Controller
     /**
      * Añade un nuevo usuario, solo si tiene permisos para ello.
      */
-    public function add()
+    public function add($id = null)
     {
-        return 'Entra add';
+        return view('panel.users.edit')->with([
+
+        ]);
     }
 
     /**
