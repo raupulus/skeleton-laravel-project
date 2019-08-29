@@ -1,0 +1,4 @@
+- Correo
+- Nick
+- Contraseña
+- Repetir Contraseña

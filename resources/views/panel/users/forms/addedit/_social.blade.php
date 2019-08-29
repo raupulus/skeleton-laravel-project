@@ -1,0 +1,3 @@
+- Seleccionar Red Social
+- Nick de red social
+- url de tu perfil
