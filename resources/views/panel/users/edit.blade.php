@@ -39,3 +39,16 @@
         </div>
     </div>
 @endsection
+
+@section('head-css-custom')
+    <link href="{{ mix('assets/css/bootstrap-select.css') }}" rel="stylesheet" />
+@overwrite
+
+@section('js')
+    {{-- bootstrap-select --}}
+    <script src="{{ mix('assets/js/bootstrap-select.js') }}"></script>
+
+    <script>
+        $.fn.selectpicker.Constructor.BootstrapVersion = bootstrap_version;
+    </script>
+@endsection

@@ -34,8 +34,11 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
   //.js('resources/js/assets/jquery.easing.js', 'public/assets/js')
   .copy('node_modules/jquery/dist/jquery.min.js', 'public/assets/js/jquery.js')
   .copy('node_modules/jquery.easing/jquery.easing.min.js', 'public/assets/js/jquery.easing.js')
+  .copy('node_modules/bootstrap-select/dist/js/bootstrap-select.js', 'public/assets/js/bootstrap-select.js')
   .js('resources/js/assets/bootstrap.js', 'public/assets/js')
   .js('resources/js/assets/popper.js', 'public/assets/js')
+  //.scripts('node_modules/popper.js/dist/esm/popper.js', 'public/assets/js/popper.js')
+
   .js('resources/js/assets/datatables.js', 'public/assets/js')
   .js('resources/js/assets/chart.js', 'public/assets/js')
   .js('resources/js/assets/fontawesome.js', 'public/assets/js')
@@ -53,6 +56,7 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
   .sass('resources/sass/assets/fontawesome.scss', 'public/assets/css')
   .sass('resources/sass/assets/datatables.scss', 'public/assets/css')
   .sass('node_modules/weather-icons2/sass/weather-icons.scss', 'public/assets/css')
+  .sass('node_modules/bootstrap-select/sass/bootstrap-select.scss', 'public/assets/css')
 
   .autoload({
     jquery: ['$', 'window.jQuery',"jQuery","window.$","jquery","window.jquery"],

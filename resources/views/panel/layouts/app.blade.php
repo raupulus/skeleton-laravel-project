@@ -10,6 +10,7 @@ E-mail: dev@fryntiz.es
 
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
+        @include('resources.global_vars_js')
         @include('panel.layouts.head')
         @include('panel.layouts.head_meta')
         @yield('head_css')
@@ -39,5 +40,6 @@ E-mail: dev@fryntiz.es
          @include('panel.layouts.footer_meta')
          @yield('css')
          @yield('javascript')
+         @yield('js')
     </body>
 </html>

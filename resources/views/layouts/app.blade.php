@@ -12,6 +12,7 @@ E-mail: dev@fryntiz.es
     <head>
         {!! RecaptchaV3::initJs() !!}
 
+        @include('resources.global_vars_js')
         @include('layouts.head')
         @include('layouts.head_meta')
         @yield('head_css')

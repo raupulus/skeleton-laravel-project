@@ -501,6 +501,8 @@
     </p>
 @endsection
 
-@section('javascript')
-    <script src="{{ url('admin-panel/js/demos/datatables-demo.js') }}"></script>
-@endsection
+@section('js')
+    {{-- DataTables --}}
+    <script src="{{ mix('assets/js/datatables.js') }}"></script>
+    <script src="{{ mix('admin-panel/js/demos/datatables-demo.js') }}"></script>
+@overwrite
