@@ -19,6 +19,7 @@ class CreateSocialNetworksTable extends Migration
             $table->collation = 'utf8_unicode_ci';
             $table->bigIncrements('id');
             $table->string('name', 255);
+            $table->string('slug', 255);
             $table->string('type', 255);
             $table->string('color', 255);
             $table->text('url');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\SocialNetwork;
 use App\User;
 use Illuminate\Http\Request;
 use function auth;
@@ -15,8 +16,9 @@ class UserController extends Controller
      */
     public function add($id = null)
     {
+        $socialNetworks = SocialNetwork::all();
         return view('panel.users.edit')->with([
-
+            'socialNetworks' => $socialNetworks,
         ]);
     }
 

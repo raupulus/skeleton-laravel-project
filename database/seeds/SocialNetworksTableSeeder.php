@@ -25,7 +25,8 @@ class SocialNetworksTableSeeder extends Seeder
         ## Facebook
         DB::table($table)->insert([
             'name' => 'Facebook',
-            'type' => 'facebook',
+            'slug' => 'facebook',
+            'type' => 'Red Social',
             'color' => '#3b5998',
             'url' => 'https://www.facebook.com/',
             'icon' => 'fa fa-facebook',
@@ -37,7 +38,8 @@ class SocialNetworksTableSeeder extends Seeder
         ## Twitter
         DB::table($table)->insert([
             'name' => 'Twitter',
-            'type' => 'twitter',
+            'slug' => 'twitter',
+            'type' => 'Red Social',
             'color' => '#1DA1F2',
             'url' => 'https://www.twitter.com/',
             'icon' => 'fa fa-twitter',
@@ -49,7 +51,8 @@ class SocialNetworksTableSeeder extends Seeder
         ## Instagram
         DB::table($table)->insert([
             'name' => 'Instagram',
-            'type' => 'instagram',
+            'slug' => 'instagram',
+            'type' => 'Red Social',
             'color' => '#bc2a8d',
             'url' => 'https://www.instagram.com/',
             'icon' => 'fa fa-instagram',

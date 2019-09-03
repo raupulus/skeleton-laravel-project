@@ -1,58 +1,57 @@
-<div class="row">
+<div class="form-row">
     {{-- Profesión --}}
     <div class="col-md-4">
         <div class="form-group">
             <label for="profesion">Seleccionar Red Social</label>
-            <select title="Select your spell" class="form-control selectpicker">
-                <option data-thumbnail="{{asset('images/icons/social-network/facebook.png')
-                }}">Chrome</option>
 
-                <option data-icon="glyphicon glyphicon-eye-open"
-                        data-subtext="Facebook">
-                    Facebook
-                </option>
+            <select title="Selecciona red social"
+                    class="form-control selectpicker"
+                    name="social_id">
+                @foreach($socialNetworks as $social)
+                    <option data-icon="{{ $social->icon }}"
+                            data-subtext="{{ $social->type }}"
+                            style="color: {{ $social->color }}"
+                            value="{{ $social->id }}">
+                        {{ $social->name }}
+                    </option>
+                @endforeach
             </select>
-
-            <select class="selectpicker">
-                <option data-thumbnail="http://icons.iconarchive.com/icons/tinylab/android-lollipop-apps/24/Foursquare-icon.png" >Foursquare</option>
-                <option data-thumbnail="http://icons.iconarchive.com/icons/tinylab/android-lollipop-apps/24/Twitter-icon.png">Twitter</option>
-                <option data-thumbnail="http://icons.iconarchive.com/icons/tinylab/android-lollipop-apps/24/Evernote-icon.png">Evernote</option>
-                <option data-thumbnail="http://icons.iconarchive.com/icons/tinylab/android-lollipop-apps/24/Dropbox-icon.png" >Dropbox</option>
-            </select>
-
-            <hr />
-
-            <select class="selectpicker">
-                <option data-icon="glyphicon glyphicon-eye-open" data-subtext="petrification">Eye of Medusa</option>
-                <option data-icon="glyphicon glyphicon-fire" data-subtext="area damage">Rain of Fire</option>
-            </select>
-
-
-
-
-
         </div>
     </div>
 
-    {{-- Web --}}
+    {{-- Nick --}}
     <div class="col-md-4">
-        <div class="form-group">
-            <label for="web">Nick en la red social</label>
-            <input name="web"
-                   type="text"
-                   class="form-control"
-                   placeholder="Web" />
+        <label for="social_nick">Nick</label>
+
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="social_nick">@</span>
+            </div>
+
+            <input type="text" class="form-control"
+                   placeholder="Nick"
+                   aria-describedby="social_nick"
+                   name="social_nick"
+                   required>
         </div>
     </div>
 
-    {{-- Web --}}
+    {{-- Url del Perfil --}}
     <div class="col-md-4">
-        <div class="form-group">
-            <label for="web">Url de tu perfil</label>
-            <input name="web"
-                   type="text"
-                   class="form-control"
-                   placeholder="Web" />
+        <label for="social_url">Url del perfil</label>
+
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="social_url">
+                    <i class="fa fa-globe"></i>
+                </span>
+            </div>
+
+            <input type="text" class="form-control"
+                   placeholder="Nick"
+                   aria-describedby="social_url"
+                   name="social_url"
+                   required>
         </div>
     </div>
 </div>
