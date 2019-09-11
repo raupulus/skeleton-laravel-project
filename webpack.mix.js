@@ -65,3 +65,4 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
     DataTable : ['datatables.net-bs4', 'Datatable']
   });
 
+mix.browserSync('lolcalhost:8000');

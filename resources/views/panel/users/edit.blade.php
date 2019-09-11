@@ -27,7 +27,7 @@
         <div class="col-12">
             <button class="btn btn-success">
                 <i class="fa fa-user-plus"></i>
-                Botón 1
+                Guardar
             </button>
         </div>
     </div>
