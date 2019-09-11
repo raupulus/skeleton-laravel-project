@@ -47,8 +47,5 @@
 @section('js')
     {{-- bootstrap-select --}}
     <script src="{{ mix('assets/js/bootstrap-select.js') }}"></script>
-
-    <script>
-        $.fn.selectpicker.Constructor.BootstrapVersion = bootstrap_version;
-    </script>
+    <script src="{{ mix('admin-panel/users/js/user_add.js') }}"></script>
 @endsection
