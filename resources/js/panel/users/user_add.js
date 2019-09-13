@@ -24,19 +24,19 @@ function red_social_delete() {
  * Avanza un paso en el formulario para crear usuarios.
  */
 function nextStep() {
-    // id → user-form-create-tabs
     // Tiene clase "active" el elemento marcado, pillar el hermano y hacer click
     var box = $('#user-form-create-tabs');
     var tabActive = box.find('.active');
-    var sibling = tabActive.closest('li').next().find('.nav-link').addClass('active');
+    var sibling = tabActive.closest('li').next().find('.nav-link').first();
 
-    //TODO → si sibling no tiene nada el nodo, volver al primero.
+    // Elimino el anterior activo solo cuando existe próximo.
+    if (sibling.attr('href')) {
+        tabActive.removeClass('active');
+        $(tabActive.attr('href')).removeClass(['active', 'show']);
 
-    // Elimino el anterior activo
-    tabActive.removeClass('active');
-
-    console.log(tabActive);
-    console.log(sibling);
+        sibling.addClass('active');
+        $(sibling.attr('href')).addClass(['active', 'show']);
+    }
 }
 
 /**
