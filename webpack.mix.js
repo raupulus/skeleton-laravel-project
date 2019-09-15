@@ -17,6 +17,7 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
   .scripts('resources/js/panel/theme.js', 'public/admin-panel/js/theme.js')
   .scripts('resources/js/panel/login/scripts.js', 'public/admin-panel/login/js/scripts.js')
   .scripts('resources/js/panel/login/functions.js', 'public/admin-panel/login/js/functions.js')
+  .scripts('resources/js/panel/users/user_add.js', 'public/admin-panel/users/js/user_add.js')
   .scripts('resources/js/header.js', 'public/js/header.js')
   .scripts('resources/js/footer.js', 'public/js/footer.js')
   .scripts('resources/js/functions.js', 'public/js/functions.js')
@@ -64,3 +65,6 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
     DataTable : ['datatables.net-bs4', 'Datatable']
   });
 
+mix.browserSync({
+    proxy: 'localhost:8000'
+});

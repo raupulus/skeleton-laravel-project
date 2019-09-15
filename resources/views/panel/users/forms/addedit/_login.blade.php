@@ -14,12 +14,13 @@
                    placeholder="Correo"
                    aria-describedby="mail"
                    name="mail"
-                   required>
+                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 5}$"
+                   required />
         </div>
     </div>
 </div>
 
-<div class="row">
+<div class="row mt-5">
     {{-- Contraseña --}}
     <div class="col-md-6">
         <label for="password">Password</label>

@@ -95,14 +95,13 @@
     {{-- Botones de Acción bajo el formulario --}}
     <div class="row text-center">
         <div class="col-12">
-            <button class="btn btn-info ml-4 mr-4">
+            <button id="user-add-step-left" class="btn btn-info ml-4 mr-4">
                 <i class="fa fa-arrow-left"></i>
             </button>
 
-            <button class="btn btn-info ml-4 mr-4">
+            <button id="user-add-step-right" class="btn btn-info ml-4 mr-4">
                 <i class="fa fa-arrow-right"></i>
             </button>
         </div>
     </div>
 </form>
-
