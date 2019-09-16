@@ -83,14 +83,14 @@ Route::group([
         ]
     ], function() {
         ## Ver un usuario concreto.
-        Route::get('/view/{id}/{nick?}', 'UserController@view')->name('panel.users.view');
+        Route::get('/view/{id}/{nick?}', 'Panel\UserController@view')->name('panel.users.view');
 
         ## Ver todos los usuarios.
-        Route::get('/index', 'UserController@index')->name('panel.users.index');
+        Route::get('/index', 'Panel\UserController@index')->name('panel.users.index');
 
         ## Añadir o edita un nuevo usuario.
-        Route::get('/add', 'UserController@add')->name('panel.users.add');
-        Route::post('/add', 'UserController@add')->name('panel.users.add');
+        Route::get('/add', 'Panel\UserController@add')->name('panel.users.add');
+        Route::post('/add', 'Panel\UserController@edit')->name('panel.users.edit');
     });
 
     ## Errores

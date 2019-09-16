@@ -1,4 +1,14 @@
-<form action="#" method="post">
+@if($errors->any())
+    @foreach ($errors->all() as $error)
+        <div>{{ $error }}</div>
+    @endforeach
+@endif
+
+<form id="form-add-user"
+      action="{{route('panel.users.edit')}}"
+      method="post">
+    @csrf
+
     {{-- Pestañas con los pasos --}}
     <ul id="user-form-create-tabs" class="nav nav-pills mb-3" role="tablist">
         <li class="nav-item">

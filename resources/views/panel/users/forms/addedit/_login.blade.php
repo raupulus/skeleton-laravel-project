@@ -1,19 +1,19 @@
 <div class="row">
     {{-- Correo --}}
     <div class="col-md-12">
-        <label for="mail">Correo</label>
+        <label for="email">Correo</label>
 
         <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="mail">
+                <span class="input-group-text" id="email">
                     <i class="fa fa-mail-bulk"></i>
                 </span>
             </div>
 
             <input type="email" class="form-control"
                    placeholder="Correo"
-                   aria-describedby="mail"
-                   name="mail"
+                   aria-describedby="email"
+                   name="email"
                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 5}$"
                    required />
         </div>
@@ -51,8 +51,8 @@
             </div>
 
             <input type="password" class="form-control"
-                   aria-describedby="password_repeat"
-                   name="password_repeat"
+                   aria-describedby="password_confirmation"
+                   name="password_confirmation"
                    required />
         </div>
     </div>

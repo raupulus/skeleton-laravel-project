@@ -1,18 +1,18 @@
 <div class="row">
     {{-- Nombre --}}
     <div class="col-md-6">
-        <label for="nombre">Nombre</label>
+        <label for="name">Nombre</label>
 
         <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="nombre">
+                <span class="input-group-text" id="name">
                     <i class="fa fa-user"></i>
                 </span>
             </div>
 
             <input type="text" class="form-control"
-                   aria-describedby="nombre"
-                   name="nombre"
+                   aria-describedby="name"
+                   name="name"
                    placeholder="Tu nombre" />
         </div>
     </div>

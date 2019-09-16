@@ -25,7 +25,9 @@
     {{-- Botones de Acción General --}}
     <div class="row mt-3 mb-4">
         <div class="col-12">
-            <button class="btn btn-success">
+            <button type="submit"
+                    class="btn btn-success"
+                    form="form-add-user">
                 <i class="fa fa-user-plus"></i>
                 Guardar
             </button>

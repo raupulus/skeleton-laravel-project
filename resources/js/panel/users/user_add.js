@@ -32,7 +32,7 @@ function changeStep(direction) {
 
     if (direction === 'next') {
         var sibling = tabActive.closest('li').next().find('.nav-link').first();
-    } else (direction === 'prev') {
+    } else if (direction === 'prev') {
         var sibling = tabActive.closest('li').prev().find('.nav-link').first();
     }
 
