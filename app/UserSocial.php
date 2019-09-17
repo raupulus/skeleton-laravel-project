@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use function dd;
 
 class UserSocial extends Model
 {
@@ -14,13 +15,13 @@ class UserSocial extends Model
      *
      * @param $socialNetwork Recibe un array con tres array para ids, nicks, urls
      */
-    public static function saveAllForUser($array)
+    public static function saveAllForUser($array, $user_id)
     {
         $arraySocial_id = $array['social_id'];
         $arraySocial_nick = $array['social_nick'];
         $arraySocial_url = $array['social_url'];
 
-        $socialNetworkData = [];
+        $socialNetworks = [];
 
         foreach ($arraySocial_id as $idx => $id) {
             $social_id = $id;
@@ -28,21 +29,17 @@ class UserSocial extends Model
             $social_url = $arraySocial_url[$idx];
 
             if ($social_id && $social_nick && $social_url) {
-                $newSocial = [
-                    'user_id' => 1, // TODO → Dinamizar
-                    'social_id' => $id,
+                $newSocial = self::create([
+                    'user_id' => $user_id,
+                    'social_network' => $id,
                     'social_nick' => $social_nick,
                     'social_url' => $social_url,
-                ];
+                ])->save();
 
                 $socialNetworkData[] = $newSocial;
             }
         }
 
-        $socialNetwork = new UserSocial($socialNetworkData);
-
-        $socialNetwork->save();
-
-        return $socialNetwork;
+        return $socialNetworks;
     }
 }

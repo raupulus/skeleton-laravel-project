@@ -39,14 +39,15 @@ class UserController extends Controller
         ## Creador del usuario.
         $created_by = auth()->id();
 
-        // Todo → ¿Puede crear usuario? RoleHelper
+        // Todo → ¿Puede crear usuario? RoleHelper → SI → continua:
 
         $social_id = $request->get('social_id') ?? null;
         $social_nick = $request->get('social_nick') ?? null;
         $social_url = $request->get('social_url') ?? null;
 
         $socialNetworks = UserSocial::saveAllForUser(
-            compact('social_id', 'social_nick', 'social_url')
+            compact('social_id', 'social_nick', 'social_url'),
+            $id // Todo → user_id
         );
 
         dd($socialNetworks);
