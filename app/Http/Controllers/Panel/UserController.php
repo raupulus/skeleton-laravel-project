@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserAddRequest;
 use App\SocialNetwork;
 use App\User;
+use App\UserSocial;
 use Illuminate\Http\Request;
 use function auth;
+use function compact;
 use function is_null;
 use function redirect;
 use function view;
@@ -39,7 +41,15 @@ class UserController extends Controller
 
         // Todo → ¿Puede crear usuario? RoleHelper
 
-        dd($request);
+        $social_id = $request->get('social_id') ?? null;
+        $social_nick = $request->get('social_nick') ?? null;
+        $social_url = $request->get('social_url') ?? null;
+
+        $socialNetworks = UserSocial::saveAllForUser(
+            compact('social_id', 'social_nick', 'social_url')
+        );
+
+        dd($socialNetworks);
 
         // Busco todas las tablas relacionadas con el usuario.
         // TODO → Crear trait para añadirlo al modelo de usuario
