@@ -2,10 +2,12 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-use function dd;
-
-class UserSocial extends Model
+/**
+ * Class UserSocial
+ * Representa cada una de las redes sociales que dispone un usuario.
+ * @package App
+ */
+class UserSocial extends DefaultModel
 {
     protected $table = 'users_social';
 
@@ -21,22 +23,29 @@ class UserSocial extends Model
         $arraySocial_nick = $array['social_nick'];
         $arraySocial_url = $array['social_url'];
 
+        ## Elimino todas las redes sociales anteriores.
+        $deleteOld = self::where('user_id', $user_id)->delete();
+
+        ## Almacena en el array las instancias guardadas para devolverlas.
         $socialNetworks = [];
 
-        foreach ($arraySocial_id as $idx => $id) {
-            $social_id = $id;
-            $social_nick = $arraySocial_nick[$idx];
-            $social_url = $arraySocial_url[$idx];
+        ## Proceso el guardado de cada una de las redes sociales.
+        foreach ($arraySocial_id as $idx => $social_network_id) {
+            $nick = $arraySocial_nick[$idx];
+            $url = $arraySocial_url[$idx];
 
-            if ($social_id && $social_nick && $social_url) {
+            ## Compruebo y obligo a que tenga $nick y $url
+            if ($nick && $url) {
                 $newSocial = self::create([
                     'user_id' => $user_id,
-                    'social_network' => $id,
-                    'social_nick' => $social_nick,
-                    'social_url' => $social_url,
-                ])->save();
+                    'social_network_id' => $social_network_id,
+                    'nick' => $nick,
+                    'url' => $url,
+                ]);
 
-                $socialNetworkData[] = $newSocial;
+                $newSocial->save();
+
+                $socialNetworks[] = $newSocial;
             }
         }
 

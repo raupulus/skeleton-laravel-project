@@ -36,10 +36,12 @@ class UserController extends Controller
     {
         $id = $id ?? auth()->id();
 
+        // Todo → ¿Puede crear usuario? RoleHelper → SI → continua:
+
+
         ## Creador del usuario.
         $created_by = auth()->id();
 
-        // Todo → ¿Puede crear usuario? RoleHelper → SI → continua:
 
         $social_id = $request->get('social_id') ?? null;
         $social_nick = $request->get('social_nick') ?? null;
