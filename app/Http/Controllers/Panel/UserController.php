@@ -8,6 +8,7 @@ use App\SocialNetwork;
 use App\User;
 use App\UserSocial;
 use Illuminate\Http\Request;
+use RoleHelper;
 use function auth;
 use function compact;
 use function is_null;
@@ -34,15 +35,46 @@ class UserController extends Controller
      */
     public function edit($id = null, UserAddRequest $request)
     {
+        if ($id) {
+            $permission = RoleHelper::canUserEdit($id);
+        } else {
+            $permission = RoleHelper::canUserCreate();
+        }
+
+        if (! $permission) {
+            return redirect()->back()->with([
+               'error' => 'No tiene permisos para editar este usuario',
+            ]);
+        }
+
         $id = $id ?? auth()->id();
 
-        // Todo → ¿Puede crear usuario? RoleHelper → SI → continua:
-
-
         ## Creador del usuario.
-        $created_by = auth()->id();
+        // TODO → Añadir al log
+        //$created_by = auth()->id();
+
+        /**
+         * Busco usuario, lo crea en caso de no existir.
+         */
+        $user = User::find($id);
+
+        if ($user) {
+            $userData = UserData::where('user_id', $user->id)->first();
+            $userDetail = UserDetail::where('user_id', $user->id)->first();
+        } else {
+            $user = new User();
+
+            // TODO → Extrayendo a UserData Model función para crear:
+            $userData = new UserData();
+
+            $userDetail = new UserDetail;
+        }
 
 
+
+        /**
+         * Creo redes sociales.
+         */
         $social_id = $request->get('social_id') ?? null;
         $social_nick = $request->get('social_nick') ?? null;
         $social_url = $request->get('social_url') ?? null;

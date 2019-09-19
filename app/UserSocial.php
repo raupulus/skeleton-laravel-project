@@ -15,7 +15,10 @@ class UserSocial extends DefaultModel
      * Guarda las redes sociales por usuario, si las tuviera las elimina y
      * añade las nuevas.
      *
-     * @param $socialNetwork Recibe un array con tres array para ids, nicks, urls
+     * @param $array Recibe un array con tres array para ids, nicks, urls
+     * @param $user_id
+     *
+     * @return array
      */
     public static function saveAllForUser($array, $user_id)
     {

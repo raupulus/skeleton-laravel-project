@@ -18,6 +18,9 @@
  */
 class RoleHelper
 {
+    /**
+     * Array de Roles establecidos. Todo → Dinamizar desde intranet
+     */
     private const SUPERADMIN = [1];
     private const ADMIN = [1,3];
     private const USER = [1,2,3];
@@ -29,7 +32,7 @@ class RoleHelper
      */
     public static function isSuperAdmin($role_id = null)
     {
-        $role_id = $role_id ?: auth()->id();
+        $role_id = $role_id ?: auth()->user()->role_id;
         return in_array($role_id, self::SUPERADMIN, false);
     }
 
@@ -41,7 +44,7 @@ class RoleHelper
      */
     public static function isAdmin($role_id = null)
     {
-        $role_id = $role_id ?: auth()->id();
+        $role_id = $role_id ?: auth()->user()->role_id;
         return in_array($role_id, self::ADMIN, false);
     }
 
@@ -59,13 +62,27 @@ class RoleHelper
      * Comprueba si el usuario actual puede editar el usuario.
      *
      * @param null $user_id
-     * @param null $role_id
      *
      * @return bool
      */
-    public static function canUserEdit($user_id = null, $role_id = null)
+    public static function canUserEdit($edit_user_id = null)
     {
+        $role_id = auth()->user()->role_id;
+        $user_id = auth()->id();
         // TODO → Controlar si soy usuario normal y edito mi propio perfil.
+        return self::isAdmin($role_id) || ($user_id === edit_user_id);
+    }
+
+    /**
+     * Comprueba si el usuario puede crear usuarios.
+     *
+     * @param null $user_id
+     *
+     * @return bool
+     */
+    public static function canUserCreate($user_id = null)
+    {
+        $role_id = auth()->user()->role_id;
         return self::isAdmin($role_id);
     }
 }

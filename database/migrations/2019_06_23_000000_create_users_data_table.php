@@ -18,9 +18,9 @@ class CreateUsersDataTable extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
             $table->bigIncrements('id');
-            $table->string('phone');
-            $table->string('description', 511);
-            $table->text('bio');
+            $table->string('phone')->nullable();
+            $table->string('description', 511)->nullable();
+            $table->text('bio')->nullable();
             $table->timestamps();
         });
     }
