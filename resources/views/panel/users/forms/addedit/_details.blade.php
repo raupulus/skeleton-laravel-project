@@ -1,17 +1,17 @@
 <div class="row">
     {{-- Profesión --}}
     <div class="col-md-6">
-        <label for="profesion">Profesión</label>
+        <label for="profession">Profesión</label>
 
         <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="profesion">
+                <span class="input-group-text" id="profession">
                     <i class="fa fa-graduation-cap"></i>
                 </span>
             </div>
 
             <input type="text" class="form-control"
-                   aria-describedby="profesion"
+                   aria-describedby="profession"
                    name="profesion"
                    placeholder="Profesión" />
         </div>

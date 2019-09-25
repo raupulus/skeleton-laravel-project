@@ -38,7 +38,7 @@ class UserSocial extends DefaultModel
             $url = $arraySocial_url[$idx];
 
             ## Compruebo y obligo a que tenga $nick y $url
-            if ($nick && $url) {
+            if ($social_network_id && $nick && $url) {
                 $newSocial = self::create([
                     'user_id' => $user_id,
                     'social_network_id' => $social_network_id,

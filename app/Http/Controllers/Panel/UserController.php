@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserAddRequest;
 use App\SocialNetwork;
 use App\User;
+use App\UserData;
+use App\UserDetail;
 use App\UserSocial;
 use Illuminate\Http\Request;
 use RoleHelper;
@@ -59,18 +61,13 @@ class UserController extends Controller
         $user = User::find($id);
 
         if ($user) {
-            $userData = UserData::where('user_id', $user->id)->first();
-            $userDetail = UserDetail::where('user_id', $user->id)->first();
+            $userDataModel = UserData::where('id', $user->data_id)->first();
+            $userDetailModel = UserDetail::where('id', $user->detail_id)->first();
         } else {
             $user = new User();
-
-            // TODO → Extrayendo a UserData Model función para crear:
-            $userData = new UserData();
-
-            $userDetail = new UserDetail;
+            $userDataModel = new UserData();
+            $userDetailModel = new UserDetail;
         }
-
-
 
         /**
          * Creo redes sociales.
@@ -84,7 +81,13 @@ class UserController extends Controller
             $id // Todo → user_id
         );
 
-        dd($socialNetworks);
+        ## Almaceno los datos de usuario
+        $userData = UserData::addEdit($userDataModel, $request);
+
+        ## Almaceno detalles del usuario
+        $userDetail = UserDetail::addEdit($userDetailModel, $request);
+
+        dd($userDetail);
 
         // Busco todas las tablas relacionadas con el usuario.
         // TODO → Crear trait para añadirlo al modelo de usuario
