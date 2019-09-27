@@ -31,12 +31,11 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that are mass assignable.
-     *
+     * Atributos protegidos de asignación masiva.
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password', 'nick',
+    protected $guarded = [
+        'id',
     ];
 
     /**

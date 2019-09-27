@@ -34,7 +34,8 @@ class UserAddRequest extends FormRequest
     {
         return [
             'name' => 'min:4|max:220',
-            'email' => 'required|email',
+            'nick' => 'required|unique:users,nick|min:4|max:220',
+            'email' => 'required|email|unique:users,email',
             'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
             'password_confirmation' => 'min:6',
         ];
@@ -54,6 +55,7 @@ class UserAddRequest extends FormRequest
             'numeric' => 'El campo :attribute tiene que ser numérico',
             'min' => 'El campo :attribute no cumple con la longitud mínima',
             'max' => 'El campo :attribute supera la longitud máxima',
+            'unique' => 'Ya existe el :attribute registrado',
         ];
     }
 }

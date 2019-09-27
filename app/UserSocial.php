@@ -46,7 +46,7 @@ class UserSocial extends DefaultModel
                     'url' => $url,
                 ]);
 
-                $newSocial->save();
+                $newSocial->store();
 
                 $socialNetworks[] = $newSocial;
             }

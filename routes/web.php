@@ -89,8 +89,8 @@ Route::group([
         Route::get('/index', 'Panel\UserController@index')->name('panel.users.index');
 
         ## Añadir o edita un nuevo usuario.
-        Route::get('/add', 'Panel\UserController@add')->name('panel.users.add');
-        Route::post('/add', 'Panel\UserController@edit')->name('panel.users.edit');
+        Route::get('/add/{user_id?}', 'Panel\UserController@add')->name('panel.users.add');
+        Route::post('/add/{user_id?}', 'Panel\UserController@edit')->name('panel.users.edit');
     });
 
     ## Errores
@@ -117,8 +117,6 @@ Route::group([
         })->name('panel.demo.tables');
     });
 });
-
-
 
 Auth::routes();
 

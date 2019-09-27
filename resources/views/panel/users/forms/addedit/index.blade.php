@@ -4,8 +4,16 @@
     @endforeach
 @endif
 
+@php
+if (isset($user_id) && $user_id) {
+    $routeAction = route('panel.users.edit', ['user_id' => $user_id]);
+} else {
+    $routeAction = route('panel.users.edit');
+}
+@endphp
+
 <form id="form-add-user"
-      action="{{route('panel.users.edit')}}"
+      action="{{$routeAction}}"
       method="post">
     @csrf
 

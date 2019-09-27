@@ -10,11 +10,15 @@ use App\UserData;
 use App\UserDetail;
 use App\UserSocial;
 use Illuminate\Http\Request;
+use LogHelper;
 use RoleHelper;
 use function auth;
 use function compact;
+use function dd;
 use function is_null;
+use function isEmpty;
 use function redirect;
+use function route;
 use function view;
 
 class UserController extends Controller
@@ -22,23 +26,27 @@ class UserController extends Controller
     /**
      * Añade un nuevo usuario, solo si tiene permisos para ello.
      */
-    public function add($id = null)
+    public function add($user_id = null)
     {
         $socialNetworks = SocialNetwork::all();
         return view('panel.users.edit')->with([
             'socialNetworks' => $socialNetworks,
+            'user_id' => $user_id,
         ]);
     }
 
     /**
      * Modifica o crea un nuevo usuario.
      *
-     * @param null $id
+     * @param null                              $id
+     * @param \App\Http\Requests\UserAddRequest $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function edit($id = null, UserAddRequest $request)
+    public function edit(UserAddRequest $request, $user_id = null)
     {
-        if ($id) {
-            $permission = RoleHelper::canUserEdit($id);
+        if ($user_id) {
+            $permission = RoleHelper::canUserEdit($user_id);
         } else {
             $permission = RoleHelper::canUserCreate();
         }
@@ -49,48 +57,62 @@ class UserController extends Controller
             ]);
         }
 
-        $id = $id ?? auth()->id();
+        $action = 'create'; ## Identifica si se crea o edita (create|edit)
 
-        ## Creador del usuario.
-        // TODO → Añadir al log
-        //$created_by = auth()->id();
+        ## Registro de Log.
+        LogHelper::register('info', 'Creado usuario');
 
         /**
          * Busco usuario, lo crea en caso de no existir.
          */
-        $user = User::find($id);
+        $user = User::find($user_id);
 
         if ($user) {
+            $action = 'edit';
             $userDataModel = UserData::where('id', $user->data_id)->first();
             $userDetailModel = UserDetail::where('id', $user->detail_id)->first();
         } else {
-            $user = new User();
+            $user = new User(['role_id' => 3]);
             $userDataModel = new UserData();
-            $userDetailModel = new UserDetail;
+            $userDetailModel = new UserDetail();
         }
 
-        /**
-         * Creo redes sociales.
-         */
+        ## Almaceno los datos de usuario.
+        $userData = UserData::addEdit($userDataModel, $request);
+
+        ## Almaceno detalles del usuario.
+        $userDetail = UserDetail::addEdit($userDetailModel, $request);
+
+        ## Guardo y almaceno el usuario.
+        $user->fill([
+            'data_id' => $userData->id,
+            'detail_id' => $userDetail->id,
+            'name' => $request->get('name'),
+            'nick' => $request->get('nick'),
+            'email' => $request->get('email'),
+        ]);
+
+        ## Compruebo la contraseña antes de asignarla al usuario.
+        $password = $request->get('password');
+        if (isset($password) && !empty($password) && (mb_strlen($password) >= 6)) {
+            $user->password = $password;
+        }
+
+        $user->save();
+
+        ## Almaceno redes sociales.
         $social_id = $request->get('social_id') ?? null;
         $social_nick = $request->get('social_nick') ?? null;
         $social_url = $request->get('social_url') ?? null;
 
         $socialNetworks = UserSocial::saveAllForUser(
-            compact('social_id', 'social_nick', 'social_url'),
-            $id // Todo → user_id
+            compact('social_id', 'social_nick', 'social_url', 'user_id'),
+            $user->id
         );
 
-        ## Almaceno los datos de usuario
-        $userData = UserData::addEdit($userDataModel, $request);
-
-        ## Almaceno detalles del usuario
-        $userDetail = UserDetail::addEdit($userDetailModel, $request);
-
-        dd($userDetail);
-
-        // Busco todas las tablas relacionadas con el usuario.
         // TODO → Crear trait para añadirlo al modelo de usuario
+        return redirect()->route('panel.users.view', ['id' => $user->id])->with([
+        ]);
     }
 
     /**
@@ -106,7 +128,6 @@ class UserController extends Controller
         } else {
             $user = User::find($user_id);
         }
-
 
         if (! $user) {
             return redirect()->back()->with([

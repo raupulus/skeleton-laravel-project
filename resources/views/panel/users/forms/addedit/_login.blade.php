@@ -1,6 +1,6 @@
 <div class="row">
     {{-- Correo --}}
-    <div class="col-md-12">
+    <div class="col-md-6">
         <label for="email">Correo</label>
 
         <div class="input-group">
@@ -14,6 +14,26 @@
                    placeholder="Correo"
                    aria-describedby="email"
                    name="email"
+                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 5}$"
+                   required />
+        </div>
+    </div>
+
+    {{-- Nick --}}
+    <div class="col-md-6">
+        <label for="nick">Nick</label>
+
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="nick">
+                    <i class="fa fa-code"></i>
+                </span>
+            </div>
+
+            <input type="nick" class="form-control"
+                   placeholder="Nick"
+                   aria-describedby="nick"
+                   name="nick"
                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 5}$"
                    required />
         </div>
