@@ -30,6 +30,7 @@ class UserAddRequest extends FormRequest
      *
      * @return array
      */
+
     public function rules()
     {
         return [
@@ -46,6 +47,7 @@ class UserAddRequest extends FormRequest
      *
      * @return array
      */
+    /*
     public function messages()
     {
         return [
@@ -58,4 +60,5 @@ class UserAddRequest extends FormRequest
             'unique' => 'Ya existe el :attribute registrado',
         ];
     }
+    */
 }
