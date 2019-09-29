@@ -10,10 +10,12 @@ use App\UserData;
 use App\UserDetail;
 use App\UserSocial;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use LogHelper;
 use RoleHelper;
 use function auth;
 use function compact;
+use function config;
 use function dd;
 use function is_null;
 use function isEmpty;
@@ -53,7 +55,7 @@ class UserController extends Controller
 
         if (! $permission) {
             return redirect()->back()->with([
-               'error' => 'No tiene permisos para editar este usuario',
+               'error' => 'No tiene permisos para editar o crear el usuario',
             ]);
         }
 
@@ -95,7 +97,7 @@ class UserController extends Controller
         ## Compruebo la contraseña antes de asignarla al usuario.
         $password = $request->get('password');
         if (isset($password) && !empty($password) && (mb_strlen($password) >= 6)) {
-            $user->password = $password;
+            $user->password = Hash::make($password, ['rounds' => config('constant.bcrypt_cost')]);
         }
 
         $user->save();
