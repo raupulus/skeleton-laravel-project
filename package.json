@@ -16,10 +16,10 @@
         "less-loader": "^5.0.0"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.10.2",
+        "@fortawesome/fontawesome-free": "^5.11.2",
         "axios": "^0.19",
         "bootstrap": "^4.3.1",
-        "bootstrap-select": "^1.13.10",
+        "bootstrap-select": "^1.13.11",
         "chart.js": "^2.8.0",
         "cross-env": "^5.2.1",
         "datatables.net": "^1.10.19",
@@ -51,7 +51,7 @@
         "jszip": "^3.2.2",
         "laravel-mix": "^4.1.4",
         "lodash": "^4.17.5",
-        "pdfmake": "^0.1.59",
+        "pdfmake": "^0.1.60",
         "popper.js": "^1.15.0",
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.22.12",
