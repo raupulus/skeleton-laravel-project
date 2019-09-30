@@ -15,7 +15,7 @@ class UserData extends DefaultModel
     {
         $phone = $request->get('phone') ?? null;
         $description = $request->get('description') ?? null;
-        $bio = $request->get('biography');
+        $bio = $request->get('bio');
 
         $userData = $userDataModel->fill([
             'phone' => $phone,

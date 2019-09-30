@@ -13,6 +13,7 @@
             <input type="text" class="form-control"
                    aria-describedby="name"
                    name="name"
+                   value="{{UserHelper::oldForm('name', $user)}}"
                    placeholder="Tu nombre" />
         </div>
     </div>
@@ -31,6 +32,7 @@
             <input type="text" class="form-control"
                    aria-describedby="phone"
                    name="phone"
+                   value="{{UserHelper::oldForm('phone', $user_data)}}"
                    placeholder="Teléfono" />
         </div>
     </div>
@@ -44,7 +46,8 @@
             <textarea class="form-control"
                       name="description"
                       rows="4"
-                      placeholder="Descríbete aquí"></textarea>
+                      placeholder="Descríbete aquí"
+            >{{UserHelper::oldForm('description', $user_data)}}</textarea>
         </div>
     </div>
 </div>
@@ -55,9 +58,10 @@
         <div class="form-group">
             <label for="biography">Biografía</label>
             <textarea class="form-control"
-                      name="biography"
+                      name="bio"
                       rows="6"
-                      placeholder="Cuenta aquí tu trayectoría"></textarea>
+                      placeholder="Cuenta aquí tu trayectoría"
+            >{{UserHelper::oldForm('bio', $user_data)}}</textarea>
         </div>
     </div>
 </div>

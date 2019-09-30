@@ -37,8 +37,8 @@ class UserAddRequest extends FormRequest
             'name' => 'min:4|max:220',
             'nick' => 'required|unique:users,nick|min:4|max:220',
             'email' => 'required|email|unique:users,email',
-            'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
-            'password_confirmation' => 'min:6',
+            'password' => 'nullable|min:6|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation' => 'nullable|min:6',
         ];
     }
 

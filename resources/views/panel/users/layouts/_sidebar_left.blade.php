@@ -24,7 +24,7 @@
                 Enviar Mensaje
             </button>
 
-            <a href="{{route('panel.users.add')}}"
+            <a href="{{route('panel.users.add', ['user_id' => $user->id])}}"
                class="btn btn-primary btn-block">
                 <i class="fas fa-user-edit"></i>
                 Editar Perfil

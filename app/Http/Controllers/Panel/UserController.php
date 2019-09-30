@@ -31,9 +31,16 @@ class UserController extends Controller
     public function add($user_id = null)
     {
         $socialNetworks = SocialNetwork::all();
+
+        $user = User::find($user_id);
+        $user_data = $user ? $user->data : null;
+        $user_detail = $user ? $user->details :null;
         return view('panel.users.edit')->with([
             'socialNetworks' => $socialNetworks,
             'user_id' => $user_id,
+            'user' => $user,
+            'user_data' => $user_data,
+            'user_detail' => $user_detail,
         ]);
     }
 
@@ -144,6 +151,11 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Muestra la vista principal de usuarios con el listado de todos.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         return view('panel.users.index');

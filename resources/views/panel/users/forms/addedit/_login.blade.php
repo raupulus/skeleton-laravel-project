@@ -14,6 +14,7 @@
                    placeholder="Correo"
                    aria-describedby="email"
                    name="email"
+                   value="{{UserHelper::oldForm('email', $user)}}"
                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 5}$"
                    required />
         </div>
@@ -34,6 +35,7 @@
                    placeholder="Nick"
                    aria-describedby="nick"
                    name="nick"
+                   value="{{UserHelper::oldForm('nick', $user)}}"
                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 5}$"
                    required />
         </div>
@@ -55,7 +57,8 @@
             <input type="password" class="form-control"
                    aria-describedby="password"
                    name="password"
-                   required />
+                   value=""
+                   autocomplete="off"/>
         </div>
     </div>
 
@@ -73,7 +76,8 @@
             <input type="password" class="form-control"
                    aria-describedby="password_confirmation"
                    name="password_confirmation"
-                   required />
+                   value=""
+                   autocomplete="off"/>
         </div>
     </div>
 </div>

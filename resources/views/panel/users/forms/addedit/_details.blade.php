@@ -13,6 +13,7 @@
             <input type="text" class="form-control"
                    aria-describedby="profession"
                    name="profesion"
+                   value="{{UserHelper::oldForm('profession', $user_detail)}}"
                    placeholder="Profesión" />
         </div>
     </div>
@@ -31,6 +32,7 @@
             <input type="text" class="form-control"
                    aria-describedby="web"
                    name="web"
+                   value="{{UserHelper::oldForm('web', $user_detail)}}"
                    placeholder="{{config('app.url')}}" />
         </div>
     </div>
