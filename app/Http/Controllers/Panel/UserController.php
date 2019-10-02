@@ -35,12 +35,14 @@ class UserController extends Controller
         $user = User::find($user_id);
         $user_data = $user ? $user->data : null;
         $user_detail = $user ? $user->details :null;
+        $user_social = $user ? $user->social :null;
         return view('panel.users.edit')->with([
             'socialNetworks' => $socialNetworks,
             'user_id' => $user_id,
             'user' => $user,
             'user_data' => $user_data,
             'user_detail' => $user_detail,
+            'user_social' => $user_social,
         ]);
     }
 
