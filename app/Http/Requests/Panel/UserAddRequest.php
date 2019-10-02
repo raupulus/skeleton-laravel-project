@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use function auth;
 
 /**
  * Class UserAddRequest
@@ -30,13 +32,20 @@ class UserAddRequest extends FormRequest
      *
      * @return array
      */
-
     public function rules()
     {
         return [
             'name' => 'min:4|max:220',
-            'nick' => 'required|unique:users,nick|min:4|max:220',
-            'email' => 'required|email|unique:users,email',
+            'nick' => [
+                'required',
+                'min:4',
+                'max:220',
+                Rule::unique('users')->ignore($this->user_id), ## Para update
+            ],
+            'email' => [
+                'required',
+                Rule::unique('users')->ignore($this->user_id), ## Para update
+            ],
             'password' => 'nullable|min:6|required_with:password_confirmation|same:password_confirmation',
             'password_confirmation' => 'nullable|min:6',
         ];
