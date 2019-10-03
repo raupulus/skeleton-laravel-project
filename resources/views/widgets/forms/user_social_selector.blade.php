@@ -2,9 +2,9 @@
     {{-- Red Social --}}
     <div class="col-md-4">
         <div class="form-group">
-            <button class="user_social_box_delete btn btn-sm btn-danger">
+            <span class="user_social_box_delete btn btn-sm btn-danger btn-hover">
                 <i class="fa fa-trash-alt"></i>
-            </button>
+            </span>
 
             <label for="social_id">Red Social</label>
 
@@ -32,10 +32,15 @@
                 <span class="input-group-text" id="social_nick">@</span>
             </div>
 
+            {{-- TODO → incluyendo datos anteriores de request--}}
+            @dd(request())
+
             <input type="text" class="form-control"
                    placeholder="Username"
                    aria-describedby="social_nick"
-                   name="social_nick[]" />
+                   name="social_nick[]"
+                   value="{{UserHelper::oldForm('social_nick[0]', $social_nick)
+                   }}"/>
         </div>
     </div>
 

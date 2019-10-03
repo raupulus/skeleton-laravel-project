@@ -13,8 +13,7 @@ use function view;
  *
  * @package App\Widgets
  */
-class UserSocialSelectorWidget extends AbstractWidget
-{
+class UserSocialSelectorWidget extends AbstractWidget{
     /**
      * The configuration array.
      *
@@ -23,6 +22,7 @@ class UserSocialSelectorWidget extends AbstractWidget
     protected $config = [
         'titleUrl' => 'Ver detalles',
         'color' => 'bg-primary',
+        'social_nick' => '',
     ];
 
     /**
@@ -31,13 +31,10 @@ class UserSocialSelectorWidget extends AbstractWidget
      */
     public function run()
     {
-        return view('widgets.card_see_details', [
+        return view('widgets.forms.user_social_selector', [
             'config' => $this->config,
-            'title' => $this->config['title'],
-            'icon' => $this->config['icon'],
-            'titleUrl' => $this->config['titleUrl'],
-            'url' => $this->config['url'],
-            'color' => $this->config['color']
+            'socialNetworks' => $this->config['socialNetworks'],
+            'social_nick' => $this->config['social_nick'],
         ]);
     }
 }

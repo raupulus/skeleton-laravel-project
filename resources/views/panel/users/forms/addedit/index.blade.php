@@ -113,13 +113,13 @@ if (isset($user_id) && $user_id) {
     {{-- Botones de Acción bajo el formulario --}}
     <div class="row text-center">
         <div class="col-12">
-            <button id="user-add-step-left" class="btn btn-info ml-4 mr-4">
+            <span id="user-add-step-left" class="btn btn-info ml-4 mr-4 btn-hover">
                 <i class="fa fa-arrow-left"></i>
-            </button>
+            </span>
 
-            <button id="user-add-step-right" class="btn btn-info ml-4 mr-4">
+            <span id="user-add-step-right" class="btn btn-info ml-4 mr-4 btn-hover">
                 <i class="fa fa-arrow-right"></i>
-            </button>
+            </span>
         </div>
     </div>
 </form>
