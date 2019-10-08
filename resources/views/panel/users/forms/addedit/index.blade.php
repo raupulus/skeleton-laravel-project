@@ -100,7 +100,7 @@ if (isset($user_id) && $user_id) {
     </div>
 
     {{-- Barra de progreso --}}
-    <div class="row mt-4 mb-4">
+    <div id="box-progress-bar" class="row mt-4 mb-4">
         <div class="col-12">
             <div class="progress">
                 <div class="progress-bar progress-bar-striped progress-bar-animated"

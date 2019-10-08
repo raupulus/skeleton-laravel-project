@@ -60,6 +60,35 @@ function backStep() {
     changeStep('prev');
 }
 
+/**
+ * Recalcula y dibuja la barra de progreso para la situación actual.
+ */
+function progressBar() {
+    var progressbar = $('#box-progress-bar .progress-bar');
+    var tabs = $('#user-form-create-tabs .nav-item .nav-link');
+    var n_tabs = tabs.length;  // Total de pasos.
+    var pos_tabs = 0;  // Paso seleccionado actualmente.
+    var width = 0; // Ancho de la barra.
+
+    // Busco elemento activo y anoto su posición.
+    $.each(tabs, (idx, ele) => {
+        if ($(ele).hasClass('active')) {
+            pos_tabs = idx + 1;
+        }
+    });
+
+    // Calculo el porcentaje que ocupa la posición actual respecto al total.
+    width = (100 / n_tabs) * pos_tabs;
+
+    log(pos_tabs);
+    log(width);
+
+    progressbar.css('width', width + '%');
+}
+
+
+progressBar();
+
 $('document').ready(() => {
     $('#red_social_add').click(red_social_add);
     $('.user_social_box_delete').click(red_social_delete);
@@ -67,4 +96,7 @@ $('document').ready(() => {
     // Moverse por el formulario.
     $('#user-add-step-left').click(backStep);
     $('#user-add-step-right').click(nextStep);
+
+    // Recalcular barra de navegación
+    //$('#user-form-create-tabs').change(progressBar);
 });
