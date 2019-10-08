@@ -15,7 +15,8 @@
                     <option data-icon="{{ $social->icon }}"
                             data-subtext="{{ $social->type }}"
                             style="color: {{ $social->color }}"
-                            value="{{ $social->id }}">
+                            value="{{ $social->id }}"
+                            {{FormHelper::selected($social_id, $social->id)}}>
                         {{ $social->name }}
                     </option>
                 @endforeach
@@ -32,15 +33,11 @@
                 <span class="input-group-text" id="social_nick">@</span>
             </div>
 
-            {{-- TODO → incluyendo datos anteriores de request--}}
-            @dd(request())
-
             <input type="text" class="form-control"
                    placeholder="Username"
                    aria-describedby="social_nick"
                    name="social_nick[]"
-                   value="{{UserHelper::oldForm('social_nick[0]', $social_nick)
-                   }}"/>
+                   value="{{$social_nick}}"/>
         </div>
     </div>
 
@@ -58,7 +55,8 @@
             <input type="text" class="form-control"
                    placeholder="https://redsocial.es/nick"
                    aria-describedby="social_url"
-                   name="social_url[]" />
+                   name="social_url[]"
+                   value="{{$social_url}}"/>
         </div>
     </div>
 </div>

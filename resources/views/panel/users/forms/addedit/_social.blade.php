@@ -10,6 +10,8 @@
             @widget('UserSocialSelectorWidget', [
                 'socialNetworks' => $socialNetworks,
                 'social_nick' => $social->personal->nick,
+                'social_id' => $social->personal->social_network_id,
+                'social_url' => $social->personal->url,
             ])
         @endforeach
     @endif

@@ -23,6 +23,8 @@ class UserSocialSelectorWidget extends AbstractWidget{
         'titleUrl' => 'Ver detalles',
         'color' => 'bg-primary',
         'social_nick' => '',
+        'social_id' => '',
+        'social_url' => '',
     ];
 
     /**
@@ -35,6 +37,8 @@ class UserSocialSelectorWidget extends AbstractWidget{
             'config' => $this->config,
             'socialNetworks' => $this->config['socialNetworks'],
             'social_nick' => $this->config['social_nick'],
+            'social_id' => $this->config['social_id'],
+            'social_url' => $this->config['social_url'],
         ]);
     }
 }
