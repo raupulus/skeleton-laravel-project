@@ -26,6 +26,12 @@ E-mail: dev@fryntiz.es
              <div id="content-wrapper">
 
                  <div class="container-fluid">
+                     {{-- Caja para las alertas, errores y notificaciones --}}
+                     <div id="box-alerts">
+                        @include('panel.alerts.all_messages')
+                     </div>
+
+                     {{-- Caja con el contenido principal de la aplicación --}}
                      <div id="box-content">
                          @yield('content')
                      </div>

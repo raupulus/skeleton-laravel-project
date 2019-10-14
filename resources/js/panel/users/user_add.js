@@ -51,6 +51,7 @@ function changeStep(direction) {
  */
 function nextStep() {
     changeStep('next');
+    progressBar();
 }
 
 /**
@@ -58,36 +59,35 @@ function nextStep() {
  */
 function backStep() {
     changeStep('prev');
+    progressBar();
 }
 
 /**
  * Recalcula y dibuja la barra de progreso para la situación actual.
+ * Se lleva a cabo por la clase de navegación tomando como referencia la activa.
  */
 function progressBar() {
-    var progressbar = $('#box-progress-bar .progress-bar');
-    var tabs = $('#user-form-create-tabs .nav-item .nav-link');
-    var n_tabs = tabs.length;  // Total de pasos.
-    var pos_tabs = 0;  // Paso seleccionado actualmente.
-    var width = 0; // Ancho de la barra.
+    // TODO → Este timeout queda bien pero es por la prioridad de eventos
+    setTimeout(() => {
+        var progressbar = $('#box-progress-bar .progress-bar');
+        var tabs = $('#user-form-create-tabs .nav-item .nav-link');
+        var n_tabs = tabs.length;  // Total de pasos.
+        var pos_tabs = 0;  // Paso seleccionado actualmente.
+        var width = 0; // Ancho de la barra.
 
-    // Busco elemento activo y anoto su posición.
-    $.each(tabs, (idx, ele) => {
-        if ($(ele).hasClass('active')) {
-            pos_tabs = idx + 1;
-        }
-    });
+        // Busco elemento activo y anoto su posición.
+        $.each(tabs, (idx, ele) => {
+            if ($(ele).hasClass('active')) {
+                pos_tabs = idx + 1;
+            }
+        });
 
-    // Calculo el porcentaje que ocupa la posición actual respecto al total.
-    width = (100 / n_tabs) * pos_tabs;
+        // Calculo el porcentaje que ocupa la posición actual respecto al total.
+        width = (100 / n_tabs) * pos_tabs;
 
-    log(pos_tabs);
-    log(width);
-
-    progressbar.css('width', width + '%');
+        progressbar.css('width', width + '%');
+    }, 500);
 }
-
-
-progressBar();
 
 $('document').ready(() => {
     $('#red_social_add').click(red_social_add);
@@ -97,6 +97,22 @@ $('document').ready(() => {
     $('#user-add-step-left').click(backStep);
     $('#user-add-step-right').click(nextStep);
 
-    // Recalcular barra de navegación
-    //$('#user-form-create-tabs').change(progressBar);
+    /**
+     * Recalcular barra de navegación
+     * TODO → Problema en orden de ejecución eventos, progressbar tiene que
+     * ser el último para darle tiempo al de bootstrap que cambie clases.
+     *
+     * El evento shown.bs.tab de bootstrap no llega a dispararse
+     */
+    progressBar();
+    $('#user-form-create-tabs').find('.nav-link').click(progressBar);
+    /*
+    $('#user-form-create-tabs a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
+        //var active = e.target; // newly activated tab
+        //var activePrevius = e.relatedTarget; // previous active tab
+
+        //console.log('entra');
+        progressBar();
+    });
+    */
 });

@@ -1,9 +1,3 @@
-@if($errors->any())
-    @foreach ($errors->all() as $error)
-        <div>{{ $error }}</div>
-    @endforeach
-@endif
-
 @php
 if (isset($user_id) && $user_id) {
     $routeAction = route('panel.users.edit', ['user_id' => $user_id]);

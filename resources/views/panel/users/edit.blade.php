@@ -16,7 +16,7 @@
                 'icon' => 'fas fa-users'
             ],
             [
-                'title' => 'Crear Usuario',
+                'title' => $user_id ? 'Editando Usuario' : 'Crear Usuario',
                 'icon' => 'fas fa-plus'
             ],
         ]
