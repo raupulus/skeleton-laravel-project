@@ -9,6 +9,7 @@ use App\User;
 use App\UserData;
 use App\UserDetail;
 use App\UserSocial;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use LogHelper;
@@ -160,6 +161,27 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('panel.users.index');
+        ## Usuarios Activos
+        $users = User::allActive();
+        $n_users = $users->count();
+
+        $n_users_this_month = $users->whereBetween('created_at',
+            [
+                Carbon::now()->ceilMonth(),
+                Carbon::now()->addHour(),
+            ]
+        )->count();
+
+        ## Usuarios Inactivos (SoftDelete)
+        $usersInactive = User::allInactive();
+        $n_usersInactive = $usersInactive->count();
+
+        return view('panel.users.index')->with([
+            'users' => $users,
+            'n_users' => $n_users,
+            'n_users_this_month' => $n_users_this_month,
+            'usersInactive' => $usersInactive,
+            'n_usersInactive' => $n_usersInactive,
+        ]);
     }
 }

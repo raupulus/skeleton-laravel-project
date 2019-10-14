@@ -11,52 +11,52 @@
     @include('panel.layouts.breadcrumbs', [
         'breadcrumbs' => [
             [
-                'title' => 'Test 1',
-                'url' => route('panel.index'),
-                'icon' => 'fa fa-star'
+                'title' => 'Usuarios',
+                'url' => route('panel.users.index'),
+                'icon' => 'fas fa-users'
             ],
             [
-                'title' => 'Test 2',
-                'url' => route('panel.index'),
+                'title' => 'Mostrar todos',
+                'icon' => 'fas fa-list'
             ],
         ]
     ])
 
     {{-- Botones de Acción General --}}
-    <div class="row">
+    <div class="row mt-4 mb-4">
         <div class="col-12">
-            <button class="btn btn-success">
+            <a href="{{route('panel.users.add')}}" class="btn btn-success">
                 <i class="fa fa-user-plus"></i>
                 Añadir nuevo usuario
-            </button>
+            </a>
         </div>
     </div>
 
     {{-- Tarjetas con resumen de usuarios --}}
     <div class="row">
         @widget('cardSeeDetailsWidget', [
-            'title' => 'n Usuarios',
+            'title' => $n_users . ' Usuarios',
             'icon' => 'fas fa-fw fa-users',
             'url' => '#',
             'color' => 'bg-primary'
         ])
 
         @widget('cardSeeDetailsWidget', [
-            'title' => 'n Usuarios nuevos este mes',
+            'title' => $n_users_this_month . 'Usuarios nuevos del mes',
             'icon' => 'fas fa-fw fa-user-clock',
             'url' => '#',
             'color' => 'bg-success'
         ])
 
         @widget('cardSeeDetailsWidget', [
-            'title' => 'n Usuarios eliminados este mes',
+            'title' => $n_usersInactive . ' Usuarios Inactivos',
             'icon' => 'fas fa-fw fa-user-times',
             'url' => '#',
             'color' => 'bg-danger'
         ])
 
         @widget('cardSeeDetailsWidget', [
-            'title' => 'n Usuarios bloqueados',
+            'title' => 'nº Usuarios bloqueados',
             'icon' => 'fas fa-fw fa-user-shield',
             'url' => '#',
             'color' => 'bg-warning'
@@ -72,6 +72,17 @@
 
     {{-- Tabla de Usuarios --}}
     <div>
+        @foreach($users as $user)
+            ̣{{$user->name}} - {{$user->nick}} - {{$user->created_at}}
+            <br />
+        @endforeach
+    </div>
 
+    {{-- Tabla de Usuarios Inactivos--}}
+    <div>
+        @foreach($usersInactive as $user)
+            ̣{{$user->name}} - {{$user->nick}}
+            <br />
+        @endforeach
     </div>
 @endsection

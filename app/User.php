@@ -112,6 +112,16 @@ class User extends Authenticatable
         return $url;
     }
 
+    public static function allActive()
+    {
+        return parent::all()->where('deleted_at', null);
+    }
+
+    public static function allInactive()
+    {
+        return parent::all()->where('deleted_at', 'not null');
+    }
+
     /*
     public static function all($columns = ['*'])
     {
