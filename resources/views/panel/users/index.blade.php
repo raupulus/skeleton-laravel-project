@@ -42,7 +42,7 @@
         ])
 
         @widget('cardSeeDetailsWidget', [
-            'title' => $n_users_this_month . 'Usuarios nuevos del mes',
+            'title' => $n_users_this_month . ' Usuarios en 1 mes',
             'icon' => 'fas fa-fw fa-user-clock',
             'url' => '#',
             'color' => 'bg-success'

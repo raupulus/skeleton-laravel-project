@@ -167,8 +167,8 @@ class UserController extends Controller
 
         $n_users_this_month = $users->whereBetween('created_at',
             [
-                Carbon::now()->ceilMonth(),
-                Carbon::now()->addHour(),
+                Carbon::now()->subMonth()->format('Y-m-d H:i:s'),
+                Carbon::now()->format('Y-m-d H:i:s'),
             ]
         )->count();
 
