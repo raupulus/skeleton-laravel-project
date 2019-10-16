@@ -7,7 +7,8 @@
 {{-- Estilos Propios --}}
 <link href="{{ mix('admin-panel/css/styles.css') }}" rel="stylesheet" />
 
-{{-- Estilos que serán reemplazados por algunas páginas --}}
-@section('head-css-custom')
-    <link href="{{ mix('assets/css/datatables.css') }}" rel="stylesheet" />
-@show
+
+{{-- Estilos para DataTable --}}
+{{--
+<link href="{{ mix('assets/css/datatables.css') }}" rel="stylesheet" />
+--}}

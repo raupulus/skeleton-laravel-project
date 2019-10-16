@@ -88,9 +88,16 @@ Route::group([
         ## Ver todos los usuarios.
         Route::get('/index', 'Panel\UserController@index')->name('panel.users.index');
 
-        ## Añadir o edita un nuevo usuario.
+        ## Añadir o editar un nuevo usuario.
         Route::get('/add/{user_id?}', 'Panel\UserController@add')->name('panel.users.add');
         Route::post('/add/{user_id?}', 'Panel\UserController@edit')->name('panel.users.edit');
+
+        /**
+         * Datatables
+         */
+        Route::get('/table-all-users', 'Panel\UserController@getTableAllUser')
+            ->name('panel.users.table.allusers');
+
     });
 
     ## Errores

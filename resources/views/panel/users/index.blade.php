@@ -76,6 +76,17 @@
             ̣{{$user->name}} - {{$user->nick}} - {{$user->created_at}}
             <br />
         @endforeach
+
+        <table class="table table-bordered" id="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+        </table>
     </div>
 
     {{-- Tabla de Usuarios Inactivos--}}
@@ -86,3 +97,30 @@
         @endforeach
     </div>
 @endsection
+
+@section('css')
+    <link href="{{ mix('assets/css/datatables.css') }}" rel="stylesheet" />
+@endsection
+
+@section('js')
+    <script src="{{ mix('assets/js/datatables.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('panel.users.table.allusers') }}',
+                columns: [
+                    { data: 'id', name: 'id' },
+                    { data: 'name', name: 'name' },
+                    { data: 'email', name: 'email' },
+                    { data: 'action', name: 'action' }
+                ]
+            });
+
+        });
+    </script>
+@endsection
+
+

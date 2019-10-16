@@ -1,7 +1,6 @@
 {
     "/assets/js/bootstrap.js": "/assets/js/bootstrap.js",
     "/assets/js/chart.js": "/assets/js/chart.js",
-    "/assets/js/datatables.js": "/assets/js/datatables.js",
     "/assets/js/fontawesome.js": "/assets/js/fontawesome.js",
     "/assets/js/popper.js": "/assets/js/popper.js",
     "/js/vue.js": "/js/vue.js",
@@ -28,6 +27,7 @@
     "/assets/js/jquery.js": "/assets/js/jquery.js",
     "/assets/js/jquery.easing.js": "/assets/js/jquery.easing.js",
     "/assets/js/bootstrap-select.js": "/assets/js/bootstrap-select.js",
+    "/assets/js/datatables.js": "/assets/js/datatables.js",
     "/admin-panel/js/demos/chart-area-demo.js": "/admin-panel/js/demos/chart-area-demo.js",
     "/admin-panel/js/demos/chart-bar-demo.js": "/admin-panel/js/demos/chart-bar-demo.js",
     "/admin-panel/js/demos/chart-pie-demo.js": "/admin-panel/js/demos/chart-pie-demo.js",

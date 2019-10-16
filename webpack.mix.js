@@ -40,7 +40,16 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
   .js('resources/js/assets/popper.js', 'public/assets/js')
   //.scripts('node_modules/popper.js/dist/esm/popper.js', 'public/assets/js/popper.js')
 
-  .js('resources/js/assets/datatables.js', 'public/assets/js')
+  //.js('resources/js/assets/datatables.js', 'public/assets/js')
+  .scripts([
+      'node_modules/datatables.net/js/jquery.dataTables.js',
+      'node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js',
+      //'node_modules/datatables.net-autofill-bs4/js/autoFill.bootstrap4.js',
+      //'node_modules/datatables.net-buttons-bs4/js/buttons.bootstrap4.js',
+  ], 'public/assets/js/datatables.js')
+
+
+
   .js('resources/js/assets/chart.js', 'public/assets/js')
   .js('resources/js/assets/fontawesome.js', 'public/assets/js')
 
@@ -59,10 +68,17 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
   .sass('node_modules/weather-icons2/sass/weather-icons.scss', 'public/assets/css')
   .sass('node_modules/bootstrap-select/sass/bootstrap-select.scss', 'public/assets/css')
 
+    /*
+    .extract([
+        'jquery', 'bootstrap-sass', 'datatables.net', 'datatables.net-bs'
+    ])
+
+     */
+
   .autoload({
-    jquery: ['$', 'window.jQuery',"jQuery","window.$","jquery","window.jquery"],
+    jquery: ['$', 'window.jQuery', 'jQuery', 'window.$', 'jquery', 'window.jquery'],
     Popper: ['popper', 'Popper', 'popper.js'],
-    DataTable : ['datatables.net-bs4', 'Datatable']
+    //DataTable : ['datatables.net-bs4', 'Datatable']
   });
 
 mix.browserSync({

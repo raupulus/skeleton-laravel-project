@@ -9,11 +9,14 @@ use App\User;
 use App\UserData;
 use App\UserDetail;
 use App\UserSocial;
+use Buttom;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use LogHelper;
 use RoleHelper;
+use Yajra\DataTables\DataTables;
 use function auth;
 use function compact;
 use function config;
@@ -21,6 +24,7 @@ use function dd;
 use function is_null;
 use function isEmpty;
 use function redirect;
+use function response;
 use function route;
 use function view;
 
@@ -183,5 +187,39 @@ class UserController extends Controller
             'usersInactive' => $usersInactive,
             'n_usersInactive' => $n_usersInactive,
         ]);
+    }
+
+    /****************** DATATABLES ******************/
+
+    public function getTableAllUser()
+    {
+        $users = User::all();
+
+        try {
+            $table = DataTables::of($users)
+                ->addColumn('action', function ($user) {
+                    return
+                        Buttom::view(
+                            route('panel.users.view', ['$id' => $user->id]),
+                            $user->nick
+                        ) .
+
+                        //TODO  → Este botón tiene un form, adaptar o sacar dos
+                        // Para simplemente llevar al apartado editar.
+                        Buttom::edit(
+                            route('panel.users.add', ['user_id' => $user->id]),
+                            $user->nick
+                        );
+                })
+                ->editColumn('created_at', function ($user) {
+                    return $user->created_at->format('d/m/Y H:m:i');
+                })
+                ->make(true);
+        }
+        catch (Exception $e) {
+            return response()->json('FALLO Datatable');
+        }
+
+        return $table;
     }
 }
