@@ -72,7 +72,8 @@
 
     {{-- Tabla de Usuarios --}}
     <div>
-        <table  class="table table-bordered" id="table">
+        <table id="panel-users-table"
+               class="table table-striped table-bordered nowrap">
             <thead>
             <tr>
                 <th>Id</th>
@@ -96,6 +97,12 @@
 
 @section('css')
     <link href="{{ mix('assets/css/datatables.css') }}" rel="stylesheet" />
+
+    <style>
+        #panel-users-table {
+            width: 100%;
+        }
+    </style>
 @endsection
 
 @section('js')
@@ -103,9 +110,10 @@
 
     <script>
         $(document).ready(function() {
-            $('#table').DataTable({
+            var panelUserTable = $('#panel-users-table').DataTable({
                 processing: true,
                 serverSide: true,
+                responsive: true,
                 ajax: '{{ route('panel.users.table.allusers') }}',
                 columns: [
                     { data: 'id', name: 'id' },
@@ -115,6 +123,7 @@
                     { data: 'action', name: 'action' }
                 ]
             });
+            //new $.fn.dataTable.FixedHeader(panelUserTable);
 
         });
     </script>
