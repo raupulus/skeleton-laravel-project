@@ -54,49 +54,6 @@ class Buttom
     }
 
     /**
-     * Devuelve un botón para editar.
-     *
-     * @param       $action URL del controlador que llamará.
-     * @param       $id El id del elemento a editar.
-     * @param array $options Opciones posibles:
-     *              class => clases css,
-     *              text => Nombre del botón
-     *              valueId => Prefijo del id para el formulario
-     *
-     * @return string
-     */
-    public static function edit($action, $id,  $options = [])
-    {
-        if (! array_key_exists('class', $options)) {
-            $options['class'] = 'btn btn-sm btn-primary pull-right edit';
-        }
-
-        if (! array_key_exists('text', $options)) {
-            $options['text'] = 'Editar';
-        }
-
-        if (! array_key_exists('valueId', $options)) {
-            $options['valueId'] = 'form-edit';
-        }
-
-        return '<form action="' . $action . '" ' .
-            'method="POST" ' .
-            'id="' . $options['valueId'] . '-' . $id . '">' .
-            csrf_field() .
-
-            '<input type="hidden" name="id" value="' . $id . '">' .
-
-            '<button type="submit" ' .
-            'class="' . $options['class'] . '">' .
-            '<i class="fa fa-check"></i> ' .
-            '<span class="hidden-xs hidden-sm">' .
-            $options['text'] .
-            '</span>' .
-            '</button>' .
-            '</form>';
-    }
-
-    /**
      * Devuelve un botón para aprobar.
      *
      * @param       $action URL del controlador que llamará.
@@ -153,17 +110,11 @@ class Buttom
      */
     public static function view($action, $id,  $options = [])
     {
-        if (!array_key_exists('class', $options)) {
-            $options['class'] = 'btn btn-sm btn-success pull-right view';
-        }
-
-        if (!array_key_exists('text', $options)) {
-            $options['text'] = 'Ver';
-        }
-
-        if (!array_key_exists('valueId', $options)) {
-            $options['valueId'] = 'form-view';
-        }
+        $options = array_merge([
+            'class' => 'btn btn-sm btn-success btn-panel btn-panel-view',
+            'text' => 'Ver',
+            'valueId' => 'form-view',
+        ], $options);
 
         return '<a ' . 'id="' . $options['valueId'] . '-' . $id . '" ' .
             'class="' . $options['class'] . '" ' .
@@ -175,6 +126,27 @@ class Buttom
             '</a>';
     }
 
+    /**
+     * Devuelve un botón para editar.
+     *
+     * @param       $action URL del controlador que llamará.
+     * @param       $id El id del elemento a editar.
+     * @param array $options Opciones posibles:
+     *              class => clases css,
+     *              text => Nombre del botón
+     *              valueId => Prefijo del id para el formulario
+     *
+     * @return string
+     */
+    public static function edit($action, $id,  $options = [])
+    {
+        $options = array_merge([
+            'class' => 'btn btn-sm btn-primary btn-panel btn-panel-edit',
+            'text' => 'Editar',
+        ], $options);
+
+        return self::view($action, $id, $options);
+    }
 
     /**
      * Recibe un booleano y devuelve su estado activo/inactivo.

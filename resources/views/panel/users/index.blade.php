@@ -72,16 +72,12 @@
 
     {{-- Tabla de Usuarios --}}
     <div>
-        @foreach($users as $user)
-            ̣{{$user->name}} - {{$user->nick}} - {{$user->created_at}}
-            <br />
-        @endforeach
-
-        <table class="table table-bordered" id="table">
+        <table  class="table table-bordered" id="table">
             <thead>
             <tr>
                 <th>Id</th>
                 <th>Nombre</th>
+                <th>Nick</th>
                 <th>Email</th>
                 <th>Acciones</th>
             </tr>
@@ -114,6 +110,7 @@
                 columns: [
                     { data: 'id', name: 'id' },
                     { data: 'name', name: 'name' },
+                    { data: 'nick', name: 'nick' },
                     { data: 'email', name: 'email' },
                     { data: 'action', name: 'action' }
                 ]
