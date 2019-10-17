@@ -4,8 +4,8 @@ $(document).ready(function() {
         serverSide: true,
         responsive: true,
         select: true,
-        //TODO ↓ fix route
-        ajax: '{{ route('panel.users.table.allusers') }}',
+        // TODO → Dinamizar ruta
+        ajax: 'table-all-users',
         columns: [
             { data: 'id', name: 'id' },
             { data: 'name', name: 'name' },

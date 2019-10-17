@@ -204,14 +204,15 @@ class UserController extends Controller
                             $user->nick
                         ) .
 
-                        //TODO  → Este botón tiene un form, adaptar o sacar dos
-                        // Para simplemente llevar al apartado editar.
                         Buttom::edit(
                             route('panel.users.add', ['user_id' => $user->id]),
                             $user->nick
                         );
                 })
                 ->editColumn('created_at', function ($user) {
+                    if (is_null($user->created_at)) {
+                        return 'N/D';
+                    }
                     return $user->created_at->format('d/m/Y H:m:i');
                 })
                 ->make(true);
