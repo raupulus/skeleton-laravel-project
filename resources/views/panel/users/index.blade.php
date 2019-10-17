@@ -97,72 +97,11 @@
 
 @section('css')
     <link href="{{ mix('assets/css/datatables.css') }}" rel="stylesheet" />
-
-    <style>
-        #panel-users-table {
-            width: 100% !important;
-        }
-    </style>
 @endsection
 
 @section('js')
     <script src="{{ mix('assets/js/datatables.js') }}"></script>
-
-    <script>
-        editor = new $.fn.dataTable.Editor({
-            ajax:"../php/staff.php",
-            table:"#example",
-            fields:[{
-                label:"First name:",
-                name:"first_name"
-            }, {
-                label:"Last name:",
-                name:"last_name"
-            }, {
-                label:"Position:",
-                name:"position"
-            }, {
-                label:"Office:",
-                name:"office"
-            }, {
-                label:"Extension:",
-                name:"extn"
-            }, {
-                label:"Start date:",
-                name:"start_date",
-                type:"datetime"
-            }, {
-                label:"Salary:",
-                name:"salary"
-            }
-            ]
-        });
-
-        $(document).ready(function() {
-            var panelUserTable = $('#panel-users-table').DataTable({
-                processing: true,
-                serverSide: true,
-                responsive: true,
-                select: true,
-                ajax: '{{ route('panel.users.table.allusers') }}',
-                columns: [
-                    { data: 'id', name: 'id' },
-                    { data: 'name', name: 'name' },
-                    { data: 'nick', name: 'nick' },
-                    { data: 'email', name: 'email' },
-                    { data: 'action', name: 'action' }
-                ]
-            });
-            //new $.fn.dataTable.FixedHeader(panelUserTable);
-
-            new $.fn.dataTable.Buttons( panelUserTable, {
-                buttons: [
-                    'copy', 'excel', 'pdf'
-                ]
-            } );
-
-        });
-    </script>
+    <script src="{{ mix('admin-panel/users/js/user_index.js') }}"></script>
 @endsection
 
 

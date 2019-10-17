@@ -20,6 +20,7 @@
     "/admin-panel/login/js/scripts.js": "/admin-panel/login/js/scripts.js",
     "/admin-panel/login/js/functions.js": "/admin-panel/login/js/functions.js",
     "/admin-panel/users/js/user_add.js": "/admin-panel/users/js/user_add.js",
+    "/admin-panel/users/js/user_index.js": "/admin-panel/users/js/user_index.js",
     "/js/header.js": "/js/header.js",
     "/js/footer.js": "/js/footer.js",
     "/js/functions.js": "/js/functions.js",

@@ -18,6 +18,7 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
   .scripts('resources/js/panel/login/scripts.js', 'public/admin-panel/login/js/scripts.js')
   .scripts('resources/js/panel/login/functions.js', 'public/admin-panel/login/js/functions.js')
   .scripts('resources/js/panel/users/user_add.js', 'public/admin-panel/users/js/user_add.js')
+  .scripts('resources/js/panel/users/user_index.js', 'public/admin-panel/users/js/user_index.js')
   .scripts('resources/js/header.js', 'public/js/header.js')
   .scripts('resources/js/footer.js', 'public/js/footer.js')
   .scripts('resources/js/functions.js', 'public/js/functions.js')
@@ -50,8 +51,6 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
       'node_modules/datatables.net-buttons-bs4/js/buttons.bootstrap4.js',
       'node_modules/datatables.net-colreorder/js/dataTables.colReorder.js',
       'node_modules/datatables.net-colreorder-bs4/js/colReorder.bootstrap4.js',
-      'node_modules/datatables.net-editor/js/dataTables.editor.js',
-      'node_modules/datatables.net-editor-bs4/js/editor.bootstrap4.js',
       'node_modules/datatables.net-fixedcolumns/js/dataTables.fixedColumns.js',
       'node_modules/datatables.net-fixedcolumns-bs4/js/fixedColumns.bootstrap4.js',
       'node_modules/datatables.net-fixedheaders/js/dataTables.fixedHeaders.js',
@@ -67,8 +66,6 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
       'node_modules/datatables.net-select/js/dataTables.select.js',
       'node_modules/datatables.net-select-bs4/js/select.bootstrap4.js',
   ], 'public/assets/js/datatables.js')
-
-
 
   .js('resources/js/assets/chart.js', 'public/assets/js')
   .js('resources/js/assets/fontawesome.js', 'public/assets/js')
