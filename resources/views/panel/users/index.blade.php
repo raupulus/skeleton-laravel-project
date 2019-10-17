@@ -73,7 +73,7 @@
     {{-- Tabla de Usuarios --}}
     <div>
         <table id="panel-users-table"
-               class="table table-striped table-bordered nowrap">
+               class="table table-striped table-bordered">
             <thead>
             <tr>
                 <th>Id</th>
@@ -100,7 +100,7 @@
 
     <style>
         #panel-users-table {
-            width: 100%;
+            width: 100% !important;
         }
     </style>
 @endsection
@@ -109,11 +109,41 @@
     <script src="{{ mix('assets/js/datatables.js') }}"></script>
 
     <script>
+        editor = new $.fn.dataTable.Editor({
+            ajax:"../php/staff.php",
+            table:"#example",
+            fields:[{
+                label:"First name:",
+                name:"first_name"
+            }, {
+                label:"Last name:",
+                name:"last_name"
+            }, {
+                label:"Position:",
+                name:"position"
+            }, {
+                label:"Office:",
+                name:"office"
+            }, {
+                label:"Extension:",
+                name:"extn"
+            }, {
+                label:"Start date:",
+                name:"start_date",
+                type:"datetime"
+            }, {
+                label:"Salary:",
+                name:"salary"
+            }
+            ]
+        });
+
         $(document).ready(function() {
             var panelUserTable = $('#panel-users-table').DataTable({
                 processing: true,
                 serverSide: true,
                 responsive: true,
+                select: true,
                 ajax: '{{ route('panel.users.table.allusers') }}',
                 columns: [
                     { data: 'id', name: 'id' },
@@ -124,6 +154,12 @@
                 ]
             });
             //new $.fn.dataTable.FixedHeader(panelUserTable);
+
+            new $.fn.dataTable.Buttons( panelUserTable, {
+                buttons: [
+                    'copy', 'excel', 'pdf'
+                ]
+            } );
 
         });
     </script>
