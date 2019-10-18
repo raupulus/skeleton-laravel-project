@@ -26,7 +26,6 @@ require( 'datatables.net-select-bs4' )();
 //var dt = require( 'datatables.net-bs4' );
 
 try {
-    /*
   window.$ = window.jQuery = require('jquery');
   window.Popper = require('popper.js').default;
 
@@ -48,5 +47,4 @@ try {
   require( 'datatables.net-scroller-bs4' );
   require( 'datatables.net-keytable' );
   require( 'datatables.net-rowgroup' );
-*/
 } catch (e) {}

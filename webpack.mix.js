@@ -32,14 +32,18 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
   )
 
   .js('resources/js/vue.js', 'public/js')
-  //.js('resources/js/assets/jquery.js', 'public/assets/js')
-  //.js('resources/js/assets/jquery.easing.js', 'public/assets/js')
   .copy('node_modules/jquery/dist/jquery.min.js', 'public/assets/js/jquery.js')
   .copy('node_modules/jquery.easing/jquery.easing.min.js', 'public/assets/js/jquery.easing.js')
   .copy('node_modules/bootstrap-select/dist/js/bootstrap-select.js', 'public/assets/js/bootstrap-select.js')
+
   .js('resources/js/assets/bootstrap.js', 'public/assets/js')
   .js('resources/js/assets/popper.js', 'public/assets/js')
-  //.scripts('node_modules/popper.js/dist/esm/popper.js', 'public/assets/js/popper.js')
+  /*
+  .scripts([
+          'node_modules/popper.js/dist/esr/popper-utils.js',
+          'node_modules/popper.js/dist/esr/popper.js',
+  ], 'public/assets/js/popper.js')
+  */
 
   //.js('resources/js/assets/datatables.js', 'public/assets/js')
   .scripts([
@@ -88,17 +92,9 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
   .sass('node_modules/weather-icons2/sass/weather-icons.scss', 'public/assets/css')
   .sass('node_modules/bootstrap-select/sass/bootstrap-select.scss', 'public/assets/css')
 
-    /*
-    .extract([
-        'jquery', 'bootstrap-sass', 'datatables.net', 'datatables.net-bs'
-    ])
-
-     */
-
   .autoload({
     jquery: ['$', 'window.jQuery', 'jQuery', 'window.$', 'jquery', 'window.jquery'],
-    Popper: ['popper', 'Popper', 'popper.js'],
-    //DataTable : ['datatables.net-bs4', 'Datatable']
+    Popper: ['popper', 'Popper', 'popper.js']
   });
 
 mix.browserSync({

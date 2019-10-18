@@ -42,12 +42,12 @@
     </div>
 @endsection
 
-@section('head-css-custom')
+@section('head-css')
     <link href="{{ mix('assets/css/bootstrap-select.css') }}" rel="stylesheet" />
-@overwrite
+@endsection
 
 @section('js')
-    {{-- bootstrap-select --}}
+    {{-- Bootstrap-select --}}
     <script src="{{ mix('assets/js/bootstrap-select.js') }}"></script>
     <script src="{{ mix('admin-panel/users/js/user_add.js') }}"></script>
 @endsection

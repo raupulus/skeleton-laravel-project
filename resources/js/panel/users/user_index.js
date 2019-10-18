@@ -9,8 +9,8 @@ $(document).ready(function() {
             ajax: url,
             columns: columns,
             language: {
-                url : dataTableTranslation,
-            },
+                url : dataTableTranslation
+            }
 
             /*
              // Botones
