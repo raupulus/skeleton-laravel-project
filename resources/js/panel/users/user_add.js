@@ -106,13 +106,4 @@ $('document').ready(() => {
      */
     progressBar();
     $('#user-form-create-tabs').find('.nav-link').click(progressBar);
-    /*
-    $('#user-form-create-tabs a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
-        //var active = e.target; // newly activated tab
-        //var activePrevius = e.relatedTarget; // previous active tab
-
-        //console.log('entra');
-        progressBar();
-    });
-    */
 });

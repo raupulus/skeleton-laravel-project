@@ -34,9 +34,16 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
   .js('resources/js/vue.js', 'public/js')
   .copy('node_modules/jquery/dist/jquery.min.js', 'public/assets/js/jquery.js')
   .copy('node_modules/jquery.easing/jquery.easing.min.js', 'public/assets/js/jquery.easing.js')
-  .copy('node_modules/bootstrap-select/dist/js/bootstrap-select.js', 'public/assets/js/bootstrap-select.js')
 
-  .js('resources/js/assets/bootstrap.js', 'public/assets/js')
+  .scripts([
+      'node_modules/bootstrap-select/dist/js/bootstrap-select.js',
+      'node_modules/bootstrap-select/dist/i18n/defaults-es_ES.js',
+  ], 'public/assets/js/bootstrap-select.js')
+  .styles('node_modules/bootstrap-select/dist/css/bootstrap-select.css', 'public/assets/css/bootstrap-select.css')
+
+  //.js('resources/js/assets/bootstrap.js', 'public/assets/js')
+  .scripts('node_modules/bootstrap/dist/js/bootstrap.js', 'public/assets/js/bootstrap.js')
+
   .js('resources/js/assets/popper.js', 'public/assets/js')
   /*
   .scripts([
@@ -90,7 +97,6 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
   .sass('resources/sass/assets/fontawesome.scss', 'public/assets/css')
   .sass('resources/sass/assets/datatables.scss', 'public/assets/css')
   .sass('node_modules/weather-icons2/sass/weather-icons.scss', 'public/assets/css')
-  .sass('node_modules/bootstrap-select/sass/bootstrap-select.scss', 'public/assets/css')
 
   .autoload({
     jquery: ['$', 'window.jQuery', 'jQuery', 'window.$', 'jquery', 'window.jquery'],

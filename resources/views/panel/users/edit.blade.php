@@ -42,7 +42,7 @@
     </div>
 @endsection
 
-@section('head-css')
+@section('css')
     <link href="{{ mix('assets/css/bootstrap-select.css') }}" rel="stylesheet" />
 @endsection
 
