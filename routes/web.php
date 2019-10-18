@@ -54,6 +54,21 @@ Route::group(['prefix' => 'error'], function() {
  *            PANEL DE GESTIÓN
  ******************************************/
 Route::group([
+    'prefix' => 'datatable',
+    'middleware' => [
+
+    ]
+], function() {
+
+    Route::get('/translation', function() {
+        return response()->file(storage_path('app/public/json/datatable/datatable-translation-es.json'));
+    })->name('datatable.translation');
+});
+
+/******************************************
+ *            PANEL DE GESTIÓN
+ ******************************************/
+Route::group([
     'prefix' => 'panel',
     'middleware' => [
         'auth'

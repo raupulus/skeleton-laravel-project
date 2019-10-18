@@ -4,8 +4,7 @@ $(document).ready(function() {
         serverSide: true,
         responsive: true,
         select: true,
-        // TODO → Dinamizar ruta
-        ajax: 'table-all-users',
+        ajax: panelUsersGetAllUrl,
         columns: [
             { data: 'id', name: 'id' },
             { data: 'name', name: 'name' },
@@ -13,5 +12,9 @@ $(document).ready(function() {
             { data: 'email', name: 'email' },
             { data: 'action', name: 'action' }
         ],
+        language: {
+            search: "Search in table:"
+            //url : dataTableTranslations,
+        }
     });
 });
