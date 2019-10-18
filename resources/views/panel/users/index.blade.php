@@ -102,7 +102,7 @@
 @section('js')
     <script>
         var panelUsersGetAllUrl = "{{route('panel.users.table.allusers')}}";
-        var dataTableTranslations = "{{route('datatable.translation')}}";
+        var dataTableTranslation = "{{route('datatable.translation')}}";
     </script>
     <script src="{{ mix('assets/js/datatables.js') }}"></script>
     <script src="{{ mix('admin-panel/users/js/user_index.js') }}"></script>

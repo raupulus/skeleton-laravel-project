@@ -63,8 +63,11 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
       'node_modules/datatables.net-rowgroup-bs4/js/rowGroup.bootstrap4.js',
       'node_modules/datatables.net-rowreorder/js/dataTables.rowReorder.js',
       'node_modules/datatables.net-rowreorder-bs4/js/rowReorder.bootstrap4.js',
+      'node_modules/datatables.net-scroller/js/dataTables.scroller.js',
+      'node_modules/datatables.net-scroller-bs4/js/scroller.bootstrap4.js',
       'node_modules/datatables.net-select/js/dataTables.select.js',
       'node_modules/datatables.net-select-bs4/js/select.bootstrap4.js',
+      //'node_modules/datatables.net-translations/js/spanish.js',
   ], 'public/assets/js/datatables.js')
 
   .js('resources/js/assets/chart.js', 'public/assets/js')
