@@ -18,9 +18,9 @@ class CreateUsersConfigurationTable extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
             $table->bigIncrements('id');
-            $table->boolean('send_email');
-            $table->boolean('send_notification');
-            $table->boolean('send_notification_push');
+            $table->boolean('send_email')->nullable()->default(true);
+            $table->boolean('send_notification')->nullable()->default(true);
+            $table->boolean('send_notification_push')->nullable()->default(true);
             $table->timestamps();
         });
     }

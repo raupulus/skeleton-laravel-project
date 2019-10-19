@@ -11,6 +11,7 @@ use Illuminate\Database\Seeder;
  */
 class SocialNetworksTableSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      *

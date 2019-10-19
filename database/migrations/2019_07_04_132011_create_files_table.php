@@ -34,6 +34,7 @@ class CreateFilesTable extends Migration
             $table->bigInteger('size');
             $table->string('originalname', 511);
             $table->text('path');
+            $table->timestamps();
         });
     }
 

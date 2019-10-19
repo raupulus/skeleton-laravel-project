@@ -24,7 +24,7 @@ class CreateEmailsTable extends Migration
             $table->string('subject', 511);
             $table->text('message');
             $table->boolean('privacity');
-            $table->boolean('contactme');
+            $table->boolean('contactme')->nullable();
             $table->decimal('recaptcha_score', 2, 1);
             $table->string('server_ip', 255);
             $table->string('client_ip', 255);
