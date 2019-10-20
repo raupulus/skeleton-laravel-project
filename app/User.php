@@ -57,7 +57,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Relación con el rol de usuarios
+     * Relación con el rol de usuarios.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -94,7 +94,6 @@ class User extends Authenticatable
     {
         return $this->belongsTo(UserDetail::class, 'detail_id', 'id');
     }
-
 
     /**
      * Devuelve el enlace hacia la imagen/avatar del usuario.

@@ -191,6 +191,12 @@ class UserController extends Controller
 
     /****************** DATATABLES ******************/
 
+    /**
+     * Devuelve los datos para Datatable con todos los usuarios en la
+     * aplicación.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getTableAllUser()
     {
         $users = User::all();

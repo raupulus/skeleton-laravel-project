@@ -193,4 +193,34 @@ class Buttom
 
         return $button;
     }
+
+    /**
+     * Devuelve un botón para ver.
+     *
+     * @param       $action URL del controlador que llamará.
+     * @param       $dataName El identificador de tipo "data-name" que tendrá.
+     * @param array $options Opciones posibles:
+     *              class => clases css.
+     *              text => Nombre del botón.
+     *              icon => Clases para el icono.
+     *
+     * @return string
+     */
+    public static function generic($action, $dataName,  $options = [])
+    {
+        $options = array_merge([
+            'class' => 'm-1 btn btn-primary btn-panel btn-panel-generic',
+            'text' => 'Ver',
+            'icon' => 'fa fa-edit',
+        ], $options);
+
+        return ' <a ' . 'data-name="' . $dataName . '" ' .
+            'class="' . $options['class'] . '" ' .
+            'href="' . $action . '">' .
+            '<i class="' . $options['icon'] . '"></i> ' .
+            '<span>' .
+                $options['text'] .
+            '</span>' .
+            '</a> ';
+    }
 }

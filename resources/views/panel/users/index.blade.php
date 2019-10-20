@@ -65,8 +65,38 @@
 
     {{-- Botones de Acción Sobre la tabla de usuarios --}}
     <div class="row">
-        <div class="col-12">
+        <div class="col-md-12">
+            <h3 id="title-users">
+                Viendo todos los usuarios
+            </h3>
+        </div>
 
+        <div class="col-12">
+            {!! Buttom::generic('#', 'all-users', [
+                'class' => 'm-1 btn btn-disabled btn-panel disabled',
+                'text' => 'Todos',
+                'icon' => 'fas fa-users',
+            ]) !!}
+
+            {!! Buttom::generic('#', 'blocked-users', [
+                'class' => 'm-1 btn btn-primary btn-panel',
+                'text' => 'Bloqueados',
+                'icon' => 'fas fa-user-shield',
+            ]) !!}
+
+            {!! Buttom::generic('#', 'inactive-users', [
+                'class' => 'm-1 btn btn-primary btn-panel',
+                'text' => 'Inactivos',
+                'icon' => 'fas fa-user-times',
+            ]) !!}
+
+            {!! Buttom::generic('#', 'new-users', [
+                'class' => 'm-1 btn btn-primary btn-panel',
+                'text' => 'Nuevos',
+                'icon' => 'fas fa-user-plus',
+            ]) !!}
+
+            {{-- TODO → Crear acciones para botones anteriores por ajax a datatable --}}
         </div>
     </div>
 
