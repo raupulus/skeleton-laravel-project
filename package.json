@@ -19,7 +19,7 @@
         "@fortawesome/fontawesome-free": "^5.11.2",
         "axios": "^0.19",
         "bootstrap": "^4.3.1",
-        "bootstrap-select": "^1.13.13",
+        "bootstrap-select": "^1.13.12",
         "chart.js": "^2.8.0",
         "cross-env": "^5.2.1",
         "datatables.net": "^1.10.20",
