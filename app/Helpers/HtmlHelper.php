@@ -111,19 +111,20 @@ class Buttom
     public static function view($action, $id,  $options = [])
     {
         $options = array_merge([
-            'class' => 'btn btn-sm btn-success btn-panel btn-panel-view',
+            'class' => 'm-1 btn btn-success btn-panel btn-panel-view',
             'text' => 'Ver',
             'valueId' => 'form-view',
+            'icon' => 'fa fa-eye',
         ], $options);
 
-        return '<a ' . 'id="' . $options['valueId'] . '-' . $id . '" ' .
+        return ' <a ' . 'id="' . $options['valueId'] . '-' . $id . '" ' .
             'class="' . $options['class'] . '" ' .
             'href="' . $action . '">' .
-            '<i class="fa fa-eye"></i> ' .
-            '<span class="hidden-xs hidden-sm">' .
-            $options['text'] .
+            '<i class="' . $options['icon'] . '"></i> ' .
+            '<span class="d-none d-md-inline-block">' .
+                $options['text'] .
             '</span>' .
-            '</a>';
+            '</a> ';
     }
 
     /**
@@ -141,8 +142,9 @@ class Buttom
     public static function edit($action, $id,  $options = [])
     {
         $options = array_merge([
-            'class' => 'btn btn-sm btn-primary btn-panel btn-panel-edit',
+            'class' => 'm-1 btn btn-warning btn-panel btn-panel-edit',
             'text' => 'Editar',
+            'icon' => 'fa fa-edit',
         ], $options);
 
         return self::view($action, $id, $options);
