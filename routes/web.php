@@ -61,7 +61,7 @@ Route::group([
 ], function() {
 
     Route::get('/translation', function() {
-        return response()->file(storage_path('app/public/json/datatable/datatable-translation-es.json'));
+        return response()->file(base_path('public/json/datatable/datatable-translation-es.json'));
     })->name('datatable.translation');
 });
 
