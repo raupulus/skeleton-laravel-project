@@ -78,10 +78,10 @@
                 'icon' => 'fas fa-users',
             ]) !!}
 
-            {!! Buttom::generic('#', 'blocked-users', [
+            {!! Buttom::generic('#', 'this-month-users', [
                 'class' => 'm-1 btn btn-primary btn-panel',
-                'text' => 'Bloqueados',
-                'icon' => 'fas fa-user-shield',
+                'text' => 'Nuevos',
+                'icon' => 'fas fa-user-plus',
             ]) !!}
 
             {!! Buttom::generic('#', 'inactive-users', [
@@ -90,13 +90,11 @@
                 'icon' => 'fas fa-user-times',
             ]) !!}
 
-            {!! Buttom::generic('#', 'new-users', [
+            {!! Buttom::generic('#', 'blocked-users', [
                 'class' => 'm-1 btn btn-primary btn-panel',
-                'text' => 'Nuevos',
-                'icon' => 'fas fa-user-plus',
+                'text' => 'Bloqueados',
+                'icon' => 'fas fa-user-shield',
             ]) !!}
-
-            {{-- TODO → Crear acciones para botones anteriores por ajax a datatable --}}
         </div>
     </div>
 
@@ -132,10 +130,20 @@
 @section('js')
     <script>
         var panelUsersGetAllUrl = "{{route('panel.users.table.allusers')}}";
+        var panelUsersGetThisMonth = "{{route('panel.users.table.thismonth')}}";
+        var panelUsersGetInactive = "{{route('panel.users.table.inactive')}}";
+        //var panelUsersGetBlocked = "{{route('panel.users.table.inactive')}}";
         var dataTableTranslation = "{{route('datatable.translation')}}";
+        var userColumns = [
+            { data: 'id', name: 'id' },
+            { data: 'name', name: 'name' },
+            { data: 'nick', name: 'nick' },
+            { data: 'email', name: 'email' },
+            { data: 'action', name: 'action' }
+        ];
     </script>
     <script src="{{ mix('assets/js/datatables.js') }}"></script>
-    <script src="{{ mix('admin-panel/users/js/user_index.js') }}"></script>
+    <script async src="{{ mix('admin-panel/users/js/user_index.js') }}"></script>
 @endsection
 
 

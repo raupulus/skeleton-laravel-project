@@ -192,17 +192,16 @@ class UserController extends Controller
     /****************** DATATABLES ******************/
 
     /**
-     * Devuelve los datos para Datatable con todos los usuarios en la
-     * aplicación.
+     * Función genérica para mostrar datatable de usuarios.
+     *
+     * @param $users
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getTableAllUser()
+    private function createUserDatatable($users)
     {
-        $users = User::all();
-
         try {
-            $table = DataTables::of($users)
+            return DataTables::of($users)
                 ->addColumn('action', function ($user) {
                     return
                         Buttom::view(
@@ -226,7 +225,41 @@ class UserController extends Controller
         catch (Exception $e) {
             return response()->json('FALLO Datatable');
         }
+    }
 
-        return $table;
+    /**
+     * Devuelve los datos para Datatable con todos los usuarios en la
+     * aplicación.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getTableAllUser()
+    {
+        $users = User::all();
+        return $this->createUserDatatable($users);
+    }
+
+    /**
+     * Devuelve los nuevos usuarios creados en el último mes.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getTableThisMontUsers()
+    {
+        $users = User::all()->whereBetween('created_at',
+            [
+                Carbon::now()->subMonth()->format('Y-m-d H:i:s'),
+                Carbon::now()->format('Y-m-d H:i:s'),
+            ]
+        );
+
+        return $this->createUserDatatable($users);
+    }
+
+    public function getTableInactiveUsers()
+    {
+        $users = User::allInactive();
+
+        return $this->createUserDatatable($users);
     }
 }

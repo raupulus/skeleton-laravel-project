@@ -112,7 +112,10 @@ Route::group([
          */
         Route::get('/table-all-users', 'Panel\UserController@getTableAllUser')
             ->name('panel.users.table.allusers');
-
+        Route::get('/table-thismonth-users', 'Panel\UserController@getTableThisMontUsers')
+            ->name('panel.users.table.thismonth');
+        Route::get('/table-inactive-users', 'Panel\UserController@getTableInactiveUsers')
+            ->name('panel.users.table.inactive');
     });
 
     ## Errores

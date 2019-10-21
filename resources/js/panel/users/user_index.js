@@ -26,19 +26,48 @@ $(document).ready(function() {
              */
         };
 
-        return $('#' + id).DataTable({...basic, ...options});
+        return await $('#' + id).DataTable({...basic, ...options});
     }
 
-    var panelUserTable = createDatatable(
-        'panel-users-table',
-        panelUsersGetAllUrl,
-        [
-            { data: 'id', name: 'id' },
-            { data: 'name', name: 'name' },
-            { data: 'nick', name: 'nick' },
-            { data: 'email', name: 'email' },
-            { data: 'action', name: 'action' }
-        ],
-        {}
-    );
+    async function allUsers() {
+        return await createDatatable(
+            'panel-users-table',
+            panelUsersGetAllUrl,
+            userColumns,
+            {}
+        );
+    }
+
+    // Al cargar por defecto cargo todos los usuarios.
+    var panelUserTable = allUsers();
+
+    $.when(panelUserTable).done((table) => {
+        // Todos los Usuarios.
+        $('a[data-name="all-users"]').click(function(e) {
+            e.preventDefault();
+            table.ajax.url(panelUsersGetAllUrl).load();
+        });
+
+        // Usuarios Filtrados.
+        $('a[data-name="this-month-users"]').click(function(e) {
+            e.preventDefault();
+            table.ajax.url(panelUsersGetThisMonth).load();
+        });
+
+        // Usuarios Inactivos.
+        $('a[data-name="inactive-users"]').click(function(e) {
+            e.preventDefault();
+            table.ajax.url(panelUsersGetInactive).load();
+        });
+
+        // Usuarios Bloqueados.
+        /*
+        $('a[data-name="blocked-users"]').click(function(e) {
+            e.preventDefault();
+            table.ajax.url(panelUsersGetInactive).load();
+        });
+
+         */
+    });
+
 });
