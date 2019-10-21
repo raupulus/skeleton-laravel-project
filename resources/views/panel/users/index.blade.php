@@ -71,27 +71,27 @@
             </h3>
         </div>
 
-        <div class="col-12">
+        <div class="col-12 text-center">
             {!! Buttom::generic('#', 'all-users', [
-                'class' => 'm-1 btn btn-disabled btn-panel disabled',
+                'class' => 'm-1 btn btn-secondary btn-panel btn-panel-selector disabled',
                 'text' => 'Todos',
                 'icon' => 'fas fa-users',
             ]) !!}
 
             {!! Buttom::generic('#', 'this-month-users', [
-                'class' => 'm-1 btn btn-primary btn-panel',
+                'class' => 'm-1 btn btn-primary btn-panel btn-panel-selector',
                 'text' => 'Nuevos',
                 'icon' => 'fas fa-user-plus',
             ]) !!}
 
             {!! Buttom::generic('#', 'inactive-users', [
-                'class' => 'm-1 btn btn-primary btn-panel',
+                'class' => 'm-1 btn btn-primary btn-panel btn-panel-selector',
                 'text' => 'Inactivos',
                 'icon' => 'fas fa-user-times',
             ]) !!}
 
             {!! Buttom::generic('#', 'blocked-users', [
-                'class' => 'm-1 btn btn-primary btn-panel',
+                'class' => 'm-1 btn btn-primary btn-panel btn-panel-selector',
                 'text' => 'Bloqueados',
                 'icon' => 'fas fa-user-shield',
             ]) !!}
