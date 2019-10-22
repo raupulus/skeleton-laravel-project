@@ -40,7 +40,6 @@ $(document).ready(function() {
 
     // Desactivo el botón al ser pulsado y marco los demás como activos.
     $('.btn-panel-selector').click(function() {
-        console.log($(this).text());
         $('.btn-panel-selector').removeClass('disabled btn-secondary');
         $('.btn-panel-selector').addClass('btn-primary');
         $(this).addClass('disabled btn-secondary');
