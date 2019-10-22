@@ -106,6 +106,7 @@ Route::group([
         ## Añadir o editar un nuevo usuario.
         Route::get('/add/{user_id?}', 'Panel\UserController@add')->name('panel.users.add');
         Route::post('/add/{user_id?}', 'Panel\UserController@edit')->name('panel.users.edit');
+        Route::post('/delete/{user_id?}', 'Panel\UserController@delete')->name('panel.users.delete');
 
         /**
          * Datatables

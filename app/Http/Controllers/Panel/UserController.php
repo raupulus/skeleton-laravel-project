@@ -171,6 +171,30 @@ class UserController extends Controller
     }
 
     /**
+     * Procesa el borrado de un usuario.
+     *
+     * @param null $user_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete($user_id = null)
+    {
+        $user = User::find($user_id);
+
+        if (true && $user_id && RoleHelper::canUserDelete($user_id)) {
+            $user->delete();
+
+            return redirect()->back()->with([
+                'error' => 'Se ha eliminado el usuario correctamente.'
+            ]);
+        }
+
+        return redirect()->back()->with([
+            'error' => 'No tienes permisos.'
+        ]);
+    }
+
+    /**
      * Muestra la vista principal de usuarios con el listado de todos.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -225,6 +249,13 @@ class UserController extends Controller
                             route('panel.users.add', ['user_id' => $user->id]),
                             $user->nick
                         );
+                        /*
+
+                        Buttom::delete(
+                            route('panel.users.delete', ['user_id' => $user->id]),
+                            $user->nick
+                        );
+                        */
                 })
                 ->editColumn('created_at', function ($user) {
                     if (is_null($user->created_at)) {

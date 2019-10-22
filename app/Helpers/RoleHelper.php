@@ -88,6 +88,13 @@ class RoleHelper
         return self::isAdmin($role_id);
     }
 
+    /**
+     * Comprueba si el usuario puede ver al usuario solicitado.
+     *
+     * @param null $view_user_id
+     *
+     * @return bool
+     */
     public static function canUserView($view_user_id = null)
     {
         $role_id = auth()->user()->role_id;
@@ -104,5 +111,20 @@ class RoleHelper
         }
 
         return false;
+    }
+
+    /**
+     * Comprueba si puede borrar al usuario.
+     *
+     * @param null $delete_user_id
+     *
+     * @return bool
+     */
+    public static function canUserDelete($delete_user_id = null)
+    {
+        $role_id = auth()->user()->role_id;
+        $user_id = auth()->id();
+
+        return self::isAdmin($role_id) || ($user_id === $delete_user_id);
     }
 }

@@ -23,17 +23,12 @@ class Buttom
      */
     public static function delete($action, $id,  $options = [])
     {
-        if (! array_key_exists('class', $options)) {
-            $options['class'] = 'btn btn-sm btn-danger pull-right delete';
-        }
-
-        if (! array_key_exists('text', $options)) {
-            $options['text'] = 'Eliminar';
-        }
-
-        if (! array_key_exists('valueId', $options)) {
-            $options['valueId'] = 'form-delete';
-        }
+        $options = array_merge([
+            'class' => 'm-1 btn btn-sm btn-danger delete',
+            'text' => 'Eliminar',
+            'valueId' => 'form-delete',
+            'icon' => 'fa fa-trash',
+        ], $options);
 
         return '<form action="' . $action . '" ' .
             'method="POST" ' .
@@ -45,7 +40,7 @@ class Buttom
             '<button type="button" ' .
             'class="' . $options['class'] . '" ' .
             'onclick="' . jsHelper::confirm() . '">' .
-            '<i class="fa fa-trash"></i> ' .
+            '<i class="' . $options['icon'] . '"></i> ' .
             '<span class="hidden-xs hidden-sm">' .
             $options['text'] .
             '</span>' .
