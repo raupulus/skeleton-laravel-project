@@ -113,14 +113,6 @@
             </thead>
         </table>
     </div>
-
-    {{-- Tabla de Usuarios Inactivos--}}
-    <div>
-        @foreach($usersInactive as $user)
-            ̣{{$user->name}} - {{$user->nick}}
-            <br />
-        @endforeach
-    </div>
 @endsection
 
 @section('css')
@@ -132,7 +124,7 @@
         var panelUsersGetAllUrl = "{{route('panel.users.table.allusers')}}";
         var panelUsersGetThisMonth = "{{route('panel.users.table.thismonth')}}";
         var panelUsersGetInactive = "{{route('panel.users.table.inactive')}}";
-        //var panelUsersGetBlocked = "{{route('panel.users.table.inactive')}}";
+        var panelUsersGetBlocked = "{{route('panel.users.table.blocked')}}";
         var dataTableTranslation = "{{route('datatable.translation')}}";
         var userColumns = [
             { data: 'id', name: 'id' },

@@ -6,6 +6,8 @@
  * Time: 09:20
  */
 
+use App\User;
+
 /**
  * Class RoleHelper
  *
@@ -69,8 +71,8 @@ class RoleHelper
     {
         $role_id = auth()->user()->role_id;
         $user_id = auth()->id();
-        // TODO → Controlar si soy usuario normal y edito mi propio perfil.
-        return self::isAdmin($role_id) || ($user_id === edit_user_id);
+
+        return self::isAdmin($role_id) || ($user_id === $edit_user_id);
     }
 
     /**
@@ -84,5 +86,23 @@ class RoleHelper
     {
         $role_id = auth()->user()->role_id;
         return self::isAdmin($role_id);
+    }
+
+    public static function canUserView($view_user_id = null)
+    {
+        $role_id = auth()->user()->role_id;
+
+        if (self::isAdmin(($role_id))) {
+            return true;
+        }
+
+        $user_id = auth()->id();
+        $user_view = User::find($view_user_id);
+
+        if ($user_view) {
+            return ($user_id === $view_user_id) || (! self::isAdmin($user_view->role_id));
+        }
+
+        return false;
     }
 }

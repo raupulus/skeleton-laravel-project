@@ -116,6 +116,8 @@ Route::group([
             ->name('panel.users.table.thismonth');
         Route::get('/table-inactive-users', 'Panel\UserController@getTableInactiveUsers')
             ->name('panel.users.table.inactive');
+        Route::get('/table-blocked-users', 'Panel\UserController@getTableBlockedUsers')
+            ->name('panel.users.table.blocked');
     });
 
     ## Errores

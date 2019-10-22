@@ -12,6 +12,7 @@ use App\UserSocial;
 use Buttom;
 use Carbon\Carbon;
 use Exception;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use LogHelper;
@@ -35,6 +36,12 @@ class UserController extends Controller
      */
     public function add($user_id = null)
     {
+        if (! RoleHelper::canUserCreate()) {
+            return redirect()->back()->with([
+                'error' => 'No tiene permisos para crear usuarios',
+            ]);
+        }
+
         $socialNetworks = SocialNetwork::all();
 
         $user = User::find($user_id);
@@ -126,7 +133,6 @@ class UserController extends Controller
             $user->id
         );
 
-        // TODO → Crear trait para añadirlo al modelo de usuario
         return redirect()->route('panel.users.view', ['id' => $user->id])->with([
         ]);
     }
@@ -137,6 +143,12 @@ class UserController extends Controller
     public function view($id = null)
     {
         $user_id = $id ?: auth()->id();
+
+        if (! RoleHelper::canUserView($user_id)) {
+            return redirect()->back()->with([
+                'error' => 'No tiene permisos para crear usuarios',
+            ]);
+        }
 
         ## Obtengo el usuario (Así no repite consultas al ver mi propio user)
         if ((int) $id === (int) auth()->id()) {
@@ -181,10 +193,10 @@ class UserController extends Controller
         $n_usersInactive = $usersInactive->count();
 
         return view('panel.users.index')->with([
-            'users' => $users,
+            //'users' => $users,
             'n_users' => $n_users,
             'n_users_this_month' => $n_users_this_month,
-            'usersInactive' => $usersInactive,
+            //'usersInactive' => $usersInactive,
             'n_usersInactive' => $n_usersInactive,
         ]);
     }
@@ -256,10 +268,38 @@ class UserController extends Controller
         return $this->createUserDatatable($users);
     }
 
+    /**
+     * Devuelve todos los usuarios inactivos en el sistema.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getTableInactiveUsers()
     {
+        if (! RoleHelper::isAdmin()) {
+            return response()->json(['Error' => 'No Tienes permisos'], 403);
+        }
+
         $users = User::allInactive();
 
         return $this->createUserDatatable($users);
+    }
+
+    /**
+     * Devuelve todos los usuarios bloqueados en el sistema.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getTableBlockedUsers()
+    {
+        //TODO → completar función para bloquear usuarios por fallos de login
+        // y también manualmente.
+
+        if (! RoleHelper::isAdmin()) {
+            return response()->json(['Error' => 'No Tienes permisos'], 403);
+        }
+
+        //$users = User::allBlocked();
+
+        //return $this->createUserDatatable($users);
     }
 }
