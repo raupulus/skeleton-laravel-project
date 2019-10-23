@@ -15,7 +15,7 @@
                    aria-describedby="email"
                    name="email"
                    value="{{UserHelper::oldForm('email', $user)}}"
-                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 5}$"
+                   pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
                    required />
         </div>
     </div>
@@ -36,7 +36,6 @@
                    aria-describedby="nick"
                    name="nick"
                    value="{{UserHelper::oldForm('nick', $user)}}"
-                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 5}$"
                    required />
         </div>
     </div>
@@ -80,4 +79,29 @@
                    autocomplete="off"/>
         </div>
     </div>
+</div>
+
+<div class="row mt-5">
+    {{-- Rol --}}
+    @if ($roles)
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="social_id">Rol</label>
+
+                <select title="Selecciona el rol"
+                        class="form-control selectpicker"
+                        name="rol_id">
+                    @foreach($roles as $rol)
+                        <option data-icon="{{ $rol->icon }}"
+                                data-subtext="{{ $social->name }}"
+                                style="color: {{ $rol->color }}"
+                                value="{{ $rol->id }}"
+                                {{FormHelper::selected($social_id, $rol->id)}}>
+                            {{ $social->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    @endif
 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserAddRequest;
+use App\Role;
 use App\SocialNetwork;
 use App\User;
 use App\UserData;
@@ -14,6 +15,7 @@ use Carbon\Carbon;
 use Exception;
 use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 use LogHelper;
 use RoleHelper;
@@ -36,18 +38,28 @@ class UserController extends Controller
      */
     public function add($user_id = null)
     {
-        if (! RoleHelper::canUserCreate()) {
+        if (!RoleHelper::canUserCreate()) {
             return redirect()->back()->with([
                 'error' => 'No tiene permisos para crear usuarios',
             ]);
         }
 
         $socialNetworks = SocialNetwork::all();
+        $roles = null;
+
+        // TODO → Gestión para asociar roles.
+        if (true) {
+            ## Es superadmin, puede asignar todos los roles.
+            $roles = Role::all();
+        } else if (true) {
+            ## Es admin, puede asignar todos menos otros admin/superadmin
+            $roles = Role::all();
+        }
 
         $user = User::find($user_id);
         $user_data = $user ? $user->data : null;
-        $user_detail = $user ? $user->details :null;
-        $user_social = $user ? $user->social :null;
+        $user_detail = $user ? $user->details : null;
+        $user_social = $user ? $user->social : null;
         return view('panel.users.edit')->with([
             'socialNetworks' => $socialNetworks,
             'user_id' => $user_id,
@@ -55,6 +67,7 @@ class UserController extends Controller
             'user_data' => $user_data,
             'user_detail' => $user_detail,
             'user_social' => $user_social,
+            'roles' => $roles,
         ]);
     }
 
@@ -74,9 +87,9 @@ class UserController extends Controller
             $permission = RoleHelper::canUserCreate();
         }
 
-        if (! $permission) {
+        if (!$permission) {
             return redirect()->back()->with([
-               'error' => 'No tiene permisos para editar o crear el usuario',
+                'error' => 'No tiene permisos para editar o crear el usuario',
             ]);
         }
 
@@ -144,20 +157,20 @@ class UserController extends Controller
     {
         $user_id = $id ?: auth()->id();
 
-        if (! RoleHelper::canUserView($user_id)) {
+        if (!RoleHelper::canUserView($user_id)) {
             return redirect()->back()->with([
                 'error' => 'No tiene permisos para crear usuarios',
             ]);
         }
 
         ## Obtengo el usuario (Así no repite consultas al ver mi propio user)
-        if ((int) $id === (int) auth()->id()) {
+        if ((int)$id === (int)auth()->id()) {
             $user = auth()->user();
         } else {
             $user = User::find($user_id);
         }
 
-        if (! $user) {
+        if (!$user) {
             return redirect()->back()->with([
                 'error' => 'Hubo un problema mientras se buscaba al usuario.'
             ]);
@@ -180,13 +193,19 @@ class UserController extends Controller
     public function delete($user_id = null)
     {
         $user = User::find($user_id);
+        $actual_user = (int)$user_id === (int)auth()->id();
 
-        if (true && $user_id && RoleHelper::canUserDelete($user_id)) {
+        if ($user_id && RoleHelper::canUserDelete($user_id)) {
             $user->delete();
 
             return redirect()->back()->with([
                 'error' => 'Se ha eliminado el usuario correctamente.'
             ]);
+        }
+
+        ## Si el usuario que se borra es el actual, se cierra su sesión.
+        if ($actual_user === true) {
+            auth()->logout();
         }
 
         return redirect()->back()->with([
@@ -262,8 +281,7 @@ class UserController extends Controller
                     return $user->created_at->format('d/m/Y H:m:i');
                 })
                 ->make(true);
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return response()->json('FALLO Datatable');
         }
     }
@@ -304,7 +322,7 @@ class UserController extends Controller
      */
     public function getTableInactiveUsers()
     {
-        if (! RoleHelper::isAdmin()) {
+        if (!RoleHelper::isAdmin()) {
             return response()->json(['Error' => 'No Tienes permisos'], 403);
         }
 
@@ -323,7 +341,7 @@ class UserController extends Controller
         //TODO → completar función para bloquear usuarios por fallos de login
         // y también manualmente.
 
-        if (! RoleHelper::isAdmin()) {
+        if (!RoleHelper::isAdmin()) {
             return response()->json(['Error' => 'No Tienes permisos'], 403);
         }
 
