@@ -242,20 +242,18 @@ class UserController extends Controller
                     return
                         Buttom::view(
                             route('panel.users.view', ['$id' => $user->id]),
-                            $user->nick
+                            $user->id
                         ) .
 
                         Buttom::edit(
                             route('panel.users.add', ['user_id' => $user->id]),
-                            $user->nick
-                        );
-                        /*
+                            $user->id
+                        ) .
 
                         Buttom::delete(
                             route('panel.users.delete', ['user_id' => $user->id]),
-                            $user->nick
+                            $user->id
                         );
-                        */
                 })
                 ->editColumn('created_at', function ($user) {
                     if (is_null($user->created_at)) {

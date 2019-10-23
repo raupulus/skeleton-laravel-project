@@ -37,3 +37,20 @@ async function createDatatable(id, url, columns, options = {}) {
 
     return await $('#' + id).DataTable({...basic, ...options});
 }
+
+/**
+ * Pregunta antes de enviar, si es aceptado envía el formulario padre
+ * que se encuentre primero como ancestro de el propio nodo que contenga
+ * esta función.
+ *
+ * @param e Evento actual (Click).
+ * @param ele Elemento actual.
+ * @param text Texto para el mensaje de confirmar.
+ */
+function formSendConfirm(e, ele, text) {
+    e.preventDefault();
+
+    if (confirm(text)) {
+        $(ele).closest('form').submit();
+    }
+}

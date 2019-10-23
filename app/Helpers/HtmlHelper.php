@@ -28,6 +28,7 @@ class Buttom
             'text' => 'Eliminar',
             'valueId' => 'form-delete',
             'icon' => 'fa fa-trash',
+            'confirm' => '¿Estás seguro de eliminar?'
         ], $options);
 
         return '<form action="' . $action . '" ' .
@@ -38,14 +39,14 @@ class Buttom
             '<input type="hidden" name="id" value="' . $id . '">' .
 
             '<button type="button" ' .
-            'class="' . $options['class'] . '" ' .
-            'onclick="' . jsHelper::confirm() . '">' .
-            '<i class="' . $options['icon'] . '"></i> ' .
-            '<span class="hidden-xs hidden-sm">' .
-            $options['text'] .
-            '</span>' .
+                     'class="' . $options['class'] . '" ' .
+                     'onclick="formSendConfirm(event, this, \'' . $options['confirm'] . '\')">' .
+                '<i class="' . $options['icon'] . '"></i> ' .
+                '<span class="d-none d-md-inline-block">' .
+                    $options['text'] .
+                '</span>' .
             '</button>' .
-            '</form>';
+        '</form>';
     }
 
     /**
