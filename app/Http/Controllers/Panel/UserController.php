@@ -47,13 +47,13 @@ class UserController extends Controller
         $socialNetworks = SocialNetwork::all();
         $roles = null;
 
-        // TODO → Gestión para asociar roles.
-        if (true) {
+        ## Si es admin o superadmin muestra los roles que puede asignar.
+        if (RoleHelper::isSuperAdmin()) {
             ## Es superadmin, puede asignar todos los roles.
             $roles = Role::all();
-        } else if (true) {
+        } else if (RoleHelper::isAdmin()) {
             ## Es admin, puede asignar todos menos otros admin/superadmin
-            $roles = Role::all();
+            $roles = Role::all()->whereNotIn('id', [1]);
         }
 
         $user = User::find($user_id);
@@ -132,6 +132,15 @@ class UserController extends Controller
         $password = $request->get('password');
         if (isset($password) && !empty($password) && (mb_strlen($password) >= 6)) {
             $user->password = Hash::make($password, ['rounds' => config('constant.bcrypt_cost')]);
+        }
+
+        $role_id = $request->get('role_id') ?? null;
+
+        ## Compruebo que puede asignar el rol recibido.
+        if (RoleHelper::isSuperAdmin() && $role_id) {
+            $user->role_id = $role_id;
+        } elseif (RoleHelper::isAdmin() && $role_id && ($role_id != 1)) {
+            $user->role_id = $role_id;
         }
 
         $user->save();

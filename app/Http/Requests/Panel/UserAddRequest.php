@@ -42,6 +42,7 @@ class UserAddRequest extends FormRequest
                 'max:220',
                 Rule::unique('users')->ignore($this->user_id), ## Para update
             ],
+            'role_id' => 'nullable|numeric',
             'email' => [
                 'required',
                 Rule::unique('users')->ignore($this->user_id), ## Para update

@@ -86,18 +86,20 @@
     @if ($roles)
         <div class="col-md-6">
             <div class="form-group">
-                <label for="rol_id">Rol</label>
+                <label for="role_id">Role</label>
 
-                <select title="Selecciona el rol"
+                <select title="Selecciona el role"
                         class="form-control selectpicker"
-                        name="rol_id">
-                    @foreach($roles as $rol)
-                        <option data-icon="{{ $rol->icon }}"
-                                data-subtext="{{ $rol->name }}"
-                                style="color: {{ $rol->color }}"
-                                value="{{ $rol->id }}"
-                                {{FormHelper::selected(auth()->user()->role_id, $rol->id)}}>
-                            {{ $rol->name }}
+                        name="role_id">
+                    @foreach($roles as $role)
+                        <option data-icon="{{ $role->icon }}"
+                                data-subtext="{{ $role->display_name }}"
+                                style="color: {{ $role->color }}"
+                                value="{{ $role->id }}"
+                                {{FormHelper::selected(
+                                    $user ? $user->role_id : null,
+                                    $role->id)}}>
+                            {{ $role->name }}
                         </option>
                     @endforeach
                 </select>

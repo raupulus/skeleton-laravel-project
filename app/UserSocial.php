@@ -32,6 +32,10 @@ class UserSocial extends DefaultModel
         ## Almacena en el array las instancias guardadas para devolverlas.
         $socialNetworks = [];
 
+        if (! ($arraySocial_id && $arraySocial_nick && $arraySocial_url)) {
+            return null;
+        }
+
         ## Proceso el guardado de cada una de las redes sociales.
         foreach ($arraySocial_id as $idx => $social_network_id) {
             $nick = $arraySocial_nick[$idx];

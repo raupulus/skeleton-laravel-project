@@ -20,7 +20,8 @@ class CreateUsersRolesTable extends Migration
             $table->collation = 'utf8_unicode_ci';
             $table->bigIncrements('id');
             $table->string('name', '255');
-            $table->string('display_name');
+            $table->string('display_name', 511);
+            $table->text('description');
             $table->timestamps();
         });
     }
