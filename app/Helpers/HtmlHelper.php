@@ -107,7 +107,7 @@ class Buttom
     public static function view($action, $id,  $options = [])
     {
         $options = array_merge([
-            'class' => 'm-1 btn btn-success btn-panel btn-panel-view',
+            'class' => 'm-1 btn btn-sm btn-success btn-panel btn-panel-view',
             'text' => 'Ver',
             'valueId' => 'form-view',
             'icon' => 'fa fa-eye',
@@ -138,9 +138,32 @@ class Buttom
     public static function edit($action, $id,  $options = [])
     {
         $options = array_merge([
-            'class' => 'm-1 btn btn-warning btn-panel btn-panel-edit',
+            'class' => 'm-1 btn btn-sm btn-warning btn-panel btn-panel-edit',
             'text' => 'Editar',
             'icon' => 'fa fa-edit',
+        ], $options);
+
+        return self::view($action, $id, $options);
+    }
+
+    /**
+     * Devuelve un botón para Acciones.
+     *
+     * @param       $action URL del controlador que llamará.
+     * @param       $id El id del elemento a editar.
+     * @param array $options Opciones posibles:
+     *              class => clases css,
+     *              text => Nombre del botón
+     *              valueId => Prefijo del id para el formulario
+     *
+     * @return string
+     */
+    public static function action($action, $id,  $options = [])
+    {
+        $options = array_merge([
+            'class' => 'm-1 btn btn-sm btn-danger btn-panel btn-panel-action',
+            'text' => 'Action',
+            'icon' => 'fa fa-tasks-alt',
         ], $options);
 
         return self::view($action, $id, $options);

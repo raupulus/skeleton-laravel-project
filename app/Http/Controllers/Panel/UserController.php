@@ -29,6 +29,7 @@ use function isEmpty;
 use function redirect;
 use function response;
 use function route;
+use function url;
 use function view;
 
 class UserController extends Controller
@@ -237,6 +238,7 @@ class UserController extends Controller
         } else {
             $users = User::allActive()->whereNotIn('role_id', [1, 2]);
         }
+
         $n_users = $users->count();
 
         $n_users_this_month = $users->whereBetween('created_at',
@@ -273,7 +275,7 @@ class UserController extends Controller
         try {
             return DataTables::of($users)
                 ->addColumn('action', function ($user) {
-                    return
+                    $buttons =
                         Buttom::view(
                             route('panel.users.view', ['$id' => $user->id]),
                             $user->id
@@ -288,6 +290,15 @@ class UserController extends Controller
                             route('panel.users.delete', ['user_id' => $user->id]),
                             $user->id
                         );
+
+                    if (RoleHelper::isSuperAdmin()) {
+                        $buttons .= Buttom::action(url('#'), $user->id, [
+                            'text' => $user->deleted_at ? 'Activar' : 'Desactivar',
+                            'icon' => 'fa fa-tasks',
+                        ]);
+                    }
+
+                    return $buttons;
                 })
                 ->editColumn('created_at', function ($user) {
                     if (is_null($user->created_at)) {

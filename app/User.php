@@ -16,13 +16,15 @@ class User extends Authenticatable
 
     /**
      * Relaciones que siempre se llevarán al instanciar el modelo, esto
-     * se realiza para disminuir consultas.
+     * se realiza para disminuir consultas. Puede hacer más consultas, usar
+     * con cabeza (más útil en muchos modelos que en solo 1)
      *
      * Para no usar una relación:
      * $users = App\User::without(['role', 'details'])->get();
      *
      * @var array
      */
+    /*
     protected $with = [
         'role',
         'social',
@@ -30,6 +32,7 @@ class User extends Authenticatable
         'data',
         'details'
     ];
+    */
 
     /**
      * Atributos protegidos de asignación masiva.
