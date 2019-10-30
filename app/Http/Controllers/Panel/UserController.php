@@ -261,6 +261,14 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Modifica si el usuario está activo o inactivo (Soft-delete).
+     */
+    public function toogleActive()
+    {
+
+    }
+
     /****************** DATATABLES ******************/
 
     /**
