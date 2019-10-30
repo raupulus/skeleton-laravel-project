@@ -229,8 +229,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        ## Usuarios Activos
-        $users = User::allActive();
+        ## Usuarios Activos que según el role del actual puede ver.
+        if (RoleHelper::isSuperAdmin()) {
+            $users = User::allActive();
+        } else if (RoleHelper::isAdmin()) {
+            $users = User::allActive()->whereNotIn('role_id', [1]);
+        } else {
+            $users = User::allActive()->whereNotIn('role_id', [1, 2]);
+        }
         $n_users = $users->count();
 
         $n_users_this_month = $users->whereBetween('created_at',

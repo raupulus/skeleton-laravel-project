@@ -2,6 +2,7 @@
 
 namespace App;
 
+use RoleHelper;
 use function asset;
 use function func_get_args;
 use Illuminate\Notifications\Notifiable;
@@ -113,12 +114,30 @@ class User extends Authenticatable
 
     public static function allActive()
     {
-        return parent::all()->where('deleted_at', null);
+        $users = parent::all()->where('deleted_at', null);
+
+        ## Usuarios Activos que según el role del actual puede ver.
+        if (RoleHelper::isSuperAdmin()) {
+            return $users;
+        } else if (RoleHelper::isAdmin()) {
+            return $users->whereNotIn('role_id', [1]);
+        }
+
+        return $users->whereNotIn('role_id', [1, 2]);
     }
 
     public static function allInactive()
     {
-        return parent::all()->where('deleted_at', 'not null');
+        $users = parent::all()->where('deleted_at', null);
+
+        ## Usuarios Inactivos que según el role del actual puede ver.
+        if (RoleHelper::isSuperAdmin()) {
+            return $users;
+        } else if (RoleHelper::isAdmin()) {
+            return $users->whereNotIn('role_id', [1]);
+        }
+
+        return $users->whereNotIn('role_id', [1, 2]);
     }
 
     /*
