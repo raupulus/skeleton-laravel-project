@@ -264,9 +264,22 @@ class UserController extends Controller
     /**
      * Modifica si el usuario está activo o inactivo (Soft-delete).
      */
-    public function toogleActive()
+    public function toggleActiveAjax($user_id)
     {
+        $user = User::find($user_id);
 
+        if ($user) {
+            $user->deleted_at = $user->deleted_at ? null : Carbon::now();
+
+            return response()->json([
+                'message' => $user->deleted_at ? 'Usuario Desactivado' : 'Usuario Activado',
+                'text_buttom' => $user->deleted_at ? 'Activar' : 'Desactivar'
+            ], 201);
+        }
+
+        return response()->json([
+            'message' => 'Usuario no encontrado',
+        ], 404);
     }
 
     /****************** DATATABLES ******************/

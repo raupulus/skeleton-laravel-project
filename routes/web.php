@@ -108,6 +108,9 @@ Route::group([
         Route::post('/add/{user_id?}', 'Panel\UserController@edit')->name('panel.users.edit');
         Route::post('/delete/{user_id?}', 'Panel\UserController@delete')->name('panel.users.delete');
 
+        ## Marcar como activo o inactivo un usuario
+        Route::post('/toggleactive/{user_id}', 'Panel\UserController@toggleActiveAjax')->name('panel.users.toggle');
+
         /**
          * Datatables
          */

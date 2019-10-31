@@ -9,6 +9,19 @@
 
 class Buttom
 {
+    public static function genericForm($action, $id,  $options = [])
+    {
+        $options = array_merge([
+            'class' => 'm-1 btn btn-sm btn-danger delete',
+            'text' => 'Eliminar',
+            'valueId' => 'form-delete',
+            'icon' => 'fa fa-trash',
+            'confirm' => '¿Estás seguro de eliminar?'
+        ], $options);
+
+        return
+    }
+
     /**
      * Devuelve un botón para eliminar.
      *
