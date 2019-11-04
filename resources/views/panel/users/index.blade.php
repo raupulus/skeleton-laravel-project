@@ -78,22 +78,22 @@
                 'icon' => 'fas fa-users',
             ]) !!}
 
-            {!! Buttom::generic('#', 'this-month-users', [
+            {!! Buttom::generic('#', 'active-users', [
                 'class' => 'm-1 btn btn-primary btn-panel btn-panel-selector',
-                'text' => 'Nuevos',
-                'icon' => 'fas fa-user-plus',
+                'text' => 'Activos',
+                'icon' => 'fas fa-user-check',
             ]) !!}
 
             {!! Buttom::generic('#', 'inactive-users', [
                 'class' => 'm-1 btn btn-primary btn-panel btn-panel-selector',
                 'text' => 'Inactivos',
-                'icon' => 'fas fa-user-times',
+                'icon' => 'fas fa-user-shield',
             ]) !!}
 
-            {!! Buttom::generic('#', 'blocked-users', [
+            {!! Buttom::generic('#', 'this-month-users', [
                 'class' => 'm-1 btn btn-primary btn-panel btn-panel-selector',
-                'text' => 'Bloqueados',
-                'icon' => 'fas fa-user-shield',
+                'text' => 'Nuevos',
+                'icon' => 'fas fa-user-plus',
             ]) !!}
         </div>
     </div>
@@ -123,8 +123,8 @@
     <script>
         var panelUsersGetAllUrl = "{{route('panel.users.table.allusers')}}";
         var panelUsersGetThisMonth = "{{route('panel.users.table.thismonth')}}";
+        var panelUsersGetActive = "{{route('panel.users.table.active')}}";
         var panelUsersGetInactive = "{{route('panel.users.table.inactive')}}";
-        var panelUsersGetBlocked = "{{route('panel.users.table.blocked')}}";
         var dataTableTranslation = "{{route('datatable.translation')}}";
         var userColumns = [
             { data: 'id', name: 'id' },

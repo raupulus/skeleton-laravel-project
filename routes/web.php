@@ -109,15 +109,18 @@ Route::group([
         Route::post('/delete/{user_id?}', 'Panel\UserController@delete')->name('panel.users.delete');
 
         ## Marcar como activo o inactivo un usuario
-        Route::post('/toggleactive/{user_id}', 'Panel\UserController@toggleActiveAjax')->name('panel.users.toggle');
+        Route::post('/toggleactive/{user_id}', 'Panel\UserController@toggleActive')->name('panel.users.toggle');
+        Route::post('/toggleactiveajax/{user_id}', 'Panel\UserController@toggleActiveAjax')->name('panel.users.toggle.ajax');
 
         /**
          * Datatables
          */
         Route::get('/table-all-users', 'Panel\UserController@getTableAllUser')
             ->name('panel.users.table.allusers');
-        Route::get('/table-thismonth-users', 'Panel\UserController@getTableThisMontUsers')
+        Route::get('/table-thismonth-users', 'Panel\UserController@getTableThisMonthUsers')
             ->name('panel.users.table.thismonth');
+        Route::get('/table-active-users', 'Panel\UserController@getTableActiveUsers')
+            ->name('panel.users.table.active');
         Route::get('/table-inactive-users', 'Panel\UserController@getTableInactiveUsers')
             ->name('panel.users.table.inactive');
         Route::get('/table-blocked-users', 'Panel\UserController@getTableBlockedUsers')

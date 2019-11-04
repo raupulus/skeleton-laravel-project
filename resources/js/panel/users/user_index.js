@@ -17,24 +17,32 @@ $(document).ready(function() {
         $('a[data-name="all-users"]').click(function(e) {
             e.preventDefault();
             table.ajax.url(panelUsersGetAllUrl).load();
+
+            $('#title-users').text('Viendo todos los usuarios');
         });
 
         // Usuarios Filtrados.
         $('a[data-name="this-month-users"]').click(function(e) {
             e.preventDefault();
             table.ajax.url(panelUsersGetThisMonth).load();
+
+            $('#title-users').text('Viendo usuarios del último mes');
+        });
+
+        // Usuarios Activos.
+        $('a[data-name="active-users"]').click(function(e) {
+            e.preventDefault();
+            table.ajax.url(panelUsersGetActive).load();
+
+            $('#title-users').text('Viendo los usuarios activos');
         });
 
         // Usuarios Inactivos.
         $('a[data-name="inactive-users"]').click(function(e) {
             e.preventDefault();
             table.ajax.url(panelUsersGetInactive).load();
-        });
 
-        // Usuarios Bloqueados.
-        $('a[data-name="blocked-users"]').click(function(e) {
-            e.preventDefault();
-            table.ajax.url(panelUsersGetInactive).load();
+            $('#title-users').text('Viendo los usuarios inactivos');
         });
     });
 

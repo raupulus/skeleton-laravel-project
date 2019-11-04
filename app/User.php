@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use RoleHelper;
 use function asset;
 use function func_get_args;
@@ -9,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use function is_array;
+use function response;
 
 class User extends Authenticatable
 {
@@ -93,6 +96,8 @@ class User extends Authenticatable
 
     /**
      * Devuelve la relación con los detalles, datos complementarios del usuario.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function details()
     {
@@ -115,9 +120,31 @@ class User extends Authenticatable
         return $url;
     }
 
-    public static function allActive()
+    /**
+     * Marca al usuario actual como activo o inactivo según el estado actual.
+     *
+     * @return bool|null
+     */
+    public function toggleActive()
     {
-        $users = parent::all()->where('deleted_at', null);
+        ## Controlo que exista usuario y además sea distinto al role superadmin.
+        if ($this->role_id == 1) {
+            return null;
+        }
+
+        $this->deleted_at = $this->deleted_at ? null : Carbon::now();
+        return $this->save();
+    }
+
+    /**
+     * Obtiene todos los modelos de la base de datos filtrando por roles.
+     *
+     * @param  array|mixed  $columns
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public static function all($columns = ['*'])
+    {
+        $users = parent::all();
 
         ## Usuarios Activos que según el role del actual puede ver.
         if (RoleHelper::isSuperAdmin()) {
@@ -129,26 +156,23 @@ class User extends Authenticatable
         return $users->whereNotIn('role_id', [1, 2]);
     }
 
+    /**
+     * Devuelve todos los usuarios activos de la plataforma.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Foundation\Auth\User[]
+     */
+    public static function allActive()
+    {
+        return self::all()->where('deleted_at', null);
+    }
+
+    /**
+     * Devuelve todos los usuarios inactivos de la plataforma.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Foundation\Auth\User[]
+     */
     public static function allInactive()
     {
-        $users = parent::all()->where('deleted_at', null);
-
-        ## Usuarios Inactivos que según el role del actual puede ver.
-        if (RoleHelper::isSuperAdmin()) {
-            return $users;
-        } else if (RoleHelper::isAdmin()) {
-            return $users->whereNotIn('role_id', [1]);
-        }
-
-        return $users->whereNotIn('role_id', [1, 2]);
+        return self::all()->where('deleted_at');
     }
-
-    /*
-    public static function all($columns = ['*'])
-    {
-        return static::query()->get(
-            is_array($columns) ? $columns : func_get_args()
-        );
-    }
-    */
 }

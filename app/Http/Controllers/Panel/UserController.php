@@ -263,23 +263,46 @@ class UserController extends Controller
 
     /**
      * Modifica si el usuario está activo o inactivo (Soft-delete).
+     *
+     * @param $user_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function toggleActive($user_id)
+    {
+        $user = User::find($user_id);
+
+        if ($user) {
+            $user->toggleActive();
+        }
+
+        return back();
+    }
+
+    /**
+     * Modifica si el usuario está activo o inactivo (Soft-delete) por ajax.
+     *
+     * @param $user_id
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function toggleActiveAjax($user_id)
     {
         $user = User::find($user_id);
 
-        if ($user) {
-            $user->deleted_at = $user->deleted_at ? null : Carbon::now();
-
+        ## Controlo que exista usuario y además sea distinto al role superadmin.
+        if (!$user) {
             return response()->json([
-                'message' => $user->deleted_at ? 'Usuario Desactivado' : 'Usuario Activado',
-                'text_buttom' => $user->deleted_at ? 'Activar' : 'Desactivar'
-            ], 201);
+                'message' => 'Usuario no encontrado',
+            ], 404);
         }
 
+        $user->toggleActive();
+
         return response()->json([
-            'message' => 'Usuario no encontrado',
-        ], 404);
+            'message' => $user->deleted_at ? 'Usuario Desactivado' : 'Usuario Activado',
+            'text_buttom' => $user->deleted_at ? 'Activar' : 'Desactivar'
+        ], 201);
     }
 
     /****************** DATATABLES ******************/
@@ -312,11 +335,15 @@ class UserController extends Controller
                             $user->id
                         );
 
-                    if (RoleHelper::isSuperAdmin()) {
-                        $buttons .= Buttom::action(url('#'), $user->id, [
-                            'text' => $user->deleted_at ? 'Activar' : 'Desactivar',
-                            'icon' => 'fa fa-tasks',
-                        ]);
+                    ## Botón para activar/desactivar usuarios
+                    if (($user->role_id != 1) && RoleHelper::isSuperAdmin()) {
+                        $buttons .= Buttom::genericForm(
+                            route('panel.users.toggle', ['user_id' => $user->id]),
+                            $user->id, [
+                                'text' => $user->deleted_at ? 'Activar' : 'Desactivar',
+                                'icon' => 'fa fa-tasks',
+                            ]
+                        );
                     }
 
                     return $buttons;
@@ -350,7 +377,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getTableThisMontUsers()
+    public function getTableThisMonthUsers()
     {
         $users = User::all()->whereBetween('created_at',
             [
@@ -363,37 +390,38 @@ class UserController extends Controller
     }
 
     /**
+     * Devuelve todos los usuarios activos en el sistema.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getTableActiveUsers()
+    {
+        /*
+        if (!RoleHelper::isAdmin()) {
+            return response()->json(['Error' => 'No Tienes permisos'], 403);
+        }
+        */
+
+        $users = User::allActive();
+
+        return $this->createUserDatatable($users);
+    }
+
+    /**
      * Devuelve todos los usuarios inactivos en el sistema.
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getTableInactiveUsers()
     {
+        /*
         if (!RoleHelper::isAdmin()) {
             return response()->json(['Error' => 'No Tienes permisos'], 403);
         }
+        */
 
         $users = User::allInactive();
 
         return $this->createUserDatatable($users);
-    }
-
-    /**
-     * Devuelve todos los usuarios bloqueados en el sistema.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getTableBlockedUsers()
-    {
-        //TODO → completar función para bloquear usuarios por fallos de login
-        // y también manualmente.
-
-        if (!RoleHelper::isAdmin()) {
-            return response()->json(['Error' => 'No Tienes permisos'], 403);
-        }
-
-        //$users = User::allBlocked();
-
-        //return $this->createUserDatatable($users);
     }
 }
