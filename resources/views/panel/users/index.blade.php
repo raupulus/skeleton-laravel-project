@@ -35,29 +35,29 @@
     {{-- Tarjetas con resumen de usuarios --}}
     <div class="row">
         @widget('cardSeeDetailsWidget', [
-            'title' => $n_users . ' Usuarios',
+            'title' => $n_users . ($n_users > 1 ? ' Usuarios en total' : ' Usuario en total'),
             'icon' => 'fas fa-fw fa-users',
             'url' => '#',
             'color' => 'bg-primary'
         ])
 
         @widget('cardSeeDetailsWidget', [
-            'title' => $n_users_this_month . ' Usuarios en 1 mes',
-            'icon' => 'fas fa-fw fa-user-clock',
+            'title' => $n_usersActive . ($n_usersActive > 1 ? ' Usuarios Activos' : ' Usuario Activo'),
+            'icon' => 'fas fa-fw fa-user-check',
             'url' => '#',
             'color' => 'bg-success'
         ])
 
         @widget('cardSeeDetailsWidget', [
-            'title' => $n_usersInactive . ' Usuarios Inactivos',
-            'icon' => 'fas fa-fw fa-user-times',
+            'title' => $n_usersInactive . ($n_usersInactive > 1 ? ' Usuarios Inactivos' : ' Usuario Inactivo'),
+            'icon' => 'fas fa-fw fa-user-shield',
             'url' => '#',
             'color' => 'bg-danger'
         ])
 
         @widget('cardSeeDetailsWidget', [
-            'title' => 'nº Usuarios bloqueados',
-            'icon' => 'fas fa-fw fa-user-shield',
+            'title' => $n_users_this_month . ($n_users_this_month > 1 ? ' Usuarios en 1 mes' : ' Usuario en 1 mes'),
+            'icon' => 'fas fa-fw fa-user-clock',
             'url' => '#',
             'color' => 'bg-warning'
         ])

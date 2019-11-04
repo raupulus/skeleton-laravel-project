@@ -230,16 +230,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        ## Usuarios Activos que según el role del actual puede ver.
-        if (RoleHelper::isSuperAdmin()) {
-            $users = User::allActive();
-        } else if (RoleHelper::isAdmin()) {
-            $users = User::allActive()->whereNotIn('role_id', [1]);
-        } else {
-            $users = User::allActive()->whereNotIn('role_id', [1, 2]);
-        }
-
-        $n_users = $users->count();
+        ## Usuarios Activos que según el role actual puede ver.
+        $users = User::allActive();
+        $n_usersActive = $users->count();
 
         $n_users_this_month = $users->whereBetween('created_at',
             [
@@ -252,13 +245,35 @@ class UserController extends Controller
         $usersInactive = User::allInactive();
         $n_usersInactive = $usersInactive->count();
 
+        $n_users = $n_usersActive + $n_usersInactive;
+
         return view('panel.users.index')->with([
             //'users' => $users,
             'n_users' => $n_users,
-            'n_users_this_month' => $n_users_this_month,
             //'usersInactive' => $usersInactive,
+            'n_usersActive' => $n_usersInactive,
             'n_usersInactive' => $n_usersInactive,
+            'n_users_this_month' => $n_users_this_month,
         ]);
+    }
+
+    /**
+     * Muestra la vista para las configuraciones del usuario.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showConfiguration()
+    {
+        $user = auth()->user();
+
+        return view('panel.users.configuration')->with([
+            'user' => $user,
+        ]);
+    }
+
+    public function saveConfiguration()
+    {
+
     }
 
     /**
