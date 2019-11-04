@@ -26,6 +26,7 @@ class CreateSocialNetworksTable extends Migration
             $table->string('icon', 255);
             $table->text('image');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

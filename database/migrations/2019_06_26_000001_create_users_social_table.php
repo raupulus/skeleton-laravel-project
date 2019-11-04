@@ -31,6 +31,7 @@ class CreateUsersSocialTable extends Migration
             $table->string('nick')->nullable();
             $table->string('url');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

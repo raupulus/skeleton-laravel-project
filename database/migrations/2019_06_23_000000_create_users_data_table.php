@@ -22,6 +22,7 @@ class CreateUsersDataTable extends Migration
             $table->string('description', 511)->nullable();
             $table->text('bio')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

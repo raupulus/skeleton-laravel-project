@@ -21,6 +21,7 @@ class CreateUsersDetailTable extends Migration
             $table->string('profession')->nullable();
             $table->string('web')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

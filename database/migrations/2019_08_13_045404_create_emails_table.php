@@ -30,6 +30,7 @@ class CreateEmailsTable extends Migration
             $table->string('client_ip', 255);
             $table->string('app_name', 511);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

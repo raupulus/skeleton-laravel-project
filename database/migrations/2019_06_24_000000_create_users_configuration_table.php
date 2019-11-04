@@ -22,6 +22,7 @@ class CreateUsersConfigurationTable extends Migration
             $table->boolean('send_notification')->nullable()->default(true);
             $table->boolean('send_notification_push')->nullable()->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

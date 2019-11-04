@@ -23,6 +23,7 @@ class CreateUsersRolesTable extends Migration
             $table->string('display_name', 511);
             $table->text('description');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
