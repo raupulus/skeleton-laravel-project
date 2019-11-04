@@ -38,28 +38,32 @@
             'title' => $n_users . ($n_users > 1 ? ' Usuarios en total' : ' Usuario en total'),
             'icon' => 'fas fa-fw fa-users',
             'url' => '#',
-            'color' => 'bg-primary'
+            'color' => 'bg-primary',
+            'id' => 'widget_users_total',
         ])
 
         @widget('cardSeeDetailsWidget', [
             'title' => $n_usersActive . ($n_usersActive > 1 ? ' Usuarios Activos' : ' Usuario Activo'),
             'icon' => 'fas fa-fw fa-user-check',
             'url' => '#',
-            'color' => 'bg-success'
+            'color' => 'bg-success',
+            'id' => 'widget_users_active',
         ])
 
         @widget('cardSeeDetailsWidget', [
             'title' => $n_usersInactive . ($n_usersInactive > 1 ? ' Usuarios Inactivos' : ' Usuario Inactivo'),
             'icon' => 'fas fa-fw fa-user-shield',
             'url' => '#',
-            'color' => 'bg-danger'
+            'color' => 'bg-danger',
+            'id' => 'widget_users_inactive',
         ])
 
         @widget('cardSeeDetailsWidget', [
             'title' => $n_users_this_month . ($n_users_this_month > 1 ? ' Usuarios en 1 mes' : ' Usuario en 1 mes'),
             'icon' => 'fas fa-fw fa-user-clock',
             'url' => '#',
-            'color' => 'bg-warning'
+            'color' => 'bg-warning',
+            'id' => 'widget_users_month',
         ])
     </div>
 
