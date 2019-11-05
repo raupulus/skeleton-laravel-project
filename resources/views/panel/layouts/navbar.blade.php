@@ -71,7 +71,8 @@
                 {{-- <i class="fas fa-user-circle fa-fw"></i> --}}
                 <img src="{{auth()->user()->urlImage}}"
                      alt="{{auth()->user()->name}}"
-                     style="width: 30px; height: 30px; margin: 0; padding: 0"/>
+                     title="{{auth()->user()->name}}"
+                     class="navbar-user-image" />
             </a>
 
             <div class="dropdown-menu dropdown-menu-right"
