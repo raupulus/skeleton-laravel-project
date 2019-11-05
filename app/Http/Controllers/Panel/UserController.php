@@ -251,7 +251,7 @@ class UserController extends Controller
             //'users' => $users,
             'n_users' => $n_users,
             //'usersInactive' => $usersInactive,
-            'n_usersActive' => $n_usersInactive,
+            'n_usersActive' => $n_usersActive,
             'n_usersInactive' => $n_usersInactive,
             'n_users_this_month' => $n_users_this_month,
         ]);
