@@ -39,6 +39,7 @@
                 </a>
             </div>
         </li>
+
         <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
@@ -49,10 +50,11 @@
                 <a class="dropdown-item" href="#">Nuevo Mensaje 2</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">
-                    Ver todoso los mensajes
+                    Ver todos los mensajes
                 </a>
             </div>
         </li>
+
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-user-circle fa-fw"></i>
@@ -73,7 +75,13 @@
 
                 <div class="dropdown-divider"></div>
 
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+                {{-- Botón para abrir modal de Logout --}}
+                <a class="dropdown-item"
+                   href="#"
+                   data-toggle="modal"
+                   data-target="#logoutModal">
+                    Logout
+                </a>
             </div>
         </li>
     </ul>

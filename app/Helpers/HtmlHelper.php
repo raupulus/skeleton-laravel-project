@@ -53,13 +53,14 @@ class Buttom
      *              method => Tipo de envío para el formulario.
      *              alert => Indica si muestra cartel para confirmar envío.
      *              inputs => Campos ocultos extras: [name => value]
+     *              attributes => Cadena con atributos extras para el botón.
      *
      * @return string
      */
     public static function genericForm($action, $id,  $options = [])
     {
         $options = array_merge([
-            'class' => 'm-1 btn btn-sm btn-danger delete',
+            'class' => 'm-1 btn btn-sm btn-danger generic',
             'text' => 'Botón',
             'valueId' => 'form-generic',
             'icon' => 'fa fa-trash',
@@ -67,6 +68,7 @@ class Buttom
             'method' => 'POST',
             'alert' => false,
             'inputs' => [],  ## Representa todos los campos ocultos
+            'attributes' => '',
         ], $options);
 
         $form = '<form action="' . $action . '" ' .
@@ -82,6 +84,7 @@ class Buttom
 
         $form .= '<button ' .
             'class="' . $options['class'] . '" ';
+        $form .= $options['attributes'];
 
         if ($options['alert']) {
             $form .= 'onclick="formSendConfirm(event, this, \'' . $options['confirm'] . '\')"';
@@ -98,6 +101,24 @@ class Buttom
         '</form>';
 
         return $form;
+    }
+
+    /**
+     * Devuelve un botón para cerrar la sesión.
+     */
+    public static function logout($options = [])
+    {
+        $action = route('logout');
+        $id = random_int(1, 9999999);
+
+        $options = array_merge([
+            'class' => 'm-1 btn btn-sm btn-primary logout',
+            'text' => 'Salir',
+            'valueId' => 'form-logout',
+            'icon' => 'fa fa-sign-out',
+        ], $options);
+
+        return self::genericForm($action, $id, $options);
     }
 
     /**
