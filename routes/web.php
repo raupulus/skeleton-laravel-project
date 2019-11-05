@@ -103,6 +103,11 @@ Route::group([
         ## Ver todos los usuarios.
         Route::get('/index', 'Panel\UserController@index')->name('panel.users.index');
 
+        ## Configuración del usuario para la plataforma.
+        Route::get('/configuration', 'Panel\UserController@showConfiguration')
+            ->name('panel.users.configuration');
+        Route::post('/configuration/save', 'Panel\UserController@saveConfiguration')->name('panel.users.saveconfiguration');
+
         ## Añadir o editar un nuevo usuario.
         Route::get('/add/{user_id?}', 'Panel\UserController@add')->name('panel.users.add');
         Route::post('/add/{user_id?}', 'Panel\UserController@edit')->name('panel.users.edit');

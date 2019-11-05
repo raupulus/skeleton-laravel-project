@@ -69,7 +69,9 @@
                     Perfil
                 </a>
 
-                <a class="dropdown-item" href="#">Configuración</a>
+                <a class="dropdown-item" href="{{route('panel.users.configuration')}}">
+                    Configuración
+                </a>
 
                 <a class="dropdown-item" href="#">Log de Actividad</a>
 
