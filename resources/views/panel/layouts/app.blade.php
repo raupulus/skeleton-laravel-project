@@ -17,35 +17,37 @@ E-mail: dev@fryntiz.es
         @yield('head_javascript')
     </head>
 
-    <body id="page-top" class="header-sticky">
-         @include('panel.layouts.navbar')
+    <body class="page-top header-sticky">
+        <div id="app">
+             @include('panel.layouts.navbar')
 
-         <div id="wrapper">
-             @include('panel.layouts.sidebar')
+             <div id="wrapper">
+                 @include('panel.layouts.sidebar')
 
-             <div id="content-wrapper">
+                 <div id="content-wrapper">
 
-                 <div class="container-fluid">
-                     {{-- Caja para las alertas, errores y notificaciones --}}
-                     <div id="box-alerts">
-                        @include('panel.alerts.all_messages')
-                     </div>
+                     <div class="container-fluid">
+                         {{-- Caja para las alertas, errores y notificaciones --}}
+                         <div id="box-alerts">
+                            @include('panel.alerts.all_messages')
+                         </div>
 
-                     {{-- Caja con el contenido principal de la aplicación --}}
-                     <div id="box-content">
-                         @yield('content')
+                         {{-- Caja con el contenido principal de la aplicación --}}
+                         <div id="box-content">
+                             @yield('content')
+                         </div>
                      </div>
                  </div>
              </div>
-         </div>
 
-        <footer id="box-footer" class="footer sticky-footer">
-            @include('panel.layouts.footer')
-        </footer>
+            <footer id="box-footer" class="footer sticky-footer">
+                @include('panel.layouts.footer')
+            </footer>
 
-         @include('panel.layouts.footer_meta')
-         @yield('css')
-         @yield('javascript')
-         @yield('js')
+             @include('panel.layouts.footer_meta')
+             @yield('css')
+             @yield('javascript')
+             @yield('js')
+        </div>
     </body>
 </html>

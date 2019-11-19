@@ -41,7 +41,7 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
   ], 'public/assets/js/bootstrap-select.js')
   .styles('node_modules/bootstrap-select/dist/css/bootstrap-select.css', 'public/assets/css/bootstrap-select.css')
 
-  //.js('resources/js/assets/bootstrap.js', 'public/assets/js')
+  //.js('resources/js/app.js', 'public/js/app.js')
   .scripts('node_modules/bootstrap/dist/js/bootstrap.js', 'public/assets/js/bootstrap.js')
 
   .js('resources/js/assets/popper.js', 'public/assets/js')

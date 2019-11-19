@@ -57,6 +57,7 @@
         "sass": "^1.23.0",
         "sass-loader": "^7.3.1",
         "vue": "^2.6.10",
+        "vue-image-crop-upload": "^2.5.0",
         "vue-template-compiler": "^2.6.10",
         "weather-icons2": "^2.0.10"
     }
