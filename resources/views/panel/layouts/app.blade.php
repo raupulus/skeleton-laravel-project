@@ -43,11 +43,11 @@ E-mail: dev@fryntiz.es
             <footer id="box-footer" class="footer sticky-footer">
                 @include('panel.layouts.footer')
             </footer>
-
-             @include('panel.layouts.footer_meta')
-             @yield('css')
-             @yield('javascript')
-             @yield('js')
         </div>
+
+        @include('panel.layouts.footer_meta')
+        @yield('css')
+        @yield('javascript')
+        @yield('js')
     </body>
 </html>

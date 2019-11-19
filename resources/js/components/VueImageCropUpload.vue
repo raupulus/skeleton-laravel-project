@@ -79,3 +79,23 @@
         }
     });
 </script>
+
+
+<style>
+    .profile-header-section1 a:hover {
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    .profile-header-section1 a i.fa,
+    .profile-header-section1 a i.fas {
+        padding: 5px 8px;
+        font-size: 2.4rem;
+        border-radius: 3px;
+    }
+
+    .profile-header-section1 a i.fa:hover,
+    .profile-header-section1 a i.fas:hover {
+        background-color: #343A40;
+    }
+</style>

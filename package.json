@@ -59,6 +59,7 @@
         "vue": "^2.6.10",
         "vue-image-crop-upload": "^2.5.0",
         "vue-template-compiler": "^2.6.10",
+        "vuejs-clipper": "^1.1.5",
         "weather-icons2": "^2.0.10"
     }
 }
