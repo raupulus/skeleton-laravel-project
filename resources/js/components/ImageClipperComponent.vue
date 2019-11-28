@@ -14,7 +14,6 @@
 
                         <br />
 
-
                         <button>
                             <clipper-upload v-model="imgURL">upload image</clipper-upload>
                         </button>
@@ -23,12 +22,16 @@
                             clip image
                         </button>
 
-                        <clipper-basic class="my-clipper"
+                        <clipper-fixed class="my-clipper"
                                        ref="clipper"
                                        :src="imgURL"
                                        preview="my-preview">
                             <div class="placeholder" slot="placeholder">No image</div>
-                        </clipper-basic>
+                        </clipper-fixed>
+
+                        <div>
+                            <clipper-range min="0" max="10"></clipper-range>
+                        </div>
 
                         <div>
                             <div>preview:</div>
@@ -55,26 +58,29 @@
     //https://timtnleeproject.github.io/vuejs-clipper/#/examples/quick-start
     //https://timtnleeproject.github.io/vuejs-clipper/#/examples/profile-photo
 
-    //import VuejsClipper from 'vuejs-clipper';
-    import clipperFixed from 'vuejs-clipper';
-    Vue.use(clipperFixed);
+    import 'vuejs-clipper';
+
 
     export default {
         //name: 'v-image-clipper',
         mounted() {
-            console.log('Component test mounted.')
+            console.log('Component image clipper mounted.')
         },
         data () {
             return {
                 msg: 'Mensaje de prueba',
                 imgURL: '',
-                resultURL: ''
+                resultURL: '',
+                originalName: ''
             }
         },
         methods: {
             getResult: function () {
                 const canvas = this.$refs.clipper.clip();//call component's clip method
                 this.resultURL = canvas.toDataURL("image/jpeg", 1);//canvas->image
+            },
+            uploadImage: function() {
+
             }
         }
     }
