@@ -30,7 +30,8 @@
                         </clipper-fixed>
 
                         <div>
-                            <clipper-range min="0" max="10"></clipper-range>
+                            <clipper-range :min="rangeMin"
+                                           :max="rangeMax"></clipper-range>
                         </div>
 
                         <div>
@@ -71,16 +72,20 @@
                 msg: 'Mensaje de prueba',
                 imgURL: '',
                 resultURL: '',
-                originalName: ''
+                originalName: '',
+                rangeMin: 0,
+                rangeMax: 10
             }
         },
         methods: {
             getResult: function () {
+                console.log('getResult');
                 const canvas = this.$refs.clipper.clip();//call component's clip method
                 this.resultURL = canvas.toDataURL("image/jpeg", 1);//canvas->image
+                console.log(this.resultURL);
             },
             uploadImage: function() {
-
+                console.log('uploadImage');
             }
         }
     }
