@@ -30,11 +30,6 @@
                         </clipper-fixed>
 
                         <div>
-                            <clipper-range :min="rangeMin"
-                                           :max="rangeMax"></clipper-range>
-                        </div>
-
-                        <div>
                             <div>preview:</div>
                             <clipper-preview name="my-preview" class="my-clipper">
                                 <div class="placeholder" slot="placeholder">
@@ -60,7 +55,6 @@
     //https://timtnleeproject.github.io/vuejs-clipper/#/examples/profile-photo
 
     import 'vuejs-clipper';
-
 
     export default {
         //name: 'v-image-clipper',

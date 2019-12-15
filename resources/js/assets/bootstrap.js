@@ -16,6 +16,7 @@ try {
   //include('~bootstrap/dist/js/bootstrap.bundle.js');
 
   require('bootstrap');
+
 } catch (e) {}
 
 /**
