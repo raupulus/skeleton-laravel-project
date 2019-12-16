@@ -57,7 +57,28 @@
                     <!-- Step 2 -->
                     <b-container>
                         <b-row>
-                            <b-col>Step 2 - Recortar imagen</b-col>
+                            <b-col>Step 2 - Recortar imagen y aprobar</b-col>
+                        </b-row>
+
+                        <!-- Previsualización de imágen nueva -->
+                        <b-row>
+                            <b-col cols="6">
+                                <clipper-preview name="my-preview"
+                                                 class="my-clipper my-clipper-rounded">
+                                    <div class="placeholder" slot="placeholder">
+                                        Previsualización
+                                    </div>
+                                </clipper-preview>
+                            </b-col>
+
+                            <b-col cols="6">
+                                <clipper-preview name="my-preview"
+                                                 class="my-clipper">
+                                    <div class="placeholder" slot="placeholder">
+                                        Previsualización
+                                    </div>
+                                </clipper-preview>
+                            </b-col>
                         </b-row>
 
                         <b-row>
@@ -66,66 +87,22 @@
                                                ref="clipper"
                                                :src="imgURL"
                                                preview="my-preview">
-                                    <div class="placeholder" slot="placeholder">No image</div>
+                                    <div class="placeholder" slot="placeholder">
+                                        No hay imagen seleccionada
+                                    </div>
                                 </clipper-fixed>
                             </b-col>
                         </b-row>
-                    </b-container>
 
-                    <!-- Step 3 -->
-                    <b-container>
-                        <b-row>
-                            <b-col>Step 3 - Previsualizar imagen y aprobar</b-col>
-                        </b-row>
-
-                        <b-row>
-                            <b-col>
-                                <clipper-preview name="my-preview" class="my-clipper">
-                                    <div class="placeholder" slot="placeholder">
-                                        preview area
-                                    </div>
-                                </clipper-preview>
+                        <b-row class="mt-3 mb-3">
+                            <b-col class="text-center">
+                                <b-button variant="success" @click="getResult">
+                                    Aprobar Imagen
+                                </b-button>
                             </b-col>
                         </b-row>
                     </b-container>
                 </b-modal>
-
-                <div>
-                    <h4>Image upload</h4>
-                    <br />
-                    Mensaje: {{msg}}
-
-                    <br />
-
-                    <button>
-                        <clipper-upload v-model="imgURL">upload image</clipper-upload>
-                    </button>
-
-                    <button @click="getResult">
-                        clip image
-                    </button>
-
-                    <clipper-fixed class="my-clipper"
-                                   ref="clipper"
-                                   :src="imgURL"
-                                   preview="my-preview">
-                        <div class="placeholder" slot="placeholder">No image</div>
-                    </clipper-fixed>
-
-                    <div>
-                        <div>preview:</div>
-                        <clipper-preview name="my-preview" class="my-clipper">
-                            <div class="placeholder" slot="placeholder">
-                                preview area
-                            </div>
-                        </clipper-preview>
-                    </div>
-
-                    <div>
-                        <div>result:</div>
-                        <img class="result" :src="resultURL" alt="">
-                    </div>
-                </div>
             </b-col>
         </b-row>
     </b-container>
@@ -180,5 +157,9 @@
         text-align: center;
         padding: 20px;
         background-color: lightgray;
+    }
+
+    .my-clipper-rounded > div {
+        border-radius: 50%;
     }
 </style>
