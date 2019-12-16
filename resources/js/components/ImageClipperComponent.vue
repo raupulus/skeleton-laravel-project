@@ -1,52 +1,134 @@
 <template>
-    <div id="v-image-clipper" class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Upload Image</h3>
+    <b-container fluid id="v-image-clipper">
+        <b-row class="justify-content-center">
+            <b-col cols="12">
+                <b-button v-b-modal.v-modal-avatar-image-crop>
+                    Cambiar Avatar
+                </b-button>
+
+                <b-modal id="v-modal-avatar-image-crop"
+                         title="Selecciona nueva imagen para tu Avatar">
+                    <!-- Step 1 -->
+                    <b-container fluid>
+                        <b-row>
+                            <b-col>Step 1</b-col>
+                        </b-row>
+
+                        <!-- Mensaje de ayuda -->
+                        <b-row>
+                            <b-col cols="12"
+                                   class="mt-3 mb-3 p-3 bg-primary text-warning font-weight-bold">
+                                Mensaje: {{msg}}
+                            </b-col>
+                        </b-row>
+
+                        <!-- Barra de separación -->
+                        <div class="w-100"></div>
+
+                        <!-- Previsualización de imágen actual -->
+                        <b-row>
+                            <b-col cols="6">
+                                <b-img rounded="circle"
+                                       fluid
+                                       src="https://picsum.photos/250/250/?image=54"
+                                       alt="Image 1"></b-img>
+                            </b-col>
+
+                            <b-col cols="6">
+                                <b-img rounded
+                                       fluid
+                                       src="https://picsum.photos/250/250/?image=54"
+                                       alt="Image 1"></b-img>
+                            </b-col>
+                        </b-row>
+
+                        <!-- Botón para seleccionar imagen -->
+                        <b-row class="mt-3 mb-3">
+                            <b-col cols="12" class="text-center">
+                                <b-button>
+                                    <clipper-upload v-model="imgURL">
+                                        Seleccionar imagen
+                                    </clipper-upload>
+                                </b-button>
+                            </b-col>
+                        </b-row>
+                    </b-container>
+
+                    <!-- Step 2 -->
+                    <b-container>
+                        <b-row>
+                            <b-col>Step 2 - Recortar imagen</b-col>
+                        </b-row>
+
+                        <b-row>
+                            <b-col>
+                                <clipper-fixed class="my-clipper"
+                                               ref="clipper"
+                                               :src="imgURL"
+                                               preview="my-preview">
+                                    <div class="placeholder" slot="placeholder">No image</div>
+                                </clipper-fixed>
+                            </b-col>
+                        </b-row>
+                    </b-container>
+
+                    <!-- Step 3 -->
+                    <b-container>
+                        <b-row>
+                            <b-col>Step 3 - Previsualizar imagen y aprobar</b-col>
+                        </b-row>
+
+                        <b-row>
+                            <b-col>
+                                <clipper-preview name="my-preview" class="my-clipper">
+                                    <div class="placeholder" slot="placeholder">
+                                        preview area
+                                    </div>
+                                </clipper-preview>
+                            </b-col>
+                        </b-row>
+                    </b-container>
+                </b-modal>
+
+                <div>
+                    <h4>Image upload</h4>
+                    <br />
+                    Mensaje: {{msg}}
+
+                    <br />
+
+                    <button>
+                        <clipper-upload v-model="imgURL">upload image</clipper-upload>
+                    </button>
+
+                    <button @click="getResult">
+                        clip image
+                    </button>
+
+                    <clipper-fixed class="my-clipper"
+                                   ref="clipper"
+                                   :src="imgURL"
+                                   preview="my-preview">
+                        <div class="placeholder" slot="placeholder">No image</div>
+                    </clipper-fixed>
+
+                    <div>
+                        <div>preview:</div>
+                        <clipper-preview name="my-preview" class="my-clipper">
+                            <div class="placeholder" slot="placeholder">
+                                preview area
+                            </div>
+                        </clipper-preview>
                     </div>
 
-                    <div class="card-body">
-                        <h4>Image upload</h4>
-                        <br />
-                        Mensaje: {{msg}}
-
-                        <br />
-
-                        <button>
-                            <clipper-upload v-model="imgURL">upload image</clipper-upload>
-                        </button>
-
-                        <button @click="getResult">
-                            clip image
-                        </button>
-
-                        <clipper-fixed class="my-clipper"
-                                       ref="clipper"
-                                       :src="imgURL"
-                                       preview="my-preview">
-                            <div class="placeholder" slot="placeholder">No image</div>
-                        </clipper-fixed>
-
-                        <div>
-                            <div>preview:</div>
-                            <clipper-preview name="my-preview" class="my-clipper">
-                                <div class="placeholder" slot="placeholder">
-                                    preview area
-                                </div>
-                            </clipper-preview>
-                        </div>
-
-                        <div>
-                            <div>result:</div>
-                            <img class="result" :src="resultURL" alt="">
-                        </div>
+                    <div>
+                        <div>result:</div>
+                        <img class="result" :src="resultURL" alt="">
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
+            </b-col>
+        </b-row>
+    </b-container>
 </template>
 
 <script>
@@ -86,6 +168,9 @@
 </script>
 
 <style lang="scss">
+    #v-image-clipper {
+
+    }
     .my-clipper {
         width: 100%;
         max-width: 700px;
