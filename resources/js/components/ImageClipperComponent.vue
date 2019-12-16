@@ -10,35 +10,28 @@
                          title="Selecciona nueva imagen para tu Avatar">
                     <!-- Step 1 -->
                     <b-container fluid>
-                        <b-row>
-                            <b-col>Step 1</b-col>
-                        </b-row>
-
                         <!-- Mensaje de ayuda -->
                         <b-row>
                             <b-col cols="12"
                                    class="mt-3 mb-3 p-3 bg-primary text-warning font-weight-bold">
-                                Mensaje: {{msg}}
+                                {{msgStep1}}
                             </b-col>
                         </b-row>
-
-                        <!-- Barra de separación -->
-                        <div class="w-100"></div>
 
                         <!-- Previsualización de imágen actual -->
                         <b-row>
                             <b-col cols="6">
                                 <b-img rounded="circle"
                                        fluid
-                                       src="https://picsum.photos/250/250/?image=54"
-                                       alt="Image 1"></b-img>
+                                       :src="imgOriginal"
+                                       alt="Avatar Original redondeado"></b-img>
                             </b-col>
 
                             <b-col cols="6">
                                 <b-img rounded
                                        fluid
-                                       src="https://picsum.photos/250/250/?image=54"
-                                       alt="Image 1"></b-img>
+                                       :src="imgOriginal"
+                                       alt="Avatar original cuadrado"></b-img>
                             </b-col>
                         </b-row>
 
@@ -56,8 +49,12 @@
 
                     <!-- Step 2 -->
                     <b-container>
+                        <!-- Mensaje de ayuda -->
                         <b-row>
-                            <b-col>Step 2 - Recortar imagen y aprobar</b-col>
+                            <b-col cols="12"
+                                   class="mt-3 mb-3 p-3 bg-primary text-warning font-weight-bold">
+                                {{msgStep2}}
+                            </b-col>
                         </b-row>
 
                         <!-- Previsualización de imágen nueva -->
@@ -96,8 +93,14 @@
 
                         <b-row class="mt-3 mb-3">
                             <b-col class="text-center">
+                                <b-button variant="danger">
+                                    Atrás
+                                </b-button>
+                            </b-col>
+
+                            <b-col class="text-center">
                                 <b-button variant="success" @click="getResult">
-                                    Aprobar Imagen
+                                    Guardar Imagen
                                 </b-button>
                             </b-col>
                         </b-row>
@@ -122,8 +125,12 @@
         },
         data () {
             return {
-                msg: 'Mensaje de prueba',
+                msgStep1: 'Así se ve tu imagen actual, puedes subir una nueva.',
+                msgStep2:
+                    'Mueve la imagen para centrarla, puedes hacer scroll ' +
+                    'para aumentar o disminuir su tamaño.',
                 imgURL: '',
+                imgOriginal: 'https://picsum.photos/250/250/?image=54',
                 resultURL: '',
                 originalName: '',
                 rangeMin: 0,
