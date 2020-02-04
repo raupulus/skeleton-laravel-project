@@ -2,12 +2,15 @@
     <b-container fluid id="v-image-clipper">
         <b-row class="justify-content-center">
             <b-col cols="12">
-                <b-button v-b-modal.v-modal-avatar-image-crop>
+                <b-button v-b-modal.v-modal-avatar-image-crop @click="show=true">
                     Cambiar Avatar
                 </b-button>
 
                 <b-modal id="v-modal-avatar-image-crop"
-                         title="Selecciona nueva imagen para tu Avatar">
+                         title="Selecciona nueva imagen para tu Avatar"
+                         size="xl"
+                         v-model="show"
+                         centered>
                     <!-- Step 1 -->
                     <b-container fluid>
                         <!-- Mensaje de ayuda -->
@@ -105,6 +108,19 @@
                             </b-col>
                         </b-row>
                     </b-container>
+
+                    <template v-slot:modal-footer>
+                        <div class="w-100">
+                            <b-button
+                                variant="warning"
+                                size="sm"
+                                class="float-right"
+                                @click="show=false"
+                            >
+                                Cerrar
+                            </b-button>
+                        </div>
+                    </template>
                 </b-modal>
             </b-col>
         </b-row>
@@ -125,6 +141,7 @@
         },
         data () {
             return {
+                show: false,
                 msgStep1: 'Así se ve tu imagen actual, puedes subir una nueva.',
                 msgStep2:
                     'Mueve la imagen para centrarla, puedes hacer scroll ' +
