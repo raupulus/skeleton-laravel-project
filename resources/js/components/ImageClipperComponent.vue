@@ -62,27 +62,7 @@
 
                         <!-- Previsualización de imágen nueva -->
                         <b-row>
-                            <b-col cols="6">
-                                <clipper-preview name="my-preview"
-                                                 class="my-clipper my-clipper-rounded">
-                                    <div class="placeholder" slot="placeholder">
-                                        Previsualización
-                                    </div>
-                                </clipper-preview>
-                            </b-col>
-
-                            <b-col cols="6">
-                                <clipper-preview name="my-preview"
-                                                 class="my-clipper">
-                                    <div class="placeholder" slot="placeholder">
-                                        Previsualización
-                                    </div>
-                                </clipper-preview>
-                            </b-col>
-                        </b-row>
-
-                        <b-row>
-                            <b-col>
+                            <b-col cols="6" cols-sm="12">
                                 <clipper-fixed class="my-clipper"
                                                ref="clipper"
                                                :src="imgURL"
@@ -91,6 +71,30 @@
                                         No hay imagen seleccionada
                                     </div>
                                 </clipper-fixed>
+                            </b-col>
+
+                            <b-col cols="6" cols-sm="12">
+                                <b-row>
+                                    <b-col cols="12"
+                                           class="box-my-clipper-preview">
+                                        <clipper-preview name="my-preview"
+                                                         class="my-clipper my-clipper-rounded">
+                                            <div class="placeholder" slot="placeholder">
+                                                Previsualización
+                                            </div>
+                                        </clipper-preview>
+                                    </b-col>
+
+                                    <b-col cols="12"
+                                           class="box-my-clipper-preview">
+                                        <clipper-preview name="my-preview"
+                                                         class="my-clipper">
+                                            <div class="placeholder" slot="placeholder">
+                                                Previsualización
+                                            </div>
+                                        </clipper-preview>
+                                    </b-col>
+                                </b-row>
                             </b-col>
                         </b-row>
 
@@ -174,13 +178,18 @@
     }
     .my-clipper {
         width: 100%;
-        max-width: 700px;
+        max-width: 300px;
+        border: 3px solid #3a3a3a;
     }
 
     .placeholder {
         text-align: center;
         padding: 20px;
         background-color: lightgray;
+    }
+
+    .box-my-clipper-preview {
+        margin: 10px;
     }
 
     .my-clipper-rounded > div {

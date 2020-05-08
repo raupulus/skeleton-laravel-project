@@ -320,6 +320,17 @@ class UserController extends Controller
         ], 201);
     }
 
+    /**
+     * Almacena la imagen para el usuario actual.
+     */
+    public function uploadAvatar(Request $request)
+    {
+        $imageBase64 = $request->get('image');
+
+
+
+    }
+
     /****************** DATATABLES ******************/
 
     /**

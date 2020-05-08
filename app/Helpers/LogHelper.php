@@ -28,7 +28,7 @@ class LogHelper
     ];
 
     /**
-     * Registr un suceso recibiendo el tipo y el mensaje a registrar.
+     * Registra un suceso recibiendo el tipo y el mensaje a registrar.
      *
      * @param $type
      * @param $message
