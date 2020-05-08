@@ -166,12 +166,28 @@ class JsonHelper
      *
      * @return \Illuminate\Http\JsonResponse Devuelve la respuesta final.
      */
-    public static function created(Array $data)
+    public static function created(Array $data = [])
     {
         return self::success(
             $data,
-            'Se ha creado correctamente',
+            'Se ha insertado correctamente',
             201
+        );
+    }
+
+    /**
+     * Respuesta indicando que se ha insertado un elemento correctamente.
+     *
+     * @param array $data
+     *
+     * @return \Illuminate\Http\JsonResponse Devuelve la respuesta final.
+     */
+    public static function updated(Array $data = [])
+    {
+        return self::success(
+            $data,
+            'Se ha actualizado correctamente',
+            202
         );
     }
 
@@ -182,7 +198,7 @@ class JsonHelper
      *
      * @return \Illuminate\Http\JsonResponse Devuelve la respuesta final.
      */
-    public static function accepted(Array $data)
+    public static function accepted(Array $data = [])
     {
         return self::success(
             $data,

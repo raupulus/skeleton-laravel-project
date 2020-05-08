@@ -11,7 +11,11 @@ window.Vue = require('vue');
 // Importo Bootstrap-Vue
 import BootstrapVue from 'bootstrap-vue';
 
-Vue.use(BootstrapVue);
+
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+
+Vue.use(BootstrapVue, VueAxios, axios);
 
 /**
  * The following block of code may be used to automatically register your

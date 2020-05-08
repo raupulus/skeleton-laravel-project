@@ -17,18 +17,30 @@ use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use JsonHelper;
 use LogHelper;
 use RoleHelper;
 use Yajra\DataTables\DataTables;
 use function auth;
+use function base_path;
 use function compact;
 use function config;
 use function dd;
+use function file_exists;
+use function file_get_contents;
+use function hash;
 use function is_null;
 use function isEmpty;
+use function json_encode;
+use function md5;
 use function redirect;
 use function response;
 use function route;
+use function sha1;
+use function uniqid;
+use function unlink;
 use function url;
 use function view;
 
@@ -323,12 +335,56 @@ class UserController extends Controller
     /**
      * Almacena la imagen para el usuario actual.
      */
-    public function uploadAvatar(Request $request)
+    public function uploadAvatarAjax(Request $request)
     {
         $imageBase64 = $request->get('image');
+        $user_id = $request->get('user_id');
+
+        if (!$imageBase64 || !$user_id) {
+            JsonHelper::error('Faltan parámetros');
+        }
+
+        if (!RoleHelper::canUserEdit()) {
+            JsonHelper::error('No tienes permiso para realizar esta acción');
+        }
+
+        $user = User::find($user_id);
+
+        if (!$user) {
+            JsonHelper::error('No existe el usuario');
+        }
+
+        ## Guardo la imagen en el disco duro.
+        $hash1 = sha1($user_id);
+        $hash2 = uniqid($hash1, true);
+        $hash3 = hash('haval160,4', $hash2);
+        $name = $hash1 . '_' . $hash2 . $hash3;
+
+        $image = Image::make(file_get_contents($imageBase64))
+            ->resize(250, 250);
+
+        $path = 'storage/users/' . $name . '.jpg';
+
+        ## Guardo la imagen como jpg comprimiendo su calidad
+        if ($image->save($path, 70, 'jpg')) {
+            if ($user->avatar != 'images/users/profile-avatars/default.png') {
+                $oldImage = base_path() . '/storage/app/public/' . $user->avatar;
+
+                ## Borro la imagen anterior.
+                if ($oldImage && file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
 
 
+            ## Guardo la nueva imagen como dato del usuario.
+            $user->avatar = 'users/' . $name . '.jpg';
+            $user->save();
 
+            return JsonHelper::updated();
+        }
+
+        return JsonHelper::error('No se pudo guardar');
     }
 
     /****************** DATATABLES ******************/

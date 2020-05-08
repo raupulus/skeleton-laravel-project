@@ -130,6 +130,20 @@ Route::group([
             ->name('panel.users.table.inactive');
         Route::get('/table-blocked-users', 'Panel\UserController@getTableBlockedUsers')
             ->name('panel.users.table.blocked');
+
+        /**
+         * Ajax
+         */
+        Route::group([
+            'prefix' => 'ajax',
+            'middleware' => [
+
+            ]
+        ], function() {
+            Route::post('/avatar/upload', 'Panel\UserController@uploadAvatarAjax')
+                ->name('panel.ajax.user.avatar.upload');
+        });
+
     });
 
     ## Errores

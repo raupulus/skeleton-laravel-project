@@ -137,6 +137,8 @@
     //https://timtnleeproject.github.io/vuejs-clipper/#/examples/profile-photo
 
     import 'vuejs-clipper';
+    import axios from 'axios';
+    import VueAxios from "vue-axios";
 
     export default {
         //name: 'v-image-clipper',
@@ -163,10 +165,26 @@
                 console.log('getResult');
                 const canvas = this.$refs.clipper.clip();//call component's clip method
                 this.resultURL = canvas.toDataURL("image/jpeg", 1);//canvas->image
-                console.log(this.resultURL);
+                //console.log(this.resultURL);
+                this.uploadImage();
             },
             uploadImage: function() {
                 console.log('uploadImage');
+                axios.post(
+                    '/panel/user/ajax/avatar/upload',
+                    {
+                        image: this.resultURL,
+                        user_id: 1
+                    }
+                );
+
+                /*
+                axios.get("https://jsonplaceholder.typicode.com/todos/")
+                    .then(response => {
+                        this.todosList = [...response.data].slice(0, 10)
+                    });
+
+                */
             }
         }
     }

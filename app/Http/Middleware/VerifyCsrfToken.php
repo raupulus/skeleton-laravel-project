@@ -19,6 +19,6 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        'panel/user/ajax/avatar/upload',  // Ruta para subir por ajax el avatar
     ];
 }

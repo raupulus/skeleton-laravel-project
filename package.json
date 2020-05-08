@@ -17,7 +17,7 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.12.0",
-        "axios": "^0.19",
+        "axios": "^0.19.2",
         "bootstrap": "^4.4.1",
         "bootstrap-select": "^1.13.12",
         "bootstrap-vue": "^2.1.0",
@@ -60,6 +60,7 @@
         "sass": "^1.23.7",
         "sass-loader": "^7.3.1",
         "vue": "^2.6.10",
+        "vue-axios": "^2.1.5",
         "vue-image-crop-upload": "^2.5.0",
         "vue-rx": "^6.2.0",
         "vue-template-compiler": "^2.6.10",
