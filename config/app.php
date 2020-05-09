@@ -101,7 +101,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -196,6 +196,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Añadidos por mi
+         */
+        Yajra\Datatables\DatatablesServiceProvider::class,
+
     ],
 
     /*
@@ -247,6 +252,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        /**
+         * Añadidos por mi
+         */
+        'Datatables' => Yajra\Datatables\Facades\Datatables::class,
     ],
 
 ];

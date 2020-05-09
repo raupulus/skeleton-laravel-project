@@ -15,24 +15,31 @@
 {{-- Fontawesome --}}
 <script src="{{ mix('assets/js/fontawesome.js') }}"></script>
 
-{{-- Scripts que serán reemplazados por algunas páginas --}}
-@section('footer-js-custom')
-    {{-- DataTables --}}
-    <script src="{{ mix('assets/js/datatables.js') }}"></script>
-
-    {{-- Chart.js --}}
-    <script src="{{ mix('assets/js/chart.js') }}"></script>
-
-    {{-- Demos scripts --}}
-    {{--
-    <script src="{{ url('admin-panel/js/demos/datatables-demo.js') }}"></script>
-    <script src="{{ url('admin-panel/js/demos/chart-area-demo.js') }}"></script>
-    <script src="{{ url('admin-panel/js/demos/chart-bar-demo.js') }}"></script>
-    <script src="{{ url('admin-panel/js/demos/chart-pie-demo.js') }}"></script>
-    --}}
-
-    <script src="{{ mix('admin-panel/js/functions.js') }}"></script>
-    <script src="{{ mix('admin-panel/js/scripts.js') }}"></script>
+{{-- Mis scripts propios --}}
+<script src="{{ mix('js/functions.js') }}"></script>
+<script src="{{ mix('admin-panel/js/functions.js') }}"></script>
+<script src="{{ mix('admin-panel/js/scripts.js') }}"></script>
+<script src="{{ mix('admin-panel/js/theme.js') }}"></script>
+<script src="{{ mix('js/vue.js') }}"></script>
 
 
-@show
+{{-- Listado de assets disponibles pero no cargados globalmente --}}
+
+{{-- DataTables --}}
+{{--
+<script src="{{ mix('assets/js/datatables.js') }}"></script>
+--}}
+
+{{-- Chart.js --}}
+{{--
+<script src="{{ mix('assets/js/chart.js') }}"></script>
+--}}
+
+{{-- bootstrap-select --}}
+{{--
+<script src="{{ mix('assets/js/bootstrap-select.js') }}"></script>
+
+<script>
+    $.fn.selectpicker.Constructor.BootstrapVersion = '4.1.1';
+</script>
+--}}

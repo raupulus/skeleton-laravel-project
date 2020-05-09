@@ -1,3 +1,5 @@
+
+
 /*
 require( 'jszip' );
 require( 'pdfmake' );
@@ -27,11 +29,11 @@ try {
   window.$ = window.jQuery = require('jquery');
   window.Popper = require('popper.js').default;
 
-  require('bootstrap');
+  //require('bootstrap');
 
   window.JSZip = require("jszip");
   require( "pdfmake" );
-  window.DataTable = require( 'datatables.net' );
+  window.DataTable = $.DataTable = require( 'datatables.net' );
   require( 'datatables.net-bs4' );
   require( 'datatables.net-buttons-bs4' );
   require( 'datatables.net-buttons/js/buttons.colVis.js' );
@@ -45,5 +47,4 @@ try {
   require( 'datatables.net-scroller-bs4' );
   require( 'datatables.net-keytable' );
   require( 'datatables.net-rowgroup' );
-
 } catch (e) {}

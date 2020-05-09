@@ -54,6 +54,21 @@ Route::group(['prefix' => 'error'], function() {
  *            PANEL DE GESTIÓN
  ******************************************/
 Route::group([
+    'prefix' => 'datatable',
+    'middleware' => [
+
+    ]
+], function() {
+
+    Route::get('/translation', function() {
+        return response()->file(base_path('public/json/datatable/datatable-translation-es.json'));
+    })->name('datatable.translation');
+});
+
+/******************************************
+ *            PANEL DE GESTIÓN
+ ******************************************/
+Route::group([
     'prefix' => 'panel',
     'middleware' => [
         'auth'
@@ -61,19 +76,19 @@ Route::group([
 ], function() {
     Route::get('/', function() {
         return view('panel.index');
-    })->name('panel-index');
+    })->name('panel.index');
 
     Route::get('/login', function() {
         return view('panel.login');
-    })->name('panel-login');
+    })->name('panel.login');
 
     Route::get('/forgot-password', function() {
         return view('panel.forgot-password');
-    })->name('panel-forgot-password');
+    })->name('panel.forgot.password');
 
     Route::get('/register', function() {
         return view('panel.register');
-    })->name('panel-register');
+    })->name('panel.register');
 
     ## Usuarios
     Route::group([
@@ -83,38 +98,76 @@ Route::group([
         ]
     ], function() {
         ## Ver un usuario concreto.
-        Route::get('/view/{id}/{slug}?', 'UserController@view')->name('user-view');
+        Route::get('/view/{id}/{nick?}', 'Panel\UserController@view')->name('panel.users.view');
 
         ## Ver todos los usuarios.
-        Route::get('/index', 'UserController@index')->name('user-index');
+        Route::get('/index', 'Panel\UserController@index')->name('panel.users.index');
 
-        ## Añadir o edita un nuevo usuario.
-        Route::get('/add', 'UserController@add')->name('user-add');
-        Route::post('/add', 'UserController@add')->name('user-add');
+        ## Configuración del usuario para la plataforma.
+        Route::get('/configuration', 'Panel\UserController@showConfiguration')
+            ->name('panel.users.configuration');
+        Route::post('/configuration/save', 'Panel\UserController@saveConfiguration')->name('panel.users.saveconfiguration');
+
+        ## Añadir o editar un nuevo usuario.
+        Route::get('/add/{user_id?}', 'Panel\UserController@add')->name('panel.users.add');
+        Route::post('/add/{user_id?}', 'Panel\UserController@edit')->name('panel.users.edit');
+        Route::post('/delete/{user_id?}', 'Panel\UserController@delete')->name('panel.users.delete');
+
+        ## Marcar como activo o inactivo un usuario
+        Route::post('/toggleactive/{user_id}', 'Panel\UserController@toggleActive')->name('panel.users.toggle');
+        Route::post('/toggleactiveajax/{user_id}', 'Panel\UserController@toggleActiveAjax')->name('panel.users.toggle.ajax');
+
+        /**
+         * Datatables
+         */
+        Route::get('/table-all-users', 'Panel\UserController@getTableAllUser')
+            ->name('panel.users.table.allusers');
+        Route::get('/table-thismonth-users', 'Panel\UserController@getTableThisMonthUsers')
+            ->name('panel.users.table.thismonth');
+        Route::get('/table-active-users', 'Panel\UserController@getTableActiveUsers')
+            ->name('panel.users.table.active');
+        Route::get('/table-inactive-users', 'Panel\UserController@getTableInactiveUsers')
+            ->name('panel.users.table.inactive');
+        Route::get('/table-blocked-users', 'Panel\UserController@getTableBlockedUsers')
+            ->name('panel.users.table.blocked');
+
+        /**
+         * Ajax
+         */
+        Route::group([
+            'prefix' => 'ajax',
+            'middleware' => [
+
+            ]
+        ], function() {
+            Route::post('/avatar/upload', 'Panel\UserController@uploadAvatarAjax')
+                ->name('panel.ajax.user.avatar.upload');
+        });
+
     });
 
     ## Errores
     Route::get('/404', function() {
         return view('panel.errors.404');
-    })->name('panel-404');
+    })->name('panel.404');
 
     Route::get('/500', function() {
         return view('panel.errors.500');
-    })->name('panel-500');
+    })->name('panel.500');
 
     Route::get('/blank', function() {
         return view('panel.blank');
-    })->name('panel-blank');
+    })->name('panel.blank');
 
     ## DEMOS
     Route::group(['prefix' => 'demos'], function() {
         Route::get('/charts', function () {
             return view('panel.demos.charts');
-        })->name('panel-demo-charts');
+        })->name('panel.demo.charts');
 
         Route::get('/tables', function () {
             return view('panel.demos.tables');
-        })->name('panel-demo-tables');
+        })->name('panel.demo.tables');
     });
 });
 

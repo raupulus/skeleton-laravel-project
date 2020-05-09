@@ -3,7 +3,7 @@
         <ol class="breadcrumb cyan lighten-2">
             <li class="breadcrumb-item">
                 <i class="fa fa-home mr-1 white-text" aria-hidden="true"></i>
-                <a href="{{route('panel-index')}}">Inicio</a>
+                <a href="{{route('panel.index')}}">Inicio</a>
             </li>
 
             @php($n_breadcrumbs = count($breadcrumbs) - 1)

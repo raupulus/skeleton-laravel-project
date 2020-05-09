@@ -25,6 +25,8 @@ class CreateFileTypesTable extends Migration
             $table->text('icon32');
             $table->text('icon64');
             $table->text('icon128');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

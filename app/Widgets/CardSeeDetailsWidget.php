@@ -23,6 +23,8 @@ class CardSeeDetailsWidget extends AbstractWidget
     protected $config = [
         'titleUrl' => 'Ver detalles',
         'color' => 'bg-primary',
+        'class' => '',
+        'id' => '',
     ];
 
     /**
@@ -37,7 +39,9 @@ class CardSeeDetailsWidget extends AbstractWidget
             'icon' => $this->config['icon'],
             'titleUrl' => $this->config['titleUrl'],
             'url' => $this->config['url'],
-            'color' => $this->config['color']
+            'color' => $this->config['color'],
+            'class' => $this->config['class'],
+            'id' => $this->config['id'],
         ]);
     }
 }

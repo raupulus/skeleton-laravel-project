@@ -5,7 +5,7 @@
 
 @yield('meta')
 
-<title>@yield('title', 'API Admin')</title>
-<meta name="description" content="@yield('description', 'API Admin')">
+<title>@yield('title', 'APP Admin Panel')</title>
+<meta name="description" content="@yield('description', config('app.description'))">
 <meta name="author" content="@yield('title', 'Raúl Caro Pastorino')">
-<meta name="keywords" content="@yield('keywords', 'Api Fryntiz, fryntiz, chipiona, desarrollador web')" />
+<meta name="keywords" content="@yield('keywords', 'App Fryntiz, fryntiz, chipiona, desarrollador web')" />

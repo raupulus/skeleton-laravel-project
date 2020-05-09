@@ -1,6 +1,6 @@
 <ul class="sidebar navbar-nav">
     <li class="nav-item active">
-        <a class="nav-link" href="{{route('panel-index')}}">
+        <a class="nav-link" href="{{route('panel.index')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
@@ -20,10 +20,10 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">Usuarios WEB:</h6>
-            <a class="dropdown-item" href="{{route('user-add')}}">
+            <a class="dropdown-item" href="{{route('panel.users.add')}}">
                 Añadir Usuario
             </a>
-            <a class="dropdown-item" href="{{route('user-index')}}">
+            <a class="dropdown-item" href="{{route('panel.users.index')}}">
                 Gestionar Usuarios
             </a>
 
@@ -54,23 +54,23 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">Ventanas de Login:</h6>
-            <a class="dropdown-item" href="{{route('panel-login')}}">
+            <a class="dropdown-item" href="{{route('panel.login')}}">
                 Login
             </a>
-            <a class="dropdown-item" href="{{route('panel-register')}}">
+            <a class="dropdown-item" href="{{route('panel.register')}}">
                 Registro
             </a>
-            <a class="dropdown-item" href="{{route('panel-forgot-password')}}">
+            <a class="dropdown-item" href="{{route('panel.forgot.password')}}">
                 Contraseña Perdida
             </a>
 
             <div class="dropdown-divider"></div>
             <h6 class="dropdown-header">Otras páginas:</h6>
-            <a class="dropdown-item" href="{{route('panel-404')}}">
+            <a class="dropdown-item" href="{{route('panel.404')}}">
                 404
             </a>
 
-            <a class="dropdown-item" href="{{route('panel-blank')}}">
+            <a class="dropdown-item" href="{{route('panel.blank')}}">
                 En blanco
             </a>
         </div>
@@ -78,13 +78,13 @@
 
 
     <li class="nav-item">
-        <a class="nav-link" href="{{route('panel-demo-charts')}}">
+        <a class="nav-link" href="{{route('panel.demo.charts')}}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Demo Charts</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{route('panel-demo-tables')}}">
+        <a class="nav-link" href="{{route('panel.demo.tables')}}">
             <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span></a>
+            <span>Demo Tables</span></a>
     </li>
 </ul>

@@ -6,6 +6,8 @@
  * Time: 09:20
  */
 
+use App\User;
+
 /**
  * Class RoleHelper
  *
@@ -18,6 +20,9 @@
  */
 class RoleHelper
 {
+    /**
+     * Array de Roles establecidos. Todo → Dinamizar desde intranet
+     */
     private const SUPERADMIN = [1];
     private const ADMIN = [1,3];
     private const USER = [1,2,3];
@@ -29,7 +34,7 @@ class RoleHelper
      */
     public static function isSuperAdmin($role_id = null)
     {
-        $role_id = $role_id ?: auth()->id();
+        $role_id = $role_id ?: auth()->user()->role_id;
         return in_array($role_id, self::SUPERADMIN, false);
     }
 
@@ -41,7 +46,7 @@ class RoleHelper
      */
     public static function isAdmin($role_id = null)
     {
-        $role_id = $role_id ?: auth()->id();
+        $role_id = $role_id ?: auth()->user()->role_id;
         return in_array($role_id, self::ADMIN, false);
     }
 
@@ -53,5 +58,76 @@ class RoleHelper
     public static function notIsAdmin($role_id = null)
     {
         return !self::isAdmin($role_id);
+    }
+
+    /**
+     * Comprueba si el usuario actual puede editar el usuario.
+     *
+     * @param null $user_id
+     *
+     * @return bool
+     */
+    public static function canUserEdit($edit_user_id = null)
+    {
+        $role_id = auth()->user()->role_id;
+        $user_id = auth()->id();
+
+        return self::isAdmin(
+            $role_id) ||
+            ($edit_user_id && ($user_id === $edit_user_id)
+        );
+    }
+
+    /**
+     * Comprueba si el usuario puede crear usuarios.
+     *
+     * @param null $user_id
+     *
+     * @return bool
+     */
+    public static function canUserCreate($user_id = null)
+    {
+        $role_id = auth()->user()->role_id;
+        return self::isAdmin($role_id);
+    }
+
+    /**
+     * Comprueba si el usuario puede ver al usuario solicitado.
+     *
+     * @param null $view_user_id
+     *
+     * @return bool
+     */
+    public static function canUserView($view_user_id = null)
+    {
+        $role_id = auth()->user()->role_id;
+
+        if (self::isAdmin(($role_id))) {
+            return true;
+        }
+
+        $user_id = auth()->id();
+        $user_view = User::find($view_user_id);
+
+        if ($user_view) {
+            return ($user_id === $view_user_id) || (! self::isAdmin($user_view->role_id));
+        }
+
+        return false;
+    }
+
+    /**
+     * Comprueba si puede borrar al usuario.
+     *
+     * @param null $delete_user_id
+     *
+     * @return bool
+     */
+    public static function canUserDelete($delete_user_id = null)
+    {
+        $role_id = auth()->user()->role_id;
+        $user_id = auth()->id();
+
+        return self::isAdmin($role_id) || ($user_id === $delete_user_id);
     }
 }

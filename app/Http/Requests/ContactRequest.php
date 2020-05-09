@@ -34,7 +34,7 @@ class ContactRequest extends FormRequest
     {
         return [
             'name' => 'required|min:4|max:220',
-            'email' => 'email',
+            'email' => 'required|email|unique:users,email',
             'phone' => 'numeric|nullable',
             'message' => 'required|min:50',
             'privacity' => 'accepted',

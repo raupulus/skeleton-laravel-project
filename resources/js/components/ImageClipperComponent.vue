@@ -1,0 +1,295 @@
+<template>
+    <b-container fluid id="v-image-clipper">
+        <b-row class="justify-content-center">
+            <b-col cols="12">
+                <b-col cols="12" class="user-image text-center">
+                    <b-img class="rounded-circle"
+                         title="Avatar del Usuario"
+                         alt="Avatar del Usuario"
+                         v-bind:src="imgOriginal"
+                         v-b-modal.v-modal-avatar-image-crop
+                         v-b-popover.hover.top="'Pulsa sobre el Avatar para cambiarlo'"
+                         @click="show=true" ></b-img>
+                </b-col>
+
+                <!--
+                <b-col cols="12">
+                    <b-button v-b-modal.v-modal-avatar-image-crop
+                              @click="show=true">
+                        Cambiar Avatar
+                    </b-button>
+                </b-col>
+                -->
+            </b-col>
+
+            <b-col cols="12">
+                <b-modal id="v-modal-avatar-image-crop"
+                         title="Selecciona nueva imagen para tu Avatar"
+                         size="xl"
+                         v-model="show"
+                         centered>
+                    <!-- Step 1 -->
+                    <b-container fluid class="my-clipper-step1" ref="my-clipper-step1">
+                        <!-- Mensaje de ayuda -->
+                        <b-row>
+                            <b-col cols="12"
+                                   class="mt-3 mb-3 p-3 bg-primary text-warning font-weight-bold">
+                                {{msgStep1}}
+                            </b-col>
+                        </b-row>
+
+                        <!-- Previsualización de imágen actual -->
+                        <b-row>
+                            <b-col cols="6">
+                                <b-img rounded="circle"
+                                       fluid
+                                       :src="imgOriginal"
+                                       alt="Avatar Original redondeado"></b-img>
+                            </b-col>
+
+                            <b-col cols="6">
+                                <b-img rounded
+                                       fluid
+                                       :src="imgOriginal"
+                                       alt="Avatar original cuadrado"></b-img>
+                            </b-col>
+                        </b-row>
+
+                        <b-row id="my-cropper-upload-errors" hidden>
+                            <b-col cols="12" class="text-center">
+                                Tienes que seleccionar una imágen válida en
+                                formato png, jpg o gif.
+                            </b-col>
+                        </b-row>
+
+                        <!-- Botón para seleccionar imagen -->
+                        <b-row class="mt-3 mb-3">
+                            <b-col cols="12" class="text-center">
+                                <b-button>
+                                    <clipper-upload v-model="imgURL">
+                                        Seleccionar imagen
+                                    </clipper-upload>
+                                </b-button>
+                            </b-col>
+                        </b-row>
+                    </b-container>
+
+                    <!-- Step 2 -->
+                    <b-container class="my-clipper-step2"
+                                 ref="my-clipper-step2"
+                                 hidden>
+                        <!-- Mensaje de ayuda -->
+                        <b-row>
+                            <b-col cols="12"
+                                   class="mt-3 mb-3 p-3 bg-primary text-warning font-weight-bold">
+                                {{msgStep2}}
+                            </b-col>
+                        </b-row>
+
+                        <!-- Previsualización de imágen nueva -->
+                        <b-row>
+                            <b-col cols="6" cols-sm="12">
+                                <clipper-fixed class="my-clipper"
+                                               ref="clipper"
+                                               :src="imgURL"
+                                               @load="load"
+                                               @error="error"
+                                               preview="my-preview">
+                                    <div class="placeholder" slot="placeholder">
+                                        No hay imagen seleccionada
+                                    </div>
+                                </clipper-fixed>
+                            </b-col>
+
+                            <b-col cols="6" cols-sm="12">
+                                <b-row>
+                                    <b-col cols="12"
+                                           class="box-my-clipper-preview">
+                                        <clipper-preview name="my-preview"
+                                                         class="my-clipper my-clipper-rounded">
+                                            <div class="placeholder" slot="placeholder">
+                                                Previsualización
+                                            </div>
+                                        </clipper-preview>
+                                    </b-col>
+
+                                    <b-col cols="12"
+                                           class="box-my-clipper-preview">
+                                        <clipper-preview name="my-preview"
+                                                         class="my-clipper">
+                                            <div class="placeholder" slot="placeholder">
+                                                Previsualización
+                                            </div>
+                                        </clipper-preview>
+                                    </b-col>
+                                </b-row>
+                            </b-col>
+                        </b-row>
+
+                        <b-row class="mt-3 mb-3">
+                            <b-col class="text-center">
+                                <b-button variant="danger" @click="back">
+                                    Atrás
+                                </b-button>
+                            </b-col>
+
+                            <b-col class="text-center">
+                                <b-button variant="success" @click="getResult">
+                                    Guardar Imagen
+                                </b-button>
+                            </b-col>
+                        </b-row>
+                    </b-container>
+
+                    <template v-slot:modal-footer>
+                        <div class="w-100">
+                            <b-button
+                                variant="warning"
+                                size="sm"
+                                class="float-right"
+                                @click="show=false"
+                            >
+                                Cerrar
+                            </b-button>
+                        </div>
+                    </template>
+                </b-modal>
+            </b-col>
+        </b-row>
+    </b-container>
+</template>
+
+<script>
+    //https://www.npmjs.com/package/vuejs-clipper
+    //https://timtnleeproject.github.io/vuejs-clipper/#/examples/quick-start
+    //https://timtnleeproject.github.io/vuejs-clipper/#/examples/profile-photo
+
+    import 'vuejs-clipper';
+    import axios from 'axios';
+    import VueAxios from "vue-axios";
+
+    export default {
+        //name: 'v-image-clipper',
+        props: [
+            'user_id',
+            'username',
+            'image'
+        ],
+        mounted() {
+            //console.log('Component image clipper mounted.')
+        },
+        data () {
+            return {
+                show: false,
+                msgStep1: 'Así se ve tu imagen actual, puedes subir una nueva.',
+                msgStep2:
+                    'Mueve la imagen para centrarla, puedes hacer scroll ' +
+                    'para aumentar o disminuir su tamaño.',
+                imgURL: '',
+                resultURL: '',
+                imgOriginal: this.image,
+                originalName: '',
+                rangeMin: 0,
+                rangeMax: 10,
+            }
+        },
+        methods: {
+            getResult: function () {
+                console.log('getResult');
+                const canvas = this.$refs.clipper.clip();  //call component's clip method
+                this.resultURL = canvas.toDataURL("image/jpeg", 1);  //canvas->image
+                this.uploadImage();
+            },
+            uploadImage: async function() {
+                console.log('uploadImage');
+                axios.post(
+                    '/panel/user/ajax/avatar/upload',
+                    {
+                        image: this.resultURL,
+                        user_id: this.user_id
+                    }
+                ).then(response => {
+                    if (!response.data.error) {
+                        console.log(response);
+                        this.imgOriginal = response.data.data.new_image;
+                    }
+                });
+
+                // Cierro el modal
+                this.$bvModal.hide('v-modal-avatar-image-crop');
+            },
+            /**
+             * Cuando se carga correctamente la imagen.
+             */
+            load: function() {
+                let step1 = document.getElementsByClassName('my-clipper-step1')[0];
+                let step2 = document.getElementsByClassName('my-clipper-step2')[0];
+
+                let boxError = document.getElementById('my-cropper-upload-errors');
+
+                if (step1 && step2) {
+                    console.log(step1);
+                    step1.setAttribute('hidden', 'true');
+                    step2.removeAttribute('hidden');
+
+                    boxError.setAttribute('class', 'hidden');
+
+                }
+            },
+            /**
+             * Cuando no se carga la imagen o es otro tipo de archivo.
+             */
+            error: function() {
+                let step1 = document.getElementsByClassName('my-clipper-step1')[0];
+                let step2 = document.getElementsByClassName('my-clipper-step2')[0];
+
+                let boxError = document.getElementById('my-cropper-upload-errors');
+
+                boxError.removeAttribute('hidden');
+            },
+            back: function() {
+                let step1 = document.getElementsByClassName('my-clipper-step1')[0];
+                let step2 = document.getElementsByClassName('my-clipper-step2')[0];
+
+                step2.setAttribute('hidden', 'true');
+                step1.removeAttribute('hidden');
+            }
+        }
+    }
+</script>
+
+<style lang="scss">
+    #v-image-clipper {
+
+    }
+    .my-clipper {
+        width: 100%;
+        max-width: 300px;
+        border: 6px solid #3a3a3a;
+    }
+
+    .placeholder {
+        text-align: center;
+        padding: 20px;
+        background-color: lightgray;
+    }
+
+    .box-my-clipper-preview {
+        margin: 10px;
+    }
+
+    .my-clipper-rounded,
+    .my-clipper-rounded > div,
+    .my-clipper-rounded .placeholder {
+        border-radius: 50%;
+    }
+
+    .user-image img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .user-image:hover {
+        cursor: pointer;
+    }
+</style>
