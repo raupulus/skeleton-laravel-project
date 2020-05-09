@@ -2,10 +2,27 @@
     <b-container fluid id="v-image-clipper">
         <b-row class="justify-content-center">
             <b-col cols="12">
-                <b-button v-b-modal.v-modal-avatar-image-crop @click="show=true">
-                    Cambiar Avatar
-                </b-button>
+                <b-col cols="12" class="user-image text-center">
+                    <img class="rounded-circle"
+                         title="Avatar del Usuario"
+                         alt="Avatar del Usuario"
+                         v-bind:src="imgOriginal"
+                         v-b-modal.v-modal-avatar-image-crop
+                         v-b-popover.hover.top="'Pulsa sobre el Avatar para cambiarlo'"
+                         @click="show=true" />
+                </b-col>
 
+                <!--
+                <b-col cols="12">
+                    <b-button v-b-modal.v-modal-avatar-image-crop
+                              @click="show=true">
+                        Cambiar Avatar
+                    </b-button>
+                </b-col>
+                -->
+            </b-col>
+
+            <b-col cols="12">
                 <b-modal id="v-modal-avatar-image-crop"
                          title="Selecciona nueva imagen para tu Avatar"
                          size="xl"
@@ -142,8 +159,12 @@
 
     export default {
         //name: 'v-image-clipper',
+        props: [
+            'image'
+        ],
         mounted() {
             console.log('Component image clipper mounted.')
+            console.log(this.image);
         },
         data () {
             return {
@@ -153,11 +174,12 @@
                     'Mueve la imagen para centrarla, puedes hacer scroll ' +
                     'para aumentar o disminuir su tamaño.',
                 imgURL: '',
-                imgOriginal: 'https://picsum.photos/250/250/?image=54',
                 resultURL: '',
+                imgOriginal: this.image,
                 originalName: '',
                 rangeMin: 0,
-                rangeMax: 10
+                rangeMax: 10,
+                test: 'PRUEBA'
             }
         },
         methods: {
@@ -168,7 +190,7 @@
                 //console.log(this.resultURL);
                 this.uploadImage();
             },
-            uploadImage: function() {
+            uploadImage: async function() {
                 console.log('uploadImage');
                 axios.post(
                     '/panel/user/ajax/avatar/upload',
@@ -176,15 +198,12 @@
                         image: this.resultURL,
                         user_id: 1
                     }
-                );
-
-                /*
-                axios.get("https://jsonplaceholder.typicode.com/todos/")
-                    .then(response => {
-                        this.todosList = [...response.data].slice(0, 10)
-                    });
-
-                */
+                ).then(response => {
+                    if (!response.data.error) {
+                        console.log(response);
+                        this.imgOriginal = response.data.data.new_image;
+                    }
+                });
             }
         }
     }
@@ -197,7 +216,7 @@
     .my-clipper {
         width: 100%;
         max-width: 300px;
-        border: 3px solid #3a3a3a;
+        border: 6px solid #3a3a3a;
     }
 
     .placeholder {
@@ -210,7 +229,18 @@
         margin: 10px;
     }
 
-    .my-clipper-rounded > div {
+    .my-clipper-rounded,
+    .my-clipper-rounded > div,
+    .my-clipper-rounded .placeholder {
         border-radius: 50%;
+    }
+
+    .user-image img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .user-image:hover {
+        cursor: pointer;
     }
 </style>

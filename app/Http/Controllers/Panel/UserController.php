@@ -23,6 +23,7 @@ use JsonHelper;
 use LogHelper;
 use RoleHelper;
 use Yajra\DataTables\DataTables;
+use function asset;
 use function auth;
 use function base_path;
 use function compact;
@@ -354,7 +355,7 @@ class UserController extends Controller
             JsonHelper::error('No existe el usuario');
         }
 
-        ## Guardo la imagen en el disco duro.
+        ## Preparo un nombre único para la imagen.
         $hash1 = sha1($user_id);
         $hash2 = uniqid($hash1, true);
         $hash3 = hash('haval160,4', $hash2);
@@ -376,12 +377,13 @@ class UserController extends Controller
                 }
             }
 
-
             ## Guardo la nueva imagen como dato del usuario.
             $user->avatar = 'users/' . $name . '.jpg';
             $user->save();
 
-            return JsonHelper::updated();
+            return JsonHelper::updated([
+                'new_image' => asset('storage/users/' . $name . '.jpg'),
+            ]);
         }
 
         return JsonHelper::error('No se pudo guardar');

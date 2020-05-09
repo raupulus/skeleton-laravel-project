@@ -1,12 +1,18 @@
 <div class="col-12 col-md-3 user-profil-part pull-left">
     {{-- User Card --}}
     <div class="row ">
-        <div class="col-12 user-image text-center">
-            <img class="rounded-circle"
-                 src="{{ $user->urlImage }}"
-                 title="Imagen de {{ $user->name }}"
-                 alt="Imagen de {{ $user->name }}" />
-        </div>
+        @if(RoleHelper::canUserEdit())
+            <v-image-clipper
+                    image="{{$user->urlAvatar }}">
+            </v-image-clipper>
+        @else
+            <div class="col-12 user-image text-center">
+                <img class="rounded-circle"
+                     src="{{ $user->urlAvatar }}"
+                     title="Imagen de {{ $user->name }}"
+                     alt="Imagen de {{ $user->name }}" />
+            </div>
+        @endif
 
         <div class="col-12 user-detail-section1 text-center">
             <button class="btn btn-warning btn-block follow">

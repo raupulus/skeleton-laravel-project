@@ -121,6 +121,25 @@ class User extends Authenticatable
     }
 
     /**
+     * Devuelve el enlace hacia la imagen/avatar del usuario.
+     *
+     * @return string
+     */
+    public function getUrlAvatarAttribute()
+    {
+        $url = asset('images/users/profile-avatars/default.png');
+
+        if ($this->avatar && ($this->avatar === 'images/users/profile-avatars/default.png')) {
+            $url = asset('storage/' . $this->avatar);
+        } else if ($this->avatar) {
+            $url = asset('storage/' . $this->avatar);
+        }
+
+
+        return $url;
+    }
+
+    /**
      * Marca al usuario actual como activo o inactivo según el estado actual.
      *
      * @return bool|null

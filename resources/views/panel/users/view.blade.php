@@ -40,9 +40,6 @@
                             <div class="col-6 col-md-8 profile-header-section1 pull-left">
                                 <h1>{{ $user->name }} | {{ $user->nick }}</h1>
                                 <h5>{{ $user->role->name }}</h5>
-                                <p>
-                                    <v-image-clipper></v-image-clipper>
-                                </p>
                             </div>
                             <div class="col-6 col-md-4 profile-header-section1 text-right pull-rigth">
                                 @foreach($user->social as $social)
