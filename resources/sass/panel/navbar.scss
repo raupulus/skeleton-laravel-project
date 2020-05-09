@@ -80,6 +80,13 @@
   }
 }
 
+.navbar-user-image {
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+}
+
 @media (min-width: 768px) {
   .sidebar {
     width: $sidebar-base-width !important;
@@ -111,12 +118,5 @@
       width: $sidebar-collapsed-width !important;
       @include sidebar-icons;
     }
-  }
-
-  .navbar-user-image {
-    width: 30px;
-    height: 30px;
-    margin: 0;
-    padding: 0;
   }
 }
