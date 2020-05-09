@@ -69,7 +69,7 @@
                aria-haspopup="true"
                aria-expanded="false">
                 {{-- <i class="fas fa-user-circle fa-fw"></i> --}}
-                <img src="{{auth()->user()->urlImage}}"
+                <img src="{{auth()->user()->urlAvatar}}"
                      alt="{{auth()->user()->name}}"
                      title="{{auth()->user()->name}}"
                      class="navbar-user-image" />
