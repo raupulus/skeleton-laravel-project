@@ -6,14 +6,15 @@ use App\Email;
 use App\Http\Requests\ContactRequest;
 use App\Mail\ContactMail;
 use App\Http\Requests\ContactoRequest;
+use ReCaptcha\ReCaptcha;
 use function back;
 use Illuminate\Support\Facades\Log;
 use function config;
 use Exception;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use Lunaweb\RecaptchaV3\Facades\RecaptchaV3;
+use function dd;
+use function env;
 use function view;
 
 /**
@@ -41,14 +42,29 @@ class ContactController extends Controller
      */
     public function send(ContactRequest $request)
     {
-        ## Validación del captcha
-        $score = RecaptchaV3::verify($request->get('g-recaptcha-response'), 'contact');
 
-        if ($score > 0.7) {
-            // Perfecto
-        } elseif($score > 0.3) {
-            // TODO → Pedir confirmación adicional por email antes de enviar
-        } else {
+        // TODO → Guardar estos emails marcados como spam en la DB
+        // TODO → Pedir validación por email antes de enviar este correo
+
+        ## Validación del captcha
+        $googleRecaptcha = (new \ReCaptcha\ReCaptcha(config('constant.google_recaptcha_secret')))
+            ->setExpectedAction('contact')
+            ->verify($request->get('g_recaptcha'), $request->ip());
+
+        if (!$googleRecaptcha->isSuccess()) {
+            return view('contact.view')->with([
+                'message' => [
+                    'danger' => [
+                        'No se ha validado el captcha correctamente'
+                    ],
+                ],
+            ]);
+        }
+
+        ## Almaceno la puntuación que le da google recaptcha v3
+        $score = $googleRecaptcha->getScore();
+
+        if ($score < 0.3) {
             return view('contact.view')->with([
                 'message' => [
                     'danger' => [
@@ -57,11 +73,6 @@ class ContactController extends Controller
                 ],
             ]);
         }
-
-        $validar = Validator::make(Input::all(), [
-            ## Valido el score de la petición con puntuación mínima de 0.3
-            'g-recaptcha-response' => 'required|recaptchav3:contact,0.3'
-        ]);
 
         $data = [
             'name' => $request->get('name'),

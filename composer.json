@@ -12,10 +12,11 @@
         "arrilot/laravel-widgets": "^3.13",
         "caouecs/laravel-lang": "^4.0",
         "fideloper/proxy": "^4.0",
+        "google/recaptcha": "^1.2",
         "intervention/image": "^2.5",
-        "josiasmontag/laravel-recaptchav3": "^0.2.0",
-        "laravel/framework": "5.8.*",
-        "laravel/tinker": "^1.0",
+        "laravel/framework": "^7.0.0",
+        "laravel/tinker": "^2.0",
+        "laravel/ui": "^2.0",
         "yajra/laravel-datatables-oracle": "^9.7"
     },
     "require-dev": {
@@ -24,8 +25,8 @@
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^3.0",
-        "phpunit/phpunit": "^7.5"
+        "nunomaduro/collision": "^4.1",
+        "phpunit/phpunit": "^8.5"
     },
     "config": {
         "optimize-autoloader": true,

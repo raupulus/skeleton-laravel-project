@@ -125,7 +125,9 @@
                     {{-- Captcha --}}
                     <div class="col-md-12">
                         <div class="form-group">
-                            {!! RecaptchaV3::field('contact') !!}
+                            <input type="hidden"
+                                   name="g_recaptcha"
+                                   id="recaptcha" />
                         </div>
                     </div>
 
@@ -166,4 +168,21 @@
             background: -webkit-linear-gradient(left, #0072ff, #00c6ff);
         }
     </style>
+@endsection
+
+@section('js')
+    <script src="https://www.google.com/recaptcha/api.js?render={{config('constant.google_recaptcha_key')}}"></script>
+
+
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{ config('constant.google_recaptcha_key') }}', {
+                action: 'contact'
+            }).then(function(token) {
+                if (token) {
+                    document.getElementById('recaptcha').value = token;
+                }
+            });
+        });
+    </script>
 @endsection
