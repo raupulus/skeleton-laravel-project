@@ -160,11 +160,12 @@
     export default {
         //name: 'v-image-clipper',
         props: [
+            'user_id',
+            'username',
             'image'
         ],
         mounted() {
-            console.log('Component image clipper mounted.')
-            console.log(this.image);
+            //console.log('Component image clipper mounted.')
         },
         data () {
             return {
@@ -179,7 +180,6 @@
                 originalName: '',
                 rangeMin: 0,
                 rangeMax: 10,
-                test: 'PRUEBA'
             }
         },
         methods: {
@@ -196,7 +196,7 @@
                     '/panel/user/ajax/avatar/upload',
                     {
                         image: this.resultURL,
-                        user_id: 1
+                        user_id: this.user_id
                     }
                 ).then(response => {
                     if (!response.data.error) {

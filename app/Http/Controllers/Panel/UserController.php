@@ -345,7 +345,7 @@ class UserController extends Controller
             JsonHelper::error('Faltan parámetros');
         }
 
-        if (!RoleHelper::canUserEdit()) {
+        if (!RoleHelper::canUserEdit($user_id)) {
             JsonHelper::error('No tienes permiso para realizar esta acción');
         }
 

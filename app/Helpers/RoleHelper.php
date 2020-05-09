@@ -72,7 +72,10 @@ class RoleHelper
         $role_id = auth()->user()->role_id;
         $user_id = auth()->id();
 
-        return self::isAdmin($role_id) || ($user_id === $edit_user_id);
+        return self::isAdmin(
+            $role_id) ||
+            ($edit_user_id && ($user_id === $edit_user_id)
+        );
     }
 
     /**

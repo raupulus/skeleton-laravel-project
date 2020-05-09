@@ -129,12 +129,9 @@ class User extends Authenticatable
     {
         $url = asset('images/users/profile-avatars/default.png');
 
-        if ($this->avatar && ($this->avatar === 'images/users/profile-avatars/default.png')) {
-            $url = asset('storage/' . $this->avatar);
-        } else if ($this->avatar) {
+        if ($this->avatar && ($this->avatar !== 'images/users/profile-avatars/default.png')) {
             $url = asset('storage/' . $this->avatar);
         }
-
 
         return $url;
     }

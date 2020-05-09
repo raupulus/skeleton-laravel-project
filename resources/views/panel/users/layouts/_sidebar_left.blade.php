@@ -1,9 +1,11 @@
 <div class="col-12 col-md-3 user-profil-part pull-left">
     {{-- User Card --}}
     <div class="row ">
-        @if(RoleHelper::canUserEdit())
+        @if(RoleHelper::canUserEdit($user->id))
             <v-image-clipper
-                    image="{{$user->urlAvatar }}">
+                    image="{{ $user->urlAvatar }}"
+                    username="{{ $user->name }}"
+                    user_id="{{ $user->id }}">
             </v-image-clipper>
         @else
             <div class="col-12 user-image text-center">
