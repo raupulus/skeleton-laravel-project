@@ -125,7 +125,7 @@
                     {{-- Captcha --}}
                     <div class="col-md-12">
                         <div class="form-group">
-                            {!! RecaptchaV3::field('contact') !!}
+                            {{-- RecaptchaV3::field('contact') --}}
                         </div>
                     </div>
 

@@ -10,7 +10,7 @@ E-mail: dev@fryntiz.es
 
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
-        {!! RecaptchaV3::initJs() !!}
+        {{--}} RecaptchaV3::initJs() --}}
 
         @include('resources.global_vars_js')
         @include('layouts.head')

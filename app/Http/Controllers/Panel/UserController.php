@@ -405,7 +405,7 @@ class UserController extends Controller
                 ->addColumn('action', function ($user) {
                     $buttons =
                         Buttom::view(
-                            route('panel.users.view', ['$id' => $user->id]),
+                            route('panel.users.view', ['id' => $user->id]),
                             $user->id
                         ) .
 

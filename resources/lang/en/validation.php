@@ -152,6 +152,6 @@ return [
     /**
      * Customs
      */
-    'recaptchav3' => 'Incorrect Captcha',
+    'recaptcha' => 'Incorrect Captcha',
 
 ];

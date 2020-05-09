@@ -6,14 +6,14 @@ use App\Email;
 use App\Http\Requests\ContactRequest;
 use App\Mail\ContactMail;
 use App\Http\Requests\ContactoRequest;
+use ReCaptcha\ReCaptcha;
 use function back;
 use Illuminate\Support\Facades\Log;
 use function config;
 use Exception;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use Lunaweb\RecaptchaV3\Facades\RecaptchaV3;
+use function env;
 use function view;
 
 /**
@@ -42,8 +42,10 @@ class ContactController extends Controller
     public function send(ContactRequest $request)
     {
         ## Validación del captcha
-        $score = RecaptchaV3::verify($request->get('g-recaptcha-response'), 'contact');
+        $score = 0;
+        //$score = ReCaptcha::verify($request->get('g-recaptcha-response'), 'contact');
 
+        /*
         if ($score > 0.7) {
             // Perfecto
         } elseif($score > 0.3) {
@@ -57,10 +59,30 @@ class ContactController extends Controller
                 ],
             ]);
         }
+        */
 
-        $validar = Validator::make(Input::all(), [
+        // NUEVO RECAPTCHA
+
+        //https://medium.com/swlh/laravel-recaptcha-v3-the-easy-way-1e395083201b
+        /*
+        $googleRecaptcha = (new \ReCaptcha\ReCaptcha(config('constant.google_recaptcha_secret')))
+            ->setExpectedAction('contact_form')
+            ->verify($request->input('_recaptcha'), $request->ip());
+
+        if (!$response->isSuccess()) {
+            abort();
+        }    if ($response->getScore() < 0.6) {
+        return response()->view('challenge');
+           }
+        */
+
+
+
+
+
+        $validar = Validator::make($request->all(), [
             ## Valido el score de la petición con puntuación mínima de 0.3
-            'g-recaptcha-response' => 'required|recaptchav3:contact,0.3'
+            //'g-recaptcha-response' => 'required|recaptchav3:contact,0.3'
         ]);
 
         $data = [
