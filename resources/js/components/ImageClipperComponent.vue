@@ -3,13 +3,13 @@
         <b-row class="justify-content-center">
             <b-col cols="12">
                 <b-col cols="12" class="user-image text-center">
-                    <img class="rounded-circle"
+                    <b-img class="rounded-circle"
                          title="Avatar del Usuario"
                          alt="Avatar del Usuario"
                          v-bind:src="imgOriginal"
                          v-b-modal.v-modal-avatar-image-crop
                          v-b-popover.hover.top="'Pulsa sobre el Avatar para cambiarlo'"
-                         @click="show=true" />
+                         @click="show=true" ></b-img>
                 </b-col>
 
                 <!--
@@ -29,7 +29,7 @@
                          v-model="show"
                          centered>
                     <!-- Step 1 -->
-                    <b-container fluid>
+                    <b-container fluid class="my-clipper-step1" ref="my-clipper-step1">
                         <!-- Mensaje de ayuda -->
                         <b-row>
                             <b-col cols="12"
@@ -55,6 +55,13 @@
                             </b-col>
                         </b-row>
 
+                        <b-row id="my-cropper-upload-errors" hidden>
+                            <b-col cols="12" class="text-center">
+                                Tienes que seleccionar una imágen válida en
+                                formato png, jpg o gif.
+                            </b-col>
+                        </b-row>
+
                         <!-- Botón para seleccionar imagen -->
                         <b-row class="mt-3 mb-3">
                             <b-col cols="12" class="text-center">
@@ -68,7 +75,9 @@
                     </b-container>
 
                     <!-- Step 2 -->
-                    <b-container>
+                    <b-container class="my-clipper-step2"
+                                 ref="my-clipper-step2"
+                                 hidden>
                         <!-- Mensaje de ayuda -->
                         <b-row>
                             <b-col cols="12"
@@ -83,6 +92,8 @@
                                 <clipper-fixed class="my-clipper"
                                                ref="clipper"
                                                :src="imgURL"
+                                               @load="load"
+                                               @error="error"
                                                preview="my-preview">
                                     <div class="placeholder" slot="placeholder">
                                         No hay imagen seleccionada
@@ -117,7 +128,7 @@
 
                         <b-row class="mt-3 mb-3">
                             <b-col class="text-center">
-                                <b-button variant="danger">
+                                <b-button variant="danger" @click="back">
                                     Atrás
                                 </b-button>
                             </b-col>
@@ -185,9 +196,8 @@
         methods: {
             getResult: function () {
                 console.log('getResult');
-                const canvas = this.$refs.clipper.clip();//call component's clip method
-                this.resultURL = canvas.toDataURL("image/jpeg", 1);//canvas->image
-                //console.log(this.resultURL);
+                const canvas = this.$refs.clipper.clip();  //call component's clip method
+                this.resultURL = canvas.toDataURL("image/jpeg", 1);  //canvas->image
                 this.uploadImage();
             },
             uploadImage: async function() {
@@ -204,6 +214,45 @@
                         this.imgOriginal = response.data.data.new_image;
                     }
                 });
+
+                // Cierro el modal
+                this.$bvModal.hide('v-modal-avatar-image-crop');
+            },
+            /**
+             * Cuando se carga correctamente la imagen.
+             */
+            load: function() {
+                let step1 = document.getElementsByClassName('my-clipper-step1')[0];
+                let step2 = document.getElementsByClassName('my-clipper-step2')[0];
+
+                let boxError = document.getElementById('my-cropper-upload-errors');
+
+                if (step1 && step2) {
+                    console.log(step1);
+                    step1.setAttribute('hidden', 'true');
+                    step2.removeAttribute('hidden');
+
+                    boxError.setAttribute('class', 'hidden');
+
+                }
+            },
+            /**
+             * Cuando no se carga la imagen o es otro tipo de archivo.
+             */
+            error: function() {
+                let step1 = document.getElementsByClassName('my-clipper-step1')[0];
+                let step2 = document.getElementsByClassName('my-clipper-step2')[0];
+
+                let boxError = document.getElementById('my-cropper-upload-errors');
+
+                boxError.removeAttribute('hidden');
+            },
+            back: function() {
+                let step1 = document.getElementsByClassName('my-clipper-step1')[0];
+                let step2 = document.getElementsByClassName('my-clipper-step2')[0];
+
+                step2.setAttribute('hidden', 'true');
+                step1.removeAttribute('hidden');
             }
         }
     }
