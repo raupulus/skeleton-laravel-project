@@ -22,6 +22,10 @@ class CreateContentTagsTable extends Migration
                 ->index()
                 ->nullable()
                 ->comment('FK al contenido asociado');
+            $table->foreign('content_id')
+                ->references('id')->on('contents')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
             $table->string('name', 255)->index();
             $table->string('description', 511)->nullable();
             $table->timestamps();
