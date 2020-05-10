@@ -26,9 +26,11 @@ class CreateCategoriesTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('set null');
             $table->string('name', 511)
+                ->index()
                 ->unique()
                 ->comment('Nombre de la categoría');
             $table->string('slug', 255)
+                ->index()
                 ->unique()
                 ->comment('Slug para el URL');
             $table->string('description', 1023)

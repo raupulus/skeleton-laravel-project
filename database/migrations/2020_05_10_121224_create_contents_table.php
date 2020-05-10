@@ -19,6 +19,7 @@ class CreateContentsTable extends Migration
             $table->collation = 'utf8_unicode_ci';
             $table->bigIncrements('id');
             $table->bigInteger('user_id')
+                ->index()
                 ->nullable()
                 ->comment('FK al usuario propietario del post');
             $table->foreign('user_id')
@@ -26,6 +27,7 @@ class CreateContentsTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('set null');
             $table->bigInteger('status_id')
+                ->index()
                 ->nullable()
                 ->comment('FK al estado en la tabla content_status');
             $table->foreign('status_id')
@@ -33,6 +35,7 @@ class CreateContentsTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('set null');
             $table->bigInteger('content_type_id')
+                ->index()
                 ->nullable()
                 ->comment('FK al tipo de contenido en la tabla content_type');
             $table->foreign('content_type_id')
@@ -47,9 +50,11 @@ class CreateContentsTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('set null');
             $table->string('title', 511)
+                ->index()
                 ->unique()
                 ->comment('Título de la página');
             $table->string('slug', 255)
+                ->index()
                 ->unique()
                 ->comment('Slug para el URL');
             $table->string('excerpt', 1023)

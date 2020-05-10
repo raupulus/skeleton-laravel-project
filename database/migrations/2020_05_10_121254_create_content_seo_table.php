@@ -19,6 +19,7 @@ class CreateContentSeoTable extends Migration
             $table->collation = 'utf8_unicode_ci';
             $table->bigIncrements('id');
             $table->bigInteger('content_id')
+                ->index()
                 ->nullable()
                 ->comment('FK al contenido asociado');
             $table->foreign('content_id')
@@ -26,6 +27,7 @@ class CreateContentSeoTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('set null');
             $table->bigInteger('language_id')
+                ->index()
                 ->nullable()
                 ->comment('FK al idioma asociado');
             $table->foreign('language_id')

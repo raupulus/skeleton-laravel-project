@@ -19,6 +19,7 @@ class CreateSubcategoriesTable extends Migration
             $table->collation = 'utf8_unicode_ci';
             $table->bigIncrements('id');
             $table->bigInteger('category_id')
+                ->index()
                 ->nullable()
                 ->comment('FK a la categoría principal');
             $table->foreign('category_id')
@@ -33,9 +34,11 @@ class CreateSubcategoriesTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('set null');
             $table->string('name', 511)
+                ->index()
                 ->unique()
                 ->comment('Nombre de la subcategoría');
             $table->string('slug', 255)
+                ->index()
                 ->unique()
                 ->comment('Slug para el URL');
             $table->string('description', 1023)

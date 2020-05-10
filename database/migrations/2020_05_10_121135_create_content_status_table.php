@@ -29,6 +29,7 @@ class CreateContentStatusTable extends Migration
                 ->unique()
                 ->comment('Nombre del estado');
             $table->string('slug', 255)
+                ->index()
                 ->unique()
                 ->comment('Slug para el URL');
             $table->string('description', 1023)
