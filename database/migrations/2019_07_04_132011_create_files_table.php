@@ -19,21 +19,25 @@ class CreateFilesTable extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('file_type_id');
+            $table->unsignedBigInteger('file_type_id')
+                ->nullable()
+                ->comment('FK al tipo de imagen');
             $table->foreign('file_type_id')
                 ->references('id')->on('file_types')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->unsignedBigInteger('translation_token')->unsigned();
-            /*
-            $table->foreign('translation_token')
-                ->references('token')->on('translations')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            */
-            $table->bigInteger('size');
-            $table->string('originalname', 511);
-            $table->text('path');
+                ->onDelete('set null');
+            $table->integer('size')
+                ->default(0)
+                ->comment('Tamaño de la imagen');
+            $table->string('name', 511)
+                ->comment('Nombre asignado de forma interna en la aplicación, por ejemplo: fg7s97hg98hjsd8gh0d0.jpg');
+            $table->string('originalname', 511)
+                ->nullable()
+                ->comment('Nombre original de la imagen, el nombre que lleva al subirse');
+            $table->string('path', 511)->comment('Ruta que tiene la aplicación hacia la imagen, por ejemplo: users/avatar');
+            $table->string('alt', 511);
+            $table->string('title', 511);
+            $table->boolean('is_private')->default(0)->comment('Indica si es privada la imagen o pertenece al espacio público de la aplicación');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -48,7 +52,6 @@ class CreateFilesTable extends Migration
     {
         Schema::dropIfExists('files', function (Blueprint $table) {
             $table->dropForeign(['file_type_id']);
-            $table->dropForeign(['translation_token']);
         });
     }
 }

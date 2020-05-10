@@ -18,15 +18,19 @@ class CreateCategoriesTable extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
             $table->bigIncrements('id');
-            $table->bigInteger('image_id')
+            $table->bigInteger('file_id')
                 ->nullable()
-                ->comment('FK a la imagen');
-            $table->foreign('image_id')
-                ->references('id')->on('images')
+                ->comment('FK a la imagen en la tabla files');
+            $table->foreign('file_id')
+                ->references('id')->on('files')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
-            $table->string('name', 511)->comment('Nombre de la categoría');
-            $table->string('slug', 255)->comment('Slug para el URL');
+            $table->string('name', 511)
+                ->unique()
+                ->comment('Nombre de la categoría');
+            $table->string('slug', 255)
+                ->unique()
+                ->comment('Slug para el URL');
             $table->string('description', 1023)
                 ->nullable()
                 ->comment('Descripción acerca de lo que contendrá esta categoría');
@@ -47,7 +51,7 @@ class CreateCategoriesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('categories', function (Blueprint $table) {
-            $table->dropForeign(['image_id']);
+            $table->dropForeign(['file_id']);
         });
     }
 }
