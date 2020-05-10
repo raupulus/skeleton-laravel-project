@@ -18,8 +18,25 @@ class CreateContentContributorsTable extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
             $table->bigIncrements('id');
+            $table->bigInteger('content_id')
+                ->nullable()
+                ->comment('FK al contenido asociado');
+            $table->foreign('content_id')
+                ->references('id')->on('contents')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->bigInteger('user_id')
+                ->nullable()
+                ->comment('FK al usuario asociado');
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->unique(['content_id', 'user_id']);
+            $table->index(['content_id', 'user_id']);
         });
     }
 
@@ -30,6 +47,9 @@ class CreateContentContributorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('content_contributors');
+        Schema::dropIfExists('content_contributors', function (Blueprint $table) {
+            $table->dropForeign(['content_id']);
+            $table->dropForeign(['user_id']);
+        });
     }
 }

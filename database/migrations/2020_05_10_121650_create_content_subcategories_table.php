@@ -36,6 +36,7 @@ class CreateContentSubcategoriesTable extends Migration
             $table->softDeletes();
 
             $table->unique(['content_id', 'subcategory_id']);
+            $table->index(['content_id', 'user_id']);
         });
     }
 
