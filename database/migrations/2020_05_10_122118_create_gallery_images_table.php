@@ -14,8 +14,12 @@ class CreateGalleryImagesTable extends Migration
     public function up()
     {
         Schema::create('gallery_images', function (Blueprint $table) {
-            $table->id();
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
+            $table->bigIncrements('id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

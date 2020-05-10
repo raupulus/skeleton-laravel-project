@@ -14,8 +14,12 @@ class CreateContentsTable extends Migration
     public function up()
     {
         Schema::create('contents', function (Blueprint $table) {
-            $table->id();
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
+            $table->bigIncrements();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
