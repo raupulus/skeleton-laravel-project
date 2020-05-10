@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContentStatusesTable extends Migration
+class CreateContentStatusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateContentStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('content_statuses', function (Blueprint $table) {
+        Schema::create('content_status', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreateContentStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('content_statuses');
+        Schema::dropIfExists('content_status');
     }
 }
