@@ -34,13 +34,13 @@ class CreateSubcategoriesTable extends Migration
                 ->onDelete('set null');
             $table->string('name', 511)
                 ->unique()
-                ->comment('Nombre de la categoría');
+                ->comment('Nombre de la subcategoría');
             $table->string('slug', 255)
                 ->unique()
                 ->comment('Slug para el URL');
             $table->string('description', 1023)
                 ->nullable()
-                ->comment('Descripción acerca de lo que contendrá esta categoría');
+                ->comment('Descripción acerca de lo que contendrá esta subcategoría');
             $table->string('icon', 255)->nullable()->comment('Clase css para el icono');
             $table->string('color', 255)
                 ->default('#000000')

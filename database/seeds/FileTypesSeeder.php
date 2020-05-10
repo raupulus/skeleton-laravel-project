@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ContentTagSeeder extends Seeder
+class FileTypesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
