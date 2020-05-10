@@ -18,6 +18,12 @@ class CreateContentTagsTable extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
             $table->bigIncrements('id');
+            $table->bigInteger('content_id')
+                ->index()
+                ->nullable()
+                ->comment('FK al contenido asociado');
+            $table->string('name', 255)->index();
+            $table->string('description', 511)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +36,8 @@ class CreateContentTagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('content_tags');
+        Schema::dropIfExists('content_tags', function (Blueprint $table) {
+            $table->dropForeign(['content_id']);
+        });
     }
 }
