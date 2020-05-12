@@ -69,6 +69,9 @@
             <a class="dropdown-item text-center" href="{{route('panel.login')}}">
                 Ver todo
             </a>
+            <a class="dropdown-item text-center" href="{{route('panel.login')}}">
+                Categorías
+            </a>
 
             <h6 class="dropdown-header">Páginas:</h6>
             <a class="dropdown-item" href="{{route('panel.login')}}">

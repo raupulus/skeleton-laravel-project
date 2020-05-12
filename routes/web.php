@@ -146,6 +146,33 @@ Route::group([
 
     });
 
+    ## Contenido
+    Route::group([
+        'prefix' => 'content',
+        'middleware' => [
+
+        ]
+    ], function() {
+        ## Gestionar Categorías.
+        Route::get('/categories', 'Panel\CategoryController@index')->name('panel.content.categories.view');
+
+        ## Ver un contenido.
+        Route::get('/show/{id}/{slug?}', 'Panel\ContentController@show')->name
+        ('panel.users.show');
+
+        ## Listado de contenidos.
+        Route::get('/index/{type?}', 'Panel\ContentController@index')->name('panel.content.index');
+
+        ## Vista para agregar nuevo contenido.
+        Route::get('/add/{type?}', 'Panel\ContentController@add')->name('panel.content.add');
+
+        ## Vista para actualizar nuevo contenido.
+        Route::get('/edit/{id?}', 'Panel\ContentController@edit')->name('panel.content.edit');
+
+        ## Vista para guardar contenido.
+        Route::post('/store', 'Panel\ContentController@store')->name('panel.content.store');
+    });
+
     ## Errores
     Route::get('/404', function() {
         return view('panel.errors.404');
