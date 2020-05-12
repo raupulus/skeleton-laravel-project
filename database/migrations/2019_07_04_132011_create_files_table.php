@@ -31,6 +31,17 @@ class CreateFilesTable extends Migration
                 ->comment('Tamaño de la imagen');
             $table->string('name', 511)
                 ->comment('Nombre asignado de forma interna en la aplicación, por ejemplo: fg7s97hg98hjsd8gh0d0.jpg');
+
+            // Lo comento porque pueden existir otros archivos sin miniaturas
+            // tal vez habría que plantear una columna de tipo, o una tabla
+
+            /*
+            $table->integer('thumbnail_size')
+                ->default(0)
+                ->comment('Tamaño de la miniatura');
+            $table->string('thumbnail_name', 511)
+                ->comment('Nombre asignado a la miniatura de forma interna en la aplicación, por ejemplo: fg7s97hg98hjsd8gh0d0_thumbnail.jpg');
+            */
             $table->string('originalname', 511)
                 ->nullable()
                 ->comment('Nombre original de la imagen, el nombre que lleva al subirse');
