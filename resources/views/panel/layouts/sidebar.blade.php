@@ -74,30 +74,30 @@
             </a>
 
             <h6 class="dropdown-header">Páginas:</h6>
-            <a class="dropdown-item" href="{{route('panel.login')}}">
+            <a class="dropdown-item" href="{{route('panel.content.index')}}">
                 Listar
             </a>
-            <a class="dropdown-item" href="{{route('panel.login')}}">
+            <a class="dropdown-item" href="{{route('panel.content.add')}}">
                 Nueva Página
             </a>
 
             <div class="dropdown-divider"></div>
 
             <h6 class="dropdown-header">Artículos:</h6>
-            <a class="dropdown-item" href="{{route('panel.login')}}">
+            <a class="dropdown-item" href="{{route('panel.content.index')}}">
                 Listar
             </a>
-            <a class="dropdown-item" href="{{route('panel.login')}}">
+            <a class="dropdown-item" href="{{route('panel.content.add')}}">
                 Nuevo Artículo
             </a>
 
             <div class="dropdown-divider"></div>
 
             <h6 class="dropdown-header">Noticias:</h6>
-            <a class="dropdown-item" href="{{route('panel.login')}}">
+            <a class="dropdown-item" href="{{route('panel.content.index')}}">
                 Listar
             </a>
-            <a class="dropdown-item" href="{{route('panel.login')}}">
+            <a class="dropdown-item" href="{{route('panel.content.add')}}">
                 Nueva Noticia
             </a>
         </div>

@@ -164,7 +164,7 @@ Route::group([
         Route::get('/index/{type?}', 'Panel\ContentController@index')->name('panel.content.index');
 
         ## Vista para agregar nuevo contenido.
-        Route::get('/add/{type?}', 'Panel\ContentController@add')->name('panel.content.add');
+        Route::get('/add/{type?}', 'Panel\ContentController@create')->name('panel.content.add');
 
         ## Vista para actualizar nuevo contenido.
         Route::get('/edit/{id?}', 'Panel\ContentController@edit')->name('panel.content.edit');
