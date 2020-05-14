@@ -43,21 +43,67 @@
     {{-- Formulario --}}
     <div class="row">
         <div class="col-md-8">
-            @include('panel.content.forms.add_edit._fields')
-            @include('panel.content.forms.add_edit._seo')
+            <form id="form-content"
+                  action="#"
+                  method="post"
+                  class="">
+                @csrf
+                @include('panel.content.forms.add_edit._fields')
+            </form>
+
+            <hr />
+
+            <form id="form-seo"
+                  action="#"
+                  method="post"
+                  class="">
+                @csrf
+                @include('panel.content.forms.add_edit._seo')
+            </form>
         </div>
 
-        <div class="col-md-4">
-            @include('panel.content.forms.add_edit._contributors')
-            @include('panel.content.forms.add_edit._status')
-            @include('panel.content.forms.add_edit._subcategories')
-            @include('panel.content.forms.add_edit._tags')
+        <div class="col-md-4 content-panel-right">
+            <form id="form-contributors"
+                  action="#"
+                  method="post"
+                  class="">
+                @csrf
+                @include('panel.content.forms.add_edit._contributors')
+            </form>
+
+            <hr />
+
+            <form id="form-status"
+                  action="#"
+                  method="post"
+                  class="">
+                @csrf
+                @include('panel.content.forms.add_edit._status')
+            </form>
+
+            <hr />
+
+            <form id="form-subcategories"
+                  action="#"
+                  method="post"
+                  class="">
+                @csrf
+                @include('panel.content.forms.add_edit._subcategories')
+            </form>
+
+            <hr />
+
+            <form id="form-tags"
+                  action="#"
+                  method="post"
+                  class="">
+                @csrf
+                @include('panel.content.forms.add_edit._tags')
+            </form>
         </div>
     </div>
 @endsection
 
 @section('js')
-    {{--
-    <script src="{{ mix('admin-panel/users/js/user_add.js') }}"></script>
-    --}}
+    <script src="{{ mix('admin-panel/content/js/content_add.js') }}"></script>
 @endsection
