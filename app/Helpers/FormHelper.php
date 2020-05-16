@@ -62,4 +62,31 @@ class FormHelper
     {
         return $id_selected == $id_current ? 'selected' : '';
     }
+
+
+
+    /******************************************
+     * CAMPOS DE FORMULARIO COMPLETOS
+     ******************************************/
+    private static function input()
+    {
+
+    }
+
+    private static function label($title, $name)
+    {
+        return '<label for="' . $name .'">' . $title . '</label>';
+    }
+
+    public static function inputText($name, $label, $options)
+    {
+        //name => atributo name del input
+        //label => nombre del label, si es null no tiene label
+
+        ?>
+        <input type="text" name="<?= $title ?>"/>
+        <?php
+    }
 }
+
+?>
