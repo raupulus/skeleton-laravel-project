@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Content;
+use App\ContentType;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use function auth;
+use function redirect;
+use function response;
 use function view;
 
 class ContentController extends Controller
@@ -26,10 +30,26 @@ class ContentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($type_slug)
     {
+        $type = ContentType::where('slug', $type_slug)
+            ->whereNull('deleted_at')
+            ->first();
+
+        ## En caso de intentar crear un tipo de contenido inexistente.
+        if (!$type) {
+            return redirect()->back()->with([
+
+            ]);
+        }
+
         return view('panel.content.add_edit')->with([
-            'content' => new Content(),
+            'type' => $type,
+            'content' => new Content([
+                //'user_id' => auth()->id(),
+                //'status_id' => ??
+                //'type_id' => $type->id
+            ]),
         ]);
     }
 

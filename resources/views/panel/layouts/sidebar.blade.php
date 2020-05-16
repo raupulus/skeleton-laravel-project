@@ -66,10 +66,10 @@
                 </div>
             </form>
 
-            <a class="dropdown-item text-center" href="{{route('panel.login')}}">
+            <a class="dropdown-item text-center" href="{{route('panel.content.index')}}">
                 Ver todo
             </a>
-            <a class="dropdown-item text-center" href="{{route('panel.login')}}">
+            <a class="dropdown-item text-center" href="{{route('panel.content.index')}}">
                 Categorías
             </a>
 
@@ -77,7 +77,8 @@
             <a class="dropdown-item" href="{{route('panel.content.index')}}">
                 Listar
             </a>
-            <a class="dropdown-item" href="{{route('panel.content.add')}}">
+            <a class="dropdown-item"
+               href="{{route('panel.content.add', ['type_slug' => 'page'])}}">
                 Nueva Página
             </a>
 
@@ -87,7 +88,8 @@
             <a class="dropdown-item" href="{{route('panel.content.index')}}">
                 Listar
             </a>
-            <a class="dropdown-item" href="{{route('panel.content.add')}}">
+            <a class="dropdown-item"
+               href="{{route('panel.content.add', ['type_slug' => 'article'])}}">
                 Nuevo Artículo
             </a>
 
@@ -97,7 +99,8 @@
             <a class="dropdown-item" href="{{route('panel.content.index')}}">
                 Listar
             </a>
-            <a class="dropdown-item" href="{{route('panel.content.add')}}">
+            <a class="dropdown-item"
+               href="{{route('panel.content.add', ['type_slug' => 'new'])}}">
                 Nueva Noticia
             </a>
         </div>
