@@ -44,6 +44,7 @@
     <div class="row">
         <div class="col-md-8">
             <form id="form-content"
+                  enctype="multipart/form-data"
                   action="#"
                   method="post"
                   class="">
