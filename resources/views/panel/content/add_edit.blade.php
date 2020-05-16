@@ -24,7 +24,7 @@
 
     <div class="col-12">
         <h1 class="text-center">
-            {{isset($content_id) && $content_id ? 'Añadir' : 'Editar' . ' Contenido'}}
+            {{isset($content->id) && $content->id ? 'Añadir' : 'Editar' . ' Contenido'}}
         </h1>
     </div>
 

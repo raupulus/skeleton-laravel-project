@@ -68,24 +68,85 @@ class FormHelper
     /******************************************
      * CAMPOS DE FORMULARIO COMPLETOS
      ******************************************/
-    private static function input()
+    /**
+     * Devuelve un campo input de tipo text.
+     *
+     * @param array $attributes Array con los atributos.
+     *
+     * @return string
+     */
+    private static function input($value, $attributesArray)
     {
+        $attributesArray = array_merge([
+            'value' => old($attributesArray['name'], $value),
+        ], $attributesArray);
 
+        $attributes = '';
+
+        foreach ($attributesArray as $idx => $att) {
+            $attributes .= ' ' . $idx . '="' . $att . '" ';
+        }
+
+        return '<input ' . $attributes . ' />';
     }
 
-    private static function label($title, $name)
+    /**
+     * Genera una etiquita de tipo label asociada a un input.
+     *
+     * @param $title
+     * @param $inputName
+     *
+     * @return string
+     */
+    public static function label($title, $inputName)
     {
-        return '<label for="' . $name .'">' . $title . '</label>';
+        return '<label for="' . $inputName .'">' . $title . '</label>';
     }
 
-    public static function inputText($name, $label, $options)
+    /**
+     * Devuelve un campo input de tipo text.
+     *
+     * @param string $name Etiqueta "name" del formulario.
+     * @param string $value El valor del input.
+     * @param array $attributes Atributos para el input.
+     *
+     * @return string
+     */
+    public static function inputText($name, $value = '', $attributes = [])
     {
-        //name => atributo name del input
-        //label => nombre del label, si es null no tiene label
+        $attributes = array_merge([
+            'class' => 'form-control form-field-text',
+            'type' => 'text',
+            'name' => $name,
+        ], $attributes);
 
-        ?>
-        <input type="text" name="<?= $title ?>"/>
-        <?php
+        return self::input($value, $attributes);
+    }
+
+    /**
+     * Crea un elemento textarea
+     *
+     * @param string $name El nombre del elemento en el formulario.
+     * @param string $value El valor del contenido.
+     * @param array  $attributesArray Un array con los atributos.
+     *
+     * @return string
+     */
+    public static function textarea($name, $value = '', $attributesArray = [])
+    {
+        $attributesArray = array_merge([
+            'class' => 'form-control',
+        ], $attributesArray);
+
+        $attributes = '';
+
+        foreach ($attributesArray as $idx => $att) {
+            $attributes .= ' ' . $idx . '="' . $att . '" ';
+        }
+
+        return '<textarea ' . $attributes . '>' .
+            old($name, $value) .
+            '</textarea>';
     }
 }
 

@@ -34,11 +34,11 @@ class CreateContentsTable extends Migration
                 ->references('id')->on('content_status')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
-            $table->bigInteger('content_type_id')
+            $table->bigInteger('type_id')
                 ->index()
                 ->nullable()
                 ->comment('FK al tipo de contenido en la tabla content_type');
-            $table->foreign('content_type_id')
+            $table->foreign('type_id')
                 ->references('id')->on('content_types')
                 ->onUpdate('cascade')
                 ->onDelete('set null');

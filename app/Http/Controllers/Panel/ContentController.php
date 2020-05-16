@@ -29,7 +29,7 @@ class ContentController extends Controller
     public function create()
     {
         return view('panel.content.add_edit')->with([
-
+            'content' => new Content(),
         ]);
     }
 
@@ -63,7 +63,9 @@ class ContentController extends Controller
      */
     public function edit(Content $content)
     {
-        //
+        return view('panel.content.add_edit')->with([
+            'content' => $content,
+        ]);
     }
 
     /**

@@ -1,25 +1,32 @@
 <div class="row">
     <div class="col-md-12 form-row">
         <h3>Título</h3>
-        <input class="form-control"
-               name="title"
-               type="text"
-               placeholder="Título de la entrada" />
+
+        {!!
+            FormHelper::inputText('title', $content->title, [
+                'placeholder' => 'Título de la entrada',
+                'required' => 'true',
+                'maxlength' => 500
+            ])
+        !!}
     </div>
 
     <div class="col-12 form-row">
         <h3>Slug</h3>
 
-        <input class="form-control"
-               name="slug"
-               type="text"
-               placeholder="slug-content" />
+        {!!
+            FormHelper::inputText('slug', $content->slug, [
+                'placeholder' => 'slug-content',
+                'required' => 'true',
+                'maxlength' => 250,
+            ])
+        !!}
     </div>
 
     <div class="col-12">
-        <h3>Imagen</h3>
+        <h3>Imagen Principal</h3>
 
-        <image src="{{asset('images/default/default_1200x600.jpg')}}"
+        <image src="{{$content->urlImage}}"
                alt="Image Content"
                title="Image Content"
                class="form-image-preview" />
@@ -32,11 +39,20 @@
 
     <div class="col-12">
         <h3>Excerpt <small>(250 carácteres)</small></h3>
-        <textarea class="form-control"></textarea>
+        {!!
+            FormHelper::textarea('excerpt', $content->excerpt, [
+                'required' => 'true',
+                'maxlength' => 250,
+            ])
+        !!}
     </div>
 
     <div class="col-12">
         <h3>Contenido</h3>
-        <textarea class="form-control"></textarea>
+        {!!
+            FormHelper::textarea('body', $content->body, [
+                'required' => 'true',
+            ])
+        !!}
     </div>
 </div>
