@@ -31,12 +31,11 @@
     {{-- Botones de Acción General --}}
     <div class="row mt-3 mb-4">
         <div class="col-12">
-            <button type="submit"
-                    class="btn btn-success"
-                    form="form-add-user">
-                <i class="fa fa-file-export"></i>
-                Guardar
-            </button>
+            {!!
+                FormHelper::submit('Guardar', 'fa fa-file-export', [
+                    'form' => 'form-add-user',
+                ])
+            !!}
         </div>
     </div>
 

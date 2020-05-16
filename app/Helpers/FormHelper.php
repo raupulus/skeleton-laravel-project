@@ -148,6 +148,24 @@ class FormHelper
             old($name, $value) .
             '</textarea>';
     }
+
+    public static function submit($title = 'Enviar', $icon = '', $attributesArray = [])
+    {
+        $attributesArray = array_merge([
+            'class' => 'btn btn-primary',
+        ], $attributesArray);
+
+        $attributes = '';
+
+        foreach ($attributesArray as $idx => $att) {
+            $attributes .= ' ' . $idx . '="' . $att . '" ';
+        }
+
+        return '<button type="submit" ' . $attributes . '>' .
+                ($icon ? '<i class="' . $icon . '"></i> ' : '') .
+                $title .
+            '</button>';
+    }
 }
 
 ?>
