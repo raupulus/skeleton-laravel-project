@@ -6,12 +6,8 @@
     </div>
 
     <div class="col-md-12">
-        <select name="status_id" class="form-control selectpicker">
-        @foreach($status as $state)
-            <option value="{{ $state->id }}">
-                {{ $state->name }}
-            </option>
-        @endforeach
-        </select>
+        {!!
+            FormHelper::select('status_id', $status, 'name',$content->status_id)
+        !!}
     </div>
 </div>
