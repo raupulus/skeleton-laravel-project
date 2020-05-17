@@ -28,22 +28,37 @@
         </h1>
     </div>
 
-    {{-- Botones de Acción General --}}
+    {{-- Menú de navegación entre secciones --}}
     <div class="row mt-3 mb-4">
         <div class="col-12">
-            <nav class="nav nav-pills nav-justified">
+            <nav class="nav nav-pills nav-justified" role="tablist">
                 <a class="nav-item nav-link active"
-                   href="#">
+                   data-toggle="pill"
+                   id="link-form-content"
+                   role="tab"
+                   aria-controls="box-form-content"
+                   aria-selected="true"
+                   href="#box-form-content">
                     Contenido
                 </a>
 
                 <a class="nav-item nav-link"
-                   href="#">
+                   data-toggle="pill"
+                   id="link-form-preview"
+                   role="tab"
+                   aria-controls="box-form-preview"
+                   aria-selected="false"
+                   href="#box-form-preview">
                     Previsualizar
                 </a>
 
-                <a class="nav-item nav-link disabled"
-                   href="#">
+                <a class="nav-item nav-link"
+                   data-toggle="pill"
+                   id="link-form-seo"
+                   role="tab"
+                   aria-controls="box-form-seo"
+                   aria-selected="false"
+                   href="#box-form-seo">
                     SEO
                 </a>
             </nav>
@@ -52,28 +67,44 @@
 
     {{-- Formulario --}}
     <div class="row">
-        <div class="col-md-8">
-            <form id="form-content"
-                  enctype="multipart/form-data"
-                  action="#"
-                  method="post"
-                  class="">
-                @csrf
-                @include('panel.content.forms.add_edit._fields')
-            </form>
+        <div class="col-md-8 tab-content">
+            <div id="box-form-content"
+                 class="col-md-12 tab-pane fade show active"
+                 role="tabpanel"
+                 aria-labelledby="link-form-content">
+                <form id="form-content"
+                      enctype="multipart/form-data"
+                      action="#"
+                      method="post"
+                      class="">
+                    @csrf
+                    @include('panel.content.forms.add_edit._fields')
+                </form>
+            </div>
 
-            <hr />
+            <div id="box-form-preview"
+                 class="col-md-12 tab-pane fade"
+                 role="tabpanel"
+                 aria-labelledby="link-form-preview">
+                PREVIEW
+            </div>
 
-            <form id="form-seo"
-                  action="#"
-                  method="post"
-                  class="">
-                @csrf
-                @include('panel.content.forms.add_edit._seo')
-            </form>
+            <div id="box-form-seo"
+                 class="col-md-12 tab-pane fade"
+                 role="tabpanel"
+                 aria-labelledby="link-form-seo">
+                <form id="form-seo"
+                      action="#"
+                      method="post"
+                      class="">
+                    @csrf
+                    @include('panel.content.forms.add_edit._seo')
+                </form>
+            </div>
         </div>
 
         <div class="col-md-4 content-panel-right">
+            {{-- Botones de Acción General --}}
             <div class="text-center">
                 {!!
                     FormHelper::submit('Guardar', 'fa fa-file-export', [
