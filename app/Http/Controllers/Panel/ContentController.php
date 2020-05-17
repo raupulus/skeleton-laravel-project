@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Panel;
 
 use App\Content;
 use App\ContentSeo;
+use App\ContentStatus;
 use App\ContentType;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -46,6 +47,7 @@ class ContentController extends Controller
 
         return view('panel.content.add_edit')->with([
             'type' => $type,
+            'status' => ContentStatus::all(),
             'seo' => new ContentSeo([
 
             ]),
