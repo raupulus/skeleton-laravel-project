@@ -31,11 +31,22 @@
     {{-- Botones de Acción General --}}
     <div class="row mt-3 mb-4">
         <div class="col-12">
-            {!!
-                FormHelper::submit('Guardar', 'fa fa-file-export', [
-                    'form' => 'form-add-user',
-                ])
-            !!}
+            <nav class="nav nav-pills nav-justified">
+                <a class="nav-item nav-link active"
+                   href="#">
+                    Contenido
+                </a>
+
+                <a class="nav-item nav-link"
+                   href="#">
+                    Previsualizar
+                </a>
+
+                <a class="nav-item nav-link disabled"
+                   href="#">
+                    SEO
+                </a>
+            </nav>
         </div>
     </div>
 
@@ -63,6 +74,24 @@
         </div>
 
         <div class="col-md-4 content-panel-right">
+            <div class="text-center">
+                {!!
+                    FormHelper::submit('Guardar', 'fa fa-file-export', [
+                        'form' => 'form-add-user',
+                    ])
+                !!}
+
+                <button class="btn btn-success">
+                    <i class="fa fa-file"></i>
+                    Publicar
+                </button>
+
+                <button class="btn btn-warning">
+                    <i class="fa fa-clock"></i>
+                    Programar
+                </button>
+            </div>
+
             <form id="form-contributors"
                   action="#"
                   method="post"
