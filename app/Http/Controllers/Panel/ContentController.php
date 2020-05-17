@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Content;
+use App\ContentSeo;
 use App\ContentType;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -45,6 +46,9 @@ class ContentController extends Controller
 
         return view('panel.content.add_edit')->with([
             'type' => $type,
+            'seo' => new ContentSeo([
+
+            ]),
             'content' => new Content([
                 //'user_id' => auth()->id(),
                 //'status_id' => ??
