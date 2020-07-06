@@ -129,4 +129,20 @@ class Content extends Model
 
         return $url;
     }
+
+    /**
+     * Devuelve la url para su previsualización.
+     */
+    public function getUrlPreviewAttribute()
+    {
+
+    }
+
+    /**
+     * Devuelve la url hacia la página publicada.
+     */
+    public function getUrlAttribute()
+    {
+
+    }
 }

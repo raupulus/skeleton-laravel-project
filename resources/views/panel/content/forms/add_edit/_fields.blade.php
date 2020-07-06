@@ -54,5 +54,15 @@
                 'required' => 'true',
             ])
         !!}
+
+
+         <!-- Editor -->
+        <h2>Editor</h2>
+        <div id="editor"></div>
+
+        <!-- Viewer Using Editor -->
+        <h2>Viewer</h2>
+        <div id="viewer"></div>
+
     </div>
 </div>
