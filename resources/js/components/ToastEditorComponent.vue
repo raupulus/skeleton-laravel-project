@@ -14,6 +14,12 @@
 
 <script>
 
+    // Añadir botones personalizados:
+    //https://nhn.github.io/tui.editor/latest/tutorial-example19-customizing-toolbar-buttons
+
+
+
+
     import 'codemirror/lib/codemirror.css';
 
     // https://www.npmjs.com/package/@toast-ui/vue-editor
@@ -40,6 +46,11 @@
     //https://github.com/nhn/tui.editor/tree/master/plugins/uml
     // No lo uso, no iba demasiado bien a veces, revisar depurador al usarlo
     //import uml from '@toast-ui/editor-plugin-uml';
+
+
+    // Importo todos los idiomas que usa la aplicación
+    //https://github.com/nhn/tui.editor/blob/master/apps/editor/docs/i18n.md
+    import '@toast-ui/editor/dist/i18n/es-es';
 
 
     // Configuración para las gráficas "chart"
@@ -155,6 +166,8 @@ partition Orchestra #CCCCEE {
 
 `,
                 options: {
+                    language: 'es-ES',
+
                     plugins: [
                         [chart, chartOptions],
                         [colorSyntax, colorSyntaxOptions],
