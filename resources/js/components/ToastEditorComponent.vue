@@ -15,26 +15,31 @@
 <script>
 
     import 'codemirror/lib/codemirror.css';
+
+    // https://www.npmjs.com/package/@toast-ui/vue-editor
     import '@toast-ui/editor/dist/toastui-editor.css';
 
     //import {Editor} '@toast-ui/editor';
     import {Editor} from '@toast-ui/vue-editor';
 
+    //https://github.com/nhn/tui.editor/tree/master/plugins/chart
     import chart from '@toast-ui/editor-plugin-chart';
 
-    import '@toast-ui/editor-plugin-color-syntax'
-    import '@toast-ui/editor-plugin-uml'
-    import '@toast-ui/editor-plugin-code-syntax-highlight'
-    import '@toast-ui/editor-plugin-table-merged-cell'
-    import '@toast-ui/editor'
+    //https://github.com/nhn/tui.editor/tree/master/plugins/color-syntax
+    import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
+
+    //https://github.com/nhn/tui.editor/tree/master/plugins/code-syntax-highlight
+    import 'highlight.js/styles/github.css';
+    import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
+    import hljs from 'highlight.js';
+
+    //https://github.com/nhn/tui.editor/tree/master/plugins/table-merged-cell
+    import tableMergedCell from '@toast-ui/editor-plugin-table-merged-cell';
 
 
-
-    //import ToastuiEditor from '@toast-ui/editor';
-
-    //import {ImageEditor} from '@toast-ui/vue-edit';
-
-    //import ToastuiEditorViewer from '@toast-ui/editor/dist/toastui-editor-viewer';
+    //https://github.com/nhn/tui.editor/tree/master/plugins/uml
+    // No lo uso, no iba demasiado bien a veces, revisar depurador al usarlo
+    //import uml from '@toast-ui/editor-plugin-uml';
 
 
     // Configuración para las gráficas "chart"
@@ -45,6 +50,18 @@
         maxHeight: 300
     };
 
+    // Configuración para el plugin de dar color.
+    const colorSyntaxOptions = {
+        preset: ['#181818', '#292929', '#393939'],
+        useCustomSyntax: true
+    };
+
+    // Configuración para el plugin uml
+    /*
+    const umlOptions = {
+        rendererURL: 'http://www.plantuml.com/plantuml/png/'
+    };
+    */
 
 
     export default {
@@ -69,10 +86,21 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 ---
 
+## Ejemplo de código javascript
+
+\`\`\`javascript
+console.log('hola')
+\`\`\`
+
+---
+
+## Ejemplo de checklist
+
 - [ ] Checklist 1
 - [x] Checklist 2
 - [ ] Checklist 3
 
+---
 
 ## Ejemplo de gráfica.
 
@@ -89,9 +117,51 @@ y.min: 1
 y.max: 40
 y.suffix: $
 \`\`\`
+
+---
+
+### Ejemplo de tabla combinada
+
+|@cols=2:Title|
+|---|---|
+|cell1|cell2|
+
+---
+
+### Ejemplo de gráfico uml
+
+\`\`\`uml
+partition Conductor {
+  (*) --> \"Climbs on Platform\"
+  --> === S1 ===
+  --> Bows
+}
+
+partition Audience #LightSkyBlue {
+  === S1 === --> Applauds
+}
+
+partition Conductor {
+  Bows --> === S2 ===
+  --> WavesArmes
+  Applauds --> === S2 ===
+}
+
+partition Orchestra #CCCCEE {
+  WavesArmes --> Introduction
+  --> \"Play music\"
+}
+\`\`\`
+
 `,
                 options: {
-                    plugins: [[chart, chartOptions]],
+                    plugins: [
+                        [chart, chartOptions],
+                        [colorSyntax, colorSyntaxOptions],
+                        [codeSyntaxHighlight, hljs],
+                        [tableMergedCell],
+                        //[uml, umlOptions],
+                    ],
 
 
                     // Ocultar el cambio de modo para markdown/WYSIWYG.
