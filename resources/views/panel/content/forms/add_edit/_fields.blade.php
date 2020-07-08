@@ -59,6 +59,8 @@
          <!-- Editor -->
         <h2>Editor</h2>
         <div id="editor"></div>
+        <v-toast-editor></v-toast-editor>
+
 
         <!-- Viewer Using Editor -->
         <h2>Viewer</h2>
