@@ -18,8 +18,6 @@
     //https://nhn.github.io/tui.editor/latest/tutorial-example19-customizing-toolbar-buttons
 
 
-
-
     import 'codemirror/lib/codemirror.css';
 
     // https://www.npmjs.com/package/@toast-ui/vue-editor
@@ -32,12 +30,13 @@
     import chart from '@toast-ui/editor-plugin-chart';
 
     //https://github.com/nhn/tui.editor/tree/master/plugins/color-syntax
-    import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
+    import colorSyntax         from '@toast-ui/editor-plugin-color-syntax';
 
     //https://github.com/nhn/tui.editor/tree/master/plugins/code-syntax-highlight
     import 'highlight.js/styles/github.css';
-    import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
-    import hljs from 'highlight.js';
+    import codeSyntaxHighlight
+                               from '@toast-ui/editor-plugin-code-syntax-highlight';
+    import hljs                from 'highlight.js';
 
     //https://github.com/nhn/tui.editor/tree/master/plugins/table-merged-cell
     import tableMergedCell from '@toast-ui/editor-plugin-table-merged-cell';
@@ -55,34 +54,63 @@
 
     // Configuración para las gráficas "chart"
     const chartOptions = {
-        minWidth: 100,
-        maxWidth: 400,
-        minHeight: 100,
-        maxHeight: 300
+        minWidth:100,
+        maxWidth:400,
+        minHeight:100,
+        maxHeight:300
     };
 
     // Configuración para el plugin de dar color.
     const colorSyntaxOptions = {
-        preset: ['#181818', '#292929', '#393939'],
-        useCustomSyntax: true
+        preset:['#181818', '#292929', '#393939'],
+        useCustomSyntax:true
     };
 
     // Configuración para el plugin uml
     /*
-    const umlOptions = {
-        rendererURL: 'http://www.plantuml.com/plantuml/png/'
-    };
-    */
+     const umlOptions = {
+     rendererURL: 'http://www.plantuml.com/plantuml/png/'
+     };
+     */
 
+    /*
+    function youtubePlugin() {
+        console.log(Editor);
+        console.log(Editor.codeBlockManager);
+
+        Editor.codeBlockManager.setReplacer('youtube',
+            function(youtubeId) {
+                // Indentify multiple code blocks
+                const wrapperId = `yt${Math.random()
+                    .toString(36)
+                    .substr(2, 10)}`;
+
+                // Avoid sanitizing iframe tag
+                setTimeout(renderYoutube.bind(null, wrapperId, youtubeId), 0);
+
+                return `<div id="${wrapperId}"></div>`;
+            });
+    }
+
+    function renderYoutube(wrapperId, youtubeId) {
+        const el = document.querySelector(`#${wrapperId}`);
+
+        el.innerHTML = `<iframe width="420" height="315" src="https://www.youtube.com/embed/${youtubeId}"></iframe>`;
+    }
+
+     */
 
     export default {
-        components: {
-            'editor': Editor
+        components:{
+            'editor':Editor
+        },
+        mounted() {
+            //console.log('Component image clipper mounted.')
         },
         data() {
             return {
-                useDefaultUI: true,
-                editorText: `
+                useDefaultUI:true,
+                editorText:`
 # Lorem Ipsum
 
 ---
@@ -164,36 +192,43 @@ partition Orchestra #CCCCEE {
 }
 \`\`\`
 
-`,
-                options: {
-                    language: 'es-ES',
+---
 
-                    plugins: [
+## Vídeo de youtube
+
+\`\`\`youtube
+XyenY12fzAk
+\`\`\`
+
+`,
+                options:{
+                    language:'es-ES',
+
+                    plugins:[
                         [chart, chartOptions],
                         [colorSyntax, colorSyntaxOptions],
                         [codeSyntaxHighlight, hljs],
                         [tableMergedCell],
                         //[uml, umlOptions],
+                        //[youtubePlugin],
                     ],
 
 
                     // Ocultar el cambio de modo para markdown/WYSIWYG.
-                    hideModeSwitch: false,
+                    hideModeSwitch:false,
 
                     // Editor al iniciar (wysiwyg|markdown)
-                    initialEditType: "markdown"
+                    initialEditType:"markdown"
                 },
 
                 // Altura.
-                height: "700px",
+                height:"700px",
 
                 // Orientación para previsualizar.
-                previewStyle: 'vertical'
+                previewStyle:'vertical'
             };
         },
-        methods: {
-
-        }
+        methods:{}
     };
 </script>
 
@@ -203,6 +238,5 @@ partition Orchestra #CCCCEE {
         width: 1000px;
         height: 800px;
     }
-
      */
 </style>
