@@ -7,6 +7,11 @@
                 :options="options"
                 :height="height"
                 :previewStyle="previewStyle"
+                @load="onEditorLoad"
+                @focus="onEditorFocus"
+                @blur="onEditorBlur"
+                @change="onEditorChange"
+                @stateChange="onEditorStateChange"
             />
         </div>
     </div>
@@ -23,20 +28,20 @@
     // https://www.npmjs.com/package/@toast-ui/vue-editor
     import '@toast-ui/editor/dist/toastui-editor.css';
 
-    //import {Editor} '@toast-ui/editor';
+    //import {ToastuiEditor} from '@toast-ui/editor';
     import {Editor} from '@toast-ui/vue-editor';
 
     //https://github.com/nhn/tui.editor/tree/master/plugins/chart
     import chart from '@toast-ui/editor-plugin-chart';
 
     //https://github.com/nhn/tui.editor/tree/master/plugins/color-syntax
-    import colorSyntax         from '@toast-ui/editor-plugin-color-syntax';
+    import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 
     //https://github.com/nhn/tui.editor/tree/master/plugins/code-syntax-highlight
     import 'highlight.js/styles/github.css';
     import codeSyntaxHighlight
-                               from '@toast-ui/editor-plugin-code-syntax-highlight';
-    import hljs                from 'highlight.js';
+                       from '@toast-ui/editor-plugin-code-syntax-highlight';
+    import hljs        from 'highlight.js';
 
     //https://github.com/nhn/tui.editor/tree/master/plugins/table-merged-cell
     import tableMergedCell from '@toast-ui/editor-plugin-table-merged-cell';
@@ -97,19 +102,18 @@
 
         el.innerHTML = `<iframe width="420" height="315" src="https://www.youtube.com/embed/${youtubeId}"></iframe>`;
     }
-
-     */
+    */
 
     export default {
         components:{
-            'editor':Editor
+            'editor': Editor
         },
         mounted() {
             //console.log('Component image clipper mounted.')
         },
         data() {
             return {
-                useDefaultUI:true,
+                useDefaultUI: true,
                 editorText:`
 # Lorem Ipsum
 
@@ -201,8 +205,10 @@ XyenY12fzAk
 \`\`\`
 
 `,
+                // https://nhn.github.io/tui.editor/latest/ToastUIEditor
                 options:{
-                    language:'es-ES',
+                    language: 'es-ES',
+                    usageStatistics: false,
 
                     plugins:[
                         [chart, chartOptions],
@@ -224,11 +230,30 @@ XyenY12fzAk
                 // Altura.
                 height:"700px",
 
-                // Orientación para previsualizar.
-                previewStyle:'vertical'
+                // Orientación para previsualizar. 'tab'|'vertical'
+                previewStyle: 'tab'
             };
         },
-        methods:{}
+        methods: {
+            onEditorLoad() {
+                // implement your code
+            },
+            onEditorFocus() {
+                // implement your code
+            },
+            onEditorBlur() {
+                // implement your code
+            },
+            onEditorChange() {
+                // implement your code
+            },
+            onEditorStateChange() {
+                // implement your code
+            },
+        },
+        beforeMount() {
+
+        },
     };
 </script>
 

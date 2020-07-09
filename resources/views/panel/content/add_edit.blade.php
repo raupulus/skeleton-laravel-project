@@ -42,6 +42,7 @@
                     Contenido
                 </a>
 
+                {{--
                 <a class="nav-item nav-link"
                    data-toggle="pill"
                    id="link-form-preview"
@@ -51,6 +52,7 @@
                    href="#box-form-preview">
                     Previsualizar
                 </a>
+                --}}
 
                 <a class="nav-item nav-link"
                    data-toggle="pill"
@@ -82,12 +84,20 @@
                 </form>
             </div>
 
+            {{--
             <div id="box-form-preview"
                  class="col-md-12 tab-pane fade"
                  role="tabpanel"
                  aria-labelledby="link-form-preview">
-                PREVIEW
+                <!-- Viewer Using Editor -->
+                <h2>Viewer</h2>
+                <v-toast-viewer content="
+# Prueba del visor
+---
+## Subtítulo de prueba"
+                ></v-toast-viewer>
             </div>
+            --}}
 
             <div id="box-form-seo"
                  class="col-md-12 tab-pane fade"
