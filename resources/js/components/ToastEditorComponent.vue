@@ -1,8 +1,14 @@
 <template>
     <div>
         <h1>Super Editor by fryntiz</h1>
+
+        <textarea name="body">{{this.htmlContent}}</textarea>
+
+        <textarea name="body_markdown">{{this.markdownContent}}</textarea>
+
         <div class="imageEditorApp">
             <editor
+                ref="toastEditor"
                 :initialValue="editorText"
                 :options="options"
                 :height="height"
@@ -105,15 +111,24 @@
     */
 
     export default {
-        components:{
+        components: {
             'editor': Editor
         },
         mounted() {
-            //console.log('Component image clipper mounted.')
+            //console.log('Component image clipper mounted.');
+            //console.log(this.$refs.toastEditor.invoke('getHtml'));
+            this.htmlContent = this.getHtml();
+            this.markdownContent = this.getMarkdown();
+                //markdown: this.editor.getMarkdown(),
         },
+        props: [
+            'urlSave',  // Url dónde guardar
+        ],
         data() {
             return {
                 useDefaultUI: true,
+                htmlContent: '',
+                markdownContent: '',
                 editorText:`
 # Lorem Ipsum
 
@@ -246,10 +261,27 @@ XyenY12fzAk
             },
             onEditorChange() {
                 // implement your code
+                console.log(this.getHtml());
+                console.log(this.getMarkdown());
+
+                this.htmlContent = this.getHtml();
+                this.markdownContent = this.getMarkdown();
             },
             onEditorStateChange() {
                 // implement your code
             },
+            scroll() {
+                this.$refs.toastEditor.invoke('scrollTop', 10);
+            },
+            moveTop() {
+                this.$refs.toastEditor.invoke('moveCursorToStart');
+            },
+            getHtml() {
+                return this.$refs.toastEditor.invoke('getHtml');
+            },
+            getMarkdown() {
+                return this.$refs.toastEditor.invoke('getMarkdown');
+            }
         },
         beforeMount() {
 
