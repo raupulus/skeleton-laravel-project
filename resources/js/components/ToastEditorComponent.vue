@@ -234,7 +234,6 @@ XyenY12fzAk
                         //[youtubePlugin],
                     ],
 
-
                     // Ocultar el cambio de modo para markdown/WYSIWYG.
                     hideModeSwitch:false,
 
