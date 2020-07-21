@@ -18,10 +18,14 @@ fi
 
 db_exist=$(psql -tAc "SELECT 1 FROM pg_database WHERE datname='laravel_skeleton'" "user=${DB_USERNAME} password=${DB_PASSWORD}")
 
-if [[ db_exist = '1' ]]; then
+if [[ $db_exist = '1' ]]; then
     echo 'Ya existe la base de datos, se aborta crearla'
+    exit 0
 else
     #@SET PGPASSWORD="${DB_PASSWORD}"
     #createdb -O "${DB_USERNAME}" -T template1 'laravel_skeleton'
     psql -c "CREATE DATABASE laravel_skeleton" "user=${DB_USERNAME} password=${DB_PASSWORD}"
+    exit 0
 fi
+
+exit 1
