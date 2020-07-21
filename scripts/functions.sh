@@ -31,5 +31,5 @@ replace_or_add_var_in_file() {
     echo "La línea completa quedará así: ${LINE}"
     echo "La expresión regular quedará así: ${REGEXP}"
 
-    sudo sed -r -i "${REGEXP}" "${FILE}"
+    sed -r -i "${REGEXP}" "${FILE}"
 }
