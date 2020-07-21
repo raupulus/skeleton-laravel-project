@@ -10,21 +10,21 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
-        "browser-sync": "^2.26.7",
+        "browser-sync": "^2.26.10",
         "browser-sync-webpack-plugin": "^2.2.2",
-        "less": "^3.11.3",
+        "less": "^3.12.2",
         "less-loader": "^5.0.0"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.13.1",
-        "@toast-ui/editor": "^2.2.0",
+        "@fortawesome/fontawesome-free": "^5.14.0",
+        "@toast-ui/editor": "^2.3.0",
         "@toast-ui/editor-plugin-chart": "^1.0.0",
         "@toast-ui/editor-plugin-code-syntax-highlight": "^1.0.0",
-        "@toast-ui/editor-plugin-color-syntax": "^1.0.0",
+        "@toast-ui/editor-plugin-color-syntax": "^1.0.1",
         "@toast-ui/editor-plugin-table-merged-cell": "^1.1.0",
         "@toast-ui/editor-plugin-uml": "^1.0.0",
-        "@toast-ui/jquery-editor": "^2.2.0",
-        "@toast-ui/vue-editor": "^2.2.0",
+        "@toast-ui/jquery-editor": "^2.3.0",
+        "@toast-ui/vue-editor": "^2.3.0",
         "axios": "^0.19.2",
         "bootstrap": "^4.5.0",
         "bootstrap-select": "^1.13.18",
