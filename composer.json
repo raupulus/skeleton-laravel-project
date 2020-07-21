@@ -15,6 +15,7 @@
         "google/recaptcha": "^1.2",
         "intervention/image": "^2.5",
         "laravel/framework": "^7.0.0",
+        "laravel/passport": "^9.3",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "yajra/laravel-datatables-oracle": "^9.7"
