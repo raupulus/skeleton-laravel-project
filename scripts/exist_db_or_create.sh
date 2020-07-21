@@ -14,7 +14,9 @@ if [[ ! $DB_PASSWORD ]]; then
 fi
 
 ## Compruebo si existe la db, en ese caso devolverá "1"
-db_exist=$(psql -U ${DB_USERNAME} -tAc "SELECT 1 FROM pg_database WHERE datname='laravel_skeleton'")
+#db_exist=$(psql -U ${DB_USERNAME} -tAc "SELECT 1 FROM pg_database WHERE datname='laravel_skeleton'")
+
+db_exist=$(psql -tAc "SELECT 1 FROM pg_database WHERE datname='laravel_skeleton'" "user=${DB_USERNAME} password=${DB_PASSWORD}")
 
 if [[ db_exist = '1' ]]; then
     echo 'Ya existe la base de datos, se aborta crearla'
