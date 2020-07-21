@@ -1,5 +1,6 @@
 <?php
 
+use App\Language;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -12,7 +13,7 @@ class LanguagesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('languages')->insert([
+        Language::firstOrCreate([
             'name' => 'Español',
             'locale' => 'es_ES',
             'code' => 'esp',
@@ -23,7 +24,7 @@ class LanguagesTableSeeder extends Seeder
             'icon64' => 'es_64.png',
         ]);
 
-        DB::table('languages')->insert([
+        Language::firstOrCreate([
             'name' => 'English',
             'locale' => 'en_GB',
             'code' => 'eng',

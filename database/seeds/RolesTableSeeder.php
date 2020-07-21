@@ -16,21 +16,21 @@ class RolesTableSeeder extends Seeder
         $table = 'users_roles';
 
         ## Creo rol para el usuario administrador principal.
-        DB::table($table)->insert([
+        Role::firstOrCreate([
             'name' => 'superadmin',
             'display_name' => 'SuperAdministrador',
             'description' => 'Administrador principal de la aplicación'
         ]);
 
         ## Creo rol para los demás administradores.
-        DB::table($table)->insert([
+        Role::firstOrCreate([
             'name' => 'admin',
             'display_name' => 'Administrador',
             'description' => 'Administrador con poderes amplios pero no totales'
         ]);
 
         ## Creo rol para usuario normal
-        DB::table($table)->insert([
+        Role::firstOrCreate([
             'name' => 'user',
             'display_name' => 'Usuario Normal',
             'description' => 'Usuario que puede acceder al contenido y editar el suyo'

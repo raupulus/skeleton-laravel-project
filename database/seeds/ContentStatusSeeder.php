@@ -50,7 +50,7 @@ class ContentStatusSeeder extends Seeder
 
         foreach ($data as $contentStatusData) {
             try {
-                ContentStatus::create($contentStatusData);
+                ContentStatus::firstOrCreate($contentStatusData);
             } catch (Exception $e) {
                 Log::error('Error en ContentStatus Seeder al crear datos');
                 Log::error($e);

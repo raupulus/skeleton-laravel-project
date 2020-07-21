@@ -24,7 +24,7 @@ class SocialNetworksTableSeeder extends Seeder
         $timestamp = Carbon::now();
 
         ## Facebook
-        DB::table($table)->insert([
+        SocialNetwork::firstOrCreate([
             'name' => 'Facebook',
             'slug' => 'facebook',
             'type' => 'Red Social',
@@ -37,7 +37,7 @@ class SocialNetworksTableSeeder extends Seeder
         ]);
 
         ## Twitter
-        DB::table($table)->insert([
+        SocialNetwork::firstOrCreate([
             'name' => 'Twitter',
             'slug' => 'twitter',
             'type' => 'Red Social',
@@ -50,7 +50,7 @@ class SocialNetworksTableSeeder extends Seeder
         ]);
 
         ## Instagram
-        DB::table($table)->insert([
+        SocialNetwork::firstOrCreate([
             'name' => 'Instagram',
             'slug' => 'instagram',
             'type' => 'Red Social',

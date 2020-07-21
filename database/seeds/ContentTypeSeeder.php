@@ -42,7 +42,7 @@ class ContentTypeSeeder extends Seeder
 
         foreach ($data as $contentTypeData) {
             try {
-                ContentType::create($contentTypeData);
+                ContentType::firstOrCreate($contentTypeData);
             } catch (Exception $e) {
                 Log::error('Error en ContentType Seeder al crear datos');
                 Log::error($e);

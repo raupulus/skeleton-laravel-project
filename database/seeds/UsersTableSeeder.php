@@ -24,7 +24,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'Administrador Principal',
                 'role_id' => 1,
-                'nick' => 'elsuperadmin',
+                'nick' => 'superadmin',
                 'email' => 'admin@domain.es',
             ],
 
@@ -42,6 +42,14 @@ class UsersTableSeeder extends Seeder
          * Inserto cada usuario creando los datos en las tablas dependientes.
          */
         foreach ($users as $user) {
+            $userInDb = User::where('email', $user['email'])
+                ->orWhere('nick', $user['nick'])
+                ->first();
+
+            if ($userInDb) {
+                continue;
+            }
+
             $configuration = DB::table($table_configuration)->insertGetId([
                 'send_email' => true,
                 'send_notification' => true,
