@@ -37,6 +37,8 @@ Vue.use(BootstrapVue, VueAxios, axios);
  */
 
 Vue.component('v-image-clipper', require('./components/ImageClipperComponent.vue').default);
+Vue.component('v-toast-editor', require('./components/ToastEditorComponent.vue').default);
+Vue.component('v-toast-viewer', require('./components/ToastViewerComponent.vue').default);
 
 
 const app = new Vue({

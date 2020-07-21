@@ -28,7 +28,7 @@ class CreateUsersSocialTable extends Migration
                 ->references('id')->on('social_networks')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('nick')->nullable();
+            $table->string('nick')->index()->nullable();
             $table->string('url');
             $table->timestamps();
             $table->softDeletes();

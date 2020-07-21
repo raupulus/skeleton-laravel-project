@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('role_id');
+            $table->unsignedBigInteger('role_id')->index();
             $table->foreign('role_id')
                 ->references('id')->on('users_roles')
                 ->onUpdate('cascade')
@@ -39,8 +39,8 @@ class CreateUsersTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('set null');
             $table->string('name');
-            $table->string('nick')->unique();
-            $table->string('email')->unique();
+            $table->string('nick')->index()->unique();
+            $table->string('email')->index()->unique();
             $table->string('avatar', 511)->default('images/users/profile-avatars/default.png');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

@@ -20,7 +20,7 @@ class CreateFileTypesTable extends Migration
             $table->collation = 'utf8_unicode_ci';
             $table->bigIncrements('id');
             $table->string('type', 127);
-            $table->string('mime', 127);
+            $table->string('mime', 127)->index();
             $table->text('icon16');
             $table->text('icon32');
             $table->text('icon64');

@@ -9,7 +9,7 @@ git clone https://gitlab.com/fryntiz/laravel-skeleton.git laravel-skeleton
 - Editar .env
 - Crear Base de datos (postgresql)
 
-cd /var/www/web/nombredominio
+cd /var/www/public/nombredominio
 sudo -u postgres createdb -O web -T template1 nombreapp
 cp .env.example.production .env
 nano .env

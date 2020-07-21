@@ -40,7 +40,7 @@
         </div>
     </li>
 
-    {{-- Páginas --}}
+    {{-- Contenido --}}
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle"
            href="#"
@@ -50,7 +50,245 @@
            aria-haspopup="true"
            aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
-            <span>Páginas</span>
+            <span>Contenido</span>
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Buscar..."
+                           aria-label="Search" aria-describedby="basic-addon2" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <a class="dropdown-item text-center" href="{{route('panel.content.index')}}">
+                Ver todo
+            </a>
+            <a class="dropdown-item text-center" href="{{route('panel.content.index')}}">
+                Categorías
+            </a>
+
+            <h6 class="dropdown-header">Páginas:</h6>
+            <a class="dropdown-item" href="{{route('panel.content.index')}}">
+                Listar
+            </a>
+            <a class="dropdown-item"
+               href="{{route('panel.content.add', ['type_slug' => 'page'])}}">
+                Nueva Página
+            </a>
+
+            <div class="dropdown-divider"></div>
+
+            <h6 class="dropdown-header">Artículos:</h6>
+            <a class="dropdown-item" href="{{route('panel.content.index')}}">
+                Listar
+            </a>
+            <a class="dropdown-item"
+               href="{{route('panel.content.add', ['type_slug' => 'article'])}}">
+                Nuevo Artículo
+            </a>
+
+            <div class="dropdown-divider"></div>
+
+            <h6 class="dropdown-header">Noticias:</h6>
+            <a class="dropdown-item" href="{{route('panel.content.index')}}">
+                Listar
+            </a>
+            <a class="dropdown-item"
+               href="{{route('panel.content.add', ['type_slug' => 'new'])}}">
+                Nueva Noticia
+            </a>
+        </div>
+    </li>
+
+    {{-- Traducciones --}}
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle"
+           href="#"
+           id="pagesDropdown"
+           role="button"
+           data-toggle="dropdown"
+           aria-haspopup="true"
+           aria-expanded="false">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Traducciones</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+            <h6 class="dropdown-header">Idiomas:</h6>
+            <a class="dropdown-item" href="{{route('panel.register')}}">
+                Gestionar Idiomas
+            </a>
+
+            <div class="dropdown-divider"></div>
+
+            <h6 class="dropdown-header">Grupos</h6>
+            <a class="dropdown-item" href="{{route('panel.404')}}">
+                Gestionar Grupos
+            </a>
+        </div>
+    </li>
+
+    {{-- Configuraciones --}}
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle"
+           href="#"
+           id="pagesDropdown"
+           role="button"
+           data-toggle="dropdown"
+           aria-haspopup="true"
+           aria-expanded="false">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Configuraciones</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+            <h6 class="dropdown-header">Web:</h6>
+
+            <a class="dropdown-item" href="{{route('panel.login')}}">
+                Header
+            </a>
+            <a class="dropdown-item" href="{{route('panel.login')}}">
+                Footer
+            </a>
+            <a class="dropdown-item" href="{{route('panel.login')}}">
+                General
+            </a>
+
+            <div class="dropdown-divider"></div>
+
+            <h6 class="dropdown-header">Facturación</h6>
+            <a class="dropdown-item" href="{{route('panel.404')}}">
+                Datos de empresa
+            </a>
+            <a class="dropdown-item" href="{{route('panel.404')}}">
+                SEPA
+            </a>
+            <a class="dropdown-item" href="{{route('panel.404')}}">
+                Stripe
+            </a>
+            <a class="dropdown-item" href="{{route('panel.404')}}">
+                Redsys
+            </a>
+            <a class="dropdown-item" href="{{route('panel.404')}}">
+                Paypal
+            </a>
+
+            <div class="dropdown-divider"></div>
+
+            <h6 class="dropdown-header">Legal</h6>
+            <a class="dropdown-item" href="{{route('panel.404')}}">
+                RGPD
+            </a>
+
+            <a class="dropdown-item" href="{{route('panel.404')}}">
+                Cookies
+            </a>
+
+            <a class="dropdown-item" href="{{route('panel.404')}}">
+                Políticas de Privacidad
+            </a>
+        </div>
+    </li>
+
+    {{-- Estadísticas --}}
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle"
+           href="#"
+           id="pagesDropdown"
+           role="button"
+           data-toggle="dropdown"
+           aria-haspopup="true"
+           aria-expanded="false">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Estadísticas</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+            <h6 class="dropdown-header">Estadísticas:</h6>
+            <a class="dropdown-item" href="{{route('panel.login')}}">
+                Visitas
+            </a>
+            <a class="dropdown-item" href="{{route('panel.register')}}">
+                Ventas
+            </a>
+        </div>
+    </li>
+
+    {{-- Analítica --}}
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle"
+           href="#"
+           id="pagesDropdown"
+           role="button"
+           data-toggle="dropdown"
+           aria-haspopup="true"
+           aria-expanded="false">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Analítica</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+            <h6 class="dropdown-header">Google:</h6>
+            <a class="dropdown-item" href="{{route('panel.login')}}">
+                Configurar Adwords
+            </a>
+
+            <a class="dropdown-item" href="{{route('panel.login')}}">
+                Configurar Analytics
+            </a>
+
+            <div class="dropdown-divider"></div>
+
+            <h6 class="dropdown-header">Mi analítica:</h6>
+            <a class="dropdown-item" href="{{route('panel.404')}}">
+                Resumen
+            </a>
+
+            <a class="dropdown-item" href="{{route('panel.blank')}}">
+                Gestionar
+            </a>
+        </div>
+    </li>
+
+    {{-- Facturación --}}
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle"
+           href="#"
+           id="pagesDropdown"
+           role="button"
+           data-toggle="dropdown"
+           aria-haspopup="true"
+           aria-expanded="false">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Facturación</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+            <h6 class="dropdown-header">Resumen:</h6>
+            <a class="dropdown-item" href="{{route('panel.login')}}">
+                Ventas por Mes
+            </a>
+            <a class="dropdown-item" href="{{route('panel.register')}}">
+                Ventas por Día
+            </a>
+            <a class="dropdown-item" href="{{route('panel.register')}}">
+                Ventas por Año
+            </a>
+        </div>
+    </li>
+
+    {{-- Páginas de Ejemplo --}}
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle"
+           href="#"
+           id="pagesDropdown"
+           role="button"
+           data-toggle="dropdown"
+           aria-haspopup="true"
+           aria-expanded="false">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Páginas Ejemplo</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">Ventanas de Login:</h6>
@@ -65,6 +303,7 @@
             </a>
 
             <div class="dropdown-divider"></div>
+
             <h6 class="dropdown-header">Otras páginas:</h6>
             <a class="dropdown-item" href="{{route('panel.404')}}">
                 404
