@@ -4,6 +4,8 @@
 ##
 ## Comprueba si la línea recibida existe en el archivo o la crea
 ##
+##        (NO IMPLEMENTADO AÚN)
+##
 replace_or_add_line_in_file() {
     local FILE="${1}"
     local LINE="${2}"
@@ -21,6 +23,13 @@ replace_or_add_var_in_file() {
     local VAR="${2}"
     local VALUE="${3}"
 
-    echo "La variable recibida es: ${VAR}"
-    echo "El valor recibido es: ${VALUE}"
+    ## Almaceno la línea compuesta de variable=valor.
+    local LINE="${VAR}=${VALUE}"
+
+    local REGEXP="s/^.*${VAR}\s*=.*$/${LINE}/"
+
+    echo "La línea completa quedará así: ${LINE}"
+    echo "La expresión regular quedará así: ${REGEXP}"
+
+    sudo sed -r -i "${REGEXP}" "${FILE}"
 }
