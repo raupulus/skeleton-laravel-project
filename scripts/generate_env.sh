@@ -8,6 +8,13 @@
 ## Parámetros tomados desde el entorno:
 ## GOOGLE_CAPTCHA_KEY
 ## GOOGLE_CAPTCHA_SECRET
+## MAIL_HOST
+## MAIL_PORT
+## MAIL_USERNAME
+## MAIL_PASSWORD
+## MAIL_ENCRYPTION
+## MAIL_FROM_ADDRESS
+## MAIL_FROM_NAME
 
 
 ################ Asignación de variables por parámetros ################
@@ -57,6 +64,19 @@ source "${WORKSCRIPT}/scripts/functions.sh"
 ## Creo el archivo .env a partir del archivo con parámetros predefinidos.
 cp "${WORKSCRIPT}/.env.example.production" "${WORKSCRIPT}/.env"
 
-## Modifico las variables privadas.
+## DB.
 replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'DB_USERNAME' "${DB_USERNAME}"
 replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'DB_PASSWORD' "${DB_PASSWORD}"
+
+## Google Captcha
+replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'GOOGLE_CAPTCHA_KEY' "${GOOGLE_CAPTCHA_KEY}"
+replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'GOOGLE_CAPTCHA_SECRET' "${GOOGLE_CAPTCHA_SECRET}"
+
+## Mail
+replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'MAIL_HOST' "${MAIL_HOST}"
+replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'MAIL_PORT' "${MAIL_PORT}"
+replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'MAIL_USERNAME' "${MAIL_USERNAME}"
+replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'MAIL_PASSWORD' "${MAIL_PASSWORD}"
+replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'MAIL_ENCRYPTION' "${MAIL_ENCRYPTION}"
+replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'MAIL_FROM_ADDRESS' "${MAIL_FROM_ADDRESS}"
+replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'MAIL_FROM_NAME' "${MAIL_FROM_NAME}"
