@@ -12,7 +12,19 @@ cd /var/www/public/nombredominio
 - Editar .env
 - Crear Base de datos (postgresql)
 
+## Crear usuario postgresql
+
+En caso de no tener usuario postgresql crear así con tu usuaio:
+
+```bash
+sudo -u postgres createuser -P user_name
+sudo -u postgres createdb fryntiz -O user_name
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE db_name to user_name"
+```
+
 ## Crear Base de datos
+
+Ahora crea la base de datos para este proyecto
 
 ```bash
 sudo -u postgres createdb -O user_name -T template1 db_name
