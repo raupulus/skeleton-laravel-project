@@ -107,3 +107,20 @@ sudo certbot --authenticator webroot --installer apache \
 sudo certbot certonly --webroot -w /var/www/public/nombredominio/public \
     -d www.nombredominio -d nombredominio
 ```
+
+### Instalar certificado de forma interactiva forzando dominios
+
+```bash
+sudo certbot certonly --authenticator standalone --pre-hook "apachectl -k stop" --post-hook "apachectl -k start"
+```
+
+## Añadir crontab para renovar certificados
+
+#15 2,14 * * * /usr/bin/certbot renew --quiet --post-hook "service apache2 reload"
+43 5 * * * certbot renew --post-hook "systemctl reload apache2"
+
+## Renovar certificados manualmente
+
+```bash
+sudo certbot renew --post-hook "service apache2 reload"
+```
