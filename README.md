@@ -124,3 +124,9 @@ sudo certbot certonly --authenticator standalone --pre-hook "apachectl -k stop" 
 ```bash
 sudo certbot renew --post-hook "service apache2 reload"
 ```
+
+## Eliminar certificado cerbot
+
+```bash
+sudo certbot delete domain
+```
