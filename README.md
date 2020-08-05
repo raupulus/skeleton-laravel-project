@@ -2,6 +2,23 @@
 
 Creado por Raúl Caro Pastorino
 
+## Información sobre la plantilla
+
+Esta plantilla la estoy creando para tomarla como referencia al comenzar mis
+proyectos y utilizarla como base para además actualizarlos.
+
+Las características son o pretende llegar a serlo en un futuro:
+
+- Uso del front mediante componentes, principalmente Vue.js
+- Panel backend para gestionar parámetros de API y datos para el front.
+- Front modular, separado del backend.
+- Assets en Typescript y Saas.
+- Módulos independientes, extraibles o intercambiables.
+- Extraer cada funcionalidad que pueda ser interesante a paquete laravel de
+  forma que pueda ser desarrollado de forma externa y actualizado en todas
+  las aplicaciones cómodamente.
+- Base de datos PostgreSQL.
+
 ## Obtener aplicación
 
 ```bash
