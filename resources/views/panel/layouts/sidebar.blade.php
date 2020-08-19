@@ -278,6 +278,32 @@
         </div>
     </li>
 
+    {{-- File Manager --}}
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle"
+           href="#"
+           id="pagesDropdown"
+           role="button"
+           data-toggle="dropdown"
+           aria-haspopup="true"
+           aria-expanded="false">
+            <i class="fas fa-fw fa-file"></i>
+            <span>File Manager</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+            <h6 class="dropdown-header">Directorios:</h6>
+            <a class="dropdown-item" href="{{route('file_manager.index', ['type' => 'files'])}}">
+                Archivos
+            </a>
+            <a class="dropdown-item" href="{{route('file_manager.index', ['type' => 'images'])}}">
+                Imágenes
+            </a>
+            <a class="dropdown-item" href="{{route('file_manager.index', ['type' => 'posts'])}}">
+                Posts
+            </a>
+        </div>
+    </li>
+
     {{-- Páginas de Ejemplo --}}
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle"

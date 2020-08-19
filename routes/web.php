@@ -197,6 +197,18 @@ Route::group([
             return view('panel.demos.tables');
         })->name('panel.demo.tables');
     });
+
+    /******************************************
+     *  Gestor de archivos para filemanager
+     ******************************************/
+    Route::group(['prefix' => 'filemanager', 'middleware' => ['web',  'auth']], function () {
+        Route::get('/{type}', function ($type) {
+            return view('panel.file_manager.index', ['type' => $type]);
+        })->name('file_manager.index');
+
+        \UniSharp\LaravelFilemanager\Lfm::routes();
+    });
+
 });
 
 Auth::routes();
