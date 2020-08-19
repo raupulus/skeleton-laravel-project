@@ -40,7 +40,7 @@ E-mail: dev@fryntiz.es
                  </div>
              </div>
 
-            <footer id="box-footer" class="footer sticky-footer">
+            <footer id="box-footer" class="footer {{-- sticky-footer --}}">
                 @include('panel.layouts.footer')
             </footer>
         </div>

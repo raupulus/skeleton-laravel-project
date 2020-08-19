@@ -176,4 +176,16 @@
 
 @section('js')
     <script src="{{ mix('admin-panel/content/js/content_add.js') }}"></script>
+
+    {{-- Editor Gutenberg --}}
+    @include('panel.content.layouts._edit_gutenberg_assets')
+    <script>
+        Laraberg.init('form-addedit-body', {
+            // https://github.com/VanOns/laraberg#configuration-options
+            sidebar: false,
+            laravelFilemanager: true,
+            sidebar: false,
+            minHeight: '500px',
+        });
+    </script>
 @endsection

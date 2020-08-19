@@ -47,6 +47,14 @@
         !!}
     </div>
 
+    {{-- Usando editor Gutenberg --}}
+    <div class="col-12">
+        <h3>Contenido</h3>
+        <textarea id="form-addedit-body" name="body" hidden>{{$content->getRawContent()}}</textarea>
+    </div>
+
+    {{-- Usando mi editor en vue.js --}}
+    {{--
     <div class="col-12">
         <h3>Contenido</h3>
         {!!
@@ -59,4 +67,5 @@
         <h2>Editor</h2>
         <v-toast-editor></v-toast-editor>
     </div>
+    --}}
 </div>

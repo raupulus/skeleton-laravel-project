@@ -3,10 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+
+use VanOns\Laraberg\Models\Gutenbergable;
+
 use function asset;
 
 class Content extends Model
 {
+    use Gutenbergable;
+
     protected $fillable = [
         'title',
         'slug',
