@@ -183,8 +183,11 @@
         Laraberg.init('form-addedit-body', {
             // https://github.com/VanOns/laraberg#configuration-options
             sidebar: false,
-            laravelFilemanager: true,
-            sidebar: false,
+            //laravelFilemanager: true,
+            laravelFilemanager: {
+                prefix: '/filemanager?type=posts&no\\',
+                type: 'posts'
+            },
             minHeight: '500px',
         });
     </script>
