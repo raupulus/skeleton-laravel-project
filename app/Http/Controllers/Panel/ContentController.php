@@ -9,6 +9,7 @@ use App\ContentType;
 use App\File;
 use App\FileType;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ContentAddRequest;
 use App\User;
 use Illuminate\Http\Request;
 use function auth;
@@ -63,10 +64,8 @@ class ContentController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
      */
-    public function store(Request $request)
+    public function store(ContentAddRequest $request)
     {
         $content_id = $request->get('content_id');
 
