@@ -26,11 +26,11 @@ class CreateFilesTable extends Migration
                 ->references('id')->on('file_types')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
-            $table->integer('size')
-                ->default(0)
-                ->comment('Tamaño de la imagen');
+
+            $table->string('path', 511)->comment('Ruta que tiene la aplicación hacia la imagen, por ejemplo: users/avatar');
             $table->string('name', 511)
                 ->comment('Nombre asignado de forma interna en la aplicación, por ejemplo: fg7s97hg98hjsd8gh0d0.jpg');
+
 
             // Lo comento porque pueden existir otros archivos sin miniaturas
             // tal vez habría que plantear una columna de tipo, o una tabla
@@ -45,7 +45,9 @@ class CreateFilesTable extends Migration
             $table->string('originalname', 511)
                 ->nullable()
                 ->comment('Nombre original de la imagen, el nombre que lleva al subirse');
-            $table->string('path', 511)->comment('Ruta que tiene la aplicación hacia la imagen, por ejemplo: users/avatar');
+            $table->integer('size')
+                ->default(0)
+                ->comment('Tamaño de la imagen');
             $table->string('alt', 511);
             $table->string('title', 511);
             $table->boolean('is_private')->default(0)->comment('Indica si es privada la imagen o pertenece al espacio público de la aplicación');

@@ -13,6 +13,8 @@ use App\User;
 use Illuminate\Http\Request;
 use function auth;
 use function config;
+use function count;
+use function explode;
 use function redirect;
 use function response;
 use function view;
@@ -63,13 +65,13 @@ class ContentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $content_id = $request->get('content_id');
 
         $content_data = [
+            'status_id' => $request->get('status_id'),
             'title' => $request->get('title'),
             'slug' => $request->get('slug'),
             'excerpt' => $request->get('excerpt'),
@@ -79,6 +81,7 @@ class ContentController extends Controller
         ## Cuando no existe el contenido se asigna al usuario actual.
         if (!$content_id) {
             $content_data['user_id'] = auth()->id();
+            $content_data['type_id'] = $request->get('type_id');
         }
 
         ## Creo o edito el contenido con los datos anteriores.
@@ -110,7 +113,8 @@ class ContentController extends Controller
         ## Si hay imagen para el seo, se actualiza.
         if ($request->hasFile('og_image')) {
             $imageSeo = $request->file('og_image');
-            $contentSeo_data['og_image'] = $imageSeo->store('public/seo');
+            $imageSeoPath = 'public/seo';
+            $contentSeo_data['og_image'] = $imageSeo->store($imageSeoPath);
         }
 
         $contentSeo = ContentSeo::firstOrCreate([
@@ -120,7 +124,10 @@ class ContentController extends Controller
         ## Si hay imagen para el contenido, se actualiza.
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = $image->store('public/content');
+            $imagePath = 'public/content';
+            $imageFullPath = $image->store($imagePath);
+            $imageNameArray = explode('/', $imageFullPath);
+            $imageName = $imageNameArray[count($imageNameArray) - 1];
 
             ## Obtengo el tipo de archivo o lo creo si no existe.
             $fileType = FileType::firstOrCreate([
@@ -140,7 +147,7 @@ class ContentController extends Controller
                 'size' => $image->getSize(),
                 'name' => $imageName,
                 'originalname' => $image->getClientOriginalName(),
-                'path' => $image->getPath(),
+                'path' => $imagePath,
                 'alt' => $image->getClientOriginalName(),
                 'title' => $image->getClientOriginalName(),
                 'is_private' => false,
@@ -148,18 +155,11 @@ class ContentController extends Controller
 
             $content->file_id = $file->id;
             $content->save();
-
-            dd([
-                $fileType,
-                $file,
-                $content,
-            ]);
-
-            // Añadir en file_types el mime de esta imagen
-            // Añadir en files la imagen
         }
 
-        dd($content, $request->all());
+        return redirect()->back()->with([
+            'message' => 'Se ha guardado correctamente'
+        ]);
     }
 
     /**

@@ -143,13 +143,7 @@
 
                 <hr />
 
-                <form id="form-status"
-                      action="#"
-                      method="post"
-                      class="">
-                    @csrf
-                    @include('panel.content.forms.add_edit._status')
-                </form>
+                @include('panel.content.forms.add_edit._status')
 
                 <hr />
 

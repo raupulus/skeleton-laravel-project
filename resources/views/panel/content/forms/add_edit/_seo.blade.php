@@ -44,7 +44,7 @@
     <div class="col-md-12 form-row mt-4">
         <h3>Indexación y seguimiento de enlaces</h3>
 
-        <select class="form-control">
+        <select class="form-control" name="robots">
             @foreach([
                 'index' => 'Index',
                 'noindex' => 'No Index',

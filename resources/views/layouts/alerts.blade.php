@@ -19,7 +19,8 @@
             @else
                 <div class="row">
                     <div class="col-12">
-                        <div class="alert alert-warning alert-dismissable">
+                        <div class="alert alert-dismissable {{isset
+                        ($alert-type) && $alert-type ? $alert : 'alert-warning'}}">
                             <button type="button"
                                     class="close"
                                     aria-hidden="true">
