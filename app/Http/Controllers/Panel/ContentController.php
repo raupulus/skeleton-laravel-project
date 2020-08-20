@@ -158,7 +158,8 @@ class ContentController extends Controller
         }
 
         return redirect()->back()->with([
-            'message' => 'Se ha guardado correctamente'
+            'message' => 'Se ha guardado correctamente',
+            'alert_type' => 'danger',
         ]);
     }
 
