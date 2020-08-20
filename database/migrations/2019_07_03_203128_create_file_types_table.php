@@ -21,10 +21,11 @@ class CreateFileTypesTable extends Migration
             $table->bigIncrements('id');
             $table->string('type', 127);
             $table->string('mime', 127)->index();
-            $table->text('icon16');
-            $table->text('icon32');
-            $table->text('icon64');
-            $table->text('icon128');
+            $table->string('extension', 12);
+            $table->text('icon16')->default('images/icons/file-types/default_16.png');
+            $table->text('icon32')->default('images/icons/file-types/default_32.png');
+            $table->text('icon64')->default('images/icons/file-types/default_64.png');
+            $table->text('icon128')->default('images/icons/file-types/default_128.png');
             $table->timestamps();
             $table->softDeletes();
         });

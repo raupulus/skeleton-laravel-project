@@ -24,7 +24,7 @@
 
     <div class="col-12">
         <h1 class="text-center">
-            {{isset($content->id) && $content->id ? 'Añadir' : 'Editar' . ' Contenido'}}
+            {{isset($content->id) && $content->id ? 'Editar' : 'Crear' . '  Contenido'}}
         </h1>
     </div>
 
@@ -68,110 +68,117 @@
     </div>
 
     {{-- Formulario --}}
-    <div class="row">
-        <div class="col-md-8 tab-content">
-            <div id="box-form-content"
-                 class="col-md-12 tab-pane fade show active"
-                 role="tabpanel"
-                 aria-labelledby="link-form-content">
-                <form id="form-content"
-                      enctype="multipart/form-data"
+    <form id="form-content"
+          enctype="multipart/form-data"
+          action="{{route('panel.content.store')}}"
+          method="post"
+          class="">
+        @csrf
+
+        {{-- Almacena el id del contenido si existiera --}}
+        <input name="content_id"
+               type="hidden"
+               value="{{isset($content->id) ?? $content->id}}" />
+
+        {{-- Almacena el tipo de contenido a editar o crear --}}
+        <input name="type_id"
+               type="hidden"
+               value="{{isset($content->id) ?? $content->id}}" />
+
+        <div class="row">
+            <div class="col-md-8 tab-content">
+                <div id="box-form-content"
+                     class="col-md-12 tab-pane fade show active"
+                     role="tabpanel"
+                     aria-labelledby="link-form-content">
+
+                        @include('panel.content.forms.add_edit._fields')
+
+                </div>
+
+                {{--
+                <div id="box-form-preview"
+                     class="col-md-12 tab-pane fade"
+                     role="tabpanel"
+                     aria-labelledby="link-form-preview">
+                    <!-- Viewer Using Editor -->
+                    <h2>Viewer</h2>
+                    <v-toast-viewer content="
+    # Prueba del visor
+    ---
+    ## Subtítulo de prueba"
+                    ></v-toast-viewer>
+                </div>
+                --}}
+
+                <div id="box-form-seo"
+                     class="col-md-12 tab-pane fade"
+                     role="tabpanel"
+                     aria-labelledby="link-form-seo">
+                        @include('panel.content.forms.add_edit._seo')
+                </div>
+            </div>
+
+            <div class="col-md-4 content-panel-right">
+                {{-- Botones de Acción General --}}
+                <div class="text-center">
+                    {!!
+                        FormHelper::submit('Guardar', 'fa fa-file-export', [
+                        ])
+                    !!}
+
+                    <button class="btn btn-success"
+                            type="submit">
+                        <i class="fa fa-file"></i>
+                        Publicar
+                    </button>
+
+                    <button class="btn btn-warning">
+                        <i class="fa fa-clock"></i>
+                        Programar
+                    </button>
+                </div>
+
+                <form id="form-contributors"
                       action="#"
                       method="post"
                       class="">
                     @csrf
-                    @include('panel.content.forms.add_edit._fields')
+                    @include('panel.content.forms.add_edit._contributors')
                 </form>
-            </div>
 
-            {{--
-            <div id="box-form-preview"
-                 class="col-md-12 tab-pane fade"
-                 role="tabpanel"
-                 aria-labelledby="link-form-preview">
-                <!-- Viewer Using Editor -->
-                <h2>Viewer</h2>
-                <v-toast-viewer content="
-# Prueba del visor
----
-## Subtítulo de prueba"
-                ></v-toast-viewer>
-            </div>
-            --}}
+                <hr />
 
-            <div id="box-form-seo"
-                 class="col-md-12 tab-pane fade"
-                 role="tabpanel"
-                 aria-labelledby="link-form-seo">
-                <form id="form-seo"
+                <form id="form-status"
                       action="#"
                       method="post"
                       class="">
                     @csrf
-                    @include('panel.content.forms.add_edit._seo')
+                    @include('panel.content.forms.add_edit._status')
+                </form>
+
+                <hr />
+
+                <form id="form-subcategories"
+                      action="#"
+                      method="post"
+                      class="">
+                    @csrf
+                    @include('panel.content.forms.add_edit._subcategories')
+                </form>
+
+                <hr />
+
+                <form id="form-tags"
+                      action="#"
+                      method="post"
+                      class="">
+                    @csrf
+                    @include('panel.content.forms.add_edit._tags')
                 </form>
             </div>
         </div>
-
-        <div class="col-md-4 content-panel-right">
-            {{-- Botones de Acción General --}}
-            <div class="text-center">
-                {!!
-                    FormHelper::submit('Guardar', 'fa fa-file-export', [
-                        'form' => 'form-add-user',
-                    ])
-                !!}
-
-                <button class="btn btn-success">
-                    <i class="fa fa-file"></i>
-                    Publicar
-                </button>
-
-                <button class="btn btn-warning">
-                    <i class="fa fa-clock"></i>
-                    Programar
-                </button>
-            </div>
-
-            <form id="form-contributors"
-                  action="#"
-                  method="post"
-                  class="">
-                @csrf
-                @include('panel.content.forms.add_edit._contributors')
-            </form>
-
-            <hr />
-
-            <form id="form-status"
-                  action="#"
-                  method="post"
-                  class="">
-                @csrf
-                @include('panel.content.forms.add_edit._status')
-            </form>
-
-            <hr />
-
-            <form id="form-subcategories"
-                  action="#"
-                  method="post"
-                  class="">
-                @csrf
-                @include('panel.content.forms.add_edit._subcategories')
-            </form>
-
-            <hr />
-
-            <form id="form-tags"
-                  action="#"
-                  method="post"
-                  class="">
-                @csrf
-                @include('panel.content.forms.add_edit._tags')
-            </form>
-        </div>
-    </div>
+    </form>
 @endsection
 
 @section('js')
@@ -180,15 +187,17 @@
     {{-- Editor Gutenberg --}}
     @include('panel.content.layouts._edit_gutenberg_assets')
     <script>
-        Laraberg.init('form-addedit-body', {
-            // https://github.com/VanOns/laraberg#configuration-options
-            sidebar: false,
-            //laravelFilemanager: true,
-            laravelFilemanager: {
-                prefix: '/filemanager?type=posts&no\\',
-                type: 'posts'
-            },
-            minHeight: '500px',
-        });
+        document.addEventListener('DOMContentLoaded',  () => {
+            Laraberg.init('form-addedit-body', {
+                // https://github.com/VanOns/laraberg#configuration-options
+                sidebar: false,
+                //laravelFilemanager: true,
+                laravelFilemanager: {
+                    prefix: '/filemanager?type=posts&no\\',
+                    type: 'posts'
+                },
+                minHeight: '500px',
+            });
+        })
     </script>
 @endsection

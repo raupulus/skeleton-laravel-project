@@ -51,7 +51,6 @@ class CreateContentsTable extends Migration
                 ->onDelete('set null');
             $table->string('title', 511)
                 ->index()
-                ->unique()
                 ->comment('Título de la página');
             $table->string('slug', 255)
                 ->index()

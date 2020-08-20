@@ -13,6 +13,10 @@ class Content extends Model
     use Gutenbergable;
 
     protected $fillable = [
+        'user_id',
+        'status_id',
+        'type_id',
+        'file_id',
         'title',
         'slug',
         'excerpt',
