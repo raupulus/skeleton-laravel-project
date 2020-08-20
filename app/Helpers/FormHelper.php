@@ -161,6 +161,7 @@ class FormHelper
     {
         $attributesArray = array_merge([
             'class' => 'form-control',
+            'name' => $name,
         ], $attributesArray);
 
         $attributes = '';

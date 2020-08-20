@@ -92,7 +92,7 @@
             <br />
 
             <span class="text-center">
-                <img src="{{$content->seo ? $content->seo->urlImage : (new \App\ContentSeo)->urlImage}}"
+                <img src="{{$seo ? $seo->urlImage : (new \App\ContentSeo)->urlImage}}"
                      alt="Image Content"
                      title="Image Content"
                      class="form-image-preview text-center" />

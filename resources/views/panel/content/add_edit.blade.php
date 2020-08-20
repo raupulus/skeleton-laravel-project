@@ -1,7 +1,7 @@
 @extends('panel.layouts.app')
 
 {{-- Descripción sobre esta página --}}
-@section('title', isset($content_id) && $content_id ? 'Añadir' : 'Editar' . 'Contenido')
+@section('title', isset($content_id) && $content_id ? 'Añadir ' . $type->name : 'Editar ' . $type->name)
 @section('description', 'Vista de todos los usuarios')
 
 {{-- Marca el elemento del menú que se encuentra activo --}}
@@ -16,7 +16,9 @@
                 'icon' => 'fas fa-file'
             ],
             [
-                'title' => isset($content_id) && $content_id ? 'Editando Contenido' : 'Crear Contenido',
+                'title' => isset($content_id) && $content_id ?
+                           'Editando ' . $type->name :
+                           'Crear ' . $type->name,
                 'icon' => 'fas ' . (isset($content_id) && $content_id ? 'fa-edit' : 'fa-plus')
             ],
         ]
@@ -24,8 +26,15 @@
 
     <div class="col-12">
         <h1 class="text-center">
-            {{isset($content->id) && $content->id ? 'Editar' : 'Crear' . '  Contenido'}}
+            {{isset($content->id) && $content->id ? 'Editar ' . $type->name : 'Crear ' . $type->name}}
         </h1>
+
+        <br />
+
+        <p class="text-center">
+            <i class="fa {{$type->icon}}" style="color: {{$type->color}}"></i>
+            {{$type->description}}
+        </p>
     </div>
 
     {{-- Menú de navegación entre secciones --}}
@@ -83,7 +92,7 @@
         {{-- Almacena el tipo de contenido a editar o crear --}}
         <input name="type_id"
                type="hidden"
-               value="{{isset($content->id) ?? $content->id}}" />
+               value="{{isset($type) ?? $type->id}}" />
 
         <div class="row">
             <div class="col-md-8 tab-content">

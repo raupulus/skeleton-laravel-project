@@ -2,8 +2,6 @@
 @include('panel.alerts.forms')
 @include('panel.alerts.notifications')
 
-@php($message = 'ESTO ES UNA PRUEBA')
-
 @if (isset($message))
     <div class="row mt-2 mb-2">
         <div class="col-12">

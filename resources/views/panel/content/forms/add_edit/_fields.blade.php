@@ -45,7 +45,6 @@
 
             <input class="form-control-file mt-3 mb-3 text-center"
                    name="image"
-                   style=""
                    type="file" />
         </div>
     </div>

@@ -167,7 +167,6 @@ class ContentController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Content  $content
-     * @return \Illuminate\Http\Response
      */
     public function show(Content $content)
     {
