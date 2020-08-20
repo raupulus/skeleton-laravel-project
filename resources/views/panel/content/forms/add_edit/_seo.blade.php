@@ -1,14 +1,11 @@
 <div class="row">
-    <div class="col-md-12 text-center">
+    <div class="col-md-12 text-center mt-3">
         <h2>
             SEO
         </h2>
     </div>
 
-    <br />
-    <br />
-
-    <div class="col-md-12 form-row">
+    <div class="col-md-12 form-row mt-4">
         <h3>Descripción</h3>
 
         {!!
@@ -19,24 +16,15 @@
         !!}
     </div>
 
-    <br />
-    <br />
-
-    <div class="col-md-12 form-row">
+    <div class="col-md-12 form-row mt-4">
         <h3>Keywords</h3>
         <br />
         [ Crear sistema de tarjetas con sugerencias (select2???) y guardar en json ]
     </div>
 
-    <br />
-    <br />
-
     <hr />
 
-    <br />
-    <br />
-
-    <div class="col-md-12 form-row">
+    <div class="col-md-12 form-row mt-4">
         <h3>Redes Sociales - Título</h3>
 
         {!!
@@ -47,10 +35,7 @@
         !!}
     </div>
 
-    <br />
-    <br />
-
-    <div class="col-md-12 form-row">
+    <div class="col-md-12 form-row mt-4">
         <h3>Redes Sociales - Nombre del sitio</h3>
 
         {!!
@@ -61,10 +46,7 @@
         !!}
     </div>
 
-    <br />
-    <br />
-
-    <div class="col-md-12 form-row">
+    <div class="col-md-12 form-row mt-4">
         <h3>Redes Sociales - Descripción</h3>
 
         {!!
@@ -75,33 +57,26 @@
         !!}
     </div>
 
-    <br />
-    <br />
+    <div class="col-md-12 form-row mt-4">
+        <div class="form-text">
+            <h3>Redes Sociales - Image</h3>
 
-    <div class="col-md-12 form-row">
-        <h3>Redes Sociales - Image</h3>
-        <br />
-        <br />
-        [ Modificar por selector y añadir file_id en tabla "files" ]
+            <br />
 
-        <br />
-        <br />
-        Facebook (???px x ???px): <input type="file"
-                                         class="form-control-file" />
+            <p>
+                [ Modificar por selector y añadir file_id en tabla "files" ]
+            </p>
 
-        <br />
-        <br />
-        Twitter: <input type="file" class="form-control-file" />
+            <img src="{{$content->seo ? $content->seo->urlImage : (new \App\ContentSeo)->urlImage}}"
+                 alt="Image Content"
+                 title="Image Content"
+                 class="form-image-preview text-center" />
 
-        <br />
-        <br />
-        Instagram: <input type="file" class="form-control-file" />
+            <input type="file" name="og_image" class="form-control-file" />
+        </div>
     </div>
 
-    <br />
-    <br />
-
-    <div class="col-md-12 form-row">
+    <div class="col-md-12 form-row mt-4">
         <h3>Redes Sociales - Image Alt</h3>
 
         {!!
@@ -112,12 +87,8 @@
         !!}
     </div>
 
-    <br />
-    <br />
-
-
     {{-- Campos para enviar contenido al guardar --}}
-    <div class="col-md-12 form-row">
+    <div class="col-md-12 form-row mt-4">
         <input type="checkbox" class="form-check">
         <h3>Enviar por Telegram</h3>
         <br />

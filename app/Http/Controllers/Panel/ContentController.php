@@ -9,6 +9,7 @@ use App\ContentType;
 use App\File;
 use App\FileType;
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
 use function auth;
 use function redirect;
@@ -84,10 +85,39 @@ class ContentController extends Controller
             'id' => $request->get('content_id')
         ], $content_data);
 
-        ## Si hay imagen, se actualiza.
+        $author = User::find($content->user_id);
+        $authorName = $author->name . ($author->surname ? ' ' . $author->surname : '');
+
+        ## Seo
+        $contentSeo_data = [
+            'content_id' => $content->id,
+            'language_id' => 1,
+            'author' => $authorName,
+            'description' => $request->get('description'),
+            'keywords' => $request->get('keywords'),
+            'og_title' => $request->get('og_title'),
+            'og_site_name' => $request->get('og_site_name'),
+            'og_description' => $request->get('og_description'),
+            'og_image_alt' => $request->get('og_image_alt'),
+            'twitter_card' => $request->get('twitter_card'),
+            'twitter_site' => $request->get('twitter_site'),
+            'twitter_creator' => $authorName,
+        ];
+
+        ## Si hay imagen para el seo, se actualiza.
+        if ($request->hasFile('og_image')) {
+            $imageSeo = $request->file('og_image');
+            $contentSeo_data['og_image'] = $imageSeo->store('public/seo');
+        }
+
+        $contentSeo = ContentSeo::firstOrCreate([
+            'content_id' => $content->id,
+        ], $contentSeo_data);
+
+        ## Si hay imagen para el contenido, se actualiza.
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = $image->store('public/posts');
+            $imageName = $image->store('public/content');
 
             ## Obtengo el tipo de archivo o lo creo si no existe.
             $fileType = FileType::firstOrCreate([

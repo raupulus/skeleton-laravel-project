@@ -38,7 +38,10 @@ class CreateUsersTable extends Migration
                 ->references('id')->on('users_configuration')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
-            $table->string('name');
+            $table->string('name')->comment('Nombre del usuario');
+            $table->string('surname')
+                ->nullable()
+                ->comment('Apellidos del usuario');
             $table->string('nick')->index()->unique();
             $table->string('email')->index()->unique();
             $table->string('avatar', 511)->default('images/users/profile-avatars/default.png');
