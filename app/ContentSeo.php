@@ -7,6 +7,8 @@ use function asset;
 
 class ContentSeo extends Model
 {
+    protected $table = 'content_seo';
+
     protected $guarded = ['id'];
 
     /**

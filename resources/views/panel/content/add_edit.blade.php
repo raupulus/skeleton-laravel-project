@@ -121,17 +121,11 @@
 
             <div class="col-md-4 content-panel-right">
                 {{-- Botones de Acción General --}}
-                <div class="text-center">
+                <div class="text-center mt-5 mb-5">
                     {!!
                         FormHelper::submit('Guardar', 'fa fa-file-export', [
                         ])
                     !!}
-
-                    <button class="btn btn-success"
-                            type="submit">
-                        <i class="fa fa-file"></i>
-                        Publicar
-                    </button>
 
                     <button class="btn btn-warning">
                         <i class="fa fa-clock"></i>
@@ -176,6 +170,34 @@
                     @csrf
                     @include('panel.content.forms.add_edit._tags')
                 </form>
+
+                {{-- Contenido Relacionado --}}
+                <form id="form-tags"
+                      action="#"
+                      method="post"
+                      class="">
+                    @csrf
+                    @include('panel.content.forms.add_edit._related_content')
+                </form>
+
+                {{-- Campos para enviar contenido al guardar --}}
+                <div class="col-md-12 mt-4">
+                    <h2>Enviar Publicación al Guardar</h2>
+                    <input type="checkbox" class="form-check form-inline">
+                    <h3>Enviar por Telegram</h3>
+                    <br />
+                    <br />
+
+                    <input type="checkbox" class="form-check">
+                    <h3>Enviar por Email</h3>
+                    <br />
+                    <br />
+
+                    <input type="checkbox" class="form-check">
+                    <h3>Enviar por Twitter</h3>
+                    <br />
+                    <br />
+                </div>
             </div>
         </div>
     </form>

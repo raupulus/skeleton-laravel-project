@@ -116,7 +116,7 @@ class FormHelper
     }
 
     /**
-     * Genera una etiquita de tipo label asociada a un input.
+     * Genera una etiqueta de tipo label asociada a un input.
      *
      * @param $title
      * @param $inputName

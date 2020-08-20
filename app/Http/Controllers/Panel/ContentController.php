@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use function auth;
+use function config;
 use function redirect;
 use function response;
 use function view;
@@ -95,12 +96,14 @@ class ContentController extends Controller
             'author' => $authorName,
             'description' => $request->get('description'),
             'keywords' => $request->get('keywords'),
+            'robots' => $request->get('robots'),
+            'copyright' => $authorName,
             'og_title' => $request->get('og_title'),
-            'og_site_name' => $request->get('og_site_name'),
+            'og_site_name' => config('app.name'),
             'og_description' => $request->get('og_description'),
             'og_image_alt' => $request->get('og_image_alt'),
-            'twitter_card' => $request->get('twitter_card'),
-            'twitter_site' => $request->get('twitter_site'),
+            'twitter_card' => $request->get('twitter_card') ?? 'summary',
+            'twitter_site' => $request->get('twitter_site') ?? '@fryntiz',
             'twitter_creator' => $authorName,
         ];
 

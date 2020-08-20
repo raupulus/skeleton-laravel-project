@@ -38,6 +38,8 @@ class CreateContentSeoTable extends Migration
             $table->string('author', 511)->nullable();
             $table->string('description', 511)->nullable();
             $table->string('keywords', 511)->nullable();
+            $table->string('robots', 127)->nullable();
+            $table->string('copyright', 511)->nullable();
             $table->string('og_title', 511)->nullable();
             $table->string('og_site_name', 511)->nullable();
             $table->string('og_description', 511)->nullable();

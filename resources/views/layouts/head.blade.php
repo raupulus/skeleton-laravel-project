@@ -1,16 +1,22 @@
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <meta name="csrf_token" content="{{ csrf_token() }}" />
 
 {{-- Idioma del contenido --}}
 <meta property="og:locale" content="@yield('meta-og-locale', 'es_ES')">
+<meta http-equiv="Content-Language" content="es"/>
+
+{{-- Alcance para distribuir el contenido --}}
+<meta name="distribution" content="global" />
 
 @yield('meta')
 
 <title>@yield('title', config('app.name'))</title>
 <meta name="description" content="@yield('meta-description', config('app.description'))">
 <meta name="author" content="@yield('meta-author', 'Raúl Caro Pastorino')">
+<meta name="copyright" content="@yield('meta-author', 'Raúl Caro Pastorino')" />
+<meta name="robots" content="@yield('meta-robots', 'index,follow')">
 <meta name="keywords" content="@yield('meta-keywords', 'Api Fryntiz, fryntiz, chipiona, desarrollador web')" />
 
 {{-- Redes sociales --}}
