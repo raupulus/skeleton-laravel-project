@@ -11,6 +11,7 @@ use App\FileType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContentAddRequest;
 use App\User;
+use FlashHelper;
 use Illuminate\Http\Request;
 use function auth;
 use function config;
@@ -25,10 +26,33 @@ class ContentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($type_slug = null)
     {
-        return view('panel.content.index')->with([
+        $contents = Content::whereNull('deleted_at');
 
+        ## En caso de recibir slug filtro ese tipo de contenido, sino todos.
+        if ($type_slug) {
+            $type = ContentType::where('slug', $type_slug)->first();
+
+            if (!$type) {
+                FlashHelper::error('No existe el tipo de contenido al que intentas acceder');
+                return redirect()->back();
+            }
+
+            $contents->where('type_id', $type->id);
+        } else {
+            $type = new ContentType([
+                'name' => 'Todos',
+                'icon' => 'fa fa-file',
+            ]);
+        }
+
+        ## Ordeno resultados.
+        $contents->orderBy('status_id', 'ASC')->orderBy('created_at', 'DESC');
+
+        return view('panel.content.index')->with([
+            'type' => $type,
+            'contents' => $contents->get(),
         ]);
     }
 

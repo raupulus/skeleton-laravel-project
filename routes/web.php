@@ -161,7 +161,7 @@ Route::group([
         ('panel.users.show');
 
         ## Listado de contenidos.
-        Route::get('/index/{type?}', 'Panel\ContentController@index')->name('panel.content.index');
+        Route::get('/index/{type_slug?}', 'Panel\ContentController@index')->name('panel.content.index');
 
         ## Vista para agregar nuevo contenido.
         Route::get('/add/{type_slug?}', 'Panel\ContentController@create')->name
