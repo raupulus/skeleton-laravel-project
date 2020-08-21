@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 /**
  * Class UserAddRequest
@@ -23,6 +24,19 @@ class ContentAddRequest extends FormRequest
     {
         ## TODO → Admin siempre, también propietario y colaboradores
         return true;  // Si a todos.
+    }
+
+
+    /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'slug' => Str::slug($this->slug),
+        ]);
     }
 
     /**
