@@ -29,6 +29,7 @@ class ContentController extends Controller
     public function index($type_slug = null)
     {
         $contents = Content::whereNull('deleted_at');
+        $types = ContentType::all();
 
         ## En caso de recibir slug filtro ese tipo de contenido, sino todos.
         if ($type_slug) {
@@ -43,6 +44,7 @@ class ContentController extends Controller
         } else {
             $type = new ContentType([
                 'name' => 'Todos',
+                'slug' => 'all',
                 'icon' => 'fa fa-file',
             ]);
         }
@@ -51,6 +53,7 @@ class ContentController extends Controller
         $contents->orderBy('status_id', 'ASC')->orderBy('created_at', 'DESC');
 
         return view('panel.content.index')->with([
+            'types' => $types,
             'type' => $type,
             'contents' => $contents->get(),
         ]);

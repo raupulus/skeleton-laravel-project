@@ -141,5 +141,3 @@
     <script src="{{ mix('assets/js/datatables.js') }}"></script>
     <script async src="{{ mix('admin-panel/users/js/user_index.js') }}"></script>
 @endsection
-
-
