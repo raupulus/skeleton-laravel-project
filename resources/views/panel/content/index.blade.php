@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="col-12 text-center">
-                    {!! Buttom::generic('#', 'all-types', [
+                    {!! Buttom::generic(route('panel.content.index'), 'all-types', [
                         'class' => 'm-1 btn btn-panel btn-panel-selector ' . ($type->slug == 'all' ? 'btn-secondary disabled' : 'btn-primary'),
                         'text' => 'Todos',
                         'icon' => 'fa fa-file',
