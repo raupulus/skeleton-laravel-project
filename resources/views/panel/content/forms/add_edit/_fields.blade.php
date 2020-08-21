@@ -6,7 +6,10 @@
             FormHelper::inputText('title', $content->title, [
                 'placeholder' => 'Título de la entrada',
                 'required' => 'true',
-                'maxlength' => 500
+                'minlength' => 10,
+                'maxlength' => 500,
+                'data-error' => isset($errors) && $errors->has('title'),
+                'data-error_message' => isset($errors) && $errors->has('title') ? $errors->first('title') : '',
             ])
         !!}
     </div>
@@ -18,7 +21,10 @@
             FormHelper::inputText('slug', $content->slug, [
                 'placeholder' => 'slug-content',
                 'required' => 'true',
-                'maxlength' => 250,
+                'minlength' => 5,
+                'maxlength' => 500,
+                'data-error' => isset($errors) && $errors->has('slug'),
+                'data-error_message' => isset($errors) && $errors->has('slug') ? $errors->first('slug') : '',
             ])
         !!}
     </div>
@@ -28,7 +34,10 @@
         {!!
             FormHelper::textarea('excerpt', $content->excerpt, [
                 'required' => 'true',
+                'minlength' => 10,
                 'maxlength' => 250,
+                'data-error' => isset($errors) && $errors->has('excerpt'),
+                'data-error_message' => isset($errors) && $errors->has('excerpt') ? $errors->first('excerpt') : '',
             ])
         !!}
     </div>
@@ -45,6 +54,7 @@
 
             <input class="form-control-file mt-3 mb-3 text-center"
                    name="image"
+                   accept="image/*"
                    type="file" />
         </div>
     </div>

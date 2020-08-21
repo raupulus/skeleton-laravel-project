@@ -113,9 +113,9 @@
                     <!-- Viewer Using Editor -->
                     <h2>Viewer</h2>
                     <v-toast-viewer content="
-    # Prueba del visor
-    ---
-    ## Subtítulo de prueba"
+                # Prueba del visor
+                ---
+                ## Subtítulo de prueba"
                     ></v-toast-viewer>
                 </div>
                 --}}

@@ -38,21 +38,23 @@ class ContentAddRequest extends FormRequest
             'content_id' => 'nullable|numeric',
             'type_id' => 'nullable|numeric',
             'status_id' => 'nullable|numeric',
-            'title' => 'required|min:10|max:511',
+            'title' => 'required|min:10|max:500',
             'slug' => [
                 'required',
+                'min:5',
+                'max:511',
                 Rule::unique('contents', 'slug')->ignore($this->id)
             ],
-            'excerpt' => 'nullable',
+            'excerpt' => 'nullable|min:10|max:250',
             'image' => 'nullable',
             'body' => 'nullable',
-            'og_title' => 'nullable',
-            'description' => 'nullable',
-            'keywords' => 'nullable',
-            'robots' => 'nullable',
-            'og_description' => 'nullable',
-            'og_image_alt' => 'nullable',
-            'og_image_id' => 'nullable',
+            'og_title' => 'nullable|max:55',
+            'description' => 'nullable|max:155',
+            'keywords' => 'nullable|max:500',
+            'robots' => 'nullable|max:50',
+            'og_description' => 'nullable|max:155',
+            'og_image' => 'nullable',
+            'og_image_alt' => 'nullable|max:200',
         ];
     }
 

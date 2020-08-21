@@ -7,22 +7,28 @@
 
     <div class="col-md-12 form-row mt-4">
         <h3>Título</h3>
+        &nbsp;<small>Max. 55 carácteres.</small>
 
         {!!
             FormHelper::inputText('og_title', $seo->og_title, [
                 'placeholder' => 'Título para mostrar en redes sociales',
-                'maxlength' => 500
+                'maxlength' => 55,
+                'data-error' => isset($errors) && $errors->has('og_title'),
+                'data-error_message' => isset($errors) && $errors->has('og_title') ? $errors->first('og_title') : '',
             ])
         !!}
     </div>
 
     <div class="col-md-12 form-row mt-4">
         <h3>Descripción</h3>
+        &nbsp;<small>Max. 115 carácteres en móvil y 155 en desktop.</small>
 
         {!!
             FormHelper::inputText('description', $seo->description, [
                 'placeholder' => 'Descripción de la entrada',
-                'maxlength' => 500
+                'maxlength' => 155,
+                'data-error' => isset($errors) && $errors->has('description'),
+                'data-error_message' => isset($errors) && $errors->has('description') ? $errors->first('description') : '',
             ])
         !!}
     </div>
@@ -35,7 +41,9 @@
         {!!
             FormHelper::inputText('keywords', $seo->keywords, [
                 'placeholder' => 'diseño,programación,desarrollo',
-                'maxlength' => 500
+                'maxlength' => 500,
+                'data-error' => isset($errors) && $errors->has('keywords'),
+                'data-error_message' => isset($errors) && $errors->has('keywords') ? $errors->first('keywords') : '',
             ])
         !!}
     </div>
@@ -69,7 +77,9 @@
             {!!
                 FormHelper::inputText('og_description', $seo->og_description, [
                     'placeholder' => 'Descripción',
-                    'maxlength' => 500
+                    'maxlength' => 500,
+                    'data-error' => isset($errors) && $errors->has('og_description'),
+                'data-error_message' => isset($errors) && $errors->has('og_description') ? $errors->first('og_description') : '',
                 ])
             !!}
     </div>
@@ -80,7 +90,9 @@
         {!!
             FormHelper::inputText('og_image_alt', $seo->og_image_alt, [
                 'placeholder' => 'Image Alt',
-                'maxlength' => 500
+                'maxlength' => 500,
+                'data-error' => isset($errors) && $errors->has('og_image_alt'),
+                'data-error_message' => isset($errors) && $errors->has('og_image_alt') ? $errors->first('og_image_alt') : '',
             ])
         !!}
     </div>
@@ -101,6 +113,7 @@
 
                 <input type="file"
                        name="og_image"
+                       accept="image/*"
                        class="form-control-file mt-3 mb-3 text-center" />
             </span>
         </div>

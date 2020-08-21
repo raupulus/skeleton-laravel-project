@@ -96,7 +96,11 @@ class FormHelper
     /**
      * Devuelve un campo input de tipo text.
      *
-     * @param array $attributes Array con los atributos.
+     * @param string $value El valor dentro del campo input
+     * @param array $attributesArray $attributes Array con los atributos.
+     *                               Para los errores añadir los atributos:
+     *                                 - data-error → boolean indicando si hay error
+     *                                 - data-error_mensaje → Mensaje a mostar
      *
      * @return string
      */
@@ -106,13 +110,27 @@ class FormHelper
             'value' => old($attributesArray['name'], $value),
         ], $attributesArray);
 
+        ## En caso de tener atributos indicando error.
+        if (isset($attributesArray['data-error']) && $attributesArray['data-error']) {
+            $attributesArray['class'] = $attributesArray['class'] . ' is-invalid';
+
+            $blockError = '<span class="text-danger" role="alert">' .
+                              '<strong>' .
+                                  $attributesArray['data-error_message'] .
+                              '</strong>' .
+                          '</span>';
+        } else {
+            $blockError = '';
+        }
+
         $attributes = '';
 
+        ## Preparo los atributos como cadena de texto.
         foreach ($attributesArray as $idx => $att) {
             $attributes .= ' ' . $idx . '="' . $att . '" ';
         }
 
-        return '<input ' . $attributes . ' />';
+        return '<input ' . $attributes . ' />' . $blockError;
     }
 
     /**
@@ -164,15 +182,29 @@ class FormHelper
             'name' => $name,
         ], $attributesArray);
 
+        ## En caso de tener atributos indicando error.
+        if (isset($attributesArray['data-error']) && $attributesArray['data-error']) {
+            $attributesArray['class'] = $attributesArray['class'] . ' is-invalid';
+
+            $blockError = '<span class="text-danger" role="alert">' .
+                '<strong>' .
+                $attributesArray['data-error_message'] .
+                '</strong>' .
+                '</span>';
+        } else {
+            $blockError = '';
+        }
+
         $attributes = '';
 
+        ## Preparo los atributos como cadena de texto.
         foreach ($attributesArray as $idx => $att) {
             $attributes .= ' ' . $idx . '="' . $att . '" ';
         }
 
         return '<textarea ' . $attributes . '>' .
             old($name, $value) .
-            '</textarea>';
+            '</textarea>' . $blockError;
     }
 
     public static function submit($title = 'Enviar', $icon = '', $attributesArray = [])
