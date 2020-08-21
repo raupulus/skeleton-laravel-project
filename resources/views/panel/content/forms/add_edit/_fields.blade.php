@@ -16,6 +16,8 @@
 
     <div class="col-12 form-row mt-4">
         <h3>Slug</h3>
+        &nbsp;<small>No incluir carácteres extraños como espacios o tildes</small>
+
 
         {!!
             FormHelper::inputText('slug', $content->slug, [
