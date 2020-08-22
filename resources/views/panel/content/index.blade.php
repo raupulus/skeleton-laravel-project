@@ -22,20 +22,15 @@
 
     <div class="row">
         <div class="col-12">
-            <ul>
-                @foreach($contents as $content)
-                    <li>{{$content->title}}</li>
-                @endforeach
-            </ul>
 
             {{-- Botones de Acción Sobre la tabla de contenidos --}}
             <div class="row">
                 <div class="col-md-12">
-                    <h3 id="title-users">
+                    <h3 id="title-content">
                         @if ($type->slug == 'all')
                             Viendo todos los tipos de contenidos
                         @else
-                            Viendo los resultados de {{$type->name}}
+                            Viendo los resultados por {{$type->name}}
                         @endif
                     </h3>
                 </div>
@@ -59,15 +54,12 @@
 
             {{-- Tabla con los resultados de contenidos --}}
             <div>
-                <table id="panel-users-table"
+                <table id="panel-content-table"
                        class="table table-striped table-bordered">
                     <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Nombre</th>
-                        <th>Nick</th>
-                        <th>Email</th>
-                        <th>Acciones</th>
+                        <th>Título</th>
                     </tr>
                     </thead>
                 </table>
@@ -81,20 +73,60 @@
 @endsection
 
 @section('js')
-    <script>
-        var panelUsersGetAllUrl = "{{route('panel.users.table.allusers')}}";
-        var panelUsersGetThisMonth = "{{route('panel.users.table.thismonth')}}";
-        var panelUsersGetActive = "{{route('panel.users.table.active')}}";
-        var panelUsersGetInactive = "{{route('panel.users.table.inactive')}}";
-        var dataTableTranslation = "{{route('datatable.translation')}}";
-        var userColumns = [
-            { data: 'id', name: 'id' },
-            { data: 'name', name: 'name' },
-            { data: 'nick', name: 'nick' },
-            { data: 'email', name: 'email' },
-            { data: 'action', name: 'action' }
-        ];
-    </script>
     <script src="{{ mix('assets/js/datatables.js') }}"></script>
-    <script async src="{{ mix('admin-panel/users/js/user_index.js') }}"></script>
+
+    <script>
+        var getContentUrl = "{{route('panel.content.filtered.get_json')}}";
+        var typeSlug = "{{$type->slug}}";
+        var dataTableTranslation = "{{route('datatable.translation')}}";
+
+        var columnsContent = [
+            { data: 'id', name: 'id' },
+            { data: 'title', name: 'title' },
+        ];
+
+        $(document).ready(() => {
+            async function getContent() {
+                console.log('entra');
+                return await createDatatable(
+                    'panel-content-table',
+                    getContentUrl,
+                    columnsContent,
+                    {}
+                );
+            }
+
+            // Al cargar por defecto cargo todos contenidos.
+            var panelContentTable = getContent();
+
+            // Cuando se completa la promesa añado eventos a botones de acción.
+            $.when(panelContentTable).done((table) => {
+                // Todos los Usuarios.
+                $('a[data-name="all-types"]').click(function(e) {
+                    e.preventDefault();
+                    table.ajax.url(getContentUrl).load();
+
+                    $('#title-content').text('Viendo todos los contenidos');
+                });
+
+                @foreach($types as $t)
+                $('a[data-name="{{$t->slug}}"]').click(function(e) {
+                    e.preventDefault();
+                    console.log(getContentUrl + '/' + "{{$t->slug}}");
+                    table.ajax.url(getContentUrl + '/' + "{{$t->slug}}").load();
+
+                    $('#title-content').text('Viendo los resultados por ' + "{{$t->name}}");
+                });
+                @endforeach
+            });
+
+            // Desactivo el botón al ser pulsado y marco los demás como activos.
+            $('.btn-panel-selector').click(function() {
+                $('.btn-panel-selector').removeClass('disabled btn-secondary');
+                $('.btn-panel-selector').addClass('btn-primary');
+                $(this).addClass('disabled btn-secondary');
+                $(this).removeClass('btn-primary');
+            });
+        });
+    </script>
 @endsection

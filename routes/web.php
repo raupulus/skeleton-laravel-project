@@ -163,6 +163,9 @@ Route::group([
         ## Listado de contenidos.
         Route::get('/index/{type_slug?}', 'Panel\ContentController@index')->name('panel.content.index');
 
+        ## Obtener contenido filtrado por ajax.
+        Route::get('/filtered/get_json/{type_slug?}', 'Panel\ContentController@getContentFilteredJson')->name('panel.content.filtered.get_json');
+
         ## Vista para agregar nuevo contenido.
         Route::get('/add/{type_slug?}', 'Panel\ContentController@create')->name
         ('panel.content.add');

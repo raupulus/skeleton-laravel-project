@@ -6,6 +6,7 @@ use App\Content;
 use App\ContentSeo;
 use App\ContentStatus;
 use App\ContentType;
+use App\DataTables\ContentDatatable;
 use App\File;
 use App\FileType;
 use App\Http\Controllers\Controller;
@@ -18,7 +19,6 @@ use function config;
 use function count;
 use function explode;
 use function redirect;
-use function response;
 use function view;
 
 class ContentController extends Controller
@@ -28,7 +28,6 @@ class ContentController extends Controller
      */
     public function index($type_slug = null)
     {
-        $contents = Content::whereNull('deleted_at');
         $types = ContentType::all();
 
         ## En caso de recibir slug filtro ese tipo de contenido, sino todos.
@@ -39,8 +38,6 @@ class ContentController extends Controller
                 FlashHelper::error('No existe el tipo de contenido al que intentas acceder');
                 return redirect()->back();
             }
-
-            $contents->where('type_id', $type->id);
         } else {
             $type = new ContentType([
                 'name' => 'Todos',
@@ -49,14 +46,18 @@ class ContentController extends Controller
             ]);
         }
 
-        ## Ordeno resultados.
-        $contents->orderBy('status_id', 'ASC')->orderBy('created_at', 'DESC');
-
         return view('panel.content.index')->with([
             'types' => $types,
             'type' => $type,
-            'contents' => $contents->get(),
         ]);
+    }
+
+    /**
+     * Obtiene el contenido filtrado por JSON.
+     */
+    public function getContentFilteredJson($type_slug = null)
+    {
+        return (new ContentDatatable())->dataTable($type_slug);
     }
 
     /**

@@ -24,8 +24,10 @@
 {{-- Scripts que serán reemplazados por algunas páginas --}}
 @section('footer-js-custom')
     {{-- DataTables --}}
+    {{--
     <script src="{{ mix('assets/js/datatables.js') }}"></script>
-
+    --}}
+    
     {{-- Chart.js --}}
     <script src="{{ mix('assets/js/chart.js') }}"></script>
 
