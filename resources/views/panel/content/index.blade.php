@@ -131,19 +131,7 @@
             },
         ];
 
-        var datatableOptions = {
-            /*
-            columnDefs: [
-                { "width": "60px", "targets": 0 },
-                { "width": "40px", "targets": 1 },
-                { "width": "60px", "targets": 2 },
-                { "width": "60px", "targets": 3 },
-                { "width": "60px", "targets": 4 },
-                { "width": "60px", "targets": 5 },
-                { "width": "60px", "targets": 6 },
-            ]
-            */
-        };
+        var datatableOptions = {};
 
         $(document).ready(() => {
             async function getContent() {

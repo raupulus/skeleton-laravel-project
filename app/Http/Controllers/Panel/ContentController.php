@@ -71,9 +71,8 @@ class ContentController extends Controller
 
         ## En caso de intentar crear un tipo de contenido inexistente.
         if (!$type) {
-            return redirect()->back()->with([
-
-            ]);
+            FlashHelper::error('No existe el tipo de contenido que intentas crear');
+            return redirect()->back();
         }
 
         return view('panel.content.add_edit')->with([
@@ -85,7 +84,7 @@ class ContentController extends Controller
             'content' => new Content([
                 //'user_id' => auth()->id(),
                 //'status_id' => ??
-                //'type_id' => $type->id
+                'type_id' => $type->id
             ]),
         ]);
     }
@@ -140,8 +139,8 @@ class ContentController extends Controller
         ## Si hay imagen para el seo, se actualiza.
         if ($request->hasFile('og_image')) {
             $imageSeo = $request->file('og_image');
-            $imageSeoPath = 'public/seo';
-            $contentSeo_data['og_image'] = $imageSeo->store($imageSeoPath);
+            $imageSeoPath = 'seo';
+            $contentSeo_data['og_image'] = $imageSeo->store('public/' . $imageSeoPath);
         }
 
         $contentSeo = ContentSeo::firstOrCreate([
@@ -151,8 +150,8 @@ class ContentController extends Controller
         ## Si hay imagen para el contenido, se actualiza.
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imagePath = 'public/content';
-            $imageFullPath = $image->store($imagePath);
+            $imagePath = 'content';
+            $imageFullPath = $image->store('public/' . $imagePath);
             $imageNameArray = explode('/', $imageFullPath);
             $imageName = $imageNameArray[count($imageNameArray) - 1];
 

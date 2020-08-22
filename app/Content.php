@@ -135,7 +135,7 @@ class Content extends Model
         $url = asset('images/default/default_1200x600.jpg');
 
         if ($this->image && $this->image->name && $this->image->path) {
-            $url = asset('storage/' . $this->image->path . $this->image->name);
+            $url = asset('storage/' . $this->image->path . '/' . $this->image->name);
         }
 
         return $url;

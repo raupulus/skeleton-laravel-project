@@ -92,7 +92,7 @@
         {{-- Almacena el tipo de contenido a editar o crear --}}
         <input name="type_id"
                type="hidden"
-               value="{{isset($type) ?? $type->id}}" />
+               value="{{isset($type) ? $type->id : $content->type_id}}" />
 
         <div class="row">
             <div class="col-md-8 tab-content">
