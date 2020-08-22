@@ -64,8 +64,10 @@ class ContentDatatable extends Content
         }
 
         ## Ordeno resultados.
-        $contents->orderBy('status_id', 'ASC')->orderBy('created_at',
-            'DESC')->get();
+        $contents->orderBy('status_id', 'ASC')
+            ->orderBy('created_at','DESC')
+            ->with(['status', 'user', 'type'])
+            ->get();
         return $contents;
     }
 

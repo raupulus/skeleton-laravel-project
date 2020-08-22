@@ -59,7 +59,11 @@
                     <thead>
                     <tr>
                         <th>Id</th>
+                        <th>Imagen</th>
+                        <th>Estado</th>
+                        <th>Autor</th>
                         <th>Título</th>
+                        <th>Tipo de Contenido</th>
                     </tr>
                     </thead>
                 </table>
@@ -82,7 +86,11 @@
 
         var columnsContent = [
             { data: 'id', name: 'id' },
+            { data: 'urlImage', name: 'urlImage' },
+            { data: 'status.name', name: 'status.name' },
+            { data: 'user.name', name: 'user.name' },
             { data: 'title', name: 'title' },
+            { data: 'type.name', name: 'type.name' },
         ];
 
         $(document).ready(() => {

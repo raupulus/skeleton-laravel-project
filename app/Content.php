@@ -23,6 +23,8 @@ class Content extends Model
         'body'
     ];
 
+    protected $appends = ['urlImage'];
+
     /**
      * Devuelve la relación con el autor/usuario que ha creado el contenido.
      *
@@ -70,7 +72,7 @@ class Content extends Model
      */
     public function image()
     {
-        return $this->hasOne(File::class, 'file_id', 'id');
+        return $this->belongsTo(File::class, 'file_id', 'id');
     }
 
     /**
