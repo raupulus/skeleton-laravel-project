@@ -17,6 +17,7 @@ class ContentTypeSeeder extends Seeder
             [
                 //'file_id' => '',
                 'name' => 'Página',
+                'plural_name' => 'Páginas',
                 'slug' => 'page',
                 'description' => 'Una página es un tipo de contenido que almacena información sobre la web',
                 'icon' => 'fa fa-file',
@@ -25,6 +26,7 @@ class ContentTypeSeeder extends Seeder
             [
                 //'file_id' => '',
                 'name' => 'Artículo',
+                'plural_name' => 'Artículos',
                 'slug' => 'article',
                 'description' => 'Un artículo es un tipo de contenido dónde se describe un proceso para lograr algo o experiencia del autor',
                 'icon' => 'fa fa-file',
@@ -33,6 +35,7 @@ class ContentTypeSeeder extends Seeder
             [
                 //'file_id' => '',
                 'name' => 'Noticia',
+                'plural_name' => 'Noticias',
                 'slug' => 'new',
                 'description' => 'Una noticia es un tipo de contenido que contiene un suceso que es novedad',
                 'icon' => 'fa fa-file',

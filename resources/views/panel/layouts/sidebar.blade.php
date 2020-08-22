@@ -66,43 +66,31 @@
                 </div>
             </form>
 
-            <a class="dropdown-item text-center" href="{{route('panel.content.index')}}">
+            <a class="dropdown-item text-center"
+               href="{{route('panel.content.index')}}">
                 Ver todo
             </a>
-            <a class="dropdown-item text-center" href="{{route('panel.content.index')}}">
+
+            <a class="dropdown-item text-center"
+               href="{{route('panel.content.index')}}">
                 Categorías
             </a>
 
-            <h6 class="dropdown-header">Páginas:</h6>
-            <a class="dropdown-item" href="{{route('panel.content.index')}}">
-                Listar
-            </a>
-            <a class="dropdown-item"
-               href="{{route('panel.content.add', ['type_slug' => 'page'])}}">
-                Nueva Página
-            </a>
+            @foreach(\App\ContentType::all() as $type)
+                <h6 class="dropdown-header">{{$type->plural_name}}:</h6>
 
-            <div class="dropdown-divider"></div>
+                <a class="dropdown-item"
+                   href="{{route('panel.content.index', ['type_slug' => $type->slug])}}">
+                    Listar {{$type->plural_name}}
+                </a>
 
-            <h6 class="dropdown-header">Artículos:</h6>
-            <a class="dropdown-item" href="{{route('panel.content.index')}}">
-                Listar
-            </a>
-            <a class="dropdown-item"
-               href="{{route('panel.content.add', ['type_slug' => 'article'])}}">
-                Nuevo Artículo
-            </a>
+                <a class="dropdown-item"
+                   href="{{route('panel.content.add', ['type_slug' => 'page'])}}">
+                    Crear {{$type->name}}
+                </a>
 
-            <div class="dropdown-divider"></div>
-
-            <h6 class="dropdown-header">Noticias:</h6>
-            <a class="dropdown-item" href="{{route('panel.content.index')}}">
-                Listar
-            </a>
-            <a class="dropdown-item"
-               href="{{route('panel.content.add', ['type_slug' => 'new'])}}">
-                Nueva Noticia
-            </a>
+                <div class="dropdown-divider"></div>
+            @endforeach
         </div>
     </li>
 

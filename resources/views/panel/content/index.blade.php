@@ -30,7 +30,7 @@
                         @if ($type->slug == 'all')
                             Viendo todos los tipos de contenidos
                         @else
-                            Viendo los resultados por {{$type->name}}
+                            Viendo los resultados por {{$type->plural_name}}
                         @endif
                     </h3>
                 </div>
@@ -45,7 +45,7 @@
                     @foreach($types as $t)
                         {!! Buttom::generic(route('panel.content.index', ['type_slug' => $t->slug]), $t->slug, [
                             'class' => 'm-1 btn btn-panel btn-panel-selector  ' . ($type->slug == $t->slug ? 'btn-secondary disabled' : 'btn-primary'),
-                            'text' => $t->name,
+                            'text' => $t->plural_name,
                             'icon' => $t->icon,
                         ]) !!}
                     @endforeach
@@ -83,10 +83,12 @@
     <script src="{{ mix('assets/js/datatables.js') }}"></script>
 
     <script>
+        var getContentUrl = "{{route('panel.content.filtered.get_json')}}";
+
         @if ($type->slug == 'all')
-            var getContentUrl = "{{route('panel.content.filtered.get_json')}}";
+            var getContentUrlOnInit = "{{route('panel.content.filtered.get_json')}}";
         @else
-            var getContentUrl = "{{route('panel.content.filtered.get_json', ['type_slug' => $type->slug])}}";
+            var getContentUrlOnInit = "{{route('panel.content.filtered.get_json', ['type_slug' => $type->slug])}}";
         @endif
 
         var typeSlug = "{{$type->slug}}";
@@ -137,7 +139,7 @@
             async function getContent() {
                 return await createDatatable(
                     'panel-content-table',
-                    getContentUrl,
+                    getContentUrlOnInit,
                     datatablesColumns,
                     datatableOptions
                 );
@@ -162,7 +164,7 @@
                         console.log(getContentUrl + '/' + "{{$t->slug}}");
                         table.ajax.url(getContentUrl + '/' + "{{$t->slug}}").load();
 
-                        $('#title-content').text('Viendo los resultados por ' + "{{$t->name}}");
+                        $('#title-content').text('Viendo los resultados por ' + "{{$t->plural_name}}");
                     });
                 @endforeach
             });

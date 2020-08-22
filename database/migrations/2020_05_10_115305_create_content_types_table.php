@@ -28,6 +28,9 @@ class CreateContentTypesTable extends Migration
             $table->string('name', 511)
                 ->unique()
                 ->comment('Nombre del tipo de contenido');
+            $table->string('plural_name', 511)
+                ->unique()
+                ->comment('Nombre en plural para los tipos de contenido');
             $table->string('slug', 255)
                 ->index()
                 ->unique()
