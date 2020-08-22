@@ -20,8 +20,8 @@ class ContentSeo extends Model
     {
         $url = asset('images/default/default_1200x600.jpg');
 
-        if ($this->image && $this->image->path) {
-            $url = asset('storage/seo/' . $this->image->path);
+        if ($this->og_image) {
+            $url = asset('storage/' . $this->og_image);
         }
 
         return $url;

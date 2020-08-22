@@ -68,7 +68,7 @@
                   name="body"
                   placeholder="Añade aquí el contenido"
                   rows="10"
-                  hidden>{{old('body', $content->getRawContent())}}</textarea>
+                  hidden>{{old('body', $content->body)}}</textarea>
     </div>
 
     {{-- Usando mi editor en vue.js --}}

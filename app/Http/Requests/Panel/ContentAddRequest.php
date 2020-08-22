@@ -57,7 +57,7 @@ class ContentAddRequest extends FormRequest
                 'required',
                 'min:5',
                 'max:511',
-                Rule::unique('contents', 'slug')->ignore($this->id)
+                Rule::unique('contents', 'slug')->ignore($this->content_id)
             ],
             'excerpt' => 'nullable|min:10|max:250',
             'image' => 'nullable',

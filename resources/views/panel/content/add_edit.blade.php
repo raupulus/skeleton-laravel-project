@@ -87,7 +87,7 @@
         {{-- Almacena el id del contenido si existiera --}}
         <input name="content_id"
                type="hidden"
-               value="{{isset($content->id) ?? $content->id}}" />
+               value="{{isset($content->id) && $content->id ? $content->id : ''}}" />
 
         {{-- Almacena el tipo de contenido a editar o crear --}}
         <input name="type_id"

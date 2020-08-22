@@ -111,7 +111,7 @@ class ContentController extends Controller
         }
 
         ## Creo o edito el contenido con los datos anteriores.
-        $content = Content::firstOrCreate([
+        $content = Content::updateOrCreate([
             'id' => $request->get('content_id')
         ], $content_data);
 
@@ -140,10 +140,14 @@ class ContentController extends Controller
         if ($request->hasFile('og_image')) {
             $imageSeo = $request->file('og_image');
             $imageSeoPath = 'seo';
-            $contentSeo_data['og_image'] = $imageSeo->store('public/' . $imageSeoPath);
+            $imageSeoFullPath = $imageSeo->store('public/' . $imageSeoPath);
+            $imageSeoNameArray = explode('/', $imageSeoFullPath);
+            $imageSeoName = $imageSeoNameArray[count($imageSeoNameArray) - 1];
+
+            $contentSeo_data['og_image'] = $imageSeoPath . '/' . $imageSeoName;
         }
 
-        $contentSeo = ContentSeo::firstOrCreate([
+        $contentSeo = ContentSeo::updateOrCreate([
             'content_id' => $content->id,
         ], $contentSeo_data);
 
@@ -156,7 +160,7 @@ class ContentController extends Controller
             $imageName = $imageNameArray[count($imageNameArray) - 1];
 
             ## Obtengo el tipo de archivo o lo creo si no existe.
-            $fileType = FileType::firstOrCreate([
+            $fileType = FileType::updateOrCreate([
                 'mime' => $image->getClientMimeType(),
                 'extension' => $image->getClientOriginalExtension(),
             ], [
@@ -166,7 +170,7 @@ class ContentController extends Controller
             ]);
 
             ## Registro el archivo de imagen.
-            $file = File::firstOrCreate([
+            $file = File::updateOrCreate([
                 'id' => $content->file_id
             ], [
                 'file_type_id' => $fileType->id,
@@ -183,10 +187,8 @@ class ContentController extends Controller
             $content->save();
         }
 
-        return redirect()->back()->with([
-            'message' => 'Se ha guardado correctamente',
-            'alert_type' => 'danger',
-        ]);
+        FlashHelper::success('Se ha guardado correctamente');
+        return redirect()->route('panel.content.edit', ['content' => $content->id]);
     }
 
     /**
@@ -206,11 +208,8 @@ class ContentController extends Controller
      */
     public function edit(Content $content)
     {
-
-        $type = ContentType::find($content->type_id);
-
         return view('panel.content.add_edit')->with([
-            'type' => $type,
+            'type' => $content->type,
             'status' => ContentStatus::all(),
             'seo' => $content->seo,
             'content' => $content,
