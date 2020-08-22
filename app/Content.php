@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use VanOns\Laraberg\Models\Gutenbergable;
 
 use function asset;
+use function route;
 
 class Content extends Model
 {
@@ -150,10 +151,23 @@ class Content extends Model
     }
 
     /**
-     * Devuelve la url hacia la página publicada.
+     * Devuelve la url para ver un contenido publicado.
+     * Los administradores, propietario y colaboradores también pueden ver
+     * borradores.
      */
     public function getUrlAttribute()
     {
+        return url('TEMPORAL/URL/PAGINA/' . $this->slug);
+    }
 
+    /**
+     * Devuelve la url para editar un contenido.
+     *
+     * @return string Devuelve una cadena con la ruta para editar este
+     *                contenido.
+     */
+    public function getUrlEditAttribute()
+    {
+        return route('panel.content.edit', ['content' => $this->id]);
     }
 }

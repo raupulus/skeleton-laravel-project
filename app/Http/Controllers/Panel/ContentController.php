@@ -206,7 +206,13 @@ class ContentController extends Controller
      */
     public function edit(Content $content)
     {
+
+        $type = ContentType::find($content->type_id);
+
         return view('panel.content.add_edit')->with([
+            'type' => $type,
+            'status' => ContentStatus::all(),
+            'seo' => $content->seo,
             'content' => $content,
         ]);
     }

@@ -27,7 +27,7 @@ class ContentDatatable extends Content
         ## Añado todas las columnas adicioneles al objeto Datatable
         foreach ($columns as $idx => $column) {
             $datatable->addColumn($idx, function ($ele) use ($column) {
-                return $column;
+                return $this->{$column}($ele);
             });
         }
 
@@ -97,24 +97,30 @@ class ContentDatatable extends Content
     /**
      * Devuelve un array con las columnas adicionales para la tabla.
      *
-     * @return array
+     * @return array Devuelve un array con clave el campo y valor el nombre de
+     *               la función que lo generará.
      */
     protected function getColumns()
     {
         return [
-            'action' => Buttom::view(
-                    '#',
-                    $this->id
-                ) .
-                Buttom::edit(
-                    '#',
-                    1
-                ) .
-                Buttom::delete(
-                    '#',
-                    1
-                ),
+            'action' => 'columnActions',
         ];
+    }
+
+    protected function columnActions($ele)
+    {
+        return Buttom::view(
+                $ele->url,
+                $ele->id
+            ) .
+            Buttom::edit(
+                $ele->urlEdit,
+                $ele->id
+            ) .
+            Buttom::delete(
+                '#',
+                $ele->id
+            );
     }
 
     /**

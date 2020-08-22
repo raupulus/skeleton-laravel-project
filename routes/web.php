@@ -171,7 +171,7 @@ Route::group([
         ('panel.content.add');
 
         ## Vista para actualizar nuevo contenido.
-        Route::get('/edit/{id?}', 'Panel\ContentController@edit')->name('panel.content.edit');
+        Route::get('/edit/{content}', 'Panel\ContentController@edit')->name('panel.content.edit');
 
         ## Vista para guardar contenido.
         Route::post('/store', 'Panel\ContentController@store')->name('panel.content.store');
