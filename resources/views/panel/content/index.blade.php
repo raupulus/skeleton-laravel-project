@@ -107,7 +107,7 @@
                 orderable: false,
                 searchable: false
             },
-            { data: 'user.name', name: 'user.name', title: 'Usuario', width: "100px" },
+            { data: 'user.name', name: 'user.name', title: 'Autor', width: "100px" },
             {
                 data: 'type.name',
                 name: 'type.name',
@@ -148,7 +148,7 @@
 
             // Cuando se completa la promesa añado eventos a botones de acción.
             $.when(panelContentTable).done((table) => {
-                // Todos los Usuarios.
+                // Todos los contenidos.
                 $('a[data-name="all-types"]').click(function(e) {
                     e.preventDefault();
                     table.ajax.url(getContentUrl).load();
