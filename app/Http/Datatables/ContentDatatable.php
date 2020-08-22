@@ -25,7 +25,7 @@ class ContentDatatable extends Content
         $datatable = DataTables::of($this->getQuery($type_slug));
 
         foreach ($columns as $idx => $column) {
-            $datatable->addColumn($idx, function ($ele) use ($column){
+            $datatable->addColumn($idx, function ($ele) use ($column) {
                 return $column;
             });
         }
@@ -101,20 +101,18 @@ class ContentDatatable extends Content
     protected function getColumns()
     {
         return [
-            'ver' => Buttom::view(
-                '#',
-                $this->id
-            ),
-
-            'editar' => Buttom::edit(
-                '#',
-                1
-            ),
-
-            'eliminar' => Buttom::delete(
-                '#',
-                1
-            ),
+            'actions' => Buttom::view(
+                    '#',
+                    $this->id
+                ) .
+                Buttom::edit(
+                    '#',
+                    1
+                ) .
+                Buttom::delete(
+                    '#',
+                    1
+                ),
         ];
     }
 

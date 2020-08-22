@@ -64,6 +64,7 @@
                         <th>Autor</th>
                         <th>Título</th>
                         <th>Tipo de Contenido</th>
+                        <th>Acciones</th>
                     </tr>
                     </thead>
                 </table>
@@ -91,6 +92,7 @@
             { data: 'user.name', name: 'user.name' },
             { data: 'title', name: 'title' },
             { data: 'type.name', name: 'type.name' },
+            { data: 'actions', name: 'actions' },
         ];
 
         $(document).ready(() => {
@@ -118,13 +120,13 @@
                 });
 
                 @foreach($types as $t)
-                $('a[data-name="{{$t->slug}}"]').click(function(e) {
-                    e.preventDefault();
-                    console.log(getContentUrl + '/' + "{{$t->slug}}");
-                    table.ajax.url(getContentUrl + '/' + "{{$t->slug}}").load();
+                    $('a[data-name="{{$t->slug}}"]').click(function(e) {
+                        e.preventDefault();
+                        console.log(getContentUrl + '/' + "{{$t->slug}}");
+                        table.ajax.url(getContentUrl + '/' + "{{$t->slug}}").load();
 
-                    $('#title-content').text('Viendo los resultados por ' + "{{$t->name}}");
-                });
+                        $('#title-content').text('Viendo los resultados por ' + "{{$t->name}}");
+                    });
                 @endforeach
             });
 
