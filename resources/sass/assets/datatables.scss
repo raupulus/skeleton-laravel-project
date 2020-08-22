@@ -8,3 +8,9 @@
 @import '~datatables.net-rowgroup-bs4/css/rowGroup.bootstrap4.css';
 @import '~datatables.net-rowreorder-bs4/css/rowReorder.bootstrap4.css';
 @import '~datatables.net-select-bs4/css/select.bootstrap4.css';
+
+
+/* Alineación vertical centrada para los datatable */
+table.dataTable tbody td {
+  vertical-align: middle;
+}

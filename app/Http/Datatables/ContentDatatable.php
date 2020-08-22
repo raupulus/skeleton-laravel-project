@@ -24,6 +24,7 @@ class ContentDatatable extends Content
 
         $datatable = DataTables::of($this->getQuery($type_slug));
 
+        ## Añado todas las columnas adicioneles al objeto Datatable
         foreach ($columns as $idx => $column) {
             $datatable->addColumn($idx, function ($ele) use ($column) {
                 return $column;
@@ -101,7 +102,7 @@ class ContentDatatable extends Content
     protected function getColumns()
     {
         return [
-            'actions' => Buttom::view(
+            'action' => Buttom::view(
                     '#',
                     $this->id
                 ) .

@@ -56,6 +56,7 @@
             <div>
                 <table id="panel-content-table"
                        class="table table-striped table-bordered">
+                    {{--
                     <thead>
                     <tr>
                         <th>Id</th>
@@ -67,6 +68,7 @@
                         <th>Acciones</th>
                     </tr>
                     </thead>
+                    --}}
                 </table>
             </div>
         </div>
@@ -81,28 +83,75 @@
     <script src="{{ mix('assets/js/datatables.js') }}"></script>
 
     <script>
-        var getContentUrl = "{{route('panel.content.filtered.get_json')}}";
+        @if ($type->slug == 'all')
+            var getContentUrl = "{{route('panel.content.filtered.get_json')}}";
+        @else
+            var getContentUrl = "{{route('panel.content.filtered.get_json', ['type_slug' => $type->slug])}}";
+        @endif
+
         var typeSlug = "{{$type->slug}}";
         var dataTableTranslation = "{{route('datatable.translation')}}";
 
-        var columnsContent = [
-            { data: 'id', name: 'id' },
-            { data: 'urlImage', name: 'urlImage' },
-            { data: 'status.name', name: 'status.name' },
-            { data: 'user.name', name: 'user.name' },
-            { data: 'title', name: 'title' },
-            { data: 'type.name', name: 'type.name' },
-            { data: 'actions', name: 'actions' },
+        var datatablesColumns = [
+            { data: 'title', name: 'title', title: 'Título', width: "300px" },
+            { data: 'id', name: 'id' , title: 'ID', width: "20px", class: "text-center"},
+            {
+                data: 'urlImage',
+                name: 'urlImage',
+                render: function (data, type, full, meta) {
+                    return "<img src=\"" + data + "\" height=\"80\"" + "alt=\"Imagen de portada\"/>";
+                },
+                title: "Imagen",
+                width: "80px",
+                class: "text-center",
+                orderable: false,
+                searchable: false
+            },
+            { data: 'user.name', name: 'user.name', title: 'Usuario', width: "100px" },
+            {
+                data: 'type.name',
+                name: 'type.name',
+                title: 'Tipo de Contenido',
+                width: "50px",
+                class: "text-center"
+            },
+            {
+                data: 'status.name',
+                name: 'status.name',
+                title: 'Estado',
+                width: "60px",
+                class: "text-center"
+            },
+            {
+                data: 'action',
+                name: 'action',
+                title: 'Acciones',
+                width: "150px",
+                class: "text-center"
+            },
         ];
+
+        var datatableOptions = {
+            /*
+            columnDefs: [
+                { "width": "60px", "targets": 0 },
+                { "width": "40px", "targets": 1 },
+                { "width": "60px", "targets": 2 },
+                { "width": "60px", "targets": 3 },
+                { "width": "60px", "targets": 4 },
+                { "width": "60px", "targets": 5 },
+                { "width": "60px", "targets": 6 },
+            ]
+            */
+        };
 
         $(document).ready(() => {
             async function getContent() {
-                console.log('entra');
                 return await createDatatable(
                     'panel-content-table',
                     getContentUrl,
-                    columnsContent,
-                    {}
+                    datatablesColumns,
+                    datatableOptions
                 );
             }
 
