@@ -54,10 +54,12 @@
         </a>
 
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+            {{--
             <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Buscar..."
                            aria-label="Search" aria-describedby="basic-addon2" />
+
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="button">
                             <i class="fas fa-search"></i>
@@ -65,6 +67,7 @@
                     </div>
                 </div>
             </form>
+            --}}
 
             <a class="dropdown-item text-center"
                href="{{route('panel.content.index')}}">
@@ -72,7 +75,7 @@
             </a>
 
             <a class="dropdown-item text-center"
-               href="{{route('panel.content.index')}}">
+               href="{{route('panel.content.categories.index')}}">
                 Categorías
             </a>
 

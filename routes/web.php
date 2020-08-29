@@ -154,7 +154,8 @@ Route::group([
         ]
     ], function() {
         ## Gestionar Categorías.
-        Route::get('/categories', 'Panel\CategoryController@index')->name('panel.content.categories.view');
+        Route::get('/categories', 'Panel\ContentSubCategoryController@index')
+            ->name('panel.content.categories.index');
 
         ## Ver un contenido.
         Route::get('/show/{id}/{slug?}', 'Panel\ContentController@show')->name

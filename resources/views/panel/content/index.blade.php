@@ -1,6 +1,5 @@
 @extends('panel.layouts.app')
 
-@section('title', 'Panel Admin - Dashboard')
 {{-- Descripción sobre esta página --}}
 @section('title', 'Listando todos los ' . $type->name)
 @section('description', 'Vista de todos los ' . $type->name)
