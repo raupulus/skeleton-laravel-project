@@ -45,6 +45,7 @@ E-mail: dev@fryntiz.es
             </footer>
         </div>
 
+        @yield('modal')
         @include('panel.layouts.footer_meta')
         @yield('css')
         @yield('javascript')

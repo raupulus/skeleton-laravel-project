@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Panel;
 
+use App\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use function view;
@@ -15,6 +16,10 @@ class ContentSubCategoryController extends Controller
      */
     public function index()
     {
-        return view('panel.content.categories');
+        $categories = Category::all();
+
+        return view('panel.content.categories')->with([
+            'categories' => $categories,
+        ]);
     }
 }

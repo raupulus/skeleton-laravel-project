@@ -28,30 +28,71 @@
             <div class="row">
 
                 {{-- Izquierda → Categorías --}}
-                <div class="col-6">
-                    {{-- Botones --}}
-                    <div class="text-center">
-                        <a href="#" class="btn btn-primary">
-                            Crear categoría
-                        </a>
-
-                        <a href="#" class="btn btn-danger">
-                            Eliminar categorías seleccionadas
-                        </a>
-                    </div>
-
+                <div class="col-lg-6">
                     {{-- Selector --}}
                     <div id="box-list-categories">
                         <div class="text-center mt-3 mb-3">
                             <h2>Listado de categorías</h2>
                         </div>
+
+                        {{-- Botones --}}
+                        <div class="text-center mb-3">
+                            <button class="btn btn-primary"
+                                    data-toggle="modal"
+                                    data-target="#modal-category-addedit">
+                                Crear categoría
+                            </button>
+
+                            <a href="#" class="btn btn-danger">
+                                Eliminar categorías seleccionadas
+                            </a>
+                        </div>
+
+                        <div>
+                            <table class="table table-dark table-condensed table-borderless">
+                                <tr>
+                                    <th class="text-center">Subcategorías</th>
+                                    <th class="text-center">Categorías</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            @foreach($categories as $category)
+                                <tr>
+                                    <td class="text-center align-middle">
+                                        {{$category->subcategories->count()}}
+                                    </td>
+
+                                    <td class="text-center align-middle">
+                                        {{ $category->name }}
+                                    </td>
+
+                                    <td class="text-center align-middle">
+                                        <button class="btn btn-info m-1">
+                                            Subcategorías
+                                        </button>
+
+                                        <button class="btn btn-primary m-1">
+                                            Editar
+                                        </button>
+
+                                        <button class="btn btn-danger m-1">
+                                            Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </table>
+                        </div>
                     </div>
                 </div>
 
                 {{-- Derecha → Subcategorías --}}
-                <div class="col-6">
+                <div class="col-lg-6">
+                    <div class="text-center mt-3 mb-3">
+                        <h2>Listado de subcategorías</h2>
+                    </div>
+
                     {{-- Botones --}}
-                    <div class="text-center">
+                    <div class="text-center mb-3">
                         <a href="#" class="btn btn-primary">
                             Añadir subcategoría
                         </a>
@@ -64,7 +105,7 @@
                     {{-- Selector --}}
                     <div id="box-list-subcategories">
                         <div class="text-center mt-3 mb-3">
-                            <h2>Listado de subcategorías</h2>
+
                         </div>
                     </div>
                 </div>
@@ -77,13 +118,17 @@
 @section('css')
     <style>
         #box-list-categories {
-            border-right: 3px groove #000;
+
         }
 
         #box-list-subcategories {
-            border-left: 3px groove #000;
+
         }
     </style>
+@endsection
+
+@section('modal')
+    @include('panel.content.modals.modal_category_add_edit')
 @endsection
 
 @section('js')
