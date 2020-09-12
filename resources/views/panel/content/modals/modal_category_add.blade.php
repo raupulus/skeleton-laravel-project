@@ -1,5 +1,5 @@
 @php($category = new \App\Category())
-<div class="modal fade" id="modal-category-addedit" tabindex="-1" role="dialog"
+<div class="modal fade" id="modal-category-add" tabindex="-1" role="dialog"
      aria-labelledby="modal-category-addedit-label" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
@@ -15,7 +15,10 @@
             </div>
 
             <div class="modal-body">
-                <form action="#" method="POST">
+                <form id="form-category-add"
+                      action="{{route('panel.category.store')}}"
+                      enctype="multipart/form-data"
+                      method="POST">
                     @csrf
 
                     <input type="hidden" name="category_id"
@@ -94,7 +97,9 @@
                     Cerrar
                 </button>
 
-                <button type="button" class="btn btn-primary">
+                <button type="submit"
+                        form="form-category-add"
+                        class="btn btn-primary">
                     Crear
                 </button>
             </div>

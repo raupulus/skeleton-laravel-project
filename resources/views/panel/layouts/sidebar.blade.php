@@ -75,7 +75,7 @@
             </a>
 
             <a class="dropdown-item text-center"
-               href="{{route('panel.content.categories.index')}}">
+               href="{{route('panel.category.index')}}">
                 Categorías
             </a>
 

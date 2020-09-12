@@ -153,10 +153,6 @@ Route::group([
 
         ]
     ], function() {
-        ## Gestionar Categorías.
-        Route::get('/categories', 'Panel\ContentSubCategoryController@index')
-            ->name('panel.content.categories.index');
-
         ## Ver un contenido.
         Route::get('/show/{id}/{slug?}', 'Panel\ContentController@show')->name
         ('panel.users.show');
@@ -176,6 +172,21 @@ Route::group([
 
         ## Vista para guardar contenido.
         Route::post('/store', 'Panel\ContentController@store')->name('panel.content.store');
+    });
+
+    ## Categorías
+    Route::group(['prefix' => 'categories'], function() {
+        ## Gestionar Categorías.
+        Route::get('/index', 'Panel\ContentSubCategoryController@index')
+            ->name('panel.category.index');
+
+        ## Crea una nueva categoría.
+        Route::post('/store', 'Panel\CategoryController@store')
+            ->name('panel.category.store');
+
+        ## Actualiza datos para una categoría ya existente.
+        Route::post('/update', 'Panel\CategoryController@update')
+            ->name('panel.category.update');
     });
 
     ## Errores

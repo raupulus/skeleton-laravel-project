@@ -39,7 +39,7 @@
                         <div class="text-center mb-3">
                             <button class="btn btn-primary"
                                     data-toggle="modal"
-                                    data-target="#modal-category-addedit">
+                                    data-target="#modal-category-add">
                                 Crear categoría
                             </button>
 
@@ -128,7 +128,7 @@
 @endsection
 
 @section('modal')
-    @include('panel.content.modals.modal_category_add_edit')
+    @include('panel.content.modals.modal_category_add')
 @endsection
 
 @section('js')
