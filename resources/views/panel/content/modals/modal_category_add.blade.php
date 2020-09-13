@@ -28,7 +28,7 @@
                         <div class="text-center">
                             <img src="{{$category->urlImage}}"
                                  class="text-center"
-                                 style="max-width: 400px;"
+                                 style="max-height: 120px;"
                                  alt="{{$category->name}}" />
                         </div>
                     @endif
