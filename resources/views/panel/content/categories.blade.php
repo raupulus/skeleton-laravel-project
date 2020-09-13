@@ -51,12 +51,20 @@
                         <div>
                             <table class="table table-dark table-condensed table-borderless">
                                 <tr>
+                                    <th class="text-center"></th>
                                     <th class="text-center">Subcategorías</th>
                                     <th class="text-center">Categorías</th>
                                     <th class="text-center">Acciones</th>
                                 </tr>
                             @foreach($categories as $category)
                                 <tr>
+                                    <td class="text-center align-middle">
+                                        <img src="{{$category->urlImage}}"
+                                             alt="{{$category->name}}"
+                                             title="{{$category->name}}"
+                                             style="width: 60px"/>
+                                    </td>
+
                                     <td class="text-center align-middle">
                                         {{$category->subcategories->count()}}
                                     </td>

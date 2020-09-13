@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use function asset;
 use function count;
 use function explode;
 
@@ -15,20 +16,35 @@ class File extends Model
     ];
 
     /**
+     * Devuelve la ruta hacia la imagen.
+     *
+     * @return string
+     */
+    public function getUrlAttribute()
+    {
+        if ($this->path && $this->name) {
+            return asset('storage/' . $this->path . '/' . $this->name);
+        }
+
+        return '';
+    }
+
+    /**
      * Almacena y devuelve un archivo recibiendo el objeto de tipo UploadFile.
      * Lo devuelve una vez almacenado.
      *
      * @param \Illuminate\Http\UploadedFile $file
      * @param string                        $path Directorio dónde guardarlo.
-     * @param int|null $file_id Id del archivo si
-     *                          existiera.
+     * @param int|null $file_id Id del archivo si existiera.
      * @param string $privacity Visibilidad,
      *                          directorio public o private
      *
-     * @return mixed
+     * @return \App\File|null
      */
-    public static function store(UploadedFile $file, string $path = 'upload',
-                                 int $file_id = null, string $privacity = 'public')
+    public static function store(UploadedFile $file,
+                                 string $path = 'upload',
+                                 int $file_id = null,
+                                 string $privacity = 'public')
     {
         $imageFullPath = $file->store($privacity . '/' . $path);
         $imageNameArray = explode('/', $imageFullPath);

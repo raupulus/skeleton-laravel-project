@@ -69,7 +69,7 @@ class Content extends Model
     /**
      * Relación con la tabla "files" que contiene la imagen principal.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function image()
     {
