@@ -153,7 +153,9 @@ class ContentController extends Controller
 
         ## Si hay imagen para el contenido, se actualiza.
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
+            $file = File::store($request->file('image'), 'content', $content->file_id);
+
+            /*
             $imagePath = 'content';
             $imageFullPath = $image->store('public/' . $imagePath);
             $imageNameArray = explode('/', $imageFullPath);
@@ -182,9 +184,13 @@ class ContentController extends Controller
                 'title' => $image->getClientOriginalName(),
                 'is_private' => false,
             ]);
+            */
 
-            $content->file_id = $file->id;
-            $content->save();
+            if ($file) {
+                $content->file_id = $file->id;
+                $content->save();
+            }
+
         }
 
         FlashHelper::success('Se ha guardado correctamente');

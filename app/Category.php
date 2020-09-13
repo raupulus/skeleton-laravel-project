@@ -46,16 +46,9 @@ class Category extends Model
 
         $fillable = $category->fillableFromArray($request->all());
 
-        dd($fillable);
-
-        /*
-        $data = array_filter($request->all(), function ($ele) use ($fillable){
-            return in_array($ele, $fillable);
-        });
-        */
-
         if ($request->hasFile('image')) {
             // TODO → Guardar imagen y crear entrada en files
+            dd($request->file('image'));
 
 
             // $data['file_id'] = $file->id;
@@ -64,7 +57,7 @@ class Category extends Model
 
 
 
-        dd($data, $fillable);
+        dd($fillable, $request);
 
 
         $category = self::updateOrCreate($request->all());
