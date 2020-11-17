@@ -9,46 +9,48 @@ E-mail: dev@fryntiz.es
 -->
 
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        @include('resources.global_vars_js')
-        @include('panel.layouts.head')
-        @include('panel.layouts.head_meta')
-        @yield('head_css')
-        @yield('head_javascript')
-    </head>
+<head>
+    @include('resources.global_vars_js')
+    @include('panel.layouts.head')
+    @include('panel.layouts.head_meta')
+    @yield('head_css')
+    @yield('head_javascript')
+</head>
 
-    <body class="page-top header-sticky">
-        <div id="app">
-             @include('panel.layouts.navbar')
+<body class="page-top header-sticky">
+<div id="app">
 
-             <div id="wrapper">
-                 @include('panel.layouts.sidebar')
+    @include('panel.layouts.navbar')
 
-                 <div id="content-wrapper">
+    <div id="wrapper">
+        @include('panel.layouts.sidebar')
 
-                     <div class="container-fluid">
-                         {{-- Caja para las alertas, errores y notificaciones --}}
-                         <div id="box-alerts">
-                            @include('panel.alerts.all_messages')
-                         </div>
+        <div id="content-wrapper">
 
-                         {{-- Caja con el contenido principal de la aplicación --}}
-                         <div id="box-content">
-                             @yield('content')
-                         </div>
-                     </div>
-                 </div>
-             </div>
+            <div class="container-fluid">
+                {{-- Caja para las alertas, errores y notificaciones --}}
+                <div id="box-alerts">
+                    @include('panel.alerts.all_messages')
+                </div>
 
-            <footer id="box-footer" class="footer {{-- sticky-footer --}}">
-                @include('panel.layouts.footer')
-            </footer>
+                {{-- Caja con el contenido principal de la aplicación --}}
+                <div id="box-content">
+                    @yield('content')
+                </div>
+            </div>
         </div>
+    </div>
 
-        @yield('modal')
-        @include('panel.layouts.footer_meta')
-        @yield('css')
-        @yield('javascript')
-        @yield('js')
-    </body>
+    <footer id="box-footer" class="footer {{-- sticky-footer --}}">
+        @include('panel.layouts.footer')
+    </footer>
+
+</div>
+
+@yield('modal')
+@include('panel.layouts.footer_meta')
+@yield('css')
+@yield('javascript')
+@yield('js')
+</body>
 </html>

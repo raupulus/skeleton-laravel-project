@@ -2,11 +2,16 @@
     {{-- User Card --}}
     <div class="row ">
         @if(RoleHelper::canUserEdit($user->id))
+            <v-image-cropper></v-image-cropper>
+
+        {{--
             <v-image-clipper
                     image="{{ $user->urlAvatar }}"
                     username="{{ $user->name }}"
                     user_id="{{ $user->id }}">
             </v-image-clipper>
+        --}}
+
         @else
             <div class="col-12 user-image text-center">
                 <img class="rounded-circle"

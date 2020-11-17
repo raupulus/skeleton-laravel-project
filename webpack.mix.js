@@ -39,7 +39,7 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
 
     .scripts([
         'node_modules/bootstrap-select/dist/js/bootstrap-select.js',
-        'node_modules/bootstrap-select/dist/i18n/defaults-es_ES.js',
+        //'node_modules/bootstrap-select/dist/i18n/defaults-es_ES.js',
     ], 'public/assets/js/bootstrap-select.js')
     .styles('node_modules/bootstrap-select/dist/css/bootstrap-select.css', 'public/assets/css/bootstrap-select.css')
 
@@ -66,8 +66,8 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
         'node_modules/datatables.net-colreorder-bs4/js/colReorder.bootstrap4.js',
         'node_modules/datatables.net-fixedcolumns/js/dataTables.fixedColumns.js',
         'node_modules/datatables.net-fixedcolumns-bs4/js/fixedColumns.bootstrap4.js',
-        'node_modules/datatables.net-fixedheaders/js/dataTables.fixedHeaders.js',
-        'node_modules/datatables.net-fixedheaders-bs4/js/fixedHeaders.bootstrap4.js',
+        //'node_modules/datatables.net-fixedheaders/js/dataTables.fixedHeaders.js',
+        //'node_modules/datatables.net-fixedheaders-bs4/js/fixedHeaders.bootstrap4.js',
         'node_modules/datatables.net-keytable/js/dataTables.keyTable.js',
         'node_modules/datatables.net-keytable-bs4/js/keyTable.bootstrap4.js',
         'node_modules/datatables.net-responsive/js/dataTables.responsive.js',

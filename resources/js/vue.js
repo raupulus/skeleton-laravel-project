@@ -5,17 +5,58 @@
  */
 
 //require('./bootstrap');
-
-window.Vue = require('vue');
+import Vue from 'vue';
+window.Vue = Vue;
 
 // Importo Bootstrap-Vue
-import BootstrapVue from 'bootstrap-vue';
-
+//import BootstrapVue from 'bootstrap-vue';
+import VueRouter from 'vue-router'
 
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 
-Vue.use(BootstrapVue, VueAxios, axios);
+
+import VueRx from 'vue-rx'
+
+
+const $axios = {
+    enableSettings: () => {
+        axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+    }
+};
+
+/***************************************
+                 VUETIFY
+****************************************/
+
+//import 'vue-component-image-cropper/dist/v-image-cropper.js';
+
+import Vuetify from 'vuetify'
+
+
+const vuetifyOpts = {
+    icons: {
+        iconfont: 'mdi', // default - only for display purposes
+    },
+};
+
+Vue.use(Vuetify);
+Vue.use(VueAxios, axios)
+//Vue.use(BootstrapVue);
+Vue.use(VueRx);
+Vue.use(VueRouter);
+
+
+import ImageCropper from 'vue-component-image-cropper/src/Component.vue'
+import CropperModal from 'vue-component-image-cropper/src/components/CropperModal.vue';
+import {
+    clipperBasic,
+    clipperUpload,
+    clipperFixed,
+    clipperPreview,
+    clipperRange
+} from 'vuejs-clipper';
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -36,11 +77,25 @@ Vue.use(BootstrapVue, VueAxios, axios);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('v-image-clipper', require('./components/ImageClipperComponent.vue').default);
+Vue.component("clipper-basic", clipperBasic);
+Vue.component("clipper-upload", clipperUpload);
+Vue.component("clipper-fixed", clipperFixed);
+Vue.component("clipper-preview", clipperPreview);
+Vue.component("clipper-range", clipperRange);
+
+
+
+Vue.component('v-image-cropper', ImageCropper);
+Vue.component("v-image-cropper-modal", CropperModal);
+
+
+
+
 Vue.component('v-toast-editor', require('./components/ToastEditorComponent.vue').default);
 Vue.component('v-toast-viewer', require('./components/ToastViewerComponent.vue').default);
 
 
 const app = new Vue({
+    vuetify: new Vuetify(vuetifyOpts),
     el: '#app',
 });
