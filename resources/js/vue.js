@@ -10,13 +10,13 @@ window.Vue = Vue;
 
 // Importo Bootstrap-Vue
 //import BootstrapVue from 'bootstrap-vue';
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
 
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 
 
-import VueRx from 'vue-rx'
+import VueRx from 'vue-rx';
 
 
 const $axios = {
@@ -31,7 +31,8 @@ const $axios = {
 
 //import 'vue-component-image-cropper/dist/v-image-cropper.js';
 
-import Vuetify from 'vuetify'
+/*
+import Vuetify from 'vuetify';
 
 
 const vuetifyOpts = {
@@ -39,16 +40,15 @@ const vuetifyOpts = {
         iconfont: 'mdi', // default - only for display purposes
     },
 };
+*/
 
-Vue.use(Vuetify);
-Vue.use(VueAxios, axios)
+//Vue.use(Vuetify);
+Vue.use(VueAxios, axios);
 //Vue.use(BootstrapVue);
 Vue.use(VueRx);
 Vue.use(VueRouter);
 
 
-import ImageCropper from 'vue-component-image-cropper/src/Component.vue'
-import CropperModal from 'vue-component-image-cropper/src/components/CropperModal.vue';
 import {
     clipperBasic,
     clipperUpload,
@@ -57,6 +57,8 @@ import {
     clipperRange
 } from 'vuejs-clipper';
 
+import ImageCropper from 'vue-component-image-cropper/src/components/CropperImage.vue';
+//import CropperModal from 'vue-component-image-cropper/src/components/CropperModal.vue';
 
 /**
  * The following block of code may be used to automatically register your
@@ -86,16 +88,16 @@ Vue.component("clipper-range", clipperRange);
 
 
 Vue.component('v-image-cropper', ImageCropper);
-Vue.component("v-image-cropper-modal", CropperModal);
+//Vue.component("v-image-cropper-modal", CropperModal);
 
 
 
 
-Vue.component('v-toast-editor', require('./components/ToastEditorComponent.vue').default);
-Vue.component('v-toast-viewer', require('./components/ToastViewerComponent.vue').default);
+//Vue.component('v-toast-editor', require('./components/ToastEditorComponent.vue').default);
+//Vue.component('v-toast-viewer', require('./components/ToastViewerComponent.vue').default);
 
 
 const app = new Vue({
-    vuetify: new Vuetify(vuetifyOpts),
+    //vuetify: new Vuetify(vuetifyOpts),
     el: '#app',
 });
