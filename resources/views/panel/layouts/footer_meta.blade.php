@@ -1,3 +1,6 @@
+{{-- Vue --}}
+<script src="{{ mix('js/vue.js') }}"></script>
+
 {{-- JQuery --}}
 <script src="{{ asset('assets/js/jquery.js') }}"></script>
 
@@ -20,7 +23,11 @@
 <script src="{{ mix('admin-panel/js/functions.js') }}"></script>
 <script src="{{ mix('admin-panel/js/scripts.js') }}"></script>
 <script src="{{ mix('admin-panel/js/theme.js') }}"></script>
-<script src="{{ mix('js/vue.js') }}"></script>
+
+
+{{--
+<script src="{{ mix('assets/js/cropper/v-cropper-image.min.js')}}"></script>
+--}}
 
 
 {{-- Listado de assets disponibles pero no cargados globalmente --}}

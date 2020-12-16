@@ -2,7 +2,9 @@
     {{-- User Card --}}
     <div class="row ">
         @if(RoleHelper::canUserEdit($user->id))
-            <v-image-cropper></v-image-cropper>
+
+            <v-cropper-image style="margin: -70px auto 0 auto;"
+                    image_path="{{$user->urlAvatar}}"></v-cropper-image>
 
         {{--
             <v-image-clipper

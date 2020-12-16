@@ -4,26 +4,22 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-//require('./bootstrap');
 import Vue from 'vue';
 window.Vue = Vue;
+Vue.config.devtools = false;
 
-// Importo Bootstrap-Vue
-//import BootstrapVue from 'bootstrap-vue';
 import VueRouter from 'vue-router';
-
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-
-
 import VueRx from 'vue-rx';
 
-
-const $axios = {
-    enableSettings: () => {
+Vue.use(VueAxios, {
+    enableSettings:() => {
         axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     }
-};
+});
+Vue.use(VueRx);
+Vue.use(VueRouter);
 
 /***************************************
                  VUETIFY
@@ -43,11 +39,11 @@ const vuetifyOpts = {
 */
 
 //Vue.use(Vuetify);
-Vue.use(VueAxios, axios);
-//Vue.use(BootstrapVue);
-Vue.use(VueRx);
-Vue.use(VueRouter);
 
+
+
+
+/*
 
 import {
     clipperBasic,
@@ -56,9 +52,12 @@ import {
     clipperPreview,
     clipperRange
 } from 'vuejs-clipper';
+*/
 
-import ImageCropper from 'vue-component-image-cropper/src/components/CropperImage.vue';
-//import CropperModal from 'vue-component-image-cropper/src/components/CropperModal.vue';
+//import ImageCropper from 'vue-component-image-cropper/src/components/CropperImage.vue';
+
+
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -79,16 +78,29 @@ import ImageCropper from 'vue-component-image-cropper/src/components/CropperImag
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
+/*
+import VuejsClipper from 'vuejs-clipper';
+
+Vue.use(VuejsClipper, {
+    components: {
+        //clipperBasic: true,
+        clipperUpload: true,
+        clipperFixed: true,
+        clipperPreview: true,
+        //clipperRange: true,
+    }
+})
+ */
+
+/*
 Vue.component("clipper-basic", clipperBasic);
 Vue.component("clipper-upload", clipperUpload);
 Vue.component("clipper-fixed", clipperFixed);
 Vue.component("clipper-preview", clipperPreview);
 Vue.component("clipper-range", clipperRange);
+*/
 
-
-
-Vue.component('v-image-cropper', ImageCropper);
-//Vue.component("v-image-cropper-modal", CropperModal);
 
 
 
@@ -97,7 +109,18 @@ Vue.component('v-image-cropper', ImageCropper);
 //Vue.component('v-toast-viewer', require('./components/ToastViewerComponent.vue').default);
 
 
+Vue.component('v-component-image-cropper',require('vue-component-image-cropper/dist/v-cropper-image.min.js'));
+
+
 const app = new Vue({
     //vuetify: new Vuetify(vuetifyOpts),
     el: '#app',
 });
+
+/** Librerías Propias **/
+//import 'vue-component-image-cropper/dist/v-cropper-image.min.js';
+// Image cropper
+
+//Vue.component('v-component-image-cropper', CropperImage);
+
+

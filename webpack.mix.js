@@ -11,6 +11,26 @@ const mix = require('laravel-mix');
  |
  */
 
+/*
+mix.webpackConfig({
+    module: {
+        rules: [
+            {
+                test: /\.scss$/,
+                use: [
+                    {
+                        loader: "sass-loader",
+                        options: {
+                            modules: true
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+});
+*/
+
 mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
     .scripts('resources/js/panel/scripts.js', 'public/admin-panel/js/scripts.js')
     .scripts('resources/js/panel/functions.js', 'public/admin-panel/js/functions.js')
@@ -36,6 +56,9 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
     .js('resources/js/vue.js', 'public/js')
     .copy('node_modules/jquery/dist/jquery.min.js', 'public/assets/js/jquery.js')
     .copy('node_modules/jquery.easing/jquery.easing.min.js', 'public/assets/js/jquery.easing.js')
+
+
+    .copy('node_modules/vue-component-image-cropper/dist/*', 'public/assets/js/cropper/')
 
     .scripts([
         'node_modules/bootstrap-select/dist/js/bootstrap-select.js',
@@ -99,6 +122,10 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
     .sass('resources/sass/assets/fontawesome.scss', 'public/assets/css')
     .sass('resources/sass/assets/datatables.scss', 'public/assets/css')
     .sass('node_modules/weather-icons2/sass/weather-icons.scss', 'public/assets/css')
+
+    .postCss("resources/css/tailwind.css", "public/assets/css", [
+        require("tailwindcss"),
+    ])
 
     .autoload({
         jquery:['$', 'window.jQuery', 'jQuery', 'window.$', 'jquery', 'window.jquery'],
