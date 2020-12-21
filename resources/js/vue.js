@@ -109,12 +109,17 @@ Vue.component("clipper-range", clipperRange);
 //Vue.component('v-toast-viewer', require('./components/ToastViewerComponent.vue').default);
 
 
-Vue.component('v-component-image-cropper',require('vue-component-image-cropper/dist/v-cropper-image.min.js'));
+//Vue.component('v-component-image-cropper',require('vue-component-image-cropper/dist/v-cropper-image.min.js'));
+//Vue.component('v-cropper-image',require('vue-component-image-cropper/dist/CropperImage.umd.min.js'));
 
+require('vue-component-image-cropper/dist/CropperImage.umd.min.js');
 
 const app = new Vue({
     //vuetify: new Vuetify(vuetifyOpts),
     el: '#app',
+    components: {
+        'v-cropper-image': CropperImage
+    }
 });
 
 /** Librerías Propias **/

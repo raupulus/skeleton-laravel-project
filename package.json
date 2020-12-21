@@ -10,6 +10,7 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
+        "autoprefixer": "^9.8.6",
         "bootstrap": "^4.0.0",
         "browser-sync": "^2.26.13",
         "browser-sync-webpack-plugin": "^2.2.2",
@@ -19,16 +20,15 @@
         "less": "^3.12.2",
         "less-loader": "^5.0.0",
         "popper.js": "^1.12",
+        "postcss": "^7.0.35",
+        "postcss-focus": "^5.0.1",
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.20.1",
         "sass-loader": "^8.0.0",
-        "vue": "^2.5.17",
+        "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.1",
+        "vue": "^2.6.12",
         "vue-template-compiler": "^2.6.10",
-        "vuetifyjs-mix-extension": "0.0.17",
-        "autoprefixer": "^9.8.6",
-        "postcss": "^7.0.35",
-        "postcss-focus": "^5.0.1",
-        "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.1"
+        "vuetifyjs-mix-extension": "0.0.17"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.1",
@@ -84,7 +84,6 @@
         "resolve-url-loader": "^3.1.0",
         "rx-js": "0.0.0",
         "rxjs": "^6.6.3",
-        "vue": "^2.6.12",
         "vue-axios": "^3.2.0",
         "vue-image-crop-upload": "^2.5.0",
         "vue-loader": "^15.9.5",

@@ -3,7 +3,9 @@
     <div class="row ">
         @if(RoleHelper::canUserEdit($user->id))
 
-            <v-cropper-image style="margin: -70px auto 0 auto;"
+            <v-cropper-image style="margin: -90px auto 0 auto;"
+                    width="500"
+                    preview_width="150"
                     image_path="{{$user->urlAvatar}}"></v-cropper-image>
 
         {{--

@@ -58,7 +58,7 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
     .copy('node_modules/jquery.easing/jquery.easing.min.js', 'public/assets/js/jquery.easing.js')
 
 
-    .copy('node_modules/vue-component-image-cropper/dist/*', 'public/assets/js/cropper/')
+    //.copy('node_modules/vue-component-image-cropper/dist/*', 'public/assets/js/cropper/')
 
     .scripts([
         'node_modules/bootstrap-select/dist/js/bootstrap-select.js',
