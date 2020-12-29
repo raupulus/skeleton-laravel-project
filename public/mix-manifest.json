@@ -11,6 +11,7 @@
     "/assets/css/fontawesome.css": "/assets/css/fontawesome.css",
     "/assets/css/datatables.css": "/assets/css/datatables.css",
     "/assets/css/weather-icons.css": "/assets/css/weather-icons.css",
+    "/assets/css/tailwind.css": "/assets/css/tailwind.css",
     "/js/scripts.js": "/js/scripts.js",
     "/admin-panel/js/scripts.js": "/admin-panel/js/scripts.js",
     "/admin-panel/js/functions.js": "/admin-panel/js/functions.js",

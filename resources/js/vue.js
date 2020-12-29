@@ -4,18 +4,65 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-//require('./bootstrap');
+import Vue from 'vue';
+window.Vue = Vue;
+Vue.config.devtools = false;
 
-window.Vue = require('vue');
-
-// Importo Bootstrap-Vue
-import BootstrapVue from 'bootstrap-vue';
-
-
+import VueRouter from 'vue-router';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import VueRx from 'vue-rx';
 
-Vue.use(BootstrapVue, VueAxios, axios);
+Vue.use(VueAxios, axios);
+
+/*
+Vue.use(VueAxios, {
+    enableSettings:() => {
+        axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+    }
+});
+*/
+
+Vue.use(VueRx);
+Vue.use(VueRouter);
+
+/***************************************
+                 VUETIFY
+****************************************/
+
+//import 'vue-component-image-cropper/dist/v-image-cropper.js';
+
+/*
+import Vuetify from 'vuetify';
+
+
+const vuetifyOpts = {
+    icons: {
+        iconfont: 'mdi', // default - only for display purposes
+    },
+};
+*/
+
+//Vue.use(Vuetify);
+
+
+
+
+/*
+
+import {
+    clipperBasic,
+    clipperUpload,
+    clipperFixed,
+    clipperPreview,
+    clipperRange
+} from 'vuejs-clipper';
+*/
+
+//import ImageCropper from 'vue-component-image-cropper/src/components/CropperImage.vue';
+
+
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -36,11 +83,55 @@ Vue.use(BootstrapVue, VueAxios, axios);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('v-image-clipper', require('./components/ImageClipperComponent.vue').default);
-Vue.component('v-toast-editor', require('./components/ToastEditorComponent.vue').default);
-Vue.component('v-toast-viewer', require('./components/ToastViewerComponent.vue').default);
 
+/*
+import VuejsClipper from 'vuejs-clipper';
+
+Vue.use(VuejsClipper, {
+    components: {
+        //clipperBasic: true,
+        clipperUpload: true,
+        clipperFixed: true,
+        clipperPreview: true,
+        //clipperRange: true,
+    }
+})
+ */
+
+/*
+Vue.component("clipper-basic", clipperBasic);
+Vue.component("clipper-upload", clipperUpload);
+Vue.component("clipper-fixed", clipperFixed);
+Vue.component("clipper-preview", clipperPreview);
+Vue.component("clipper-range", clipperRange);
+*/
+
+
+
+
+
+//Vue.component('v-toast-editor', require('./components/ToastEditorComponent.vue').default);
+//Vue.component('v-toast-viewer', require('./components/ToastViewerComponent.vue').default);
+
+
+//Vue.component('v-component-image-cropper',require('vue-component-image-cropper/dist/v-cropper-image.min.js'));
+//Vue.component('v-cropper-image',require('vue-component-image-cropper/dist/CropperImage.umd.min.js'));
+
+require('vue-component-image-cropper/dist/CropperImage.umd.min.js');
+//import CropperImage from 'vue-component-image-cropper/src/components/CropperImage';
 
 const app = new Vue({
+    //vuetify: new Vuetify(vuetifyOpts),
     el: '#app',
+    components: {
+        'v-cropper-image': CropperImage
+    }
 });
+
+/** Librerías Propias **/
+//import 'vue-component-image-cropper/dist/v-cropper-image.min.js';
+// Image cropper
+
+//Vue.component('v-component-image-cropper', CropperImage);
+
+

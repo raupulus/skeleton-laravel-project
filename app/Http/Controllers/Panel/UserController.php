@@ -339,7 +339,7 @@ class UserController extends Controller
     public function uploadAvatarAjax(Request $request)
     {
         $imageBase64 = $request->get('image');
-        $user_id = $request->get('user_id');
+        $user_id = $request->get('id');
 
         if (!$imageBase64 || !$user_id) {
             JsonHelper::error('Faltan parámetros');

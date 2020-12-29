@@ -11,6 +11,26 @@ const mix = require('laravel-mix');
  |
  */
 
+/*
+mix.webpackConfig({
+    module: {
+        rules: [
+            {
+                test: /\.scss$/,
+                use: [
+                    {
+                        loader: "sass-loader",
+                        options: {
+                            modules: true
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+});
+*/
+
 mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
     .scripts('resources/js/panel/scripts.js', 'public/admin-panel/js/scripts.js')
     .scripts('resources/js/panel/functions.js', 'public/admin-panel/js/functions.js')
@@ -37,9 +57,12 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
     .copy('node_modules/jquery/dist/jquery.min.js', 'public/assets/js/jquery.js')
     .copy('node_modules/jquery.easing/jquery.easing.min.js', 'public/assets/js/jquery.easing.js')
 
+
+    //.copy('node_modules/vue-component-image-cropper/dist/*', 'public/assets/js/cropper/')
+
     .scripts([
         'node_modules/bootstrap-select/dist/js/bootstrap-select.js',
-        'node_modules/bootstrap-select/dist/i18n/defaults-es_ES.js',
+        //'node_modules/bootstrap-select/dist/i18n/defaults-es_ES.js',
     ], 'public/assets/js/bootstrap-select.js')
     .styles('node_modules/bootstrap-select/dist/css/bootstrap-select.css', 'public/assets/css/bootstrap-select.css')
 
@@ -66,8 +89,8 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
         'node_modules/datatables.net-colreorder-bs4/js/colReorder.bootstrap4.js',
         'node_modules/datatables.net-fixedcolumns/js/dataTables.fixedColumns.js',
         'node_modules/datatables.net-fixedcolumns-bs4/js/fixedColumns.bootstrap4.js',
-        'node_modules/datatables.net-fixedheaders/js/dataTables.fixedHeaders.js',
-        'node_modules/datatables.net-fixedheaders-bs4/js/fixedHeaders.bootstrap4.js',
+        //'node_modules/datatables.net-fixedheaders/js/dataTables.fixedHeaders.js',
+        //'node_modules/datatables.net-fixedheaders-bs4/js/fixedHeaders.bootstrap4.js',
         'node_modules/datatables.net-keytable/js/dataTables.keyTable.js',
         'node_modules/datatables.net-keytable-bs4/js/keyTable.bootstrap4.js',
         'node_modules/datatables.net-responsive/js/dataTables.responsive.js',
@@ -99,6 +122,10 @@ mix.scripts('resources/js/scripts.js', 'public/js/scripts.js')
     .sass('resources/sass/assets/fontawesome.scss', 'public/assets/css')
     .sass('resources/sass/assets/datatables.scss', 'public/assets/css')
     .sass('node_modules/weather-icons2/sass/weather-icons.scss', 'public/assets/css')
+
+    .postCss("resources/css/tailwind.css", "public/assets/css", [
+        require("tailwindcss"),
+    ])
 
     .autoload({
         jquery:['$', 'window.jQuery', 'jQuery', 'window.$', 'jquery', 'window.jquery'],
