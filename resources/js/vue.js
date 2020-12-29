@@ -13,11 +13,16 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import VueRx from 'vue-rx';
 
+Vue.use(VueAxios, axios);
+
+/*
 Vue.use(VueAxios, {
     enableSettings:() => {
         axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     }
 });
+*/
+
 Vue.use(VueRx);
 Vue.use(VueRouter);
 
@@ -113,6 +118,7 @@ Vue.component("clipper-range", clipperRange);
 //Vue.component('v-cropper-image',require('vue-component-image-cropper/dist/CropperImage.umd.min.js'));
 
 require('vue-component-image-cropper/dist/CropperImage.umd.min.js');
+//import CropperImage from 'vue-component-image-cropper/src/components/CropperImage';
 
 const app = new Vue({
     //vuetify: new Vuetify(vuetifyOpts),

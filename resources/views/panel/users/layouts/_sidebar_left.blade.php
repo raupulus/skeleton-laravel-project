@@ -2,20 +2,14 @@
     {{-- User Card --}}
     <div class="row ">
         @if(RoleHelper::canUserEdit($user->id))
-
             <v-cropper-image style="margin: -90px auto 0 auto;"
                     width="500"
                     preview_width="150"
+                    api_id="{{ $user->id }}"
+                    name="{{ $user->name }}"
+                    api_url="{{ route('panel.ajax.user.avatar.upload') }}"
+                    csrf_token="{{csrf_token()}}"
                     image_path="{{$user->urlAvatar}}"></v-cropper-image>
-
-        {{--
-            <v-image-clipper
-                    image="{{ $user->urlAvatar }}"
-                    username="{{ $user->name }}"
-                    user_id="{{ $user->id }}">
-            </v-image-clipper>
-        --}}
-
         @else
             <div class="col-12 user-image text-center">
                 <img class="rounded-circle"

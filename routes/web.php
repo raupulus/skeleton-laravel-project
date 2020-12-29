@@ -137,10 +137,10 @@ Route::group([
         Route::group([
             'prefix' => 'ajax',
             'middleware' => [
-
+                'cors.enabled'
             ]
         ], function() {
-            Route::post('/avatar/upload', 'Panel\UserController@uploadAvatarAjax')
+            Route::match(['get', 'post', 'options'],'/avatar/upload', 'Panel\UserController@uploadAvatarAjax')
                 ->name('panel.ajax.user.avatar.upload');
         });
 
