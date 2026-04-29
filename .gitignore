@@ -1,13 +1,69 @@
+# Aplicación Laravel
 /node_modules
+/public/build
 /public/hot
 /public/storage
 /storage/*.key
 /vendor
+
+# Variables de entorno (NUNCA commitear el .env real)
 .env
 .env.backup
-.phpunit.result.cache
-Homestead.json
-Homestead.yaml
+.env.production
+.env.staging
+!.env.example
+!.env.example.production
+
+
+# Logs
+/storage/logs/*.log
+storage/logs/*.log
+
+# Caché
+bootstrap/cache/*.php
+storage/framework/cache/
+storage/framework/sessions/
+storage/framework/views/
+
+# Assets compilados (se regeneran con npm run build)
+public/build
+mix-manifest.json
+public/mix-manifest.json
+
+# IDEs y editores
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.phpstorm.meta.php
+_ide_helper.php
+_ide_helper_models.php
+
+# Node
 npm-debug.log
 yarn-error.log
-.idea
+.npm
+.yarn
+
+# PHP
+*.phpunit.result.cache
+coverage/
+.phpunit.cache/
+
+# Docker volumes (no commitear datos de volúmenes locales)
+.docker/
+docker-compose.override.yml
+
+# Documentación API generada (se regenera con scribe:generate)
+public/docs/api/
+
+# Archivos temporales
+*.tmp
+*.bak
+docs/planning
+/docs/planning

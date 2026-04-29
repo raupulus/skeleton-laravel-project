@@ -1,30 +1,8 @@
 @extends('layouts.app')
-
-@section('title', 'Error 500')
-
 @section('content')
-    @include('layouts.breadcrumbs')
-
-    <div class="row">
-        <div class="col-12">
-            <h1 class="display-1">500</h1>
-            <p class="lead">Error de Servidor, si se repite contacte con el
-                administrador. Puedes
-                <a href="javascript:history.back()">volver</a>
-                a la página anterior o ir a la
-                <a href="{{route('index')}}">página principal</a>.</p>
-        </div>
-
-        <div>
-            @yield('code')
-        </div>
-
-        <div>
-            @yield('message')
-        </div>
-    </div>
-
-
+<div class="max-w-2xl mx-auto px-4 py-24 text-center">
+    <h1 class="text-6xl font-bold text-red-600">500</h1>
+    <p class="mt-4 text-xl text-gray-600">Error interno del servidor</p>
+    <a href="{{ route('home') }}" class="mt-8 inline-block bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700">Volver al inicio</a>
+</div>
 @endsection
-
-

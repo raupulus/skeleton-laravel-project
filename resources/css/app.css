@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+
+/* Fuente principal del proyecto (equivalente al extend.fontFamily del config v3) */
+@theme {
+    --font-sans: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+}

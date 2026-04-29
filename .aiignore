@@ -1,0 +1,54 @@
+# Archivos que deben ser excluidos del contexto de IAs
+# Para proteger información sensible y reducir el contexto innecesario
+
+# Variables de entorno y configuración sensible
+.env
+.env.*
+!.env.example
+!.env.example.production
+
+# Claves y certificados
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+*.ppk
+
+# Base de datos local
+database/database.sqlite
+*.db
+
+# Assets compilados (no son código fuente)
+public/build/
+public/hot
+public/storage
+
+# Dependencias de terceros
+vendor/
+node_modules/
+
+# Logs y caché
+storage/logs/
+storage/framework/cache/
+storage/framework/sessions/
+storage/framework/views/
+bootstrap/cache/
+
+# Archivos de documentación API generada
+public/docs/api/
+
+# Imágenes y archivos de media subidos
+storage/app/public/
+public/storage/
+
+# Git
+.git/
+
+# IDE y editores
+.idea/
+.vscode/
+*.swp
+*.swo

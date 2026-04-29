@@ -1,23 +1,12 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
-
-                    <div class="card-body">
-                        I'm an example component.
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="p-4 bg-white rounded-lg shadow">
+        <h3 class="text-lg font-semibold text-gray-800">{{ title }}</h3>
+        <p class="mt-2 text-gray-600">{{ message }}</p>
     </div>
 </template>
-
-<script>
-    export default {
-        mounted() {
-            console.log('Component mounted.')
-        }
-    }
+<script setup>
+defineProps({
+    title: { type: String, default: 'Componente Vue de ejemplo' },
+    message: { type: String, default: 'Vue 3 está funcionando correctamente en este proyecto Laravel.' },
+});
 </script>
