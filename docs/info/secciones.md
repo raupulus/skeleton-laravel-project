@@ -4,6 +4,16 @@
 
 ---
 
+## Objetivo y funcionalidad
+
+El módulo de secciones permite gestionar bloques de contenido reutilizables que se insertan en las distintas páginas del frontend. Su objetivo es que los administradores puedan editar textos, descripciones e imágenes de las páginas públicas (home, about, contact, etc.) directamente desde el panel de administración, sin necesidad de modificar vistas Blade ni desplegar código.
+
+Cada sección tiene un título, una descripción/subtítulo, un contenido HTML enriquecido (editable con RichEditor) y una imagen asociada, todo traducible en español e inglés. Las secciones se agrupan por `zone` (ej: `home`, `about`, `contact`) y se ordenan con el campo `order` dentro de cada zona, lo que permite controlar tanto la distribución como el orden en que aparecen.
+
+Los controladores web cargan las secciones de la zona correspondiente y las pasan a la vista, donde el componente Blade `<x-section-block :section="$section" />` las renderiza automáticamente mostrando el contenido en el idioma actual del visitante. Esto proporciona un sistema CMS ligero donde el frontend es dinámico y editable sin tocar código.
+
+---
+
 ## Resumen
 
 Las secciones permiten gestionar bloques de contenido reutilizables que se muestran en las distintas páginas del frontend (home, about, contact, etc.). Cada sección tiene título, descripción, contenido HTML enriquecido e imagen, todo traducible. Se agrupan por `zone` y se ordenan con el campo `order`. El componente Blade `<x-section-block>` las renderiza automáticamente con el idioma del visitante.

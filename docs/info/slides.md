@@ -4,6 +4,16 @@
 
 ---
 
+## Objetivo y funcionalidad
+
+El módulo de slides gestiona los carruseles visuales que se muestran en las distintas páginas del frontend. Su objetivo es permitir que los administradores configuren banners e imágenes destacadas con texto superpuesto, sin necesidad de modificar código ni vistas.
+
+Los slides se agrupan por zonas (ej: `home`, `about`, `services`), de modo que cada página del frontend puede tener su propio carrusel independiente. Cada slide incluye una imagen principal obligatoria en formato 16:9 (con editor de recorte integrado en Filament), una imagen vertical opcional en formato 8:12 para versiones responsive/móvil, título y contenido traducibles (español e inglés), una URL de enlace opcional, y controles de orden y visibilidad.
+
+En el frontend, el componente Blade `<x-slide-carousel zone="home" />` renderiza el carrusel de la zona indicada usando Alpine.js para la navegación entre slides. El componente carga automáticamente solo los slides activos de la zona solicitada, ordenados según el campo `order`.
+
+---
+
 ## Resumen
 
 Los slides alimentan los carruseles visuales del frontend. Se agrupan por `zone` (ej: `home`, `about`, `services`) para que distintas páginas puedan tener sus propios carruseles. Cada slide tiene una imagen principal obligatoria en formato 16:9 (con recorte integrado), una imagen vertical opcional en 8:12, título y contenido traducibles, URL de enlace y control de orden y visibilidad.

@@ -4,6 +4,16 @@
 
 ---
 
+## Objetivo y funcionalidad
+
+El módulo de configuración permite gestionar los ajustes globales del sitio web desde el panel de administración, sin necesidad de modificar archivos `.env` ni código fuente. Su objetivo es centralizar toda la configuración dinámica de la plataforma (nombre del sitio, datos de contacto, URLs de redes sociales, valores SEO por defecto, logotipo, etc.) en un sistema key-value editable en tiempo real.
+
+Cada setting tiene una clave única, un valor, un tipo de dato (text, textarea, image, number), un grupo de clasificación (general, contact, social, seo) y un orden de visualización. Los valores se cachean durante 1 hora para optimizar el rendimiento, y la caché se invalida automáticamente al editar cualquier setting desde Filament.
+
+El acceso a los settings desde cualquier parte de la aplicación se realiza mediante el helper global `setting('clave', 'valor_por_defecto')`, que internamente consulta el `SettingService`. Esto permite que las vistas Blade, controladores, servicios y mailables consuman la configuración de forma sencilla y uniforme. Los settings se utilizan extensivamente en el layout (logo, nombre del sitio, redes sociales, copyright), en el servicio SEO (meta tags por defecto), en el envío de emails (dirección de contacto) y en múltiples componentes del frontend.
+
+---
+
 ## Resumen
 
 El módulo de configuración permite gestionar ajustes del sitio (título, descripción, redes sociales, datos de contacto, SEO por defecto, etc.) desde el panel admin sin tocar código. Funciona con un patrón key-value donde cada registro tiene una clave única, un valor, un tipo de dato, un grupo y un orden. Los valores se cachean 1 hora para optimizar el rendimiento.

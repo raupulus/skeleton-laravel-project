@@ -4,6 +4,22 @@
 
 ---
 
+## Objetivo y funcionalidad
+
+La API REST permite que aplicaciones externas (apps móviles, SPAs, integraciones de terceros, automatizaciones) interactúen con la plataforma de forma programática. Su objetivo es exponer el contenido público y las funcionalidades de autenticación mediante una interfaz HTTP estándar, versionada y documentada.
+
+La API se estructura en tres grupos:
+
+1. **Endpoints públicos** (sin autenticación): permiten consultar posts, páginas y categorías publicados. Útil para consumir el contenido del sitio desde aplicaciones frontend independientes o servicios de terceros.
+
+2. **Endpoints de autenticación** (sin token): permiten registrar usuarios, iniciar sesión (obteniendo un token Bearer), solicitar restablecimiento de contraseña y completar el reset. El token obtenido se usa para los endpoints autenticados.
+
+3. **Endpoints autenticados** (Bearer token): permiten consultar los datos del usuario autenticado, cerrar sesión (revocar token) y gestionar tokens API personales (crear, listar, eliminar).
+
+Los endpoints de autenticación tienen rate limiting para prevenir ataques de fuerza bruta. Las respuestas de usuario se filtran mediante `UserResource` para no exponer datos sensibles. La documentación se genera automáticamente con Scribe y es accesible en `/docs`.
+
+---
+
 ## Resumen
 
 La API REST permite a aplicaciones externas acceder al contenido (posts, páginas, categorías) sin autenticación, y gestionar la cuenta (registro, login, perfil, tokens) con autenticación Bearer token vía Laravel Sanctum. La documentación se genera automáticamente con Scribe y es accesible en `/docs`.

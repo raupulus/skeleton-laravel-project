@@ -4,6 +4,18 @@
 
 ---
 
+## Objetivo y funcionalidad
+
+El módulo de posts implementa el sistema de blog de la plataforma, permitiendo publicar artículos con contenido enriquecido. Su objetivo es ofrecer un sistema de publicación completo, bilingüe y optimizado para SEO, gestionable desde el panel de administración y visible públicamente en el frontend.
+
+Cada post soporta traducciones en español e inglés para todos sus campos de contenido (título, cuerpo, extracto) y campos SEO (título SEO, meta descripción, keywords), lo que permite mantener versiones del artículo en ambos idiomas de forma independiente. Los posts se pueden organizar mediante categorías (relación muchos a muchos), marcar como destacados, y gestionar con un flujo de publicación basado en estados (borrador → publicado).
+
+En el frontend, el blog se presenta con un listado paginado de posts publicados en `/blog` y una vista de detalle en `/blog/{slug}`. El SEO se gestiona automáticamente mediante el trait `HasSeo` y el `SeoService`, que inyectan los meta tags apropiados en cada página. También se exponen endpoints API públicos para que aplicaciones externas consuman los posts.
+
+El autor se asigna automáticamente al usuario logueado mediante el trait `BelongsToUser`, sin que aparezca en el formulario del panel admin. El slug se genera automáticamente desde el título si no se especifica manualmente.
+
+---
+
 ## Resumen
 
 Los posts conforman el sistema de blog de la plataforma. Cada post soporta traducciones en español e inglés para título, contenido, extracto y campos SEO. Pueden asignarse a múltiples categorías, marcarse como destacados y gestionarse con estados de borrador/publicado. El autor se asigna automáticamente al crear (usuario logueado) y no aparece en el formulario.

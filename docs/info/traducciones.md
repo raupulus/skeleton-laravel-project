@@ -4,6 +4,20 @@
 
 ---
 
+## Objetivo y funcionalidad
+
+El módulo de traducciones proporciona soporte bilingüe completo (español e inglés) a toda la plataforma. Su objetivo es que tanto los textos estáticos de la interfaz como el contenido dinámico de los modelos sean traducibles, permitiendo que usuarios de distintos idiomas accedan al sitio en su lengua preferida.
+
+El sistema opera con dos mecanismos complementarios:
+
+1. **Textos estáticos de la UI** (archivos de idioma): labels, botones, mensajes, títulos fijos y textos del layout se gestionan mediante los archivos `lang/es/messages.php` y `lang/en/messages.php`, accesibles con el helper `__('messages.clave')`. Al añadir una nueva clave se debe incluir en ambos archivos obligatoriamente.
+
+2. **Contenido dinámico de modelos** (Spatie Translatable): los campos de contenido de posts, páginas, categorías, slides y secciones se almacenan como JSON en la base de datos con una versión por idioma, accesibles con `$modelo->getTranslation('campo', $locale)`. Los formularios de Filament presentan tabs por idioma (ES/EN) para editar cada versión.
+
+El cambio de idioma se realiza desde el frontend mediante el selector de idioma (`<x-language-switcher />`), que redirige a `/lang/{locale}`. El `LanguageController` valida el idioma, lo persiste en sesión y el middleware `SetLocale` lo aplica en cada request posterior. El idioma por defecto es español, con inglés como fallback.
+
+---
+
 ## Resumen
 
 La plataforma soporta dos idiomas: español (por defecto) e inglés. Hay dos mecanismos de traducción: archivos de idioma para textos estáticos de la UI (`__('messages.key')`) y campos traducibles en modelos con `spatie/laravel-translatable` para contenido dinámico. El idioma se cambia con el selector del frontend y se persiste en sesión mediante el middleware `SetLocale`.

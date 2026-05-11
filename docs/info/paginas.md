@@ -4,6 +4,16 @@
 
 ---
 
+## Objetivo y funcionalidad
+
+El módulo de páginas permite crear contenido más permanente y estructural que los posts del blog. Su objetivo es dar soporte a las páginas institucionales y de contenido fijo de la plataforma, como «Sobre nosotros», «Servicios», «Términos y condiciones», «Política de privacidad», etc.
+
+Las páginas comparten la misma arquitectura técnica que los posts (traducciones bilingües, campos SEO, categorías opcionales, estados de publicación, slug automático y asignación de autor), pero se muestran en rutas independientes (`/pages/{slug}`) y están pensadas para contenido que no cambia con frecuencia. Esto permite que el administrador cree y edite páginas completas desde el panel de administración sin necesidad de tocar código ni vistas Blade.
+
+Las páginas legales (`politica-privacidad`, `politica-cookies`) se crean automáticamente mediante el seeder para garantizar que los enlaces del footer y del formulario de contacto funcionen desde el primer despliegue. También se exponen endpoints API públicos para consumo externo.
+
+---
+
 ## Resumen
 
 Las páginas sirven para contenido más permanente que los posts: «Sobre nosotros», «Servicios», «Términos y condiciones», etc. Comparten la misma arquitectura que los posts (traducciones, SEO, categorías, estados, slug automático, asignación de autor), pero se muestran en rutas independientes (`/pages/{slug}`).

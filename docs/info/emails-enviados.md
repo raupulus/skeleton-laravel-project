@@ -4,6 +4,16 @@
 
 ---
 
+## Objetivo y funcionalidad
+
+El módulo de emails enviados proporciona un sistema de auditoría y trazabilidad para todos los correos electrónicos que la plataforma envía. Su objetivo es que los administradores puedan consultar en cualquier momento el historial completo de emails: a quién se envió, con qué asunto, cuál fue el contenido HTML exacto, si se entregó correctamente o falló, y en caso de fallo, cuál fue el error.
+
+Cada vez que el `EmailService` envía un email (bienvenida al registro, formulario de contacto, notificaciones genéricas), se crea automáticamente un registro en la tabla `sent_emails` con toda la información del envío. Este módulo es estrictamente de solo lectura: no se pueden crear, editar ni eliminar registros desde el panel admin, ya que son registros de auditoría generados automáticamente por el sistema.
+
+Desde el panel de administración, los administradores pueden buscar emails por destinatario o asunto, filtrar por estado (enviado/fallido) y ver el cuerpo HTML completo del email tal como se envió al usuario. Esto es especialmente útil para diagnosticar problemas de entrega, verificar que los emails se están generando correctamente y mantener un registro legal de las comunicaciones enviadas.
+
+---
+
 ## Resumen
 
 Cada email que la plataforma envía (bienvenida, contacto, genéricos) se registra automáticamente en la tabla `sent_emails`. El módulo es de solo lectura en el panel admin y permite consultar el historial completo con destinatario, asunto, cuerpo HTML, estado (sent/failed) y posibles errores.

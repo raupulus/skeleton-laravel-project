@@ -4,6 +4,16 @@
 
 ---
 
+## Objetivo y funcionalidad
+
+El módulo de categorías proporciona un sistema de taxonomía para organizar el contenido de la plataforma temáticamente. Su objetivo es permitir agrupar posts y páginas bajo etiquetas comunes (ej: «Tecnología», «Noticias», «Tutoriales»), facilitando la navegación y el filtrado del contenido tanto en el frontend como en la API.
+
+Las categorías funcionan como entidades independientes con nombre y descripción traducibles (español e inglés), imagen representativa opcional, estado activo/inactivo y un campo de orden para controlar su posición en los listados. Se relacionan con posts y páginas mediante relaciones muchos a muchos (tablas pivot `category_post` y `category_page`), lo que permite que un mismo contenido pertenezca a varias categorías simultáneamente.
+
+Desde el panel de administración se pueden crear, editar y desactivar categorías. En el frontend, las categorías asignadas se muestran en las tarjetas de post y en las vistas de detalle. La API expone endpoints públicos para listar y consultar categorías.
+
+---
+
 ## Resumen
 
 Las categorías permiten organizar el contenido (posts y páginas) temáticamente. Son entidades independientes con nombre y descripción traducibles, imagen opcional, estado activo/inactivo y un campo de orden para controlar su posición en los listados. Cada categoría se relaciona con posts y páginas mediante tablas pivot.

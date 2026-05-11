@@ -4,6 +4,16 @@
 
 ---
 
+## Objetivo y funcionalidad
+
+El `EmailService` es el punto único y centralizado de envío de emails de toda la plataforma. Su objetivo es garantizar que ningún email se envíe sin quedar registrado, proporcionando trazabilidad completa de todas las comunicaciones salientes.
+
+El servicio acepta cualquier `Mailable` de Laravel, lo renderiza a HTML, lo envía al destinatario y crea un registro en la tabla `sent_emails` con el cuerpo completo, destinatario, asunto y estado del envío. Si el envío falla por cualquier motivo (error de SMTP, configuración incorrecta, etc.), el error se captura, se registra en el campo `error_message` y el registro se marca como `failed`, pero **la excepción no se relanza**, evitando interrumpir el flujo del usuario.
+
+Todos los puntos de la aplicación que necesiten enviar emails deben hacerlo a través de este servicio en lugar de usar `Mail::send()` directamente. Esto incluye el registro de usuarios (email de bienvenida), el formulario de contacto y cualquier notificación futura. El servicio se integra con el módulo de emails enviados para que los administradores puedan auditar el historial desde el panel admin.
+
+---
+
 ## Resumen
 
 El `EmailService` es el punto único de envío de emails de la plataforma. Acepta cualquier `Mailable` de Laravel, lo envía y crea un registro en `sent_emails` con el cuerpo HTML, destinatario, asunto y estado. Si el envío falla, captura la excepción, marca el registro como `failed` con el mensaje de error, pero **no relanza la excepción** para no interrumpir el flujo del usuario.

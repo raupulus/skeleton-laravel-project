@@ -4,6 +4,20 @@
 
 ---
 
+## Objetivo y funcionalidad
+
+El panel de usuario es un área privada destinada a todos los usuarios registrados de la plataforma, independientemente de su rol. Su objetivo es ofrecer a cada usuario un espacio propio donde pueda gestionar su información personal y sus credenciales de acceso a la API, sin necesidad de acceso al panel de administración.
+
+El panel se construye con Filament 5 y se accede en `/panel`. Incluye dos páginas principales:
+
+1. **Mi Perfil (EditProfile)**: permite al usuario editar su nombre, foto de avatar y contraseña. El email se muestra como campo de solo lectura para evitar cambios accidentales. Al guardar, se muestra una notificación de confirmación.
+
+2. **Tokens API (ApiTokens)**: permite al usuario crear, listar y eliminar tokens de acceso a la API REST (Laravel Sanctum). El token generado se muestra una sola vez tras la creación. Los tokens revocados dejan de funcionar inmediatamente.
+
+El dashboard incluye un widget de bienvenida que muestra el nombre del usuario, el número de tokens API activos y enlaces rápidos a las dos páginas del panel. El acceso solo requiere que la cuenta esté activa (`is_active = true`), sin restricción por rol.
+
+---
+
 ## Resumen
 
 El panel de usuario es un área privada accesible para cualquier usuario activo (independientemente de su rol). Ofrece dos páginas: edición del perfil personal (nombre, avatar, contraseña) y gestión de tokens API (listar, crear, eliminar). Incluye un widget de bienvenida en el dashboard.

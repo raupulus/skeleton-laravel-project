@@ -4,6 +4,16 @@
 
 ---
 
+## Objetivo y funcionalidad
+
+El `SeoService` gestiona dinámicamente todos los meta tags SEO de cada página del sitio web. Su objetivo es que cada URL pública tenga meta tags optimizados para buscadores y redes sociales, sin necesidad de hardcodear valores en las vistas Blade.
+
+El servicio acumula los valores SEO (título, descripción, keywords, URL canónica, tipo Open Graph, imagen, directiva robots) y los expone al layout `head.blade.php`, que genera las etiquetas meta estándar, Open Graph, Twitter Cards, JSON-LD structured data, canonical y hreflang. Cada controlador web configura los meta tags de su página mediante una API fluida con encadenamiento de métodos (method chaining), y el servicio se encarga de los fallbacks a los valores por defecto del sistema (cargados desde los settings).
+
+Para modelos con el trait `HasSeo` (posts, páginas), el método `fromModel()` carga automáticamente los campos SEO del modelo (con fallback al título y extracto si los campos SEO están vacíos), simplificando la configuración en los controladores a una sola línea. Esto garantiza que todo el contenido publicado tenga meta tags SEO completos, incluso si el administrador no los rellena explícitamente.
+
+---
+
 ## Resumen
 
 El `SeoService` acumula los valores SEO que se inyectan en el layout `head.blade.php`. Cada controlador configura los meta tags de su página mediante una API fluida (method chaining). Los valores por defecto se cargan desde los settings del sistema (`site_title`, `site_description`, `default_meta_keywords`).

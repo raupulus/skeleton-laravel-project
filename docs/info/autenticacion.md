@@ -4,6 +4,20 @@
 
 ---
 
+## Objetivo y funcionalidad
+
+El módulo de autenticación y autorización proporciona toda la infraestructura de seguridad y control de acceso de la plataforma. Su objetivo es gestionar dos sistemas de autenticación paralelos e independientes:
+
+1. **Autenticación web** (Laravel Breeze): formularios HTML con sesiones para el acceso de usuarios al frontend y a los paneles Filament. Incluye registro, login, recuperación de contraseña, verificación de email y confirmación de contraseña.
+
+2. **Autenticación API** (Laravel Sanctum): tokens Bearer para que aplicaciones externas (móviles, SPAs, integraciones de terceros) consuman la API REST. Incluye registro, login, logout, recuperación de contraseña y gestión de tokens personales (crear, listar, revocar).
+
+La autorización se gestiona mediante Policies que definen qué roles pueden realizar qué acciones sobre cada modelo (crear, editar, eliminar, ver). Solo los administradores (superadmin/admin) pueden gestionar todo el contenido; los usuarios normales están limitados a sus propios datos. Los paneles Filament tienen guards adicionales que verifican el rol y el estado activo del usuario.
+
+El módulo también incluye el middleware `SetLocale`, que establece el idioma de la aplicación en cada request según la sesión, la cabecera del navegador o el idioma por defecto, y los FormRequests con validación y mensajes de error en español.
+
+---
+
 ## Resumen
 
 La plataforma ofrece dos sistemas de autenticación paralelos: autenticación web (formularios HTML con sesiones, provista por Laravel Breeze) y autenticación API (tokens Bearer, provista por Laravel Sanctum). La autorización se gestiona mediante Policies que restringen el acceso por modelo y mediante el método `canAccessPanel()` del modelo User para los paneles Filament.

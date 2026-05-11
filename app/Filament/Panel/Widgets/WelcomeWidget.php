@@ -14,7 +14,7 @@ class WelcomeWidget extends Widget
     protected static ?int $sort = 1;
 
     /** @var string Vista Blade asociada al widget */
-    protected static string $view = 'filament.panel.widgets.welcome-widget';
+    protected string $view = 'filament.panel.widgets.welcome-widget';
 
     /**
      * Datos que se pasan a la vista del widget.

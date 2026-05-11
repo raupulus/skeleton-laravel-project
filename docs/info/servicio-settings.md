@@ -4,6 +4,16 @@
 
 ---
 
+## Objetivo y funcionalidad
+
+El `SettingService` es la capa de acceso a los ajustes de configuración del sistema almacenados en la base de datos. Su objetivo es proporcionar una interfaz rápida, cacheada y sencilla para leer los settings desde cualquier punto de la aplicación (controladores, vistas Blade, servicios, mailables), evitando consultas repetitivas a la base de datos.
+
+El servicio carga todos los settings de la BD en una sola consulta, los cachea durante 1 hora y expone métodos para consultar por clave individual o recuperar todos los settings de golpe. La caché se invalida automáticamente cuando se edita cualquier setting desde el panel de administración de Filament, garantizando que los cambios se reflejen de forma inmediata.
+
+Para mayor comodidad, el helper global `setting('clave', 'valor_por_defecto')` permite acceder a cualquier setting sin necesidad de inyectar el servicio. Este helper se usa extensivamente en el layout (logo, nombre del sitio, redes sociales), en el servicio SEO (meta tags por defecto), en el envío de emails (dirección de contacto) y en componentes del frontend.
+
+---
+
 ## Resumen
 
 El `SettingService` carga todos los settings de la BD y los cachea durante 1 hora. Ofrece un método `get()` para leer un setting por clave (con valor por defecto) y un helper global `setting()` para acceder de forma aún más sencilla. La caché se invalida automáticamente al modificar settings desde el panel Filament.

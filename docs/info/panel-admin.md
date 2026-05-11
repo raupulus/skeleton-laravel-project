@@ -4,6 +4,18 @@
 
 ---
 
+## Objetivo y funcionalidad
+
+El panel de administración es la interfaz principal de gestión de toda la plataforma. Su objetivo es proporcionar a los administradores (roles `superadmin` y `admin`) un backend completo, intuitivo y funcional donde puedan gestionar todos los aspectos del sitio web sin necesidad de acceder al código.
+
+El panel se construye con Filament 5 y se accede en `/admin`. Incluye Resources CRUD para cada modelo del sistema: usuarios, páginas, posts, categorías, slides, secciones, configuración y emails enviados. Los Resources están organizados en grupos de navegación temáticos (Contenido, Media, Frontend, Sistema) para facilitar la orientación.
+
+El dashboard muestra widgets con métricas en tiempo real: tarjetas de estadísticas (usuarios activos, posts publicados, páginas publicadas, emails enviados), un gráfico de barras con la evolución de posts por mes y una tabla con los últimos emails enviados. Cada Resource ofrece listados con columnas configurables, búsqueda, filtros, ordenación, acciones de edición y formularios con tabs de traducción (ES/EN) para los modelos traducibles.
+
+El acceso al panel está restringido por el método `canAccessPanel()` del modelo User, que verifica que el usuario tenga rol de administrador y cuenta activa. Las policies de cada modelo controlan adicionalmente qué acciones puede realizar cada rol.
+
+---
+
 ## Resumen
 
 El panel admin está construido con Filament 5 y se accede en `/admin`. Solo pueden acceder los usuarios con `role=admin` o `role=superadmin` que tengan `is_active=true`. Incluye Resources para gestionar Users, Pages, Posts, Categories, Slides, Sections, Settings y SentEmails, junto con widgets de dashboard (estadísticas, gráfico de posts, últimos emails).

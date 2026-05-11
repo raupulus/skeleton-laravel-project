@@ -4,6 +4,20 @@
 
 ---
 
+## Objetivo y funcionalidad
+
+El módulo de usuarios proporciona toda la infraestructura de gestión de identidad y acceso de la plataforma. Su objetivo es permitir que existan distintos perfiles de usuario con niveles de acceso diferenciados:
+
+- **Superadmin**: control total del sistema, acceso al panel de administración (`/admin`) con permisos completos sobre todos los recursos.
+- **Admin**: acceso al panel de administración con los mismos permisos de gestión de contenido, pero pensado para roles editoriales.
+- **User**: acceso únicamente al panel de usuario (`/panel`), donde puede gestionar su perfil personal y sus tokens de API.
+
+El módulo se integra con Laravel Breeze para la autenticación web (registro, login, recuperación de contraseña con sesiones HTTP) y con Laravel Sanctum para la autenticación API (generación de tokens Bearer para consumo externo). Cada usuario puede tener un avatar, un estado activo/inactivo que controla el acceso a toda la plataforma, y se implementa borrado lógico (soft delete) para no perder datos históricos.
+
+Desde el panel admin, los administradores pueden crear, editar, desactivar y eliminar usuarios. Los usuarios normales solo pueden editar su propio perfil desde el panel de usuario. Las policies de autorización garantizan que un usuario no pueda eliminarse a sí mismo ni acceder a datos de otros usuarios sin el rol adecuado.
+
+---
+
 ## Resumen
 
 El módulo de usuarios es el pilar central de la plataforma. Define tres roles con distintos niveles de acceso (`superadmin`, `admin`, `user`), soporta autenticación web mediante Laravel Breeze y autenticación API con Laravel Sanctum. Los usuarios pueden tener avatar, estado activo/inactivo y se eliminan con borrado lógico (soft delete).
