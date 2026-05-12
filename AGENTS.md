@@ -111,6 +111,81 @@ panel de administración Filament, sistema de contenido (posts/páginas), traduc
 - Middleware `SetLocale` persiste el idioma en sesión
 - El componente `<x-language-switcher />` genera los botones de cambio
 
+### ⚠️ Widgets de Dashboard — OBLIGATORIO para nuevos módulos
+
+Cuando se **cree un nuevo módulo** de la plataforma, se debe crear un **widget para el dashboard del panel admin** con un resumen adecuado del módulo. El tipo de widget debe seleccionarse según el tipo de módulo:
+
+- **Módulos con datos cuantificables** (usuarios, posts, páginas) → `StatsOverviewWidget` o `ChartWidget`
+- **Módulos con listados recientes** (emails, logs) → `TableWidget`
+- **Módulos informativos** → Widget de información con enlaces
+
+**Excepciones** (NO crear widget para): Categorías, Configuraciones (Settings), Slides, módulos auxiliares sin interés estadístico.
+
+Los widgets se crean en: `app/Filament/Admin/Widgets/`
+
+### ⚠️ Traducciones en la intranet (Filament) — OBLIGATORIO
+
+Cuando se **creen o modifiquen** campos/módulos en la intranet (tanto panel admin como panel usuario), **es obligatorio** que:
+
+1. Todos los **labels de campos** del formulario usen `->label(__('filament.campo'))` con traducciones en `lang/es/filament.php` y `lang/en/filament.php`
+2. Todos los **labels de columnas** de tabla usen `->label(__('filament.campo'))`
+3. Los **títulos de módulo** (`$modelLabel`, `$pluralModelLabel`) y los **navigation groups** también deben ser traducibles usando métodos dinámicos (`getModelLabel()`, `getPluralModelLabel()`, `getNavigationGroup()`)
+4. Los **placeholders**, **helper texts** y **mensajes de validación** del formulario deben estar traducidos
+
+**Archivos de traducción de Filament:**
+- `lang/es/filament.php` — Español (labels, títulos, grupos de navegación)
+- `lang/en/filament.php` — Inglés
+
+---
+
+### ⚠️ Campos de imagen con cropper — OBLIGATORIO
+
+Todos los campos de imagen en formularios de Filament **deben** usar la clase helper `App\Filament\Components\ImageCropField`:
+
+```php
+use App\Filament\Components\ImageCropField;
+
+// Posts, Pages, Secciones, Categorías — imagen principal 16:9
+ImageCropField::make16x9('image', 'directorio'),
+
+// Slides — imagen vertical 8:12
+ImageCropField::make8x12('image_vertical', 'slides'),
+
+// Usuarios — avatar 4:3
+ImageCropField::make4x3('avatar', 'avatars'),
+```
+
+**Proporciones estándar del proyecto:**
+
+| Proporción | Uso | Método |
+|-----------|-----|--------|
+| 16:9 | Imagen principal de posts, pages, sections, slides, categories | `make16x9()` |
+| 8:12 | Imagen vertical de slides | `make8x12()` |
+| 4:3 | Avatar de usuarios | `make4x3()` |
+
+**NUNCA** usar `FileUpload::make()` directamente para imágenes. Siempre usar `ImageCropField`.
+
+Los métodos internamente usan `imageAspectRatio()` + `automaticallyCropImagesToAspectRatio()` + `imageEditorAspectRatioOptions()` de Filament 5 para forzar el ratio tanto en el editor como en la validación.
+
+### ⚠️ Campos con sugerencias libres (datalist) — Patrón estándar
+
+Los campos `zone` (Slides, Secciones) y `group` (Configuraciones) permiten seleccionar un valor existente O escribir uno nuevo:
+
+```php
+Forms\Components\TextInput::make('zone')
+    ->label(__('filament.zone'))
+    ->required()
+    ->datalist(fn () => Model::query()
+        ->select('zone')
+        ->distinct()
+        ->whereNotNull('zone')
+        ->pluck('zone')
+        ->toArray()
+    ),
+```
+
+Este patrón muestra sugerencias al escribir pero permite valores libres. Usar cuando el conjunto de valores posibles no está cerrado.
+
 ---
 
 ## Estructura de directorios clave
@@ -120,10 +195,13 @@ app/
 ├── Console/Commands/     # project:install, project:clear, sitemap:generate, manual:generate-pdf
 ├── Enums/                # Role (superadmin,admin,user), ContentStatus (draft,published), EmailStatus (sent,failed)
 ├── Filament/Admin/       # Panel admin — Resources: User,Page,Post,Category,Slide,Section,Setting,SentEmail
+├── Filament/Admin/Pages/ # Acciones: RegenerateSitemap, ClearCache, ViewLogs
+├── Filament/Admin/Widgets/ # StatsOverview, PostsChart, LatestEmails, LogDownload
+├── Filament/Components/  # ImageCropField (helper de croppers reutilizable)
 ├── Filament/Panel/       # Panel usuario — Pages: EditProfile, ApiTokens
 ├── Http/Controllers/Api/V1/  # AuthController, TokenController, PostApiController, PageApiController, CategoryApiController
-├── Http/Controllers/Web/     # HomeController, PostController, PageController, ContactController, StaticPageController, LanguageController
-├── Http/Middleware/     # SetLocale (gestiona idioma en sesión)
+├── Http/Controllers/Web/     # HomeController, PostController, PageController, ContactController, StaticPageController, LanguageController, LogDownloadController
+├── Http/Middleware/     # SetLocale, SecurityHeaders
 ├── Http/Requests/       # Todos los FormRequests con validación y mensajes en español
 ├── Mail/                # WelcomeMail, ContactMail, GenericMail
 ├── Models/              # User, Category, Page, Post, Slide, Section, Setting, SentEmail
@@ -163,6 +241,7 @@ La documentación técnica de cada módulo se encuentra en `docs/info/`. **Es ob
 | [traits.md](docs/info/traits.md) | HasSlug, HasStatus, HasSeo, BelongsToUser |
 | [enums.md](docs/info/enums.md) | Role, ContentStatus, EmailStatus |
 | [comandos.md](docs/info/comandos.md) | Comandos Artisan personalizados |
+| [acciones-admin.md](docs/info/acciones-admin.md) | Acciones del panel admin (Sitemap, Caché, Logs) |
 
 ### Reglas de actualización de `docs/info/`
 
@@ -231,7 +310,11 @@ La documentación técnica de cada módulo se encuentra en `docs/info/`. **Es ob
 - **Acceso**: role=admin o role=superadmin + is_active=true
 - Resources: UserResource, PageResource, PostResource, CategoryResource,
   SlideResource, SectionResource, SettingResource, SentEmailResource
-- Navigation Groups: Contenido, Media, Frontend, Sistema
+- Pages: RegenerateSitemap, ClearCache, ViewLogs
+- Navigation Groups (en este orden): Contenido, Media, Frontend, Sistema, Acciones
+- **Búsqueda global** habilitada en Posts, Páginas, Usuarios, Categorías
+- **Alertas de cambios no guardados** activadas
+- **Soft Deletes** con TrashedFilter y acciones restaurar/eliminar permanente en todos los recursos con SoftDeletes
 
 ### Panel Usuario (`/panel`)
 - **Acceso**: cualquier usuario con is_active=true

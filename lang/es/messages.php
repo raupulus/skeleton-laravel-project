@@ -119,4 +119,51 @@ return [
     // Páginas legales — Textos por defecto
     'privacy_default_text' => 'El contenido de la política de privacidad se gestiona desde el panel de administración (Secciones → zona "privacy").',
     'cookies_default_text' => 'El contenido de la política de cookies se gestiona desde el panel de administración (Secciones → zona "cookies").',
+
+    // Contacto — Formulario
+    'contact_name'           => 'Nombre',
+    'contact_email'          => 'Correo electrónico',
+    'contact_subject'        => 'Asunto',
+    'contact_message'        => 'Mensaje',
+    'contact_privacy_accept' => 'Acepto la',
+    'contact_privacy_link'   => 'política de privacidad',
+    'contact_send'           => 'Enviar mensaje',
+
+    // Validaciones — Contacto
+    'validation_name_required'    => 'El nombre es obligatorio.',
+    'validation_name_max'         => 'El nombre no puede superar 255 caracteres.',
+    'validation_email_required'   => 'El correo electrónico es obligatorio.',
+    'validation_email_email'      => 'El correo electrónico no es válido.',
+    'validation_subject_required' => 'El asunto es obligatorio.',
+    'validation_message_required' => 'El mensaje es obligatorio.',
+    'validation_message_max'      => 'El mensaje no puede superar 5.000 caracteres.',
+    'validation_privacy_required' => 'Debes aceptar la política de privacidad.',
+    'validation_privacy_accepted' => 'Debes aceptar la política de privacidad.',
+
+    // Panel usuario — Tokens API
+    'api_tokens_description'    => 'Los tokens de API te permiten conectar aplicaciones externas con tu cuenta de forma segura. Cada token actúa como una "contraseña temporal" que puedes revocar en cualquier momento sin afectar a tu contraseña principal.',
+    'api_tokens_create_title'   => 'Crear nuevo token',
+    'api_tokens_placeholder'    => 'Nombre del token (ej: Mi aplicación)',
+    'api_tokens_created_msg'    => 'Token generado — cópialo ahora, no se mostrará de nuevo:',
+    'api_tokens_copy'           => 'Copiar',
+    'api_tokens_copied'         => '¡Copiado!',
+    'api_tokens_list_title'     => 'Tokens activos',
+    'api_tokens_col_name'       => 'Nombre',
+    'api_tokens_col_created'    => 'Creado',
+    'api_tokens_col_last_used'  => 'Último uso',
+    'api_tokens_col_expires'    => 'Expira',
+    'api_tokens_col_actions'    => 'Acciones',
+    'api_tokens_empty'          => 'No tienes tokens de API creados.',
+    'api_tokens_delete_confirm' => '¿Seguro que quieres eliminar este token?',
+    'api_tokens_never'          => 'Nunca',
+    'api_tokens_no_expiry'      => 'Sin expiración',
+    'api_tokens_created_notify' => 'Token creado correctamente.',
+    'api_tokens_deleted_notify' => 'Token eliminado correctamente.',
+    'validation_token_name_required' => 'El nombre del token es obligatorio.',
+    'validation_token_name_max'      => 'El nombre no puede superar los 255 caracteres.',
+
+    // Panel usuario — Perfil
+    'profile_email_helper'    => 'Si necesitas modificar tu email, contacta con el administrador.',
+    'profile_password_helper' => 'Déjalo en blanco si no deseas cambiar la contraseña.',
+    'profile_updated'         => 'Perfil actualizado correctamente.',
 ];

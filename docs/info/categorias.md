@@ -89,8 +89,16 @@ Las categorías permiten organizar el contenido (posts y páginas) temáticament
 - **Grupo de navegación**: Contenido
 - **Icono**: `heroicon-o-tag`
 - **Labels**: «Categoría» / «Categorías»
-- **Formulario**: Tabs de traducción (nombre y descripción en ES/EN) + slug, imagen, activo, orden
+- **Búsqueda global**: Por `slug` y `name`
+- **Formulario** (orden de campos):
+  1. **Imagen** con cropper 16:9 (`ImageCropField::make16x9`) — ancho completo, primer campo
+  2. **Tabs de traducción** (nombre y descripción en ES/EN)
+  3. **Slug** + **Orden** — en la misma fila (50%-50%)
+  4. **Activo** (toggle) — debajo, ancho completo
 - **Listado**: slug, nombre, activo (icono), orden
+- **Filtros**: Activo (ternario), Papelera (TrashedFilter)
+- **Acciones**: Editar, Eliminar, Restaurar, Eliminar permanentemente
+- **Slug auto**: Se genera desde `name` (sobreescribe `getSlugSource()`)
 
 ---
 

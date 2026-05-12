@@ -119,4 +119,51 @@ return [
     // Legal pages — Default texts
     'privacy_default_text' => 'Privacy policy content is managed from the admin panel (Sections → zone "privacy").',
     'cookies_default_text' => 'Cookies policy content is managed from the admin panel (Sections → zone "cookies").',
+
+    // Contact — Form
+    'contact_name'           => 'Name',
+    'contact_email'          => 'Email',
+    'contact_subject'        => 'Subject',
+    'contact_message'        => 'Message',
+    'contact_privacy_accept' => 'I accept the',
+    'contact_privacy_link'   => 'privacy policy',
+    'contact_send'           => 'Send message',
+
+    // Validations — Contact
+    'validation_name_required'    => 'Name is required.',
+    'validation_name_max'         => 'Name cannot exceed 255 characters.',
+    'validation_email_required'   => 'Email is required.',
+    'validation_email_email'      => 'Email is not valid.',
+    'validation_subject_required' => 'Subject is required.',
+    'validation_message_required' => 'Message is required.',
+    'validation_message_max'      => 'Message cannot exceed 5,000 characters.',
+    'validation_privacy_required' => 'You must accept the privacy policy.',
+    'validation_privacy_accepted' => 'You must accept the privacy policy.',
+
+    // User panel — API Tokens
+    'api_tokens_description'    => 'API tokens allow you to securely connect external applications to your account. Each token acts as a "temporary password" that you can revoke at any time without affecting your main password.',
+    'api_tokens_create_title'   => 'Create new token',
+    'api_tokens_placeholder'    => 'Token name (e.g. My application)',
+    'api_tokens_created_msg'    => 'Token generated — copy it now, it won\'t be shown again:',
+    'api_tokens_copy'           => 'Copy',
+    'api_tokens_copied'         => 'Copied!',
+    'api_tokens_list_title'     => 'Active tokens',
+    'api_tokens_col_name'       => 'Name',
+    'api_tokens_col_created'    => 'Created',
+    'api_tokens_col_last_used'  => 'Last used',
+    'api_tokens_col_expires'    => 'Expires',
+    'api_tokens_col_actions'    => 'Actions',
+    'api_tokens_empty'          => 'You don\'t have any API tokens created.',
+    'api_tokens_delete_confirm' => 'Are you sure you want to delete this token?',
+    'api_tokens_never'          => 'Never',
+    'api_tokens_no_expiry'      => 'No expiry',
+    'api_tokens_created_notify' => 'Token created successfully.',
+    'api_tokens_deleted_notify' => 'Token deleted successfully.',
+    'validation_token_name_required' => 'Token name is required.',
+    'validation_token_name_max'      => 'Name cannot exceed 255 characters.',
+
+    // User panel — Profile
+    'profile_email_helper'    => 'If you need to change your email, please contact the administrator.',
+    'profile_password_helper' => 'Leave blank if you don\'t want to change your password.',
+    'profile_updated'         => 'Profile updated successfully.',
 ];

@@ -27,20 +27,20 @@ class StatsOverviewWidget extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Usuarios activos', User::active()->count())
-                ->description('Total de usuarios con cuenta activa')
+            Stat::make(__('filament.active_users'), User::active()->count())
+                ->description(__('filament.active_users_desc'))
                 ->icon('heroicon-o-users')
                 ->color('primary'),
-            Stat::make('Posts publicados', Post::published()->count())
-                ->description('Artículos en estado publicado')
+            Stat::make(__('filament.published_posts'), Post::published()->count())
+                ->description(__('filament.published_posts_desc'))
                 ->icon('heroicon-o-newspaper')
                 ->color('success'),
-            Stat::make('Páginas publicadas', Page::published()->count())
-                ->description('Páginas en estado publicado')
+            Stat::make(__('filament.published_pages'), Page::published()->count())
+                ->description(__('filament.published_pages_desc'))
                 ->icon('heroicon-o-document-text')
                 ->color('info'),
-            Stat::make('Emails enviados', SentEmail::count())
-                ->description('Total de emails registrados')
+            Stat::make(__('filament.sent_emails_count'), SentEmail::count())
+                ->description(__('filament.sent_emails_desc'))
                 ->icon('heroicon-o-envelope')
                 ->color('warning'),
         ];

@@ -201,7 +201,7 @@ skeleton-laravel-project/
 
 ## API REST
 
-La API está versionada en `/api/v1` y documentada con Scribe.
+La API está versionada en `/api/v1` y documentada con Scribe. Todos los endpoints públicos tienen rate limiting de 60 requests/minuto. Los de autenticación tienen límites más estrictos (5-10/minuto).
 
 ### Generar documentación
 

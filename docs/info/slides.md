@@ -76,9 +76,19 @@ El componente Blade `<x-slide-carousel zone="home" />` renderiza el carrusel de 
 
 - **Grupo de navegación**: Media
 - **Icono**: `heroicon-o-photo`
-- **Formulario**: Tabs de traducción (título y contenido en ES/EN) + imagen 16:9 con editor de recorte, imagen vertical 8:12 con editor de recorte, URL, zona, orden, activo
+- **Formulario** (orden de campos):
+  1. **Imagen principal** con cropper 16:9 (`ImageCropField::make16x9`) — obligatoria, ancho completo
+  2. **Imagen vertical** con cropper 8:12 (`ImageCropField::make8x12`) — opcional, ancho completo
+  3. **Tabs de traducción** (título y contenido en ES/EN)
+  4. **URL** — enlace de destino al hacer clic
+  5. **Zona** — TextInput con `datalist()` que sugiere zonas existentes y permite crear nuevas
+  6. **Orden** — numérico, por defecto 0
+  7. **Activo** — toggle
 - **Listado**: imagen (miniatura), título, zona, orden, activo. Ordenado por zona por defecto.
-- **Recorte de imágenes**: El `FileUpload` usa `imageEditor()` con `imageEditorAspectRatios(['16:9'])` para la imagen principal y `['8:12']` para la vertical
+- **Filtros**: Zona (select dinámico), Activo (ternario), Papelera (TrashedFilter)
+- **Acciones**: Editar, Eliminar, Restaurar, Eliminar permanentemente
+- **Cropper**: Usa `imageAspectRatio()` + `automaticallyCropImagesToAspectRatio()` de Filament 5 para forzar las proporciones
+- **Invalidación de caché**: Al guardar/eliminar un slide, se invalida la caché `slides_{zone}_ids`
 
 ---
 

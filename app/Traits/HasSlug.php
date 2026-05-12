@@ -28,7 +28,14 @@ trait HasSlug
                     ? ($source[config('app.locale')] ?? $source[config('app.fallback_locale')] ?? reset($source) ?: '')
                     : ($source ?? '');
 
-                $model->slug = $model->generateUniqueSlug(Str::slug($value));
+                $baseSlug = Str::slug($value);
+
+                // Si el slug resultante está vacío, generar uno aleatorio
+                if (empty($baseSlug)) {
+                    $baseSlug = Str::lower(Str::random(8));
+                }
+
+                $model->slug = $model->generateUniqueSlug($baseSlug);
             }
         });
     }

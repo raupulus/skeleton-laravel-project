@@ -28,17 +28,19 @@ Route::prefix('v1')->group(function () {
         });
     });
 
-    // --- Posts (público) ---
-    Route::get('/posts', [PostApiController::class, 'index'])->name('api.v1.posts.index');
-    Route::get('/posts/{slug}', [PostApiController::class, 'show'])->name('api.v1.posts.show');
+    // --- Posts (público, con rate limiting) ---
+    Route::middleware('throttle:60,1')->group(function () {
+        Route::get('/posts', [PostApiController::class, 'index'])->name('api.v1.posts.index');
+        Route::get('/posts/{slug}', [PostApiController::class, 'show'])->name('api.v1.posts.show');
 
-    // --- Páginas (público) ---
-    Route::get('/pages', [PageApiController::class, 'index'])->name('api.v1.pages.index');
-    Route::get('/pages/{slug}', [PageApiController::class, 'show'])->name('api.v1.pages.show');
+        // --- Páginas (público) ---
+        Route::get('/pages', [PageApiController::class, 'index'])->name('api.v1.pages.index');
+        Route::get('/pages/{slug}', [PageApiController::class, 'show'])->name('api.v1.pages.show');
 
-    // --- Categorías (público) ---
-    Route::get('/categories', [CategoryApiController::class, 'index'])->name('api.v1.categories.index');
-    Route::get('/categories/{slug}', [CategoryApiController::class, 'show'])->name('api.v1.categories.show');
+        // --- Categorías (público) ---
+        Route::get('/categories', [CategoryApiController::class, 'index'])->name('api.v1.categories.index');
+        Route::get('/categories/{slug}', [CategoryApiController::class, 'show'])->name('api.v1.categories.show');
+    });
 
     // --- Tokens de API (autenticado) ---
     Route::middleware('auth:sanctum')->prefix('user/tokens')->group(function () {

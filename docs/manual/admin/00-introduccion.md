@@ -85,3 +85,4 @@ En los listados que lo permiten (por ejemplo, Usuarios), puedes seleccionar vari
 7. [Secciones](07-secciones.md)
 8. [Configuración](08-configuracion.md)
 9. [Emails Enviados](09-emails-enviados.md)
+10. [Acciones del sistema](10-acciones.md)

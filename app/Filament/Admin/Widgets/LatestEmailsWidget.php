@@ -19,8 +19,15 @@ class LatestEmailsWidget extends BaseWidget
     /** @var int|string|array Ancho de columna del widget */
     protected int|string|array $columnSpan = 'full';
 
-    /** @var string|null Título del widget */
-    protected static ?string $heading = 'Últimos emails enviados';
+    /**
+     * Devuelve el heading traducido del widget.
+     *
+     * @return string|null
+     */
+    public function getHeading(): ?string
+    {
+        return __('filament.latest_emails');
+    }
 
     /**
      * Configura la tabla del widget con los últimos emails.
@@ -34,16 +41,16 @@ class LatestEmailsWidget extends BaseWidget
             ->query(SentEmail::query()->latest()->limit(5))
             ->columns([
                 TextColumn::make('to')
-                    ->label('Destinatario')
+                    ->label(__('filament.to'))
                     ->limit(30),
                 TextColumn::make('subject')
-                    ->label('Asunto')
+                    ->label(__('filament.subject'))
                     ->limit(50),
                 TextColumn::make('status')
-                    ->label('Estado')
+                    ->label(__('filament.status'))
                     ->badge(),
                 TextColumn::make('created_at')
-                    ->label('Fecha')
+                    ->label(__('filament.created_at'))
                     ->dateTime('d/m/Y H:i'),
             ])
             ->paginated(false);

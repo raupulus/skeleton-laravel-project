@@ -1,24 +1,143 @@
 <?php
 namespace App\Filament\Admin\Resources;
 use App\Models\SentEmail;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
+/**
+ * Recurso Filament para gestionar los emails enviados en el panel admin.
+ */
 class SentEmailResource extends Resource
 {
     protected static ?string $model = SentEmail::class;
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-envelope';
-    protected static string|\UnitEnum|null $navigationGroup = 'Sistema';
-    protected static ?string $modelLabel = 'Email enviado';
-    protected static ?string $pluralModelLabel = 'Emails enviados';
-    public static function canCreate(): bool { return false; }
+    protected static ?int $navigationSort = 8;
+    /**
+     * Devuelve el label del modelo traducido.
+     *
+     * @return string
+     */
+    public static function getModelLabel(): string
+    {
+        return __('filament.sent_email');
+    }
+    /**
+     * Devuelve el label plural del modelo traducido.
+     *
+     * @return string
+     */
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament.sent_emails');
+    }
+    /**
+     * Devuelve el grupo de navegación traducido.
+     *
+     * @return string|null
+     */
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament.nav_system');
+    }
+    /**
+     * No se permite crear emails enviados manualmente.
+     *
+     * @return bool
+     */
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+    /**
+     * Define la infolist para la vista de detalle del email enviado.
+     * NOTA: En Filament 5 la firma es infolist(Schema $schema): Schema.
+     *
+     * @param  Schema  $schema
+     * @return Schema
+     */
+    public static function infolist(Schema $schema): Schema
+    {
+        return $schema->schema([
+            TextEntry::make('to')
+                ->label(__('filament.to')),
+            TextEntry::make('from')
+                ->label(__('filament.from')),
+            TextEntry::make('subject')
+                ->label(__('filament.subject'))
+                ->columnSpanFull(),
+            TextEntry::make('mailable_class')
+                ->label(__('filament.mailable_class')),
+            TextEntry::make('status')
+                ->label(__('filament.status'))
+                ->badge()
+                ->color(fn ($state) => $state->color()),
+            TextEntry::make('body')
+                ->label(__('filament.body'))
+                ->html()
+                ->columnSpanFull()
+                ->formatStateUsing(fn ($state) => $state
+                    ? '<div style="background:#ffffff; color:#000000; padding:16px; border:1px solid #e5e7eb; border-radius:8px; max-height:600px; overflow:auto;">' . $state . '</div>'
+                    : ''
+                ),
+            TextEntry::make('error_message')
+                ->label(__('filament.error_message'))
+                ->columnSpanFull()
+                ->visible(fn ($record) => !empty($record->error_message)),
+            TextEntry::make('metadata')
+                ->label(__('filament.metadata'))
+                ->columnSpanFull()
+                ->visible(fn ($record) => !empty($record->metadata)),
+            TextEntry::make('created_at')
+                ->label(__('filament.created_at'))
+                ->dateTime('d/m/Y H:i:s'),
+        ]);
+    }
+    /**
+     * Define la tabla del recurso.
+     *
+     * @param  Table  $table
+     * @return Table
+     */
     public static function table(Table $table): Table
     {
         return $table->columns([
-            Tables\Columns\TextColumn::make('to')->searchable(),Tables\Columns\TextColumn::make('subject')->searchable()->limit(50),
-            Tables\Columns\TextColumn::make('mailable_class')->limit(30),Tables\Columns\TextColumn::make('status')->badge()->color(fn ($state) => $state->color()),
-            Tables\Columns\TextColumn::make('created_at')->dateTime('d/m/Y H:i')->sortable(),
-        ])->actions([\Filament\Actions\ViewAction::make()])->defaultSort('created_at', 'desc');
+            Tables\Columns\TextColumn::make('to')
+                ->label(__('filament.to'))
+                ->searchable(),
+            Tables\Columns\TextColumn::make('subject')
+                ->label(__('filament.subject'))
+                ->searchable()
+                ->limit(50),
+            Tables\Columns\TextColumn::make('mailable_class')
+                ->label(__('filament.mailable_class'))
+                ->limit(30),
+            Tables\Columns\TextColumn::make('status')
+                ->label(__('filament.status'))
+                ->badge()
+                ->color(fn ($state) => $state->color()),
+            Tables\Columns\TextColumn::make('created_at')
+                ->label(__('filament.created_at'))
+                ->dateTime('d/m/Y H:i')
+                ->sortable(),
+        ])
+        ->filters([
+            Tables\Filters\SelectFilter::make('status')
+                ->label(__('filament.status'))
+                ->options(collect(\App\Enums\EmailStatus::cases())->mapWithKeys(fn ($s) => [$s->value => $s->label()])),
+        ])
+        ->actions([\Filament\Actions\ViewAction::make()])
+        ->defaultSort('created_at', 'desc');
     }
-    public static function getPages(): array { return ['index'=>SentEmailResource\Pages\ListSentEmails::route('/')]; }
+    /**
+     * @return array<string, \Filament\Resources\Pages\PageRegistration>
+     */
+    public static function getPages(): array
+    {
+        return [
+            'index' => SentEmailResource\Pages\ListSentEmails::route('/'),
+            'view'  => SentEmailResource\Pages\ViewSentEmail::route('/{record}'),
+        ];
+    }
 }

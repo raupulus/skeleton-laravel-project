@@ -1,5 +1,6 @@
 <?php
 namespace App\Filament\Admin\Resources;
+use App\Filament\Components\ImageCropField;
 use App\Models\Slide;
 use Filament\Forms;
 use Filament\Schemas\Schema;
@@ -8,30 +9,125 @@ use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+
+/**
+ * Recurso Filament para gestionar los slides (carruseles) en el panel admin.
+ */
 class SlideResource extends Resource
 {
     protected static ?string $model = Slide::class;
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-photo';
-    protected static string|\UnitEnum|null $navigationGroup = 'Media';
+    protected static ?int $navigationSort = 5;
+
+    /**
+     * Devuelve el label del modelo traducido.
+     *
+     * @return string
+     */
+    public static function getModelLabel(): string
+    {
+        return __('filament.slide');
+    }
+
+    /**
+     * Devuelve el label plural del modelo traducido.
+     *
+     * @return string
+     */
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament.slides');
+    }
+
+    /**
+     * Devuelve el grupo de navegación traducido.
+     *
+     * @return string|null
+     */
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament.nav_media');
+    }
+
+    /**
+     * @param  Schema  $form
+     * @return Schema
+     */
     public static function form(Schema $form): Schema
     {
         return $form->schema([
-            Tabs::make('Traducciones')->tabs([
-                Tab::make('Español')->schema([Forms\Components\TextInput::make('title.es'),Forms\Components\Textarea::make('content.es')]),
-                Tab::make('English')->schema([Forms\Components\TextInput::make('title.en'),Forms\Components\Textarea::make('content.en')]),
+            // 1. Imagen principal con cropper 16:9 — primer campo, ancho completo
+            ImageCropField::make16x9('image', 'slides', required: true),
+
+            // 2. Imagen vertical con cropper 8:12 — segundo campo, ancho completo
+            ImageCropField::make8x12('image_vertical', 'slides'),
+
+            // 3. Traducciones con labels correctos
+            Tabs::make(__('filament.translations'))->tabs([
+                Tab::make(__('filament.tab_spanish'))->schema([
+                    Forms\Components\TextInput::make('title.es')->label(__('filament.title') . ' (ES)'),
+                    Forms\Components\Textarea::make('content.es')->label(__('filament.content') . ' (ES)'),
+                ]),
+                Tab::make(__('filament.tab_english'))->schema([
+                    Forms\Components\TextInput::make('title.en')->label(__('filament.title') . ' (EN)'),
+                    Forms\Components\Textarea::make('content.en')->label(__('filament.content') . ' (EN)'),
+                ]),
             ])->columnSpanFull(),
-            Forms\Components\FileUpload::make('image')->image()->required()->maxSize(2048)->imageEditor()->imageEditorAspectRatios(['16:9'])->directory('slides'),
-            Forms\Components\FileUpload::make('image_vertical')->image()->maxSize(2048)->imageEditor()->imageEditorAspectRatios(['8:12'])->directory('slides'),
-            Forms\Components\TextInput::make('url')->url(),Forms\Components\TextInput::make('zone')->required(),
-            Forms\Components\TextInput::make('order')->numeric()->default(0),Forms\Components\Toggle::make('is_active')->default(true),
+
+            // 4. Campos adicionales con labels traducidos
+            Forms\Components\TextInput::make('url')->label(__('filament.url'))->url(),
+            Forms\Components\TextInput::make('zone')
+                ->label(__('filament.zone'))
+                ->required()
+                ->datalist(fn () => Slide::query()
+                    ->select('zone')
+                    ->distinct()
+                    ->whereNotNull('zone')
+                    ->pluck('zone')
+                    ->toArray()
+                ),
+            Forms\Components\TextInput::make('order')->label(__('filament.order'))->numeric()->default(0),
+            Forms\Components\Toggle::make('is_active')->label(__('filament.is_active'))->default(true),
         ]);
     }
+
+    /**
+     * @param  Table  $table
+     * @return Table
+     */
     public static function table(Table $table): Table
     {
-        return $table->columns([Tables\Columns\ImageColumn::make('image')->height(40),Tables\Columns\TextColumn::make('title'),Tables\Columns\TextColumn::make('zone')->sortable(),Tables\Columns\TextColumn::make('order')->sortable(),Tables\Columns\IconColumn::make('is_active')->boolean()])->actions([\Filament\Actions\EditAction::make()])->defaultSort('zone');
+        return $table->columns([
+            Tables\Columns\ImageColumn::make('image')->label(__('filament.image'))->height(40),
+            Tables\Columns\TextColumn::make('title')->label(__('filament.title')),
+            Tables\Columns\TextColumn::make('zone')->label(__('filament.zone'))->sortable(),
+            Tables\Columns\TextColumn::make('order')->label(__('filament.order'))->sortable(),
+            Tables\Columns\IconColumn::make('is_active')->label(__('filament.is_active'))->boolean(),
+        ])
+        ->filters([
+            Tables\Filters\SelectFilter::make('zone')
+                ->label(__('filament.zone'))
+                ->options(fn () => Slide::query()->select('zone')->distinct()->pluck('zone', 'zone')->toArray()),
+            Tables\Filters\TernaryFilter::make('is_active')
+                ->label(__('filament.is_active')),
+            Tables\Filters\TrashedFilter::make(),
+        ])
+        ->actions([
+            \Filament\Actions\EditAction::make(),
+            \Filament\Actions\DeleteAction::make(),
+            \Filament\Actions\RestoreAction::make(),
+            \Filament\Actions\ForceDeleteAction::make(),
+        ])
+        ->defaultSort('zone');
     }
+
+    /** @return array<string, \Filament\Resources\Pages\PageRegistration> */
     public static function getPages(): array
     {
-        return ['index'=>SlideResource\Pages\ListSlides::route('/'),'create'=>SlideResource\Pages\CreateSlide::route('/create'),'edit'=>SlideResource\Pages\EditSlide::route('/{record}/edit')];
+        return [
+            'index'  => SlideResource\Pages\ListSlides::route('/'),
+            'create' => SlideResource\Pages\CreateSlide::route('/create'),
+            'edit'   => SlideResource\Pages\EditSlide::route('/{record}/edit'),
+        ];
     }
 }

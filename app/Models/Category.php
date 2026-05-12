@@ -44,6 +44,17 @@ class Category extends Model
         ];
     }
 
+    /**
+     * Define el campo fuente para generar el slug.
+     * Las categorías usan 'name' en lugar de 'title'.
+     *
+     * @return mixed
+     */
+    protected function getSlugSource(): mixed
+    {
+        return $this->name;
+    }
+
     // =========================================================
     // SCOPES
     // =========================================================

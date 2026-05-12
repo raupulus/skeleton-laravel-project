@@ -42,15 +42,15 @@ class ContactRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required'    => 'El nombre es obligatorio.',
-            'name.max'         => 'El nombre no puede superar 255 caracteres.',
-            'email.required'   => 'El correo electrónico es obligatorio.',
-            'email.email'      => 'El correo electrónico no es válido.',
-            'subject.required' => 'El asunto es obligatorio.',
-            'message.required' => 'El mensaje es obligatorio.',
-            'message.max'      => 'El mensaje no puede superar 5.000 caracteres.',
-            'privacy.required' => 'Debes aceptar la política de privacidad.',
-            'privacy.accepted' => 'Debes aceptar la política de privacidad.',
+            'name.required'    => __('messages.validation_name_required'),
+            'name.max'         => __('messages.validation_name_max'),
+            'email.required'   => __('messages.validation_email_required'),
+            'email.email'      => __('messages.validation_email_email'),
+            'subject.required' => __('messages.validation_subject_required'),
+            'message.required' => __('messages.validation_message_required'),
+            'message.max'      => __('messages.validation_message_max'),
+            'privacy.required' => __('messages.validation_privacy_required'),
+            'privacy.accepted' => __('messages.validation_privacy_accepted'),
         ];
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\LogDownloadController;
 use App\Http\Controllers\Web\ContactController;
 use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\LanguageController;
@@ -31,6 +32,11 @@ Route::get('/cookies', [StaticPageController::class, 'cookies'])->name('cookies'
 
 // --- Cambio de idioma ---
 Route::get('/lang/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
+
+// --- Descarga de logs (solo admin) ---
+Route::get('/admin/logs/download/{filename}', [LogDownloadController::class, 'download'])
+    ->middleware(['auth'])
+    ->name('admin.logs.download');
 
 // --- Autenticación (Breeze) ---
 require __DIR__.'/auth.php';

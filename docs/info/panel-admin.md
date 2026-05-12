@@ -50,12 +50,26 @@ El panel admin está construido con Filament 5 y se accede en `/admin`. Solo pue
 
 ## Grupos de navegación
 
-| Grupo | Resources |
+| Grupo | Resources / Pages |
 |-------|-----------|
 | **Contenido** | Páginas, Posts, Categorías |
 | **Media** | Slides |
 | **Frontend** | Secciones |
 | **Sistema** | Usuarios, Configuración, Emails Enviados |
+| **Acciones** | Regenerar Sitemap, Limpiar Caché, Ver Logs |
+
+**Orden en el menú**: Contenido → Media → Frontend → Sistema → Acciones
+
+---
+
+## Configuración del panel
+
+| Característica | Estado |
+|---------------|--------|
+| Alertas de cambios no guardados | ✅ Activado (`unsavedChangesAlerts`) |
+| Búsqueda global | ✅ Posts, Páginas, Usuarios, Categorías |
+| Soft Deletes (papelera) | ✅ Con filtro TrashedFilter y acciones restaurar/eliminar permanente |
+| Cambio de idioma | ✅ Selector ES/EN en menú de usuario |
 
 ---
 
@@ -63,6 +77,8 @@ El panel admin está construido con Filament 5 y se accede en `/admin`. Solo pue
 
 | Widget | Clase | Descripción | Orden |
 |--------|-------|-------------|-------|
+| `AccountWidget` | Filament nativo | Widget de bienvenida con logout | -3 |
+| `LogDownloadWidget` | `App\Filament\Admin\Widgets\LogDownloadWidget` | Descarga rápida del último log de errores | -2 |
 | `StatsOverviewWidget` | `App\Filament\Admin\Widgets\StatsOverviewWidget` | Tarjetas con: usuarios activos, posts publicados, páginas publicadas, emails enviados | 1 |
 | `PostsChartWidget` | `App\Filament\Admin\Widgets\PostsChartWidget` | Gráfico de barras con posts creados por mes (últimos 6 meses) | 2 |
 | `LatestEmailsWidget` | `App\Filament\Admin\Widgets\LatestEmailsWidget` | Tabla con los 5 últimos emails enviados | 3 |

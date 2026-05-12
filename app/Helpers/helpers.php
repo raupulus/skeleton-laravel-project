@@ -11,7 +11,7 @@ if (!function_exists('setting')) {
     /**
      * Obtiene el valor de un setting de la plataforma por su clave.
      * Los settings se cargan desde caché (1 hora) para minimizar consultas a la BD.
-     * Si el setting no existe, devuelve el valor por defecto proporcionado.
+     * Si el setting no existe o la BD no está disponible, devuelve el valor por defecto.
      *
      * @param  string  $key      La clave del setting (ej: 'site_title', 'contact_email')
      * @param  mixed   $default  Valor a devolver si el setting no existe
@@ -19,6 +19,10 @@ if (!function_exists('setting')) {
      */
     function setting(string $key, mixed $default = null): mixed
     {
-        return app(SettingService::class)->get($key, $default);
+        try {
+            return app(SettingService::class)->get($key, $default);
+        } catch (\Throwable) {
+            return $default;
+        }
     }
 }

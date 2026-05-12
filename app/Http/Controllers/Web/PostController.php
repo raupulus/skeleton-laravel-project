@@ -50,7 +50,7 @@ class PostController extends Controller
         // Configurar SEO dinámico a partir de los campos del post
         $seo->fromModel($post)
             ->setType('article')
-            ->setUrl(url("/blog/{$post->slug}"));
+            ->setUrl(route('blog.show', $post->slug));
 
         return view('posts.show', compact('post', 'seo'));
     }

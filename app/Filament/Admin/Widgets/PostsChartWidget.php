@@ -12,11 +12,18 @@ use Illuminate\Support\Carbon;
  */
 class PostsChartWidget extends ChartWidget
 {
-    /** @var string|null Título del gráfico */
-    protected ?string $heading = 'Posts creados por mes';
-
     /** @var int Orden del widget en el dashboard */
     protected static ?int $sort = 2;
+
+    /**
+     * Devuelve el heading traducido del gráfico.
+     *
+     * @return string|null
+     */
+    public function getHeading(): ?string
+    {
+        return __('filament.posts_by_month');
+    }
 
     /**
      * Devuelve los datos para el gráfico de barras.

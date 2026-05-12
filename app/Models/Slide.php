@@ -36,6 +36,20 @@ class Slide extends Model
     ];
 
     /**
+     * Eventos del modelo para invalidar caché de zona al guardar o eliminar.
+     *
+     * @return void
+     */
+    protected static function booted(): void
+    {
+        $clearCache = function (self $model): void {
+            \Illuminate\Support\Facades\Cache::forget("slides_{$model->zone}_ids");
+        };
+        static::saved($clearCache);
+        static::deleted($clearCache);
+    }
+
+    /**
      * Definición de casts de atributos.
      *
      * @return array<string, string>
