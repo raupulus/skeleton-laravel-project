@@ -61,6 +61,7 @@ docker-compose.override.yml
 
 # Documentación API generada (se regenera con scribe:generate)
 public/docs/api/
+.scribe/endpoints.cache/
 
 # Archivos temporales
 *.tmp

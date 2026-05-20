@@ -155,7 +155,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: May 11, 2026</li>
+        <li>Last updated: May 12, 2026</li>
     </ul>
 </div>
 
@@ -1071,6 +1071,8 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 49
 x-frame-options: SAMEORIGIN
 x-content-type-options: nosniff
 x-xss-protection: 1; mode=block
@@ -1080,6 +1082,22 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">[
+    {
+        &quot;id&quot;: 6,
+        &quot;slug&quot;: &quot;oooooo&quot;,
+        &quot;name&quot;: {
+            &quot;es&quot;: &quot;oooo&quot;
+        },
+        &quot;description&quot;: {
+            &quot;es&quot;: &quot;oooo&quot;
+        },
+        &quot;image&quot;: null,
+        &quot;is_active&quot;: true,
+        &quot;order&quot;: 0,
+        &quot;created_at&quot;: &quot;2026-05-12T10:54:45.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2026-05-12T10:54:45.000000Z&quot;,
+        &quot;deleted_at&quot;: null
+    },
     {
         &quot;id&quot;: 1,
         &quot;slug&quot;: &quot;documentacion&quot;,
@@ -1091,11 +1109,11 @@ access-control-allow-origin: *
             &quot;en&quot;: &quot;Guides and project skeleton documentation.&quot;,
             &quot;es&quot;: &quot;Gu&iacute;as y documentaci&oacute;n del proyecto skeleton.&quot;
         },
-        &quot;image&quot;: null,
+        &quot;image&quot;: &quot;categories/01KRDYRY6GWJVRE3BAEAC1EV4Z.png&quot;,
         &quot;is_active&quot;: true,
         &quot;order&quot;: 1,
         &quot;created_at&quot;: &quot;2026-05-11T21:42:53.000000Z&quot;,
-        &quot;updated_at&quot;: &quot;2026-05-11T21:42:53.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2026-05-12T11:22:22.000000Z&quot;,
         &quot;deleted_at&quot;: null
     },
     {
@@ -1259,14 +1277,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/v1/categories/1" \
+    --get "http://localhost:8000/api/v1/categories/2" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/v1/categories/1"
+    "http://localhost:8000/api/v1/categories/2"
 );
 
 const headers = {
@@ -1292,6 +1310,8 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 48
 x-frame-options: SAMEORIGIN
 x-content-type-options: nosniff
 x-xss-protection: 1; mode=block
@@ -1384,10 +1404,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="slug"                data-endpoint="GETapi-v1-categories--slug-"
-               value="1"
+               value="2"
                data-component="url">
     <br>
-<p>The slug of the category. Example: <code>1</code></p>
+<p>The slug of the category. Example: <code>2</code></p>
             </div>
                     </form>
 
@@ -1441,6 +1461,8 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 53
 x-frame-options: SAMEORIGIN
 x-content-type-options: nosniff
 x-xss-protection: 1; mode=block
@@ -1460,8 +1482,8 @@ access-control-allow-origin: *
                 &quot;es&quot;: &quot;Vue 3 y Alpine.js en el frontend&quot;
             },
             &quot;content&quot;: {
-                &quot;en&quot;: &quot;&lt;h2&gt;Vue 3: ready but not active by default&lt;/h2&gt;&lt;p&gt;Integrated via Vite. Mount point: &lt;code&gt;&amp;lt;div id=\&quot;vue-app\&quot;&amp;gt;&lt;/code&gt;&lt;/p&gt;&lt;h2&gt;Alpine.js for light interactivity&lt;/h2&gt;&lt;p&gt;Already loaded. Recommended for simple toggles, dropdowns and animations.&lt;/p&gt;&quot;,
-                &quot;es&quot;: &quot;&lt;h2&gt;Vue 3: preparado, no activo por defecto&lt;/h2&gt;&lt;p&gt;Vue 3 est&aacute; integrado v&iacute;a Vite pero no se usa en producci&oacute;n a&uacute;n. El punto de montaje en el home es &lt;code&gt;&amp;lt;div id=\&quot;vue-app\&quot;&amp;gt;&lt;/code&gt;.&lt;/p&gt;&lt;h2&gt;A&ntilde;adir un componente Vue&lt;/h2&gt;&lt;p&gt;1. Crea &lt;code&gt;resources/js/components/MiComponente.vue&lt;/code&gt;:&lt;/p&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;template&amp;gt;\\n  &amp;lt;div&amp;gt;&amp;lt;button @click=\&quot;count++\&quot;&amp;gt;{{ count }}&amp;lt;/button&amp;gt;&amp;lt;/div&amp;gt;\\n&amp;lt;/template&amp;gt;\\n&amp;lt;script setup&amp;gt;\\nimport { ref } from &#039;vue&#039;\\nconst count = ref(0)\\n&amp;lt;/script&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2. Reg&iacute;stralo en &lt;code&gt;resources/js/app.js&lt;/code&gt;:&lt;/p&gt;&lt;pre&gt;&lt;code&gt;import MiComponente from &#039;./components/MiComponente.vue&#039;\\napp.component(&#039;mi-componente&#039;, MiComponente)&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3. &Uacute;salo en Blade dentro de &lt;code&gt;#vue-app&lt;/code&gt;:&lt;/p&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;div id=\&quot;vue-app\&quot;&amp;gt;&amp;lt;mi-componente /&amp;gt;&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;Alpine.js para interactividad ligera&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;!-- Toggle --&amp;gt;\\n&amp;lt;div x-data=\&quot;{ open: false }\&quot;&amp;gt;\\n  &amp;lt;button @click=\&quot;open = !open\&quot;&amp;gt;Toggle&amp;lt;/button&amp;gt;\\n  &amp;lt;div x-show=\&quot;open\&quot;&amp;gt;Contenido&amp;lt;/div&amp;gt;\\n&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;&iquest;Cu&aacute;ndo usar cada uno?&lt;/h2&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Caso de uso&lt;/th&gt;&lt;th&gt;Recomendaci&oacute;n&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;Toggle, dropdown, modals simples&lt;/td&gt;&lt;td&gt;Alpine.js&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Formularios reactivos complejos&lt;/td&gt;&lt;td&gt;Vue 3&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Componentes con estado complejo&lt;/td&gt;&lt;td&gt;Vue 3&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&quot;
+                &quot;en&quot;: &quot;&lt;h2&gt;Vue 3: ready but not active by default&lt;/h2&gt;&lt;p&gt;Integrated via Vite. Mount point: &lt;code&gt;&amp;lt;div id=\&quot;vue-app\&quot;&amp;gt;&lt;/code&gt;.&lt;/p&gt;&lt;h2&gt;Alpine.js for light interactivity&lt;/h2&gt;&lt;p&gt;Already loaded. Recommended for simple toggles, dropdowns and animations.&lt;/p&gt;&quot;,
+                &quot;es&quot;: &quot;&lt;h2&gt;Vue 3: preparado, no activo por defecto&lt;/h2&gt;&lt;p&gt;Vue 3 est&aacute; integrado v&iacute;a Vite pero no se usa en producci&oacute;n a&uacute;n. El punto de montaje en el home es &lt;code&gt;&amp;lt;div id=\&quot;vue-app\&quot;&amp;gt;&lt;/code&gt;.&lt;/p&gt;&lt;h2&gt;A&ntilde;adir un componente Vue&lt;/h2&gt;&lt;p&gt;1. Crea &lt;code&gt;resources/js/components/MiComponente.vue&lt;/code&gt;:&lt;/p&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;template&amp;gt;\\n  &amp;lt;div&amp;gt;&amp;lt;button @click=\&quot;count++\&quot;&amp;gt;&amp;#123;&amp;#123; count &amp;#125;&amp;#125;&amp;lt;/button&amp;gt;&amp;lt;/div&amp;gt;\\n&amp;lt;/template&amp;gt;\\n&amp;lt;script setup&amp;gt;\\nimport { ref } from &#039;vue&#039;\\nconst count = ref(0)\\n&amp;lt;/script&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2. Reg&iacute;stralo en &lt;code&gt;resources/js/app.js&lt;/code&gt;:&lt;/p&gt;&lt;pre&gt;&lt;code&gt;import MiComponente from &#039;./components/MiComponente.vue&#039;\\napp.component(&#039;mi-componente&#039;, MiComponente)&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3. &Uacute;salo en Blade dentro de &lt;code&gt;#vue-app&lt;/code&gt;:&lt;/p&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;div id=\&quot;vue-app\&quot;&amp;gt;&amp;lt;mi-componente /&amp;gt;&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;Alpine.js para interactividad ligera&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;!-- Toggle --&amp;gt;\\n&amp;lt;div x-data=\&quot;{ open: false }\&quot;&amp;gt;\\n  &amp;lt;button @click=\&quot;open = !open\&quot;&amp;gt;Toggle&amp;lt;/button&amp;gt;\\n  &amp;lt;div x-show=\&quot;open\&quot;&amp;gt;Contenido&amp;lt;/div&amp;gt;\\n&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;&iquest;Cu&aacute;ndo usar cada uno?&lt;/h2&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Caso de uso&lt;/th&gt;&lt;th&gt;Recomendaci&oacute;n&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;Toggle, dropdown, modals simples&lt;/td&gt;&lt;td&gt;Alpine.js&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Formularios reactivos complejos&lt;/td&gt;&lt;td&gt;Vue 3&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Componentes con estado complejo&lt;/td&gt;&lt;td&gt;Vue 3&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&quot;
             },
             &quot;excerpt&quot;: {
                 &quot;en&quot;: &quot;How to add Vue 3 components to the Blade frontend and when to use Alpine.js for light interactivity.&quot;,
@@ -1483,7 +1505,7 @@ access-control-allow-origin: *
             &quot;seo_keywords&quot;: null,
             &quot;published_at&quot;: &quot;2026-05-01T21:42:53.000000Z&quot;,
             &quot;created_at&quot;: &quot;2026-05-11T21:42:53.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2026-05-11T21:42:53.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-05-12T18:21:26.000000Z&quot;,
             &quot;deleted_at&quot;: null,
             &quot;categories&quot;: [
                 {
@@ -1535,18 +1557,6 @@ access-control-allow-origin: *
             &quot;deleted_at&quot;: null,
             &quot;categories&quot;: [
                 {
-                    &quot;id&quot;: 1,
-                    &quot;slug&quot;: &quot;documentacion&quot;,
-                    &quot;name&quot;: {
-                        &quot;en&quot;: &quot;Documentation&quot;,
-                        &quot;es&quot;: &quot;Documentaci&oacute;n&quot;
-                    },
-                    &quot;pivot&quot;: {
-                        &quot;post_id&quot;: 9,
-                        &quot;category_id&quot;: 1
-                    }
-                },
-                {
                     &quot;id&quot;: 2,
                     &quot;slug&quot;: &quot;desarrollo&quot;,
                     &quot;name&quot;: {
@@ -1556,6 +1566,18 @@ access-control-allow-origin: *
                     &quot;pivot&quot;: {
                         &quot;post_id&quot;: 9,
                         &quot;category_id&quot;: 2
+                    }
+                },
+                {
+                    &quot;id&quot;: 1,
+                    &quot;slug&quot;: &quot;documentacion&quot;,
+                    &quot;name&quot;: {
+                        &quot;en&quot;: &quot;Documentation&quot;,
+                        &quot;es&quot;: &quot;Documentaci&oacute;n&quot;
+                    },
+                    &quot;pivot&quot;: {
+                        &quot;post_id&quot;: 9,
+                        &quot;category_id&quot;: 1
                     }
                 }
             ]
@@ -1595,18 +1617,6 @@ access-control-allow-origin: *
             &quot;deleted_at&quot;: null,
             &quot;categories&quot;: [
                 {
-                    &quot;id&quot;: 1,
-                    &quot;slug&quot;: &quot;documentacion&quot;,
-                    &quot;name&quot;: {
-                        &quot;en&quot;: &quot;Documentation&quot;,
-                        &quot;es&quot;: &quot;Documentaci&oacute;n&quot;
-                    },
-                    &quot;pivot&quot;: {
-                        &quot;post_id&quot;: 8,
-                        &quot;category_id&quot;: 1
-                    }
-                },
-                {
                     &quot;id&quot;: 2,
                     &quot;slug&quot;: &quot;desarrollo&quot;,
                     &quot;name&quot;: {
@@ -1616,6 +1626,18 @@ access-control-allow-origin: *
                     &quot;pivot&quot;: {
                         &quot;post_id&quot;: 8,
                         &quot;category_id&quot;: 2
+                    }
+                },
+                {
+                    &quot;id&quot;: 1,
+                    &quot;slug&quot;: &quot;documentacion&quot;,
+                    &quot;name&quot;: {
+                        &quot;en&quot;: &quot;Documentation&quot;,
+                        &quot;es&quot;: &quot;Documentaci&oacute;n&quot;
+                    },
+                    &quot;pivot&quot;: {
+                        &quot;post_id&quot;: 8,
+                        &quot;category_id&quot;: 1
                     }
                 }
             ]
@@ -1628,8 +1650,8 @@ access-control-allow-origin: *
                 &quot;es&quot;: &quot;Settings din&aacute;micos y helper global setting()&quot;
             },
             &quot;content&quot;: {
-                &quot;en&quot;: &quot;&lt;h2&gt;What are Settings?&lt;/h2&gt;&lt;p&gt;Key-value pairs in the &lt;code&gt;settings&lt;/code&gt; table for configuring the site without touching code.&lt;/p&gt;&lt;h2&gt;Global helper&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;setting(&#039;site_title&#039;, &#039;My Site&#039;);\\n{{ setting(&#039;contact_email&#039;) }}&lt;/code&gt;&lt;/pre&gt;&quot;,
-                &quot;es&quot;: &quot;&lt;h2&gt;&iquest;Qu&eacute; son los Settings?&lt;/h2&gt;&lt;p&gt;Son pares key-value en la tabla &lt;code&gt;settings&lt;/code&gt; para configurar el sitio sin tocar c&oacute;digo: t&iacute;tulo, redes sociales, email de contacto, Google Analytics ID...&lt;/p&gt;&lt;h2&gt;Helper global&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;// En un controlador, servicio o vista Blade\\n$title = setting(&#039;site_title&#039;, &#039;Mi Sitio Web&#039;);\\n{{ setting(&#039;contact_email&#039;, &#039;&#039;) }}&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;Settings disponibles por defecto&lt;/h2&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Key&lt;/th&gt;&lt;th&gt;Grupo&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;site_title&lt;/td&gt;&lt;td&gt;general&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;site_description&lt;/td&gt;&lt;td&gt;general&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;contact_email&lt;/td&gt;&lt;td&gt;contact&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;facebook_url&lt;/td&gt;&lt;td&gt;social&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;google_analytics_id&lt;/td&gt;&lt;td&gt;seo&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;h2&gt;Cach&eacute; autom&aacute;tica&lt;/h2&gt;&lt;p&gt;El &lt;code&gt;SettingService&lt;/code&gt; cachea los settings 1 hora. Invalida la cach&eacute; manualmente con:&lt;/p&gt;&lt;pre&gt;&lt;code&gt;php artisan cache:clear&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;A&ntilde;adir un nuevo setting en el seeder&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;Setting::firstOrCreate(\\n    [&#039;key&#039; =&gt; &#039;whatsapp_url&#039;],\\n    [&#039;display_name&#039; =&gt; &#039;WhatsApp URL&#039;, &#039;value&#039; =&gt; &#039;&#039;, &#039;type&#039; =&gt; &#039;text&#039;, &#039;group&#039; =&gt; &#039;social&#039;]\\n);&lt;/code&gt;&lt;/pre&gt;&quot;
+                &quot;en&quot;: &quot;&lt;h2&gt;What are Settings?&lt;/h2&gt;&lt;p&gt;Key-value pairs in the &lt;code&gt;settings&lt;/code&gt; table for configuring the site without touching code.&lt;/p&gt;&lt;h2&gt;Global helper&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;setting(&#039;site_title&#039;, &#039;My Site&#039;);\\n// In Blade:\\n&amp;#123;&amp;#123; setting(&#039;contact_email&#039;) &amp;#125;&amp;#125;&lt;/code&gt;&lt;/pre&gt;&quot;,
+                &quot;es&quot;: &quot;&lt;h2&gt;&iquest;Qu&eacute; son los Settings?&lt;/h2&gt;&lt;p&gt;Son pares key-value en la tabla &lt;code&gt;settings&lt;/code&gt; para configurar el sitio sin tocar c&oacute;digo: t&iacute;tulo, redes sociales, email de contacto, Google Analytics ID...&lt;/p&gt;&lt;h2&gt;Helper global&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;// En un controlador, servicio o vista Blade\\n$title = setting(&#039;site_title&#039;, &#039;Mi Sitio Web&#039;);\\n// En Blade:\\n&amp;#123;&amp;#123; setting(&#039;contact_email&#039;, &#039;&#039;) &amp;#125;&amp;#125;&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;Settings disponibles por defecto&lt;/h2&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Key&lt;/th&gt;&lt;th&gt;Grupo&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;site_title&lt;/td&gt;&lt;td&gt;general&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;site_description&lt;/td&gt;&lt;td&gt;general&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;contact_email&lt;/td&gt;&lt;td&gt;contact&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;facebook_url&lt;/td&gt;&lt;td&gt;social&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;google_analytics_id&lt;/td&gt;&lt;td&gt;seo&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;h2&gt;Cach&eacute; autom&aacute;tica&lt;/h2&gt;&lt;p&gt;El &lt;code&gt;SettingService&lt;/code&gt; cachea los settings 1 hora. Invalida la cach&eacute; manualmente con:&lt;/p&gt;&lt;pre&gt;&lt;code&gt;php artisan cache:clear&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;A&ntilde;adir un nuevo setting en el seeder&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;Setting::firstOrCreate(\\n    [&#039;key&#039; =&gt; &#039;whatsapp_url&#039;],\\n    [&#039;display_name&#039; =&gt; &#039;WhatsApp URL&#039;, &#039;value&#039; =&gt; &#039;&#039;, &#039;type&#039; =&gt; &#039;text&#039;, &#039;group&#039; =&gt; &#039;social&#039;]\\n);&lt;/code&gt;&lt;/pre&gt;&quot;
             },
             &quot;excerpt&quot;: {
                 &quot;en&quot;: &quot;How to use the dynamic configuration system: the setting() helper, automatic caching and how to add new keys from Filament.&quot;,
@@ -1651,7 +1673,7 @@ access-control-allow-origin: *
             &quot;seo_keywords&quot;: null,
             &quot;published_at&quot;: &quot;2026-04-25T21:42:53.000000Z&quot;,
             &quot;created_at&quot;: &quot;2026-05-11T21:42:53.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2026-05-11T21:42:53.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-05-12T18:21:26.000000Z&quot;,
             &quot;deleted_at&quot;: null,
             &quot;categories&quot;: [
                 {
@@ -1773,7 +1795,7 @@ access-control-allow-origin: *
             },
             &quot;content&quot;: {
                 &quot;en&quot;: &quot;&lt;h2&gt;Two translation levels&lt;/h2&gt;&lt;ol&gt;&lt;li&gt;&lt;strong&gt;Laravel language files&lt;/strong&gt;: Static UI texts.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;spatie/laravel-translatable&lt;/strong&gt;: Dynamic model content stored as JSON.&lt;/li&gt;&lt;/ol&gt;&lt;h2&gt;Usage&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;$post-&gt;getTranslation(&#039;title&#039;, app()-&gt;getLocale());&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Change language by visiting &lt;code&gt;/lang/es&lt;/code&gt; or &lt;code&gt;/lang/en&lt;/code&gt;.&lt;/p&gt;&quot;,
-                &quot;es&quot;: &quot;&lt;h2&gt;Dos niveles de traducci&oacute;n&lt;/h2&gt;&lt;ol&gt;&lt;li&gt;&lt;strong&gt;Archivos de idioma Laravel&lt;/strong&gt; (&lt;code&gt;lang/es/&lt;/code&gt;, &lt;code&gt;lang/en/&lt;/code&gt;): Para textos est&aacute;ticos de la UI.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;spatie/laravel-translatable&lt;/strong&gt;: Para contenido din&aacute;mico en modelos (t&iacute;tulos, contenido de Posts, Pages, Sections, Slides, Categories).&lt;/li&gt;&lt;/ol&gt;&lt;h2&gt;Campos almacenados como JSON en la BD&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;// Columna title (tipo JSON) en la tabla posts:\\n{\&quot;es\&quot;: \&quot;Mi art&iacute;culo\&quot;, \&quot;en\&quot;: \&quot;My article\&quot;}&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;Usar traducciones en c&oacute;digo&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;// Obtener traducci&oacute;n del locale actual\\n$post-&gt;getTranslation(&#039;title&#039;, app()-&gt;getLocale());\\n\\n// Guardar con traducci&oacute;n\\n$post-&gt;setTranslation(&#039;title&#039;, &#039;es&#039;, &#039;Mi t&iacute;tulo&#039;);\\n$post-&gt;setTranslation(&#039;title&#039;, &#039;en&#039;, &#039;My title&#039;);\\n$post-&gt;save();&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;Usar traducciones en Blade&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;{{-- Texto de interfaz (archivos lang/) --}}\\n{{ __(&#039;messages.read_more&#039;) }}\\n\\n{{-- Contenido de modelo traducible --}}\\n{{ $post-&gt;getTranslation(&#039;title&#039;, app()-&gt;getLocale()) }}&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;Cambiar idioma&lt;/h2&gt;&lt;p&gt;El usuario cambia el idioma visitando &lt;code&gt;/lang/es&lt;/code&gt; o &lt;code&gt;/lang/en&lt;/code&gt;. El middleware &lt;code&gt;SetLocale&lt;/code&gt; lo persiste en sesi&oacute;n.&lt;/p&gt;&lt;h2&gt;A&ntilde;adir campo traducible a un modelo&lt;/h2&gt;&lt;ol&gt;&lt;li&gt;En la migraci&oacute;n, usar &lt;code&gt;-&gt;json(&#039;campo&#039;)&lt;/code&gt;&lt;/li&gt;&lt;li&gt;En el modelo, a&ntilde;adir el campo al array &lt;code&gt;$translatable&lt;/code&gt;&lt;/li&gt;&lt;li&gt;En el Resource de Filament, usar tabs por idioma&lt;/li&gt;&lt;/ol&gt;&quot;
+                &quot;es&quot;: &quot;&lt;h2&gt;Dos niveles de traducci&oacute;n&lt;/h2&gt;&lt;ol&gt;&lt;li&gt;&lt;strong&gt;Archivos de idioma Laravel&lt;/strong&gt; (&lt;code&gt;lang/es/&lt;/code&gt;, &lt;code&gt;lang/en/&lt;/code&gt;): Para textos est&aacute;ticos de la UI.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;spatie/laravel-translatable&lt;/strong&gt;: Para contenido din&aacute;mico en modelos (t&iacute;tulos, contenido de Posts, Pages, Sections, Slides, Categories).&lt;/li&gt;&lt;/ol&gt;&lt;h2&gt;Campos almacenados como JSON en la BD&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;// Columna title (tipo JSON) en la tabla posts:\\n{\&quot;es\&quot;: \&quot;Mi art&iacute;culo\&quot;, \&quot;en\&quot;: \&quot;My article\&quot;}&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;Usar traducciones en c&oacute;digo&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;// Obtener traducci&oacute;n del locale actual\\n$post-&gt;getTranslation(&#039;title&#039;, app()-&gt;getLocale());\\n\\n// Guardar con traducci&oacute;n\\n$post-&gt;setTranslation(&#039;title&#039;, &#039;es&#039;, &#039;Mi t&iacute;tulo&#039;);\\n$post-&gt;setTranslation(&#039;title&#039;, &#039;en&#039;, &#039;My title&#039;);\\n$post-&gt;save();&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;Usar traducciones en Blade&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;@{{-- Texto de interfaz (archivos lang/) --}}\\n@{{ __(&#039;messages.read_more&#039;) }}\\n\\n@{{-- Contenido de modelo traducible --}}\\n@{{ $post-&gt;getTranslation(&#039;title&#039;, app()-&gt;getLocale()) }}&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;Cambiar idioma&lt;/h2&gt;&lt;p&gt;El usuario cambia el idioma visitando &lt;code&gt;/lang/es&lt;/code&gt; o &lt;code&gt;/lang/en&lt;/code&gt;. El middleware &lt;code&gt;SetLocale&lt;/code&gt; lo persiste en sesi&oacute;n.&lt;/p&gt;&lt;h2&gt;A&ntilde;adir campo traducible a un modelo&lt;/h2&gt;&lt;ol&gt;&lt;li&gt;En la migraci&oacute;n, usar &lt;code&gt;-&gt;json(&#039;campo&#039;)&lt;/code&gt;&lt;/li&gt;&lt;li&gt;En el modelo, a&ntilde;adir el campo al array &lt;code&gt;$translatable&lt;/code&gt;&lt;/li&gt;&lt;li&gt;En el Resource de Filament, usar tabs por idioma&lt;/li&gt;&lt;/ol&gt;&quot;
             },
             &quot;excerpt&quot;: {
                 &quot;en&quot;: &quot;How translations work in Eloquent models, how to switch language in the frontend and how to manage language files.&quot;,
@@ -1795,7 +1817,7 @@ access-control-allow-origin: *
             &quot;seo_keywords&quot;: null,
             &quot;published_at&quot;: &quot;2026-04-19T21:42:53.000000Z&quot;,
             &quot;created_at&quot;: &quot;2026-05-11T21:42:53.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2026-05-11T21:42:53.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-05-12T17:54:40.000000Z&quot;,
             &quot;deleted_at&quot;: null,
             &quot;categories&quot;: [
                 {
@@ -1847,18 +1869,6 @@ access-control-allow-origin: *
             &quot;deleted_at&quot;: null,
             &quot;categories&quot;: [
                 {
-                    &quot;id&quot;: 1,
-                    &quot;slug&quot;: &quot;documentacion&quot;,
-                    &quot;name&quot;: {
-                        &quot;en&quot;: &quot;Documentation&quot;,
-                        &quot;es&quot;: &quot;Documentaci&oacute;n&quot;
-                    },
-                    &quot;pivot&quot;: {
-                        &quot;post_id&quot;: 3,
-                        &quot;category_id&quot;: 1
-                    }
-                },
-                {
                     &quot;id&quot;: 2,
                     &quot;slug&quot;: &quot;desarrollo&quot;,
                     &quot;name&quot;: {
@@ -1868,6 +1878,18 @@ access-control-allow-origin: *
                     &quot;pivot&quot;: {
                         &quot;post_id&quot;: 3,
                         &quot;category_id&quot;: 2
+                    }
+                },
+                {
+                    &quot;id&quot;: 1,
+                    &quot;slug&quot;: &quot;documentacion&quot;,
+                    &quot;name&quot;: {
+                        &quot;en&quot;: &quot;Documentation&quot;,
+                        &quot;es&quot;: &quot;Documentaci&oacute;n&quot;
+                    },
+                    &quot;pivot&quot;: {
+                        &quot;post_id&quot;: 3,
+                        &quot;category_id&quot;: 1
                     }
                 }
             ]
@@ -1935,7 +1957,7 @@ access-control-allow-origin: *
                 &quot;en&quot;: &quot;Everything you need to know to understand this skeleton, what it includes and how to get the most out of it from day one.&quot;,
                 &quot;es&quot;: &quot;Todo lo que necesitas saber para entender qu&eacute; es este skeleton, qu&eacute; incluye y c&oacute;mo sacarle partido desde el primer d&iacute;a.&quot;
             },
-            &quot;image&quot;: null,
+            &quot;image&quot;: &quot;posts/01KRDYR0S6VEGNRW0SF0E5Y8YV.png&quot;,
             &quot;status&quot;: &quot;published&quot;,
             &quot;is_active&quot;: true,
             &quot;featured&quot;: true,
@@ -1948,24 +1970,14 @@ access-control-allow-origin: *
                 &quot;en&quot;: &quot;Getting started guide: what it includes, structure, credentials and how to start the project.&quot;,
                 &quot;es&quot;: &quot;Gu&iacute;a de inicio al skeleton: qu&eacute; incluye, estructura, credenciales y c&oacute;mo arrancar el proyecto.&quot;
             },
-            &quot;seo_keywords&quot;: null,
+            &quot;seo_keywords&quot;: {
+                &quot;en&quot;: null
+            },
             &quot;published_at&quot;: &quot;2026-04-11T21:42:53.000000Z&quot;,
             &quot;created_at&quot;: &quot;2026-05-11T21:42:53.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2026-05-11T21:42:53.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-05-12T18:20:09.000000Z&quot;,
             &quot;deleted_at&quot;: null,
             &quot;categories&quot;: [
-                {
-                    &quot;id&quot;: 1,
-                    &quot;slug&quot;: &quot;documentacion&quot;,
-                    &quot;name&quot;: {
-                        &quot;en&quot;: &quot;Documentation&quot;,
-                        &quot;es&quot;: &quot;Documentaci&oacute;n&quot;
-                    },
-                    &quot;pivot&quot;: {
-                        &quot;post_id&quot;: 1,
-                        &quot;category_id&quot;: 1
-                    }
-                },
                 {
                     &quot;id&quot;: 2,
                     &quot;slug&quot;: &quot;desarrollo&quot;,
@@ -1976,6 +1988,18 @@ access-control-allow-origin: *
                     &quot;pivot&quot;: {
                         &quot;post_id&quot;: 1,
                         &quot;category_id&quot;: 2
+                    }
+                },
+                {
+                    &quot;id&quot;: 1,
+                    &quot;slug&quot;: &quot;documentacion&quot;,
+                    &quot;name&quot;: {
+                        &quot;en&quot;: &quot;Documentation&quot;,
+                        &quot;es&quot;: &quot;Documentaci&oacute;n&quot;
+                    },
+                    &quot;pivot&quot;: {
+                        &quot;post_id&quot;: 1,
+                        &quot;category_id&quot;: 1
                     }
                 }
             ]
@@ -2100,14 +2124,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/v1/posts/1" \
+    --get "http://localhost:8000/api/v1/posts/2" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/v1/posts/1"
+    "http://localhost:8000/api/v1/posts/2"
 );
 
 const headers = {
@@ -2133,6 +2157,8 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 52
 x-frame-options: SAMEORIGIN
 x-content-type-options: nosniff
 x-xss-protection: 1; mode=block
@@ -2225,10 +2251,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="slug"                data-endpoint="GETapi-v1-posts--slug-"
-               value="1"
+               value="2"
                data-component="url">
     <br>
-<p>The slug of the post. Example: <code>1</code></p>
+<p>The slug of the post. Example: <code>2</code></p>
             </div>
                     </form>
 
@@ -2282,6 +2308,8 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 51
 x-frame-options: SAMEORIGIN
 x-content-type-options: nosniff
 x-xss-protection: 1; mode=block
@@ -2308,17 +2336,23 @@ access-control-allow-origin: *
                 &quot;en&quot;: &quot;Meet our team.&quot;,
                 &quot;es&quot;: &quot;Conoce nuestro equipo.&quot;
             },
-            &quot;image&quot;: null,
+            &quot;image&quot;: &quot;pages/01KRDYQ637RZ8E1XWPBZPV0MNT.png&quot;,
             &quot;status&quot;: &quot;published&quot;,
             &quot;is_active&quot;: true,
             &quot;featured&quot;: true,
             &quot;user_id&quot;: 1,
-            &quot;seo_title&quot;: null,
-            &quot;seo_description&quot;: null,
-            &quot;seo_keywords&quot;: null,
+            &quot;seo_title&quot;: {
+                &quot;en&quot;: null
+            },
+            &quot;seo_description&quot;: {
+                &quot;en&quot;: null
+            },
+            &quot;seo_keywords&quot;: {
+                &quot;en&quot;: null
+            },
             &quot;published_at&quot;: &quot;2026-05-11T21:42:53.000000Z&quot;,
             &quot;created_at&quot;: &quot;2026-05-11T21:42:53.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2026-05-11T21:42:53.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-05-12T11:21:25.000000Z&quot;,
             &quot;deleted_at&quot;: null,
             &quot;categories&quot;: []
         },
@@ -2694,14 +2728,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/v1/pages/1" \
+    --get "http://localhost:8000/api/v1/pages/2" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/v1/pages/1"
+    "http://localhost:8000/api/v1/pages/2"
 );
 
 const headers = {
@@ -2727,6 +2761,8 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 50
 x-frame-options: SAMEORIGIN
 x-content-type-options: nosniff
 x-xss-protection: 1; mode=block
@@ -2819,10 +2855,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="slug"                data-endpoint="GETapi-v1-pages--slug-"
-               value="1"
+               value="2"
                data-component="url">
     <br>
-<p>The slug of the page. Example: <code>1</code></p>
+<p>The slug of the page. Example: <code>2</code></p>
             </div>
                     </form>
 

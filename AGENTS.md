@@ -165,6 +165,8 @@ ImageCropField::make4x3('avatar', 'avatars'),
 
 **NUNCA** usar `FileUpload::make()` directamente para imágenes. Siempre usar `ImageCropField`.
 
+**Proporción por defecto:** Si no se indica explícitamente otra proporción, **todos los campos de imagen deben usar `make16x9()` (16:9)** como relación de aspecto predeterminada.
+
 Los métodos internamente usan `imageAspectRatio()` + `automaticallyCropImagesToAspectRatio()` + `imageEditorAspectRatioOptions()` de Filament 5 para forzar el ratio tanto en el editor como en la validación.
 
 ### ⚠️ Campos con sugerencias libres (datalist) — Patrón estándar
