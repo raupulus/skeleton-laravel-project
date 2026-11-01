@@ -12,15 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cache', function (Blueprint $table) {
-            $table->string('key')->primary();
-            $table->mediumText('value');
-            $table->bigInteger('expiration')->index();
+            $table->comment('Almacén de elementos en caché de la aplicación');
+            $table->string('key')->primary()->comment('Clave identificadora única del elemento en caché');
+            $table->mediumText('value')->comment('Valor serializado almacenado');
+            $table->bigInteger('expiration')->index()->comment('Marca de tiempo Unix de expiración');
         });
 
         Schema::create('cache_locks', function (Blueprint $table) {
-            $table->string('key')->primary();
-            $table->string('owner');
-            $table->bigInteger('expiration')->index();
+            $table->comment('Cerrojos atómicos para control de concurrencia en caché');
+            $table->string('key')->primary()->comment('Clave del cerrojo');
+            $table->string('owner')->comment('Identificador del proceso propietario del cerrojo');
+            $table->bigInteger('expiration')->index()->comment('Marca de tiempo Unix de expiración del cerrojo');
         });
     }
 

@@ -30,18 +30,20 @@ return new class extends Migration
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
+            $table->comment('Tokens para el restablecimiento de contraseñas de usuarios');
+            $table->string('email')->primary()->comment('Correo electrónico del usuario solicitante');
+            $table->string('token')->comment('Token hash único de restablecimiento');
+            $table->timestamp('created_at')->nullable()->comment('Fecha y hora de creación del token');
         });
 
         Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
+            $table->comment('Sesiones activas de usuarios en la plataforma');
+            $table->string('id')->primary()->comment('Identificador único de la sesión');
+            $table->foreignId('user_id')->nullable()->index()->comment('ID del usuario autenticado (si aplica)');
+            $table->string('ip_address', 45)->nullable()->comment('Dirección IP de origen del usuario');
+            $table->text('user_agent')->nullable()->comment('Agente de usuario / navegador');
+            $table->longText('payload')->comment('Datos serializados de la sesión');
+            $table->integer('last_activity')->index()->comment('Marca de tiempo de la última actividad');
         });
     }
 
