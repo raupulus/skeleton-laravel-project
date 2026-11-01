@@ -10,11 +10,14 @@ enum EmailStatus: string
     case Sent = 'sent';
     case Failed = 'failed';
 
+    /**
+     * Obtener la etiqueta traducida del estado del email.
+     */
     public function label(): string
     {
         return match ($this) {
-            self::Sent => 'Enviado',
-            self::Failed => 'Fallido',
+            self::Sent => __('filament.email_status_sent'),
+            self::Failed => __('filament.email_status_failed'),
         };
     }
 

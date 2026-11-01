@@ -20,8 +20,8 @@ class LanguageController extends Controller
      */
     public function switch(string $locale): RedirectResponse
     {
-        // Validar que el idioma solicitado est disponible en la aplicacin
-        if (in_array($locale, config('locales.available', ['es', 'en']))) {
+        // Validar que el idioma solicitado está disponible en la aplicación
+        if (in_array($locale, config('locales.available', ['es', 'en']), true)) {
             session()->put('locale', $locale);
             app()->setLocale($locale);
         }

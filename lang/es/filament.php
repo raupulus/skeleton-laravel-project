@@ -144,4 +144,13 @@ return [
     'expires_at' => 'Fecha de expiración',
     'last_used_at' => 'Último uso',
     'token_name' => 'Nombre del token',
+
+    // Roles y estados (Enums)
+    'role_superadmin' => 'Super Administrador',
+    'role_admin' => 'Administrador',
+    'role_user' => 'Usuario',
+    'status_draft' => 'Borrador',
+    'status_published' => 'Publicado',
+    'email_status_sent' => 'Enviado',
+    'email_status_failed' => 'Fallido',
 ];

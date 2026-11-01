@@ -24,19 +24,26 @@ class SetLocale
         // Obtener los idiomas disponibles desde la configuración
         $available = config('locales.available', ['es', 'en']);
 
-        // Intentar recuperar el idioma guardado en sesión
-        $locale = session('locale');
+        // 1. Parámetro explícito ?lang=xx (usado en alternates hreflang y enlaces directos)
+        $queryLocale = $request->query('lang');
+        if (is_string($queryLocale) && in_array($queryLocale, $available, true)) {
+            $locale = $queryLocale;
+            session(['locale' => $locale]);
+        } else {
+            // 2. Idioma guardado en sesión
+            $locale = session('locale');
 
-        // Si no hay idioma en sesión, detectar desde Accept-Language del navegador
-        if (! $locale && $request->hasHeader('Accept-Language')) {
-            $preferred = substr($request->header('Accept-Language'), 0, 2);
-            if (in_array($preferred, $available)) {
-                $locale = $preferred;
+            // 3. Si no hay idioma en sesión, detectar desde Accept-Language del navegador
+            if (! $locale && $request->hasHeader('Accept-Language')) {
+                $preferred = substr((string) $request->header('Accept-Language'), 0, 2);
+                if (in_array($preferred, $available, true)) {
+                    $locale = $preferred;
+                }
             }
         }
 
         // Usar el idioma detectado o el idioma por defecto de la aplicación
-        $locale = $locale && in_array($locale, $available) ? $locale : config('app.locale', 'es');
+        $locale = is_string($locale) && in_array($locale, $available, true) ? $locale : config('app.locale', 'es');
         app()->setLocale($locale);
 
         return $next($request);

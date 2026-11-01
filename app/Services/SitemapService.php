@@ -17,13 +17,6 @@ use Spatie\Sitemap\Tags\Url;
 class SitemapService
 {
     /**
-     * Idiomas soportados por el sitio para hreflang.
-     *
-     * @var array<string>
-     */
-    protected array $locales = ['es', 'en'];
-
-    /**
      * Genera el archivo sitemap.xml con todas las URLs públicas del sitio.
      * Incluye rutas estáticas, posts publicados y páginas publicadas.
      * Cada URL incluye alternates hreflang para todos los idiomas soportados.
@@ -55,7 +48,7 @@ class SitemapService
      */
     private function addHreflangAlternates(Url $url, string $baseUrl): Url
     {
-        foreach ($this->locales as $locale) {
+        foreach (config('locales.available', ['es', 'en']) as $locale) {
             $url->addAlternate(
                 url: $baseUrl.'?lang='.$locale,
                 locale: $locale

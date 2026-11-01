@@ -10,11 +10,14 @@ enum ContentStatus: string
     case Draft = 'draft';
     case Published = 'published';
 
+    /**
+     * Obtener la etiqueta traducida del estado.
+     */
     public function label(): string
     {
         return match ($this) {
-            self::Draft => 'Borrador',
-            self::Published => 'Publicado',
+            self::Draft => __('filament.status_draft'),
+            self::Published => __('filament.status_published'),
         };
     }
 

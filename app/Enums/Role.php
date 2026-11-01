@@ -12,14 +12,14 @@ enum Role: string
     case User = 'user';
 
     /**
-     * Obtener la etiqueta legible del rol en español.
+     * Obtener la etiqueta legible y traducida del rol.
      */
     public function label(): string
     {
         return match ($this) {
-            self::SuperAdmin => 'Super Administrador',
-            self::Admin => 'Administrador',
-            self::User => 'Usuario',
+            self::SuperAdmin => __('filament.role_superadmin'),
+            self::Admin => __('filament.role_admin'),
+            self::User => __('filament.role_user'),
         };
     }
 

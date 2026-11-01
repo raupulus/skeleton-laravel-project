@@ -8,7 +8,7 @@
     $pageType = $seoData['type'] ?? 'website';
     $pageRobots = $seoData['robots'] ?? 'index,follow';
     $currentLocale = app()->getLocale();
-    $alternateLocale = $currentLocale === 'es' ? 'en' : 'es';
+    $availableLocales = config('locales.available', ['es', 'en']);
 @endphp
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -21,8 +21,9 @@
 <meta name="author" content="{{ $seoData['author'] ?? setting('site_title', config('app.name')) }}" />
 <meta name="robots" content="{{ $pageRobots }}" />
 <link rel="canonical" href="{{ $pageUrl }}" />
-<link rel="alternate" hreflang="{{ $currentLocale }}" href="{{ $pageUrl }}" />
-<link rel="alternate" hreflang="{{ $alternateLocale }}" href="{{ $pageUrl }}" />
+@foreach($availableLocales as $loc)
+<link rel="alternate" hreflang="{{ $loc }}" href="{{ $pageUrl }}?lang={{ $loc }}" />
+@endforeach
 <link rel="alternate" hreflang="x-default" href="{{ $pageUrl }}" />
 <meta property="og:locale" content="{{ $currentLocale === 'es' ? 'es_ES' : 'en_US' }}" />
 <meta property="og:title" content="{{ $pageTitle }}" />

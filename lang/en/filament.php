@@ -144,4 +144,13 @@ return [
     'expires_at' => 'Expires at',
     'last_used_at' => 'Last used at',
     'token_name' => 'Token name',
+
+    // Roles and statuses (Enums)
+    'role_superadmin' => 'Super Administrator',
+    'role_admin' => 'Administrator',
+    'role_user' => 'User',
+    'status_draft' => 'Draft',
+    'status_published' => 'Published',
+    'email_status_sent' => 'Sent',
+    'email_status_failed' => 'Failed',
 ];
