@@ -1,7 +1,7 @@
 #!/bin/bash
 # Script de despliegue en producción para Skeleton Laravel Project
 # Uso: bash docs/deploys/deploy.sh
-# Requiere: git, composer, npm, php 8.4
+# Requiere: git, composer, pnpm, php 8.4
 
 set -e
 
@@ -16,9 +16,9 @@ git pull origin main
 # 3. Instalar dependencias PHP (sin dev)
 composer install --no-dev --optimize-autoloader
 
-# 4. Instalar dependencias JS y compilar assets
-npm ci
-npm run build
+# 4. Instalar dependencias JS y compilar assets con pnpm
+pnpm install --frozen-lockfile
+pnpm run build
 
 # 5. Ejecutar migraciones pendientes
 php artisan migrate --force

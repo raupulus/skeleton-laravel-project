@@ -4,21 +4,22 @@
 /public/hot
 /public/storage
 /storage/*.key
+/storage/pail
 /vendor
 /template
 template/
 
-# Variables de entorno (NUNCA commitear el .env real)
+# Variables de entorno y credenciales (NUNCA commitear el .env real)
 .env
 .env.backup
 .env.production
 .env.staging
 !.env.example
 !.env.example.production
+/auth.json
 
 # Logs
 /storage/logs/*.log
-storage/logs/*.log
 
 # Caché
 bootstrap/cache/*.php
@@ -26,14 +27,17 @@ storage/framework/cache/
 storage/framework/sessions/
 storage/framework/views/
 
-# Assets compilados (se regeneran con npm run build)
-public/build
+# Assets compilados (se regeneran con pnpm run build)
 mix-manifest.json
 public/mix-manifest.json
 
 # IDEs y editores
 .idea/
 .vscode/
+/.fleet
+/.nova
+/.zed
+/.phpactor.json
 *.sublime-project
 *.sublime-workspace
 .DS_Store
@@ -45,7 +49,7 @@ Thumbs.db
 _ide_helper.php
 _ide_helper_models.php
 
-# Node y paquetes
+# Node y paquetes (pnpm)
 npm-debug.log
 yarn-error.log
 .npm
@@ -53,7 +57,7 @@ yarn-error.log
 pnpm-store/
 .pnpm-store/
 
-# PHP
+# PHP y tests
 *.phpunit.result.cache
 coverage/
 .phpunit.cache/
@@ -69,10 +73,10 @@ docker-compose.override.yml
 public/docs/api/
 .scribe/endpoints.cache/
 
-# Archivos temporales e internos
+# Archivos temporales e internos de agentes
 *.tmp
 *.bak
 .junie/
+/skills/
 docs/planning/
 docs/auditorias/
-

@@ -21,14 +21,27 @@ id_ed25519
 database/database.sqlite
 *.db
 
-# Assets compilados (no son código fuente)
+# Assets compilados y artefactos generados (no son código fuente)
 public/build/
 public/hot
 public/storage
+public/sitemap.xml
+public/vendor/
+public/js/filament/
+public/css/filament/
+resources/views/scribe/
+docs/manual/*.pdf
+
+# Lockfiles
+composer.lock
+pnpm-lock.yaml
+package-lock.json
 
 # Dependencias de terceros
 vendor/
 node_modules/
+pnpm-store/
+.pnpm-store/
 
 # Logs y caché
 storage/logs/
@@ -39,6 +52,7 @@ bootstrap/cache/
 
 # Archivos de documentación API generada
 public/docs/api/
+.scribe/endpoints.cache/
 
 # Imágenes y archivos de media subidos
 storage/app/public/
@@ -50,5 +64,6 @@ public/storage/
 # IDE y editores
 .idea/
 .vscode/
+.junie/
 *.swp
 *.swo

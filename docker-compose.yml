@@ -2,8 +2,6 @@
 # Uso: docker compose up -d
 # Variables configurables en el archivo .env
 
-version: '3.9'
-
 services:
   # Aplicación PHP-FPM
   app:
