@@ -1,6 +1,6 @@
 # Módulo: Traducciones (i18n)
 
-*Última actualización: 2026-08-26*
+*Última actualización: 2026-11-01*
 
 > Sistema de internacionalización bilingüe (español/inglés) para textos de la interfaz y contenido de modelos, con cambio de idioma persistido en sesión.
 
@@ -12,17 +12,17 @@ El módulo de traducciones proporciona soporte bilingüe completo (español e in
 
 El sistema opera con dos mecanismos complementarios:
 
-1. **Textos estáticos de la UI** (archivos de idioma): labels, botones, mensajes, títulos fijos y textos del layout se gestionan mediante los archivos `lang/es/messages.php` y `lang/en/messages.php`, accesibles con el helper `__('messages.clave')`. Al añadir una nueva clave se debe incluir en ambos archivos obligatoriamente.
+1. **Textos estáticos de la UI** (archivos de idioma): labels, botones, mensajes, títulos fijos y textos del layout se gestionan mediante los archivos `lang/es/*.php`, `lang/en/*.php` y `lang/es.json`, accesibles con el helper `__('messages.clave')` o `__('filament.clave')`. Al añadir una nueva clave se debe incluir en ambos idiomas obligatoriamente.
 
 2. **Contenido dinámico de modelos** (Spatie Translatable): los campos de contenido de posts, páginas, categorías, slides y secciones se almacenan como JSON en la base de datos con una versión por idioma, accesibles con `$modelo->getTranslation('campo', $locale)`. Los formularios de Filament presentan tabs por idioma (ES/EN) para editar cada versión.
 
-El cambio de idioma se realiza desde el frontend mediante el selector de idioma (`<x-language-switcher />`), que redirige a `/lang/{locale}`. El `LanguageController` valida el idioma, lo persiste en sesión y el middleware `SetLocale` lo aplica en cada request posterior. El idioma por defecto es español, con inglés como fallback.
+El cambio de idioma se realiza desde el frontend mediante el selector de idioma (`<x-language-switcher />`), que redirige a `/lang/{locale}`, o mediante el parámetro de consulta `?lang={locale}` utilizado también en las etiquetas `hreflang` de SEO y el sitemap. El middleware `SetLocale` lo persiste en sesión y lo aplica en cada request posterior. El idioma por defecto es español, con inglés como fallback.
 
 ---
 
 ## Resumen
 
-La plataforma soporta dos idiomas: español (por defecto) e inglés. Hay dos mecanismos de traducción: archivos de idioma para textos estáticos de la UI (`__('messages.key')`) y campos traducibles en modelos con `spatie/laravel-translatable` para contenido dinámico. El idioma se cambia con el selector del frontend y se persiste en sesión mediante el middleware `SetLocale`.
+La plataforma soporta dos idiomas: español (por defecto) e inglés. Hay dos mecanismos de traducción: archivos de idioma para textos estáticos de la UI (`__('messages.key')`, `__('filament.key')`) y campos traducibles en modelos con `spatie/laravel-translatable` para contenido dinámico. El idioma se cambia con el selector del frontend o `?lang=xx` y se persiste en sesión mediante el middleware `SetLocale`.
 
 ---
 
@@ -30,8 +30,8 @@ La plataforma soporta dos idiomas: español (por defecto) e inglés. Hay dos mec
 
 | Tipo | Ruta |
 |------|------|
-| Archivos de idioma ES | `lang/es/messages.php`, `lang/es/auth.php`, etc. |
-| Archivos de idioma EN | `lang/en/messages.php`, `lang/en/auth.php`, etc. |
+| Archivos de idioma ES | `lang/es/messages.php`, `lang/es/filament.php`, `lang/es/auth.php`, `lang/es/validation.php`, `lang/es.json`, etc. |
+| Archivos de idioma EN | `lang/en/messages.php`, `lang/en/filament.php`, `lang/en/auth.php`, `lang/en/validation.php`, etc. |
 | Middleware | `app/Http/Middleware/SetLocale.php` |
 | Controlador cambio idioma | `app/Http/Controllers/Web/LanguageController.php` |
 | Componente selector | `resources/views/components/language-switcher.blade.php` |
@@ -50,14 +50,17 @@ Para labels, botones, mensajes, títulos fijos de la UI:
 
 Los archivos de idioma se encuentran en:
 
-| Archivo | Español (ES) | Inglés (EN) |
-|---------|:---:|:---:|
-| `messages.php` | ✅ `lang/es/messages.php` | ✅ `lang/en/messages.php` |
-| `auth.php` | ✅ `lang/es/auth.php` | ✅ `lang/en/auth.php` |
-| `pagination.php` | ✅ `lang/es/pagination.php` | ✅ `lang/en/pagination.php` |
-| `passwords.php` | ✅ `lang/es/passwords.php` | ✅ `lang/en/passwords.php` |
+| Archivo | Español (ES) | Inglés (EN) | Propósito |
+|---------|:---:|:---:|-----------|
+| `messages.php` | ✅ `lang/es/messages.php` | ✅ `lang/en/messages.php` | Textos generales del frontend, emails y SEO |
+| `filament.php` | ✅ `lang/es/filament.php` | ✅ `lang/en/filament.php` | Labels de Enums (`Role`, `ContentStatus`, `EmailStatus`) y panel Filament |
+| `auth.php` | ✅ `lang/es/auth.php` | ✅ `lang/en/auth.php` | Mensajes de autenticación y throttle |
+| `validation.php` | ✅ `lang/es/validation.php` | ✅ `lang/en/validation.php` | Mensajes y atributos de validación de formularios |
+| `pagination.php` | ✅ `lang/es/pagination.php` | ✅ `lang/en/pagination.php` | Paginación |
+| `passwords.php` | ✅ `lang/es/passwords.php` | ✅ `lang/en/passwords.php` | Recuperación de contraseña |
+| `es.json` | ✅ `lang/es.json` | — (claves base en inglés) | Cadenas JSON para vistas de autenticación (`__("Forgot your password?")`, etc.) |
 
-**Regla**: Al añadir una nueva clave de traducción, se debe añadir en AMBOS archivos.
+**Regla**: Al añadir una nueva clave de traducción, se debe añadir en AMBOS idiomas (`es` y `en`).
 
 ---
 
@@ -91,7 +94,7 @@ $post->getTranslation('title', app()->getLocale()); // Idioma actual
 |--------|-----|--------|
 | GET | `/lang/{locale}` | `language.switch` |
 
-El `LanguageController` valida que el locale esté en la lista de disponibles, lo guarda en sesión y redirige a la página anterior.
+El `LanguageController` valida que el locale esté en `config('locales.available')`, lo guarda en sesión y redirige a la página anterior.
 
 ### Componente Blade
 
@@ -101,10 +104,13 @@ El `LanguageController` valida que el locale esté en la lista de disponibles, l
 
 Renderiza botones/banderas ES/EN con enlaces a `route('language.switch', $locale)`.
 
-### Middleware SetLocale
+### Middleware `SetLocale`
 
-Registrado globalmente, establece el idioma en cada request:
-1. Sesión → 2. Accept-Language → 3. Config por defecto
+Registrado en el grupo `web`, establece el idioma en cada request siguiendo este orden de prioridad:
+1. Parámetro de consulta `?lang=xx` (si es un locale válido, también lo persiste en sesión)
+2. Sesión (`session('locale')`)
+3. Cabecera `Accept-Language` del navegador
+4. Idioma por defecto (`config('locales.default', config('app.locale', 'es'))`)
 
 ---
 

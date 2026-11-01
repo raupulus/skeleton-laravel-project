@@ -1,6 +1,6 @@
 # Skeleton Laravel Project
 
-*Última actualización: 2026-08-26*
+*Última actualización: 2026-11-01*
 
 Plantilla base profesional para aplicaciones Laravel con arquitectura modular, robusta y lista para producción.
 Incluye autenticación web y API, panel de administración Filament, sistema de contenidos bilingüe (posts, páginas, slides, secciones), configuraciones dinámicas, registro de auditoría de emails, SEO automatizado, Docker y suite de tests.
@@ -18,19 +18,20 @@ Incluye autenticación web y API, panel de administración Filament, sistema de 
 | **Tailwind CSS** | 4.x | Estilos frontend utilitarios configurados con `@theme` |
 | **Alpine.js** | 3.x | Interactividad ligera, dropdowns y modales |
 | **Vue 3** | 3.x | Preparado en el frontend para componentes enriquecidos |
+| **Vite + pnpm** | 8.x / 10.x | Bundler de assets y gestor de paquetes frontend |
 | **Laravel Sanctum** | 4.x | Autenticación API con Bearer tokens personales |
 | **spatie/laravel-translatable** | 6.x | Traducciones directas en campos de modelos |
-| **spatie/laravel-sitemap** | 7.x | Generación automática del sitemap XML multi-idioma |
-| **knuckleswtf/scribe** | 4.x | Documentación interactiva de la API REST (`/docs`) |
+| **spatie/laravel-sitemap** | 8.x | Generación automática del sitemap XML multi-idioma |
+| **knuckleswtf/scribe** | 5.x | Documentación interactiva de la API REST (`/docs`) |
 
 ---
 
 ## Requisitos previos
 
-- **PHP 8.4** o superior con extensiones: `pdo_pgsql`, `pgsql`, `mbstring`, `openssl`, `curl`, `gd` / `imagick`, `fileinfo`, `xml`.
+- **PHP 8.4** o superior con extensiones: `pdo_pgsql`, `pgsql`, `mbstring`, `openssl`, `curl`, `gd` / `imagick`, `fileinfo`, `xml`, `intl`, `zip`.
 - **PostgreSQL 16** instalado y corriendo localmente o mediante Docker.
 - **Composer 2.7+**
-- **Node.js 20+** y **npm 10+**
+- **Node.js 20.19+ / 22.12+** y **pnpm 10+**
 
 ---
 
@@ -72,7 +73,7 @@ cp .env.example .env
 
 # 2. Dependencias PHP y JS
 composer install
-npm install
+pnpm install
 
 # 3. Clave y Storage
 php artisan key:generate
@@ -85,9 +86,9 @@ php artisan migrate
 php artisan project:dummy
 
 # 6. Compilar assets frontend
-npm run build
+pnpm run build
 # o para desarrollo interactivo:
-npm run dev
+pnpm run dev
 ```
 
 ---
@@ -149,8 +150,8 @@ cp .env.example.production .env
 
 # 4. Instalar dependencias optimizadas
 composer install --no-dev --optimize-autoloader
-npm ci
-npm run build
+pnpm install --frozen-lockfile
+pnpm run build
 
 # 5. Clave de cifrado y Storage
 php artisan key:generate --force
@@ -205,8 +206,8 @@ composer run check
 | Comando | Descripción |
 |---------|-------------|
 | `php artisan project:install {--force}` | Instalación paso a paso o desatendida del proyecto |
-| `php artisan project:clear {--force}` | Limpieza integral de cachés, colas, rotación segura de `APP_KEY` y recomposición de autoload |
-| `php artisan project:dummy {--fresh}` | Inserción de datos corporativos de muestra en todos los módulos (Users, Settings, Categories, Pages, Posts, Slides, Sections, SentEmails) |
+| `php artisan project:clear {--force}` | Limpieza integral de cachés, colas, rotación opcional/confirmada de `APP_KEY` y recomposición de autoload |
+| `php artisan project:dummy {--fresh}` | Inserción de datos corporativos de muestra en todos los módulos (Users, Settings, Categories, Pages, Posts, Slides, Sections) |
 | `php artisan sitemap:generate` | Genera `public/sitemap.xml` con alternates hreflang para todas las páginas y artículos publicados |
 | `php artisan manual:generate-pdf` | Compila los manuales de usuario Markdown a PDFs corporativos |
 
@@ -230,7 +231,7 @@ Especificación detallada de cada comando en [docs/info/commands.md](docs/info/c
   - Gestión integral de usuarios, categorías, páginas, artículos de blog, carruseles de diapositivas, secciones dinámicas, configuraciones y auditoría de emails enviados.
   - Acciones de mantenimiento integradas: regenerar sitemap, limpiar caché y visualizador de logs.
 - **Panel de Usuario (`/panel`)**:
-  - Acceso para usuarios con rol `user` e `is_active = true`.
+  - Acceso para cualquier usuario registrado con cuenta activa (`is_active = true`).
   - Gestión de perfil de usuario y generación/revocación de tokens personales de API (Sanctum).
 
 ---

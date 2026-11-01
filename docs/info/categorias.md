@@ -1,6 +1,6 @@
 # Módulo: Categorías
 
-*Última actualización: 2026-08-26*
+*Última actualización: 2026-11-01*
 
 > Taxonomía compartida entre posts y páginas, con nombres traducibles (es/en), slug único y ordenación personalizada.
 
@@ -47,6 +47,8 @@ Las categorías permiten organizar el contenido (posts y páginas) temáticament
 | `is_active` | boolean | — | Si la categoría está visible y seleccionable |
 | `order` | integer | — | Posición en los listados (menor = primero). Por defecto: 0 |
 | `deleted_at` | datetime (nullable) | — | Soft delete |
+
+**Accessor disponible**: `$category->image_url` (`getImageUrlAttribute()`) devuelve la URL pública de la imagen vía `Storage::disk('public')->url($this->image)` o `null` si no tiene imagen.
 
 ---
 

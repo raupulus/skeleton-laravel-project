@@ -1,6 +1,6 @@
 # Módulo: Slides
 
-*Última actualización: 2026-08-26*
+*Última actualización: 2026-11-01*
 
 > Carruseles de imágenes agrupados por zona, con texto traducible (es/en), editor de recorte integrado y soporte para imágenes horizontales (16:9) y verticales (8:12).
 
@@ -49,6 +49,8 @@ Los slides alimentan los carruseles visuales del frontend. Se agrupan por `zone`
 | `order` | integer | — | Posición dentro de la zona. Menor = primero. Por defecto: 0 |
 | `is_active` | boolean | — | Visibilidad en el frontend. Activo por defecto |
 | `deleted_at` | datetime (nullable) | — | Soft delete |
+
+**Accessor disponible**: `$slide->image_url` (`getImageUrlAttribute()`) devuelve la URL pública de la imagen principal vía `Storage::disk('public')->url($this->image)` o `null` si no tiene imagen.
 
 ---
 

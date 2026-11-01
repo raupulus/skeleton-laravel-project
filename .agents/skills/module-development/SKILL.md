@@ -129,10 +129,10 @@ public function published(): static
    - Carga de SEO dinámico mediante `app(SeoService::class)->fromModel($model)`.
    - Respuestas 404 controladas si el contenido no está publicado ni activo (`abort(404)`).
 2. **Vistas Blade (`resources/views/`)**:
-   - Extender el layout principal `<x-app-layout>`.
+   - Extender el layout principal con `@extends('layouts.app')` y `@section('content')`.
    - **Prohibido maquetar botones o inputs con Tailwind manual**: Utilizar `<x-primary-button>`, `<x-text-input>`, etc.
    - Aplicar tokens semánticos de color Tailwind CSS v4 (`--color-dark`, `--color-surface`, `--color-primary`).
-   - Enlace dinámico de imágenes: `{{ $model->image_url ?? asset('images/default.jpg') }}` con atributo `alt` descriptivo.
+   - Enlace dinámico de imágenes: `{{ $model->image_url ?? asset('images/defaults/no-image.webp') }}` con atributo `alt` descriptivo.
    - Textos bilingües con `__('messages.key')` o `$model->getTranslation('campo', app()->getLocale())`.
 
 ---
@@ -155,7 +155,7 @@ public function published(): static
 ---
 
 ### Paso 9: Documentación Técnica Obligatoria
-1. Crear el archivo `docs/info/[modulo].md` utilizando la plantilla oficial [`docs/info/_MODULE_TEMPLATE.md`](file:///Users/fryntiz/git/skeleton-laravel-project/docs/info/_MODULE_TEMPLATE.md).
+1. Crear el archivo `docs/info/[modulo].md` utilizando la plantilla oficial `docs/info/_MODULE_TEMPLATE.md`.
 2. Cumplimentar los 7 apartados obligatorios.
 3. Incluir la fecha `*Última actualización: YYYY-MM-DD*` en la cabecera.
 4. Registrar el enlace en la tabla de `docs/info/README.md` y en la tabla de `AGENTS.md`.

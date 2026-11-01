@@ -1,6 +1,6 @@
 # Módulo: Enums
 
-*Última actualización: 2026-08-26*
+*Última actualización: 2026-11-01*
 
 > Enumeraciones PHP backed que definen los valores constantes del sistema: roles de usuario, estados de contenido y estados de email.
 
@@ -8,7 +8,7 @@
 
 ## Resumen
 
-La plataforma usa tres enums PHP 8.1+ (backed string) para tipado fuerte y consistencia. Cada enum incluye métodos `label()` (etiqueta legible en español) y métodos adicionales según su propósito.
+La plataforma usa tres enums PHP 8.4 (`string`-backed) para tipado fuerte y consistencia. Cada enum incluye un método `label(): string` traducible mediante `__('filament.*')` (con claves en `lang/es/filament.php` y `lang/en/filament.php`) y métodos adicionales según su propósito.
 
 ---
 
@@ -18,15 +18,15 @@ La plataforma usa tres enums PHP 8.1+ (backed string) para tipado fuerte y consi
 
 Define los roles de usuario de la plataforma.
 
-| Case | Value | Label | `isAdmin()` |
-|------|-------|-------|:-----------:|
-| `SuperAdmin` | `superadmin` | Super Administrador | ✅ |
-| `Admin` | `admin` | Administrador | ✅ |
-| `User` | `user` | Usuario | ❌ |
+| Case | Value | Clave de traducción (`label()`) | ES / EN | `isAdmin()` |
+|------|-------|---------------------------------|---------|:-----------:|
+| `SuperAdmin` | `superadmin` | `filament.role_superadmin` | Super Administrador / Super Administrator | ✅ |
+| `Admin` | `admin` | `filament.role_admin` | Administrador / Administrator | ✅ |
+| `User` | `user` | `filament.role_user` | Usuario / User | ❌ |
 
 **Métodos**:
-- `label(): string` — Devuelve el nombre legible en español
-- `isAdmin(): bool` — `true` para SuperAdmin y Admin
+- `label(): string` — Devuelve la etiqueta traducida según el locale activo
+- `isAdmin(): bool` — `true` para `SuperAdmin` y `Admin`
 
 **Cast en User**: `'role' => Role::class`
 
@@ -38,13 +38,13 @@ Define los roles de usuario de la plataforma.
 
 Define los estados posibles de posts y páginas.
 
-| Case | Value | Label | Color Filament |
-|------|-------|-------|----------------|
-| `Draft` | `draft` | Borrador | `warning` (amarillo) |
-| `Published` | `published` | Publicado | `success` (verde) |
+| Case | Value | Clave de traducción (`label()`) | ES / EN | Color Filament |
+|------|-------|---------------------------------|---------|----------------|
+| `Draft` | `draft` | `filament.status_draft` | Borrador / Draft | `warning` (amarillo) |
+| `Published` | `published` | `filament.status_published` | Publicado / Published | `success` (verde) |
 
 **Métodos**:
-- `label(): string` — Etiqueta en español
+- `label(): string` — Etiqueta traducida
 - `color(): string` — Color para badges en Filament
 
 **Cast en Post/Page**: `'status' => ContentStatus::class`
@@ -57,13 +57,13 @@ Define los estados posibles de posts y páginas.
 
 Define los estados de los emails enviados.
 
-| Case | Value | Label | Color Filament |
-|------|-------|-------|----------------|
-| `Sent` | `sent` | Enviado | `success` (verde) |
-| `Failed` | `failed` | Fallido | `danger` (rojo) |
+| Case | Value | Clave de traducción (`label()`) | ES / EN | Color Filament |
+|------|-------|---------------------------------|---------|----------------|
+| `Sent` | `sent` | `filament.email_status_sent` | Enviado / Sent | `success` (verde) |
+| `Failed` | `failed` | `filament.email_status_failed` | Fallido / Failed | `danger` (rojo) |
 
 **Métodos**:
-- `label(): string` — Etiqueta en español
+- `label(): string` — Etiqueta traducida
 - `color(): string` — Color para badges en Filament
 
 **Cast en SentEmail**: `'status' => EmailStatus::class`

@@ -1,6 +1,6 @@
 # Documentación técnica de módulos
 
-*Última actualización: 2026-08-26*
+*Última actualización: 2026-11-01*
 
 Este directorio contiene la documentación técnica viva y detallada de cada módulo implementado en la plataforma. Cada archivo describe el objetivo, la arquitectura, los archivos involucrados, los campos, las relaciones, qué es editable desde el panel y el comportamiento de un módulo concreto.
 
@@ -25,7 +25,7 @@ Este directorio contiene la documentación técnica viva y detallada de cada mó
 |--------|---------|-------------|
 | [EmailService](servicio-email.md) | `servicio-email.md` | Envío centralizado de emails con registro automático |
 | [SeoService](servicio-seo.md) | `servicio-seo.md` | Gestión dinámica de meta tags SEO |
-| [SettingService](servicio-settings.md) | `servicio-settings.md` | Acceso cacheado a la configuración del sistema |
+| [SettingService y Helpers](servicio-settings.md) | `servicio-settings.md` | Acceso cacheado a configuración y helpers globales (`setting`, `media_url`, `storage_image`, `format_date`) |
 | [SitemapService](servicio-sitemap.md) | `servicio-sitemap.md` | Generación automática del sitemap XML |
 
 ### Estándares y Constructor Modular
@@ -41,7 +41,7 @@ Este directorio contiene la documentación técnica viva y detallada de cada mó
 |--------|---------|-------------|
 | [Catálogo de Componentes UI](COMPONENTS.md) | `COMPONENTS.md` | Catálogo de componentes Blade reutilizables y directrices |
 | [Guía de Diseño y Estilos](DESIGN.md) | `DESIGN.md` | Tokens Tailwind CSS v4, layout, tipografía y esquema de color |
-| [Autenticación y autorización](autenticacion.md) | `autenticacion.md` | Auth web (Breeze), API (Sanctum), policies y guards |
+| [Autenticación y autorización](autenticacion.md) | `autenticacion.md` | Auth web por sesión, API (Sanctum), policies y guards |
 | [Traducciones](traducciones.md) | `traducciones.md` | Sistema i18n: archivos de idioma, modelos traducibles, middleware |
 | [Panel Admin Filament](panel-admin.md) | `panel-admin.md` | Panel de administración con todos los Resources |
 | [Panel Usuario Filament](panel-usuario.md) | `panel-usuario.md` | Panel de usuario con perfil y tokens API |

@@ -1,6 +1,6 @@
 # AGENTS.md — Guía completa del proyecto para agentes de IA
 
-*Última actualización: 2026-08-26*
+*Última actualización: 2026-11-01*
 
 Este archivo proporciona el contexto y las directrices obligatorias del proyecto para que los agentes de IA
 puedan trabajar de forma autónoma, consistente y precisa. Léelo completamente antes de realizar cualquier modificación.
@@ -22,6 +22,7 @@ puedan trabajar de forma autónoma, consistente y precisa. Léelo completamente 
 - **Tailwind CSS 4** — Motor de estilos CSS utilitarios configurado con `@theme` en `resources/css/app.css`.
 - **Alpine.js 3** — Interactividad reactiva ligera y modales.
 - **Vue 3** — Preparado en el frontend para componentes enriquecidos (no requerido en producción aún).
+- **pnpm + Vite 8** — Gestor de paquetes frontend y bundler de assets (`pnpm install`, `pnpm run build`).
 - **Laravel Sanctum** — Autenticación API mediante Bearer tokens personales.
 - **spatie/laravel-translatable** — Gestión de traducciones en campos de modelos Eloquent.
 - **spatie/laravel-sitemap** — Generación automatizada de sitemaps XML.
@@ -65,11 +66,11 @@ La plataforma implementa tres roles definidos mediante el enum respaldado `App\E
 
 | Rol | Valor (`role`) | Acceso Panel Admin (`/admin`) | Acceso Panel Usuario (`/panel`) | API REST | Propósito |
 |-----|----------------|-------------------------------|---------------------------------|----------|-----------|
-| **SuperAdmin** | `superadmin` | Sí (Total) | Sí | Sí | Control total del sistema, configuración, logs y auditoría |
-| **Admin** | `admin` | Sí (Gestión) | Sí | Sí | Gestión de contenidos (posts, páginas, categorías, slides, secciones) |
+| **SuperAdmin** | `superadmin` | Sí (Total) | Sí | Sí | Control total del sistema, configuración, logs, auditoría y gestión de cuentas `superadmin` |
+| **Admin** | `admin` | Sí (Gestión) | Sí | Sí | Gestión de contenidos y usuarios estándar (no puede asignar ni modificar cuentas `superadmin`) |
 | **User** | `user` | No | Sí (si `is_active = true`) | Sí | Usuario registrado general; gestiona su perfil y sus tokens de API |
 
-> El método `canAccessPanel(Panel $panel)` en `App\Models\User` restringe el acceso al panel admin únicamente a usuarios con rol `superadmin` o `admin` y estado `is_active = true`.
+> El método `canAccessPanel(Panel $panel)` en `App\Models\User` restringe el acceso al panel admin únicamente a usuarios con rol `superadmin` o `admin` y estado `is_active = true`, mientras que `/panel` permite el acceso a cualquier usuario activo (`is_active = true`).
 
 ---
 
@@ -96,7 +97,9 @@ La plataforma implementa tres roles definidos mediante el enum respaldado `App\E
 - Las rutas de login y los paneles Filament deben ser totalmente dinámicas para poder desplegarse en cualquier dominio, subdominio o subdirectorio sin fallos de redirección.
 - Las imágenes y assets subidos deben enlazarse dinámicamente:
   ```blade
-  <img src="{{ Storage::disk('public')->url($model->image) }}" alt="{{ $model->title }}">
+  <img src="{{ $model->image_url }}" alt="{{ $model->title }}">
+  {{-- o mediante el helper global --}}
+  <img src="{{ media_url($model->image) }}" alt="{{ $model->title }}">
   ```
   O para archivos estáticos en `public/`:
   ```blade
@@ -107,7 +110,7 @@ La plataforma implementa tres roles definidos mediante el enum respaldado `App\E
 **NUNCA escribir textos hardcodeados en vistas Blade.**
 1. **Textos estáticos de interfaz**: Usar `__('messages.key')` o `__('Log in')` (vía `lang/es.json` y `lang/{es,en}/messages.php`).
 2. **Contenido dinámico de modelos**: Usar `$model->getTranslation('campo', app()->getLocale())`.
-3. El idioma por defecto es español (`es`), fallback en inglés (`en`). La zona horaria en `config/app.php` es siempre `UTC`; el frontend muestra las fechas formateadas en español (`d/m/Y`) o según la configuración local del usuario.
+3. El idioma por defecto es español (`es`), fallback en inglés (`en`). La zona horaria en `config/app.php` es `Europe/Madrid` (`env('APP_TIMEZONE', 'Europe/Madrid')`); el frontend muestra las fechas formateadas con `format_date($date, 'd/m/Y')` o según el idioma activo.
 
 ### ⚠️ Backend Filament — Traducciones y Formularios
 1. **Traducción integral**: Todos los labels de formulario, columnas de tabla, badges, acciones y títulos (`getModelLabel()`, `getPluralModelLabel()`, `getNavigationGroup()`) deben usar `__('filament.key')` con correspondencia exacta en `lang/es/filament.php` y `lang/en/filament.php`.
@@ -242,10 +245,11 @@ skeleton-laravel-project/
 │   │   │   └── Widgets/          # StatsOverviewWidget, PostsChartWidget, LatestEmailsWidget, LogDownloadWidget
 │   │   ├── Components/           # ImageCropField (helper de imágenes con croppers estándar)
 │   │   └── Panel/                # Panel Usuario (/panel): EditProfile, ApiTokens, WelcomeWidget
+│   ├── Helpers/                  # helpers.php (setting, media_url, storage_image, format_date)
 │   ├── Http/
 │   │   ├── Controllers/          # Controladores Web, Auth y API v1
 │   │   ├── Middleware/           # SetLocale, SecurityHeaders
-│   │   └── Requests/             # FormRequests (ContactRequest, LoginRequest, etc.)
+│   │   └── Requests/             # FormRequests (ContactRequest, LoginRequest, Api/V1/Auth/*)
 │   ├── Mail/                     # ContactMail, WelcomeMail, GenericMail
 │   ├── Models/                   # User, Post, Page, Category, Slide, Section, Setting, SentEmail
 │   ├── Policies/                 # Políticas de autorización por modelo
@@ -255,11 +259,11 @@ skeleton-laravel-project/
 │   ├── Services/                 # EmailService, SeoService, SettingService, SitemapService
 │   └── Traits/                   # HasSlug, HasStatus, HasSeo, BelongsToUser
 ├── bootstrap/                    # Arranque del framework y configuración de proveedores
-├── config/                       # Archivos de configuración (app, database, services, etc.)
+├── config/                       # Archivos de configuración (app, database, locales, services, scribe, etc.)
 ├── database/
 │   ├── factories/                # Factorías de modelos para tests
 │   ├── migrations/               # Migraciones comentadas de PostgreSQL
-│   └── seeders/                  # UserSeeder, SettingSeeder, CategorySeeder, PageSeeder, PostSeeder, SlideSeeder, SectionSeeder
+│   └── seeders/                  # DatabaseSeeder, DummyDataSeeder, UserSeeder, SettingSeeder, CategorySeeder, PageSeeder, PostSeeder, SlideSeeder, SectionSeeder
 ├── docs/
 │   ├── apis/                     # Documentación técnica oficial externa de APIs
 │   ├── auditorias/               # Auditorías solicitadas de código (gitignored)
@@ -274,9 +278,9 @@ skeleton-laravel-project/
 ├── resources/
 │   ├── css/                      # app.css con Tailwind CSS v4 (@theme)
 │   ├── js/                       # app.js y componentes
-│   └── views/                    # Plantillas Blade (auth/, components/, layouts/, posts/, pages/, etc.)
+│   └── views/                    # Plantillas Blade (auth/, components/, layouts/, posts/, pages/, static/, etc.)
 ├── routes/                       # web.php, auth.php, api.php, console.php
-└── tests/                        # Tests Feature y Unit (Auth, Web, Admin, Api, Services)
+└── tests/                        # Tests Feature y Unit (Auth, Web, Admin, Api, Console, Services)
 ```
 
 ---
@@ -294,11 +298,12 @@ skeleton-laravel-project/
 - `GET  /privacy` (`privacy`): Política de privacidad.
 - `GET  /cookies` (`cookies`): Política de cookies.
 - `GET  /lang/{locale}` (`language.switch`): Cambio de idioma activo en sesión.
-- `GET  /admin/logs/download/{filename}` (`admin.logs.download`): Descarga segura de archivo de log (solo admin).
+- `GET  /admin/logs/download/{filename}` (`admin.logs.download`): Descarga segura de archivo de log (solo admin activo).
+- `GET  /up`: Health check nativo de Laravel.
 
-### Rutas de Autenticación Web (Breeze)
+### Rutas de Autenticación Web (`routes/auth.php`)
 - `GET  /login` (`login`): Pantalla de inicio de sesión.
-- `POST /login`: Procesamiento de login (`throttle:10,1`, reCAPTCHA v3).
+- `POST /login`: Procesamiento de login (`throttle:10,1`, reCAPTCHA v3, requiere `is_active = true`).
 - `POST /logout` (`logout`): Cierre de sesión y revocación.
 - `GET  /register` (`register`): Pantalla de registro de usuario.
 - `POST /register`: Registro de nuevo usuario (`throttle:10,1`, reCAPTCHA v3).
@@ -307,8 +312,11 @@ skeleton-laravel-project/
 - `GET  /reset-password/{token}` (`password.reset`): Formulario de restablecimiento.
 - `POST /reset-password` (`password.store`): Procesamiento de nueva contraseña (`throttle:10,1`, reCAPTCHA v3).
 - `GET  /verify-email` (`verification.notice`): Aviso de verificación de email.
-- `GET  /verify-email/{id}/{hash}` (`verification.verify`): Confirmación de email firmado.
-- `POST /email/verification-notification` (`verification.send`): Reenvío de confirmación.
+- `GET  /verify-email/{id}/{hash}` (`verification.verify`): Confirmación de email firmado (`signed`, `throttle:6,1`).
+- `POST /email/verification-notification` (`verification.send`): Reenvío de confirmación (`throttle:6,1`).
+- `GET  /confirm-password` (`password.confirm`): Pantalla de confirmación de contraseña.
+- `POST /confirm-password`: Validación de contraseña actual.
+- `PUT  /password` (`password.update`): Actualización de contraseña autenticada.
 
 ### Rutas Panel Admin Filament (`/admin`)
 - `GET  /admin` (`filament.admin.pages.dashboard`): Dashboard del administrador con estadísticas y widgets.
@@ -337,20 +345,21 @@ skeleton-laravel-project/
 
 ### Rutas API REST (`/api/v1`)
 - **Públicas**:
-  - `GET  /api/v1/posts`: Listado de posts publicados.
-  - `GET  /api/v1/posts/{slug}`: Detalle de post.
-  - `GET  /api/v1/pages`: Listado de páginas.
-  - `GET  /api/v1/pages/{slug}`: Detalle de página.
-  - `GET  /api/v1/categories`: Taxonomía y categorías.
-  - `POST /api/v1/auth/register`: Registro de usuario vía API.
-  - `POST /api/v1/auth/login`: Obtención de Bearer token.
-  - `POST /api/v1/auth/forgot-password`: Recuperación de password vía API.
-  - `POST /api/v1/auth/reset-password`: Restablecimiento de password vía API.
-- **Autenticadas (Bearer token)**:
-  - `GET    /api/v1/auth/user`: Datos del usuario autenticado.
-  - `POST   /api/v1/auth/logout`: Revocación del token activo.
-  - `GET    /api/v1/user/tokens`: Listado de tokens propios.
-  - `POST   /api/v1/user/tokens`: Generación de nuevo token API.
-  - `DELETE /api/v1/user/tokens/{tokenId}`: Eliminación de token.
+  - `GET  /api/v1/posts` (`api.v1.posts.index`): Listado de posts publicados.
+  - `GET  /api/v1/posts/{slug}` (`api.v1.posts.show`): Detalle de post.
+  - `GET  /api/v1/pages` (`api.v1.pages.index`): Listado de páginas.
+  - `GET  /api/v1/pages/{slug}` (`api.v1.pages.show`): Detalle de página.
+  - `GET  /api/v1/categories` (`api.v1.categories.index`): Listado de categorías activas.
+  - `GET  /api/v1/categories/{slug}` (`api.v1.categories.show`): Detalle de categoría por slug.
+  - `POST /api/v1/auth/register` (`api.v1.auth.register`, `throttle:5,1`): Registro de usuario vía API.
+  - `POST /api/v1/auth/login` (`api.v1.auth.login`, `throttle:10,1`): Obtención de Bearer token.
+  - `POST /api/v1/auth/forgot-password` (`api.v1.auth.forgot-password`, `throttle:3,1`): Recuperación de password vía API.
+  - `POST /api/v1/auth/reset-password` (`api.v1.auth.reset-password`, `throttle:5,1`): Restablecimiento de password vía API.
+- **Autenticadas (Bearer token, `auth:sanctum`)**:
+  - `GET    /api/v1/auth/user` (`api.v1.auth.user`): Datos del usuario autenticado.
+  - `POST   /api/v1/auth/logout` (`api.v1.auth.logout`): Revocación del token activo.
+  - `GET    /api/v1/user/tokens` (`api.v1.tokens.index`): Listado de tokens propios.
+  - `POST   /api/v1/user/tokens` (`api.v1.tokens.store`): Generación de nuevo token API.
+  - `DELETE /api/v1/user/tokens/{tokenId}` (`api.v1.tokens.destroy`): Eliminación de token.
 - **Documentación API**:
   - `GET  /docs`: Documentación interactiva de la API (Scribe).

@@ -1,8 +1,10 @@
 # Constructor Modular de Contenido (Content Builder)
 
-*Última actualización: 2026-08-26*
+*Última actualización: 2026-11-01*
 
 > Especificación técnica sobre la arquitectura, almacenamiento JSON, catálogo de bloques y renderizado Blade del constructor modular de contenido para Páginas y Posts.
+
+> **Estado en el Skeleton**: Por defecto, `PageResource` y `PostResource` utilizan `RichEditor` (HTML enriquecido por idioma en `content.{es,en}`) para ofrecer una experiencia editorial directa nada más clonar el proyecto. Este documento, junto con el estado de factoría `PageFactory::withModularBlocks()`, define la arquitectura estándar lista para activar cuando un proyecto derivado requiera composición modular por bloques (`Filament\Forms\Components\Builder`).
 
 ---
 

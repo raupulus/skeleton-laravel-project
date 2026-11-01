@@ -1,6 +1,6 @@
 # Módulo: Páginas
 
-*Última actualización: 2026-08-26*
+*Última actualización: 2026-11-01*
 
 > Páginas de contenido estático/dinámico traducibles (es/en) con campos SEO, categorías opcionales y estados de publicación.
 
@@ -12,7 +12,7 @@ El módulo de páginas permite crear contenido más permanente y estructural que
 
 Las páginas comparten la misma arquitectura técnica que los posts (traducciones bilingües, campos SEO, categorías opcionales, estados de publicación, slug automático y asignación de autor), pero se muestran en rutas independientes (`/pages/{slug}`) y están pensadas para contenido que no cambia con frecuencia. Esto permite que el administrador cree y edite páginas completas desde el panel de administración sin necesidad de tocar código ni vistas Blade.
 
-Las páginas legales (`politica-privacidad`, `politica-cookies`) se crean automáticamente mediante el seeder para garantizar que los enlaces del footer y del formulario de contacto funcionen desde el primer despliegue. También se exponen endpoints API públicos para consumo externo.
+Las páginas legales (`politica-privacidad`, `politica-cookies`) se crean automáticamente mediante el seeder en `/pages/politica-privacidad` y `/pages/politica-cookies`, coexistiendo además con las rutas estáticas dedicadas `/privacy` (`privacy`) y `/cookies` (`cookies`) gestionadas por `StaticPageController`. También se exponen endpoints API públicos para consumo externo.
 
 ---
 
@@ -39,7 +39,7 @@ Las páginas sirven para contenido más permanente que los posts: «Sobre nosotr
 
 ## Campos del modelo
 
-Idénticos al modelo Post. Ver [Posts > Campos del modelo](posts.md#campos-del-modelo).
+Idénticos al modelo Post, incluyendo el accessor `$page->image_url` (`getImageUrlAttribute()`). Ver [Posts > Campos del modelo](posts.md#campos-del-modelo).
 
 Campos traducibles: `title`, `content`, `excerpt`, `seo_title`, `seo_description`, `seo_keywords`.
 
@@ -66,7 +66,9 @@ Mismos que Post: `HasTranslations`, `HasSlug`, `HasStatus`, `HasSeo`, `BelongsTo
 
 | Método | URI | Nombre | Descripción |
 |--------|-----|--------|-------------|
-| GET | `/pages/{slug}` | `pages.show` | Detalle de una página |
+| GET | `/pages/{slug}` | `pages.show` | Detalle de una página dinámica |
+| GET | `/privacy` | `privacy` | Vista estática dedicada (`StaticPageController@privacy`) |
+| GET | `/cookies` | `cookies` | Vista estática dedicada (`StaticPageController@cookies`) |
 
 ### API
 
@@ -82,9 +84,9 @@ Mismos que Post: `HasTranslations`, `HasSlug`, `HasStatus`, `HasSeo`, `BelongsTo
 - **Grupo de navegación**: Contenido
 - **Icono**: `heroicon-o-document-text`
 - **Labels**: «Página» / «Páginas»
-- **Formulario**: Tabs de traducción (ES/EN) + slug, imagen, estado, destacado, activo, categorías, fecha de publicación
+- **Formulario**: Imagen con recorte 16:9 (`ImageCropField::make16x9('image', 'pages')`) + Tabs de traducción (ES/EN con `RichEditor`) + slug, estado, destacado, activo, categorías, fecha de publicación
 - **Listado**: slug, título, estado (badge), destacado (icono), fecha de publicación
-- **Filtros**: Estado (select con ContentStatus)
+- **Filtros**: Estado (select con `ContentStatus`), Papelera (`TrashedFilter`)
 
 ---
 
@@ -92,4 +94,4 @@ Mismos que Post: `HasTranslations`, `HasSlug`, `HasStatus`, `HasSeo`, `BelongsTo
 
 El `PageSeeder` crea 12 páginas con traducciones es/en (10 publicadas, 2 borradores). Es idempotente.
 
-Las páginas **`politica-privacidad`** y **`politica-cookies`** se crean siempre en el seeder para garantizar que las rutas legales del footer y del formulario de contacto funcionen desde el primer despliegue. Anteriormente existían como vistas Blade estáticas (`privacy.blade.php` y `cookies.blade.php`); ahora son páginas dinámicas editables desde Filament Admin.
+Las páginas **`politica-privacidad`** y **`politica-cookies`** se crean siempre en el seeder como páginas dinámicas editables desde Filament Admin (`/pages/politica-privacidad`, `/pages/politica-cookies`), además de existir las vistas Blade estáticas (`resources/views/static/privacy.blade.php` y `resources/views/static/cookies.blade.php`) en `/privacy` y `/cookies`.

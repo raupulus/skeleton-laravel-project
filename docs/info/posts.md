@@ -1,6 +1,6 @@
 # Módulo: Posts (Blog)
 
-*Última actualización: 2026-08-26*
+*Última actualización: 2026-11-01*
 
 > Sistema de blog con artículos traducibles (es/en), categorías, campos SEO, estados de publicación y asignación automática de autor.
 
@@ -60,6 +60,8 @@ Los posts conforman el sistema de blog de la plataforma. Cada post soporta tradu
 | `published_at` | datetime (nullable) | — | Fecha de publicación |
 | `deleted_at` | datetime (nullable) | — | Soft delete |
 
+**Accessor disponible**: `$post->image_url` (`getImageUrlAttribute()`) devuelve la URL pública de la imagen vía `Storage::disk('public')->url($this->image)` o `null` si no tiene imagen.
+
 ---
 
 ## Relaciones
@@ -106,9 +108,9 @@ Los posts conforman el sistema de blog de la plataforma. Cada post soporta tradu
 
 - **Grupo de navegación**: Contenido
 - **Icono**: `heroicon-o-newspaper`
-- **Formulario**: Tabs de traducción (ES/EN) con campos de contenido y SEO + campos generales (slug, imagen, estado, destacado, activo, categorías, fecha de publicación)
+- **Formulario**: Imagen destacada con recorte 16:9 (`ImageCropField::make16x9('image', 'posts')`) + Tabs de traducción (ES/EN) con campos de contenido (`RichEditor`) y SEO + campos generales (slug, estado, destacado, activo, categorías, fecha de publicación)
 - **Listado**: Columnas slug, título, estado (badge), destacado (icono), fecha de publicación
-- **Acciones**: Editar
+- **Acciones**: Editar, Eliminar, Restaurar, Eliminar permanentemente
 
 ---
 

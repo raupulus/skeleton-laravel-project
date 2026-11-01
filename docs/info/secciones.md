@@ -1,6 +1,6 @@
 # Módulo: Secciones
 
-*Última actualización: 2026-08-26*
+*Última actualización: 2026-11-01*
 
 > Bloques de contenido dinámico del frontend, agrupados por zona, con título, descripción y contenido enriquecido traducibles (es/en). Editables desde el backend sin tocar código.
 
@@ -49,6 +49,8 @@ Las secciones permiten gestionar bloques de contenido reutilizables que se muest
 | `order` | integer | — | Posición dentro de la zona (menor = primero). Por defecto: 0 |
 | `deleted_at` | datetime (nullable) | — | Soft delete |
 
+**Accessor disponible**: `$section->image_url` (`getImageUrlAttribute()`) devuelve la URL pública de la imagen vía `Storage::disk('public')->url($this->image)` o `null` si no tiene imagen.
+
 ---
 
 ## Scopes
@@ -79,7 +81,7 @@ Las secciones se cargan en los controladores (ej: `HomeController` carga las de 
 - **Grupo de navegación**: Frontend
 - **Icono**: `heroicon-o-squares-2x2`
 - **Labels**: «Sección» / «Secciones»
-- **Formulario**: Tabs de traducción (título, descripción y contenido/RichEditor en ES/EN) + slug, zona, imagen, orden
+- **Formulario**: Imagen con recorte 16:9 (`ImageCropField::make16x9('image', 'sections')`) + Tabs de traducción (título, descripción y contenido/RichEditor en ES/EN) + slug, zona, orden
 - **Listado**: slug, zona, título, orden. Ordenado por zona por defecto.
 
 ---

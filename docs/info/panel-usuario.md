@@ -1,6 +1,6 @@
 # Módulo: Panel Usuario (Filament)
 
-*Última actualización: 2026-08-26*
+*Última actualización: 2026-11-01*
 
 > Panel de usuario en `/panel` con edición de perfil personal y gestión de tokens API propios.
 
@@ -30,7 +30,7 @@ El panel de usuario es un área privada accesible para cualquier usuario activo 
 
 | Tipo | Ruta |
 |------|------|
-| Panel Provider | `app/Providers/Filament/PanelPanelProvider.php` |
+| Panel Provider | `app/Providers/Filament/PanelUserProvider.php` |
 | Página - Perfil | `app/Filament/Panel/Pages/EditProfile.php` |
 | Página - Tokens | `app/Filament/Panel/Pages/ApiTokens.php` |
 | Widget | `app/Filament/Panel/Widgets/WelcomeWidget.php` |
@@ -49,7 +49,7 @@ El panel de usuario es un área privada accesible para cualquier usuario activo 
 |-------|------|:---:|-------------|
 | `name` | TextInput | ✅ | Nombre del usuario |
 | `email` | TextInput (email) | ❌ (disabled) | Email, solo lectura |
-| `avatar` | FileUpload | ✅ | Foto de perfil, directorio `avatars` |
+| `avatar` | `ImageCropField::make4x3('avatar', 'avatars')` | ✅ | Foto de perfil con recorte 4:3, directorio `avatars` |
 | `password` | TextInput (password) | ✅ | Nueva contraseña (min 8). Solo se actualiza si se rellena |
 
 Al guardar, se muestra notificación: «Perfil actualizado correctamente.»

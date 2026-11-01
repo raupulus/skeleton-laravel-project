@@ -1,6 +1,6 @@
 # Módulo: Usuarios
 
-*Última actualización: 2026-08-26*
+*Última actualización: 2026-11-01*
 
 > Gestión de cuentas de usuario con sistema de roles, autenticación web y API, y control de acceso a los paneles Filament.
 
@@ -11,18 +11,18 @@
 El módulo de usuarios proporciona toda la infraestructura de gestión de identidad y acceso de la plataforma. Su objetivo es permitir que existan distintos perfiles de usuario con niveles de acceso diferenciados:
 
 - **Superadmin**: control total del sistema, acceso al panel de administración (`/admin`) con permisos completos sobre todos los recursos.
-- **Admin**: acceso al panel de administración con los mismos permisos de gestión de contenido, pero pensado para roles editoriales.
+- **Admin**: acceso al panel de administración con los mismos permisos de gestión de contenido, pero sin capacidad para modificar ni asignar el rol `superadmin`.
 - **User**: acceso únicamente al panel de usuario (`/panel`), donde puede gestionar su perfil personal y sus tokens de API.
 
-El módulo se integra con Laravel Breeze para la autenticación web (registro, login, recuperación de contraseña con sesiones HTTP) y con Laravel Sanctum para la autenticación API (generación de tokens Bearer para consumo externo). Cada usuario puede tener un avatar, un estado activo/inactivo que controla el acceso a toda la plataforma, y se implementa borrado lógico (soft delete) para no perder datos históricos.
+El módulo incluye autenticación web con sesiones HTTP (registro, login, recuperación y confirmación de contraseña) y autenticación API con Laravel Sanctum (generación de tokens Bearer para consumo externo). Cada usuario puede tener un avatar, un estado activo/inactivo que controla el acceso a toda la plataforma, y se implementa borrado lógico (soft delete) para no perder datos históricos.
 
-Desde el panel admin, los administradores pueden crear, editar, desactivar y eliminar usuarios. Los usuarios normales solo pueden editar su propio perfil desde el panel de usuario. Las policies de autorización garantizan que un usuario no pueda eliminarse a sí mismo ni acceder a datos de otros usuarios sin el rol adecuado.
+Desde el panel admin, los administradores pueden crear, editar, desactivar y eliminar usuarios. Los usuarios normales solo pueden editar su propio perfil desde el panel de usuario (`/panel`). Las policies de autorización garantizan que un usuario no pueda eliminarse a sí mismo ni que un `admin` pueda alterar cuentas `superadmin`.
 
 ---
 
 ## Resumen
 
-El módulo de usuarios es el pilar central de la plataforma. Define tres roles con distintos niveles de acceso (`superadmin`, `admin`, `user`), soporta autenticación web mediante Laravel Breeze y autenticación API con Laravel Sanctum. Los usuarios pueden tener avatar, estado activo/inactivo y se eliminan con borrado lógico (soft delete).
+El módulo de usuarios es el pilar central de la plataforma. Define tres roles con distintos niveles de acceso (`superadmin`, `admin`, `user`), soporta autenticación web por sesión y autenticación API con Laravel Sanctum. Los usuarios pueden tener avatar (`$user->avatar_url`), estado activo/inactivo y se eliminan con borrado lógico (soft delete).
 
 ---
 
@@ -93,36 +93,36 @@ El método `isAdmin()` del enum devuelve `true` para `superadmin` y `admin`.
 
 ---
 
-## Métodos helper
+## Métodos helper y Accessors
 
-| Método | Retorno | Descripción |
+| Método / Accessor | Retorno | Descripción |
 |--------|---------|-------------|
-| `isSuperAdmin()` | bool | Si el rol es `superadmin` |
-| `isAdmin()` | bool | Si el rol es `superadmin` o `admin` |
-| `canAccessPanel(Panel)` | bool | Evalúa acceso al panel Filament según rol e `is_active` |
+| `isSuperAdmin()` | `bool` | Si el rol es `superadmin` |
+| `isAdmin()` | `bool` | Si el rol es `superadmin` o `admin` |
+| `canAccessPanel(Panel)` | `bool` | Evalúa acceso al panel Filament según rol e `is_active` |
+| `$user->avatar_url` | `?string` | Accessor `getAvatarUrlAttribute()`: URL pública dinámica del avatar vía `Storage::disk('public')->url($this->avatar)` |
 
 ---
 
 ## Traits utilizados
 
 - `HasApiTokens` — Sanctum: generación y gestión de tokens API personales
-- `HasFactory` — Factories para tests y seeders
+- `HasFactory` — Factories para tests y seeders (estados `superadmin()`, `admin()`, `inactive()`, `unverified()`)
 - `Notifiable` — Envío de notificaciones por email
 - `SoftDeletes` — Borrado lógico: no se eliminan de la BD, se marca `deleted_at`
 
 ---
 
-## Control de acceso (Policy)
-
-La `UserPolicy` restringe la gestión de usuarios:
+## Control de acceso (`UserPolicy` y `UserResource`)
 
 | Acción | Quién puede | Notas |
 |--------|-------------|-------|
-| Ver listado | admin/superadmin | — |
-| Ver detalle | admin/superadmin o el propio usuario | — |
-| Crear | admin/superadmin | — |
-| Editar | admin/superadmin o el propio usuario | — |
-| Eliminar | admin/superadmin | No puede eliminarse a sí mismo |
+| Ver listado / detalle | `admin` / `superadmin` | — |
+| Crear | `admin` / `superadmin` | Un `admin` no ve la opción de rol `superadmin` en el selector |
+| Editar / Restaurar | `admin` / `superadmin` | Las cuentas con rol `superadmin` solo pueden ser editadas o restauradas por otro `superadmin` |
+| Eliminar / ForceDelete | Solo `superadmin` | Nunca puede eliminarse a sí mismo (`$user->id !== $model->id`) |
+
+En `UserResource` y `EditProfile`, el campo `avatar` utiliza `ImageCropField::make4x3('avatar', 'avatars')`.
 
 ---
 

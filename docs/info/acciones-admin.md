@@ -1,8 +1,8 @@
 # Acciones Admin
 
-*Última actualización: 2026-08-26*
+*Última actualización: 2026-11-01*
 
-Sección del panel admin con acciones de mantenimiento del sistema. Accesible solo para usuarios con rol admin o superadmin. Aparece como último grupo en el menú lateral ("Acciones", después de "Sistema").
+Sección del panel admin con acciones de mantenimiento del sistema. Accesible solo para usuarios activos con rol admin o superadmin. Aparece como último grupo en el menú lateral ("Acciones", después de "Sistema").
 
 ## Archivos principales
 
@@ -30,12 +30,8 @@ Sección del panel admin con acciones de mantenimiento del sistema. Accesible so
 - **Icono navegación:** `heroicon-o-trash`
 - **Grupo de navegación:** Acciones
 - Vista: descripción de texto sin icono grande + panel de advertencias (fondo amber)
-- Ejecuta el comando `php artisan project:clear` desde una acción del header
-- Modal de confirmación con listado de consecuencias:
-  - Cierre de sesiones activas
-  - Vaciado de caché de datos
-  - Interrupción de colas de eventos
-  - Primera carga más lenta
+- Ejecuta `Artisan::call('optimize:clear')` y `Artisan::call('cache:clear')` desde una acción del header (no rota `APP_KEY` ni lanza procesos externos; para rotación de clave y `composer dump-autoload` se usa `php artisan project:clear --force` por CLI)
+- Modal de confirmación antes de ejecutar
 
 ### Ver Logs
 - **Icono navegación:** `heroicon-o-document-magnifying-glass`
@@ -55,7 +51,7 @@ Sección del panel admin con acciones de mantenimiento del sistema. Accesible so
 
 ## Rutas
 - Las páginas de acciones se descubren automáticamente vía `discoverPages()` en `AdminPanelProvider`
-- Ruta de descarga: `GET /admin/logs/download/{filename}` — controlador `LogDownloadController`, middleware `auth`, verificación de rol admin
+- Ruta de descarga: `GET /admin/logs/download/{filename}` — controlador `LogDownloadController`, middleware `auth`, verificación de usuario activo y rol admin
 - Nombre de ruta: `admin.logs.download`
 
 ## Traducciones
@@ -63,6 +59,6 @@ Sección del panel admin con acciones de mantenimiento del sistema. Accesible so
 - Prefijo: `regenerate_sitemap_*`, `clear_cache_*`, `view_logs_*`, `download_error_log`
 
 ## Seguridad
-- Las páginas solo son accesibles para admin/superadmin (protegido por el panel Filament)
-- La ruta de descarga verifica `auth()->user()->role->isAdmin()`
+- Las páginas solo son accesibles para usuarios activos con rol `admin` o `superadmin` (protegido por el panel Filament)
+- La ruta de descarga verifica `$user && $user->is_active && $user->isAdmin()`
 - Protección contra path traversal con `realpath()` + `str_starts_with()`

@@ -1,6 +1,6 @@
 # Módulo: Configuración (Settings)
 
-*Última actualización: 2026-08-26*
+*Última actualización: 2026-11-01*
 
 > Ajustes globales de la plataforma en formato clave-valor, agrupados por categoría, cacheados durante 1 hora y accesibles mediante el helper global `setting()`.
 
@@ -28,7 +28,7 @@ El módulo de configuración permite gestionar ajustes del sitio (título, descr
 |------|------|
 | Modelo | `app/Models/Setting.php` |
 | Servicio | `app/Services/SettingService.php` |
-| Helper global | `app/Helpers/helpers.php` → función `setting()` |
+| Helpers globales | `app/Helpers/helpers.php` → `setting()`, `media_url()`, `storage_image()`, `format_date()` |
 | Filament Resource | `app/Filament/Admin/Resources/SettingResource.php` |
 | Policy | `app/Policies/SettingPolicy.php` |
 | Migración | `database/migrations/*_create_settings_table.php` |
@@ -79,7 +79,7 @@ Clase: `App\Services\SettingService`
 setting('site_title', 'Valor por defecto');
 ```
 
-Registrado en `composer.json` bajo `autoload.files`. Internamente llama a `app(SettingService::class)->get(...)`.
+Registrado en `composer.json` bajo `autoload.files` junto con `media_url()`, `storage_image()` y `format_date()`. Internamente llama a `app(SettingService::class)->get(...)`.
 
 ---
 

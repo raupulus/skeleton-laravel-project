@@ -1,8 +1,8 @@
-# Módulo: SettingService
+# Módulo: SettingService y Helpers Globales
 
-*Última actualización: 2026-08-26*
+*Última actualización: 2026-11-01*
 
-> Servicio para acceso cacheado a la configuración del sistema. Interfaz principal para leer settings desde cualquier parte de la aplicación.
+> Servicio para acceso cacheado a la configuración del sistema y funciones helper globales cargadas vía Composer (`setting()`, `media_url()`, `storage_image()`, `format_date()`).
 
 ---
 
@@ -12,7 +12,7 @@ El `SettingService` es la capa de acceso a los ajustes de configuración del sis
 
 El servicio carga todos los settings de la BD en una sola consulta, los cachea durante 1 hora y expone métodos para consultar por clave individual o recuperar todos los settings de golpe. La caché se invalida automáticamente cuando se edita cualquier setting desde el panel de administración de Filament, garantizando que los cambios se reflejen de forma inmediata.
 
-Para mayor comodidad, el helper global `setting('clave', 'valor_por_defecto')` permite acceder a cualquier setting sin necesidad de inyectar el servicio. Este helper se usa extensivamente en el layout (logo, nombre del sitio, redes sociales), en el servicio SEO (meta tags por defecto), en el envío de emails (dirección de contacto) y en componentes del frontend.
+Para mayor comodidad, el archivo `app/Helpers/helpers.php` expone el helper global `setting('clave', 'valor_por_defecto')` junto con utilidades adicionales para resolver URLs de medios y formatear fechas en las vistas Blade.
 
 ---
 
@@ -27,7 +27,7 @@ El `SettingService` carga todos los settings de la BD y los cachea durante 1 hor
 | Tipo | Ruta |
 |------|------|
 | Servicio | `app/Services/SettingService.php` |
-| Helper global | `app/Helpers/helpers.php` |
+| Helpers globales | `app/Helpers/helpers.php` |
 | Registro autoload | `composer.json` → `autoload.files` |
 
 ---
@@ -47,25 +47,32 @@ El `SettingService` carga todos los settings de la BD y los cachea durante 1 hor
 - **Clave de caché**: `settings_all`
 - **TTL**: 3600 segundos (1 hora)
 - **Driver**: El configurado en `config('cache.default')`
-- **Invalidación**: `clearCache()` se invoca automáticamente desde los Resources de Filament (`afterSave`) al crear o editar un setting
+- **Invalidación**: `clearCache()` se invoca automáticamente desde `SettingResource` (`afterSave`) al crear o editar un setting
 
 ---
 
-## Helper global `setting()`
+## Helpers globales (`app/Helpers/helpers.php`)
+
+| Función | Firma | Descripción |
+|---------|-------|-------------|
+| `setting()` | `setting(string $key, mixed $default = null): mixed` | Obtiene el valor de un setting delegando en `app(SettingService::class)->get($key, $default)` |
+| `media_url()` | `media_url(?string $path, ?string $default = null): ?string` | Resuelve una ruta o URL de imagen: respeta URLs absolutas (`http://`, `https://`, `//`), assets estáticos (`images/...`) y rutas relativas del disco `public` (`Storage::disk('public')->url($path)`) |
+| `storage_image()` | `storage_image(?string $path, ?string $default = null): ?string` | Alias semántico de `media_url()` para vistas Blade |
+| `format_date()` | `format_date(mixed $date, string $format = 'd/m/Y'): string` | Formatea instancias `DateTimeInterface` o cadenas de fecha con `Carbon::parse($date)->translatedFormat($format)` |
 
 ```php
 // Uso en cualquier parte del código (controladores, vistas, servicios...)
-setting('site_title', 'Mi App');  // Devuelve el valor o el default
+setting('site_title', 'Mi App');
 
 // En vistas Blade
 {{ setting('contact_email', 'info@example.com') }}
+{{ media_url($post->image, asset('images/defaults/no-image.webp')) }}
+{{ format_date($post->published_at, 'd M, Y') }}
 ```
-
-El helper delega en `app(SettingService::class)->get(...)`.
 
 ---
 
-## Dónde se usa
+## Dónde se usa `setting()`
 
 El helper `setting()` se usa extensamente en:
 - `resources/views/layouts/head.blade.php` — Meta tags SEO

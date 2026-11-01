@@ -1,6 +1,6 @@
 # Módulo: Panel Admin (Filament)
 
-*Última actualización: 2026-08-26*
+*Última actualización: 2026-11-01*
 
 > Panel de administración completo en `/admin` con CRUD de todos los modelos, dashboard con widgets y navegación organizada por grupos.
 
@@ -101,7 +101,7 @@ El panel admin está construido con Filament 5 y se accede en `/admin`. Solo pue
 |---------|------|---------|
 | `name` | TextColumn | Texto, buscable, ordenable |
 | `email` | TextColumn | Texto, buscable, ordenable |
-| `role` | TextColumn | Badge con color (primary=admin, gray=user) |
+| `role` | TextColumn | Badge con color (`danger=superadmin`, `warning=admin`, `info=user`) |
 | `is_active` | IconColumn | Booleano (✓/✗) |
 | `created_at` | TextColumn | Fecha `d/m/Y`, ordenable |
 
@@ -112,21 +112,22 @@ El panel admin está construido con Filament 5 y se accede en `/admin`. Solo pue
 | `name` | TextInput | Sí | Máx. 255 caracteres |
 | `email` | TextInput (email) | Sí | Único (ignora el propio registro en edición) |
 | `password` | TextInput (password) | Solo en creación | Min. 8 chars, no se guarda si está vacío en edición |
-| `role` | Select | Sí | Opciones del enum `Role` (superadmin, admin, user) |
-| `avatar` | FileUpload | No | Imagen, máx. 2MB, directorio `avatars/` |
+| `role` | Select | Sí | Opciones del enum `Role` (`superadmin` solo disponible para otro `superadmin`) |
+| `avatar` | `ImageCropField::make4x3` | No | Imagen con recorte 4:3, directorio `avatars/` |
 | `is_active` | Toggle | No | Por defecto: `true` |
 
 **Filtros**:
 - `role` — SelectFilter con opciones del enum Role
 - `is_active` — TernaryFilter (sí/no/todos)
+- `TrashedFilter` — Papelera
 
 **Búsqueda**: `name`, `email`
 
-**Acciones**: EditAction (fila), DeleteBulkAction (lote)
+**Acciones**: EditAction, DeleteAction, RestoreAction, ForceDeleteAction
 
 **Particularidades**:
-- `user_id` (autor) se auto-asigna mediante traits, NO aparece en el formulario
-- Un usuario no puede eliminarse a sí mismo (restringido por la policy `UserPolicy`)
+- Un `admin` no puede asignar el rol `superadmin` ni editar/restaurar cuentas `superadmin` (`UserPolicy`)
+- Solo un `superadmin` puede eliminar usuarios y nunca puede eliminarse a sí mismo (`$user->id !== $model->id`)
 
 ---
 

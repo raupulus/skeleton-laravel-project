@@ -1,6 +1,6 @@
 # Módulo: SeoService
 
-*Última actualización: 2026-08-26*
+*Última actualización: 2026-11-01*
 
 > Servicio para la gestión dinámica de meta tags SEO (title, description, OG, Twitter Cards, JSON-LD) con soporte para carga automática desde modelos.
 
@@ -41,7 +41,7 @@ Todos los setters retornan `static` para encadenar:
 | `setType(string)` | Tipo Open Graph: `website`, `article`, `product`... |
 | `setImage(string)` | URL imagen para OG y Twitter Cards |
 | `setRobots(string)` | Directiva meta robots (ej: `noindex,follow`) |
-| `fromModel(object)` | Carga SEO de un modelo con trait `HasSeo`: llama a `getSeoTitleText()`, `getSeoDescriptionText()`, `getSeoKeywordsText()` y usa `$model->image` |
+| `fromModel(object)` | Carga SEO de un modelo con trait `HasSeo`: llama a `getSeoTitleText()`, `getSeoDescriptionText()`, `getSeoKeywordsText()` y resuelve la imagen del modelo (`$model->image_url` o `media_url($model->image)`) |
 | `toArray()` | Devuelve array con todos los valores SEO para la vista |
 
 ---
@@ -57,7 +57,7 @@ Cuando un campo SEO no se establece explícitamente, se usan estos fallbacks:
 | keywords | `setting('default_meta_keywords')` → `''` |
 | url | `url()->current()` |
 | type | `website` |
-| image | `asset('images/redes-sociales/rs-1200x1200.png')` |
+| image | `asset('images/redes-sociales/social-network-1200x1200.webp')` |
 | robots | `index,follow` |
 
 ---
@@ -79,8 +79,8 @@ public function show(string $slug, SeoService $seo): View
 
 La vista `resources/views/layouts/head.blade.php` recibe `$seo->toArray()` y genera:
 - Meta tags básicos (charset, viewport, csrf, title, description, keywords, robots)
-- Canonical URL y hreflang (es/en/x-default)
+- Canonical URL y hreflang diferenciados por idioma (`?lang=es`, `?lang=en` y `x-default` hacia la URL canónica limpia)
 - Open Graph completo (locale, title, site_name, type, description, image, url)
-- Twitter Cards (summary_large_image)
-- JSON-LD structured data (WebSite / Article)
-- Favicons
+- Twitter Cards (`summary_large_image`)
+- JSON-LD structured data (`WebSite` / `Article`)
+- Favicons y Web Manifest
