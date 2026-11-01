@@ -94,4 +94,28 @@ class PostPolicy
     {
         return $user->isSuperAdmin();
     }
+
+    /**
+     * Determina si el usuario puede eliminar múltiples posts en lote.
+     */
+    public function deleteAny(User $user): bool
+    {
+        return $user->isSuperAdmin();
+    }
+
+    /**
+     * Determina si el usuario puede restaurar múltiples posts en lote.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->isAdmin();
+    }
+
+    /**
+     * Determina si el usuario puede eliminar permanentemente múltiples posts en lote.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->isSuperAdmin();
+    }
 }

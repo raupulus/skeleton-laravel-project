@@ -49,12 +49,16 @@ class SeoServiceTest extends TestCase
 
         app()->setLocale('es');
         $seo = new SeoService;
-        $seo->fromModel($post);
+        $seo->fromModel($post)->setType('article');
         $data = $seo->toArray();
 
         $this->assertEquals('SEO Title Personalizado', $data['title']);
         $this->assertEquals('SEO Desc Personalizada', $data['description']);
         $this->assertEquals('tag1, tag2', $data['keywords']);
         $this->assertStringContainsString('storage/posts/test.jpg', $data['image']);
+
+        $jsonLd = json_encode($seo->toJsonLd());
+        $this->assertNotEmpty($jsonLd);
+        $this->assertStringContainsString('BlogPosting', $jsonLd);
     }
 }

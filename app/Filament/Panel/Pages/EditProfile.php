@@ -8,6 +8,7 @@ use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 /**
  * Página de edición de perfil del usuario autenticado en el panel de usuario.
@@ -56,7 +57,8 @@ class EditProfile extends Page
             // 2. Nombre
             TextInput::make('name')
                 ->label(__('filament.name'))
-                ->required(),
+                ->required()
+                ->maxLength(255),
 
             // 3. Email (deshabilitado con nota)
             TextInput::make('email')
@@ -69,9 +71,18 @@ class EditProfile extends Page
             TextInput::make('password')
                 ->label(__('filament.password'))
                 ->password()
-                ->minLength(8)
+                ->revealable()
+                ->rule(Password::defaults())
+                ->confirmed()
                 ->dehydrated(fn ($state) => filled($state))
                 ->helperText(__('messages.profile_password_helper')),
+
+            // 5. Confirmación de nueva contraseña
+            TextInput::make('password_confirmation')
+                ->label(__('messages.confirm_password'))
+                ->password()
+                ->revealable()
+                ->dehydrated(false),
         ])->statePath('data');
     }
 
@@ -83,8 +94,8 @@ class EditProfile extends Page
         $data = $this->form->getState();
         $user = auth()->user();
         $user->name = $data['name'];
-        // Asignar avatar siempre (permite eliminar o mantener el existente)
-        $user->avatar = $data['avatar'] ?? $user->avatar;
+        // Asignar el estado del avatar (incluyendo null si el usuario lo eliminó)
+        $user->avatar = $data['avatar'] ?? null;
         if (! empty($data['password'])) {
             $user->password = Hash::make($data['password']);
         }

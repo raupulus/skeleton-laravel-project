@@ -4,10 +4,14 @@ namespace App\Filament\Admin\Resources;
 
 use App\Filament\Components\ImageCropField;
 use App\Models\Slide;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
 use Filament\Forms;
 use Filament\Resources\Pages\PageRegistration;
 use Filament\Resources\Resource;
@@ -16,6 +20,8 @@ use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 /**
  * Recurso Filament para gestionar los slides (carruseles) en el panel admin.
@@ -52,32 +58,45 @@ class SlideResource extends Resource
         return __('filament.nav_media');
     }
 
+    /**
+     * Permite acceder y restaurar registros con borrado lógico.
+     */
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
+    }
+
     public static function form(Schema $form): Schema
     {
         return $form->schema([
-            // 1. Imagen principal con cropper 16:9 — primer campo, ancho completo
-            ImageCropField::make16x9('image', 'slides', required: true),
+            // 1. Imagen principal (16:9) e Imagen vertical (8:12) lado a lado en escritorio ([BRESP-07])
+            ImageCropField::make16x9('image', 'slides', required: true, columnSpan: ['default' => 1, 'lg' => 1]),
+            ImageCropField::make8x12('image_vertical', 'slides', columnSpan: ['default' => 1, 'lg' => 1]),
 
-            // 2. Imagen vertical con cropper 8:12 — segundo campo, ancho completo
-            ImageCropField::make8x12('image_vertical', 'slides'),
-
-            // 3. Traducciones con labels correctos
+            // 2. Traducciones con labels correctos
             Tabs::make(__('filament.translations'))->tabs([
                 Tab::make(__('filament.tab_spanish'))->schema([
-                    Forms\Components\TextInput::make('title.es')->label(__('filament.title').' (ES)'),
-                    Forms\Components\Textarea::make('content.es')->label(__('filament.content').' (ES)'),
+                    Forms\Components\TextInput::make('title.es')->label(__('filament.title').' (ES)')->maxLength(255),
+                    Forms\Components\Textarea::make('content.es')->label(__('filament.content').' (ES)')->maxLength(1000),
                 ]),
                 Tab::make(__('filament.tab_english'))->schema([
-                    Forms\Components\TextInput::make('title.en')->label(__('filament.title').' (EN)'),
-                    Forms\Components\Textarea::make('content.en')->label(__('filament.content').' (EN)'),
+                    Forms\Components\TextInput::make('title.en')->label(__('filament.title').' (EN)')->maxLength(255),
+                    Forms\Components\Textarea::make('content.en')->label(__('filament.content').' (EN)')->maxLength(1000),
                 ]),
             ])->columnSpanFull(),
 
-            // 4. Campos adicionales con labels traducidos
-            Forms\Components\TextInput::make('url')->label(__('filament.url'))->url(),
+            // 3. Campos adicionales con labels traducidos y validación de longitud
+            Forms\Components\TextInput::make('url')
+                ->label(__('filament.url'))
+                ->url()
+                ->maxLength(255),
             Forms\Components\TextInput::make('zone')
                 ->label(__('filament.zone'))
                 ->required()
+                ->maxLength(100)
                 ->datalist(fn () => Slide::query()
                     ->select('zone')
                     ->distinct()
@@ -85,19 +104,39 @@ class SlideResource extends Resource
                     ->pluck('zone')
                     ->toArray()
                 ),
-            Forms\Components\TextInput::make('order')->label(__('filament.order'))->numeric()->default(0),
-            Forms\Components\Toggle::make('is_active')->label(__('filament.is_active'))->default(true),
+            Forms\Components\TextInput::make('order')
+                ->label(__('filament.order'))
+                ->numeric()
+                ->required()
+                ->default(0),
+            Forms\Components\Toggle::make('is_active')
+                ->label(__('filament.is_active'))
+                ->default(true),
         ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table->columns([
-            Tables\Columns\ImageColumn::make('image')->label(__('filament.image'))->height(40),
-            Tables\Columns\TextColumn::make('title')->label(__('filament.title')),
-            Tables\Columns\TextColumn::make('zone')->label(__('filament.zone'))->sortable(),
-            Tables\Columns\TextColumn::make('order')->label(__('filament.order'))->sortable(),
-            Tables\Columns\IconColumn::make('is_active')->label(__('filament.is_active'))->boolean(),
+            Tables\Columns\ImageColumn::make('image')
+                ->label(__('filament.image'))
+                ->disk('public')
+                ->height(40),
+            Tables\Columns\TextColumn::make('title')
+                ->label(__('filament.title'))
+                ->searchable()
+                ->limit(40),
+            Tables\Columns\TextColumn::make('zone')
+                ->label(__('filament.zone'))
+                ->sortable()
+                ->toggleable(),
+            Tables\Columns\TextColumn::make('order')
+                ->label(__('filament.order'))
+                ->sortable()
+                ->toggleable(),
+            Tables\Columns\IconColumn::make('is_active')
+                ->label(__('filament.is_active'))
+                ->boolean(),
         ])
             ->filters([
                 Tables\Filters\SelectFilter::make('zone')
@@ -108,10 +147,17 @@ class SlideResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                EditAction::make(),
-                DeleteAction::make(),
-                RestoreAction::make(),
-                ForceDeleteAction::make(),
+                ActionGroup::make([
+                    EditAction::make(),
+                    DeleteAction::make(),
+                    RestoreAction::make(),
+                    ForceDeleteAction::make(),
+                ]),
+            ])
+            ->bulkActions([
+                DeleteBulkAction::make(),
+                RestoreBulkAction::make(),
+                ForceDeleteBulkAction::make(),
             ])
             ->defaultSort('zone');
     }

@@ -1,4 +1,6 @@
 <x-guest-layout>
+    <h1 class="text-xl font-bold text-gray-900 mb-4 text-center">{{ __('Resend Verification Email') }}</h1>
+
     <div class="mb-4 text-sm text-gray-600">
         {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
     </div>

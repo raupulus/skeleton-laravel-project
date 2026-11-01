@@ -24,7 +24,13 @@ class ContactController extends Controller
      */
     public function show(SeoService $seo): View
     {
-        $seo->setTitle(__('messages.contact').' - '.setting('site_title'));
+        $seo->setTitle(__('messages.contact').' - '.setting('site_title', config('app.name')))
+            ->setDescription(__('messages.contact_seo_description'))
+            ->setUrl(route('contact'))
+            ->setBreadcrumbs([
+                ['name' => __('messages.home'), 'url' => route('home')],
+                ['name' => __('messages.contact'), 'url' => route('contact')],
+            ]);
 
         return view('contact', compact('seo'));
     }

@@ -20,6 +20,14 @@ class LatestEmailsWidget extends BaseWidget
     protected int|string|array $columnSpan = 'full';
 
     /**
+     * Solo los administradores pueden ver este widget.
+     */
+    public static function canView(): bool
+    {
+        return auth()->user()?->isAdmin() ?? false;
+    }
+
+    /**
      * Devuelve el heading traducido del widget.
      */
     public function getHeading(): ?string
@@ -43,13 +51,15 @@ class LatestEmailsWidget extends BaseWidget
                     ->limit(30),
                 TextColumn::make('subject')
                     ->label(__('filament.subject'))
-                    ->limit(50),
+                    ->limit(50)
+                    ->toggleable(),
                 TextColumn::make('status')
                     ->label(__('filament.status'))
                     ->badge(),
                 TextColumn::make('created_at')
                     ->label(__('filament.created_at'))
-                    ->dateTime('d/m/Y H:i'),
+                    ->dateTime('d/m/Y H:i')
+                    ->toggleable(),
             ])
             ->paginated(false);
     }

@@ -11,7 +11,7 @@ class SettingSeeder extends Seeder
     {
         $s = [
             ['key' => 'site_title', 'display_name' => 'Título del sitio', 'value' => 'Skeleton Laravel Project', 'type' => 'text', 'group' => 'general', 'order' => 1],
-            ['key' => 'site_description', 'display_name' => 'Descripción del sitio', 'value' => 'Plantilla base para proyectos Laravel', 'type' => 'textarea', 'group' => 'general', 'order' => 2],
+            ['key' => 'site_description', 'display_name' => 'Descripción del sitio', 'value' => 'Plantilla base profesional para proyectos Laravel 13 con Filament 5, API REST autenticada con Sanctum, soporte multi-idioma, SEO técnico y Docker.', 'type' => 'textarea', 'group' => 'general', 'order' => 2],
             ['key' => 'contact_email', 'display_name' => 'Email de contacto', 'value' => 'info@example.com', 'type' => 'text', 'group' => 'contact', 'order' => 1],
             ['key' => 'contact_phone', 'display_name' => 'Teléfono', 'value' => '+34 600 000 000', 'type' => 'text', 'group' => 'contact', 'order' => 2],
             ['key' => 'contact_address', 'display_name' => 'Dirección', 'value' => 'Calle Ejemplo 123, Madrid', 'type' => 'textarea', 'group' => 'contact', 'order' => 3],

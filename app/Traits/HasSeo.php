@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Str;
+
 /**
  * Trait para gestionar campos SEO en modelos de contenido.
  * Proporciona métodos helper que obtienen el valor SEO del idioma actual
@@ -59,10 +61,24 @@ trait HasSeo
         if (isset($this->excerpt)) {
             $excerpt = $this->excerpt;
             if (is_array($excerpt)) {
-                return $excerpt[app()->getLocale()] ?? $excerpt[config('app.fallback_locale')] ?? '';
+                $excerpt = $excerpt[app()->getLocale()] ?? $excerpt[config('app.fallback_locale')] ?? '';
             }
 
-            return $excerpt ?? '';
+            if (! empty($excerpt)) {
+                return $excerpt;
+            }
+        }
+
+        // Último fallback: primeros 155 caracteres del contenido sin etiquetas HTML
+        if (isset($this->content)) {
+            $content = $this->content;
+            if (is_array($content)) {
+                $content = $content[app()->getLocale()] ?? $content[config('app.fallback_locale')] ?? '';
+            }
+
+            if (! empty($content)) {
+                return Str::limit(trim(strip_tags((string) $content)), 155);
+            }
         }
 
         return '';

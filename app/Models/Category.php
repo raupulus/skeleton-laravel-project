@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\CleansUpStorageFiles;
 use App\Traits\HasSlug;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -36,7 +37,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class Category extends Model
 {
-    use HasFactory, HasSlug, HasTranslations, SoftDeletes;
+    use CleansUpStorageFiles, HasFactory, HasSlug, HasTranslations, SoftDeletes;
 
     /** @var array<string> Campos traducibles usando spatie/laravel-translatable */
     public array $translatable = ['name', 'description'];

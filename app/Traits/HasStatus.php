@@ -12,6 +12,18 @@ use Illuminate\Database\Eloquent\Builder;
 trait HasStatus
 {
     /**
+     * Hook de arranque del trait: asigna published_at automáticamente si se publica sin fecha.
+     */
+    public static function bootHasStatus(): void
+    {
+        static::saving(function ($model): void {
+            if ($model->status === ContentStatus::Published && empty($model->published_at)) {
+                $model->published_at = now();
+            }
+        });
+    }
+
+    /**
      * Scope para obtener únicamente contenido con estado 'published'.
      *
      * @param  Builder  $query  El constructor de consultas Eloquent

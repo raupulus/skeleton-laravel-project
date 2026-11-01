@@ -42,8 +42,8 @@ Route::prefix('v1')->group(function () {
         Route::get('/categories/{slug}', [CategoryApiController::class, 'show'])->name('api.v1.categories.show');
     });
 
-    // --- Tokens de API (autenticado) ---
-    Route::middleware('auth:sanctum')->prefix('user/tokens')->group(function () {
+    // --- Tokens de API (autenticado, con rate limiting) ---
+    Route::middleware(['auth:sanctum', 'throttle:20,1'])->prefix('user/tokens')->group(function () {
         Route::get('/', [TokenController::class, 'index'])->name('api.v1.tokens.index');
         Route::post('/', [TokenController::class, 'store'])->name('api.v1.tokens.store');
         Route::delete('/{tokenId}', [TokenController::class, 'destroy'])->name('api.v1.tokens.destroy');

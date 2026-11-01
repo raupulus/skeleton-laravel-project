@@ -38,8 +38,8 @@ class TokenCreateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'El nombre del token es obligatorio.',
-            'name.max' => 'El nombre del token no puede superar 255 caracteres.',
+            'name.required' => __('messages.validation_token_name_required'),
+            'name.max' => __('messages.validation_token_name_max'),
         ];
     }
 }

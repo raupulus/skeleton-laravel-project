@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PageResource;
 use App\Models\Page;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -25,12 +26,13 @@ class PageApiController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $perPage = min((int) $request->get('per_page', 12), 50);
+        $perPage = max(1, min($request->integer('per_page', 12), 50));
 
         $pages = Page::publishedAndActive()
             ->with('categories:id,slug,name')
             ->orderByDesc('published_at')
-            ->paginate($perPage);
+            ->paginate($perPage)
+            ->through(fn (Page $page) => (new PageResource($page))->resolve());
 
         return response()->json($pages);
     }
@@ -51,6 +53,6 @@ class PageApiController extends Controller
             ->with('categories:id,slug,name')
             ->firstOrFail();
 
-        return response()->json($page);
+        return response()->json(new PageResource($page));
     }
 }

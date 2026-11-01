@@ -10,7 +10,7 @@ class CreateSetting extends CreateRecord
 {
     protected static string $resource = SettingResource::class;
 
-    protected function afterSave(): void
+    protected function afterCreate(): void
     {
         app(SettingService::class)->clearCache();
     }

@@ -169,4 +169,36 @@ return [
     'profile_email_helper' => 'If you need to change your email, please contact the administrator.',
     'profile_password_helper' => 'Leave blank if you don\'t want to change your password.',
     'profile_updated' => 'Profile updated successfully.',
+
+    // Navigation, Accessibility & Footer additions
+    'terms' => 'Terms & conditions',
+    'footer_links' => 'Links',
+    'footer_social' => 'Social media',
+    'skip_to_content' => 'Skip to main content',
+    'nav_primary' => 'Primary navigation',
+    'menu_open' => 'Open navigation menu',
+    'menu_close' => 'Close navigation menu',
+    'close' => 'Close',
+    'language_switcher' => 'Language selector',
+    'carousel_label' => 'Featured carousel',
+    'slide_pause' => 'Pause carousel',
+    'slide_play' => 'Play carousel',
+
+    // HTTP Errors
+    'error_404_title' => 'Page not found',
+    'error_500_title' => 'Internal server error',
+    'back_home' => 'Back to home',
+
+    // Security / Account status / Tokens
+    'account_deactivated' => 'Your account has been deactivated. Please contact the administrator.',
+    'api_tokens_limit_reached' => 'You have reached the maximum limit of 20 active tokens.',
+    'password_reset_link_sent_if_exists' => 'If the email address exists in our system, you will receive a password reset link.',
+
+    // Emails
+    'mail_welcome_subject' => 'Welcome to :site',
+    'mail_welcome_greeting' => 'Welcome, :name!',
+    'mail_welcome_thanks' => 'Thank you for registering at :site.',
+    'mail_welcome_body' => 'Your account has been created successfully. You can access the user panel from our website.',
+    'mail_contact_subject' => 'New contact message: :subject',
+    'mail_contact_heading' => 'New contact message',
 ];

@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Auth\Login;
+use App\Http\Middleware\EnsureUserIsActive;
 use App\Http\Middleware\SetLocale;
 use Filament\Actions\Action;
 use Filament\Http\Middleware\Authenticate;
@@ -27,10 +29,9 @@ class PanelUserProvider extends PanelProvider
         return $panel
             ->id('panel')
             ->path('panel')
-            ->login()
-            ->registration()
-            ->passwordReset()
+            ->login(Login::class)
             ->emailVerification()
+            ->unsavedChangesAlerts()
             ->colors(['primary' => Color::Blue])
             ->discoverResources(in: app_path('Filament/Panel/Resources'), for: 'App\\Filament\\Panel\\Resources')
             ->discoverPages(in: app_path('Filament/Panel/Pages'), for: 'App\\Filament\\Panel\\Pages')
@@ -41,10 +42,21 @@ class PanelUserProvider extends PanelProvider
                 EncryptCookies::class, AddQueuedCookiesToResponse::class, StartSession::class,
                 AuthenticateSession::class, ShareErrorsFromSession::class, PreventRequestForgery::class,
                 SubstituteBindings::class, DisableBladeIconComponents::class, DispatchServingFilamentEvent::class,
-                SetLocale::class,
+                SetLocale::class, EnsureUserIsActive::class,
             ])
             ->authMiddleware([Authenticate::class])
             ->userMenuItems([
+                Action::make('go_website')
+                    ->label(fn () => __('filament.go_to_website'))
+                    ->icon('heroicon-o-globe-alt')
+                    ->url(fn () => url('/'))
+                    ->sort(PHP_INT_MAX - 5),
+                Action::make('go_admin_panel')
+                    ->label(fn () => __('filament.admin_panel'))
+                    ->icon('heroicon-o-shield-check')
+                    ->url(fn () => url('/admin'))
+                    ->visible(fn () => auth()->user()?->isAdmin() ?? false)
+                    ->sort(PHP_INT_MAX - 4),
                 Action::make('lang_es')
                     ->label('Español')
                     ->icon('heroicon-o-check-circle')

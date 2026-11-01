@@ -1,5 +1,7 @@
 User-agent: *
 Disallow: /admin
 Disallow: /panel
+Disallow: /api/
+Disallow: /lang/
 
-Sitemap: /sitemap.xml
+Sitemap: https://localhost/sitemap.xml

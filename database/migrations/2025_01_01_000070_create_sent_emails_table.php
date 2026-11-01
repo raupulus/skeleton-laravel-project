@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('status', 20)->default('sent')->comment('Estado del envío: sent, failed');
             $table->text('error_message')->nullable()->comment('Mensaje de error si el envío falló');
             $table->jsonb('metadata')->nullable()->comment('Datos adicionales en JSON');
-            $table->timestamps();
+            $table->timestamp('created_at')->nullable()->comment('Fecha y hora de creación del registro de email');
+            $table->timestamp('updated_at')->nullable()->comment('Fecha y hora de última actualización del registro de email');
             $table->index('status', 'idx_sent_emails_status');
             $table->index('created_at', 'idx_sent_emails_created_at');
         });

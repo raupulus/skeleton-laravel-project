@@ -20,6 +20,7 @@ use App\Policies\SlidePolicy;
 use App\Policies\UserPolicy;
 use App\Services\SeoService;
 use App\Services\SettingService;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(SeoService::class);
+        $this->app->scoped(SeoService::class);
         $this->app->singleton(SettingService::class);
     }
 
@@ -39,6 +40,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Model::preventLazyLoading(! $this->app->isProduction());
+
         Gate::policy(User::class, UserPolicy::class);
         Gate::policy(Page::class, PagePolicy::class);
         Gate::policy(Post::class, PostPolicy::class);

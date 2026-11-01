@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Traits\CleansUpStorageFiles;
 use App\Traits\HasSlug;
+use App\Traits\SanitizesHtmlContent;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -34,7 +36,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class Section extends Model
 {
-    use HasFactory, HasSlug, HasTranslations, SoftDeletes;
+    use CleansUpStorageFiles, HasFactory, HasSlug, HasTranslations, SanitizesHtmlContent, SoftDeletes;
 
     /** @var array<string> Campos traducibles usando spatie/laravel-translatable */
     public array $translatable = ['title', 'description', 'content'];
@@ -43,12 +45,19 @@ class Section extends Model
     protected $fillable = ['slug', 'zone', 'title', 'description', 'content', 'image', 'order'];
 
     /**
-     * Eventos del modelo para invalidar caché de zona al guardar o eliminar.
+     * Eventos del modelo para invalidar caché de zona (actual y original) al guardar o eliminar.
      */
     protected static function booted(): void
     {
         $clearCache = function (self $model): void {
             Cache::forget("sections_{$model->zone}_ids");
+            Cache::forget("sections_{$model->zone}");
+
+            $originalZone = $model->getOriginal('zone');
+            if (! empty($originalZone) && $originalZone !== $model->zone) {
+                Cache::forget("sections_{$originalZone}_ids");
+                Cache::forget("sections_{$originalZone}");
+            }
         };
         static::saved($clearCache);
         static::deleted($clearCache);

@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('zone', 100)->comment('Zona/grupo al que pertenece el slide');
             $table->integer('order')->default(0)->comment('Orden de visualización dentro de la zona');
             $table->boolean('is_active')->default(true)->comment('Indica si el slide está activo');
-            $table->timestamps();
+            $table->timestamp('created_at')->nullable()->comment('Fecha y hora de creación del slide');
+            $table->timestamp('updated_at')->nullable()->comment('Fecha y hora de última actualización del slide');
             $table->softDeletes()->comment('Fecha de eliminación lógica');
             $table->index('zone', 'idx_slides_zone');
             $table->index('is_active', 'idx_slides_is_active');

@@ -29,9 +29,18 @@ class PageController extends Controller
             ->firstOrFail();
 
         // Configurar SEO dinámico a partir de los campos de la página
+        $pageUrl = route('pages.show', $page->slug);
         $seo->fromModel($page)
-            ->setType('article')
-            ->setUrl(url("/pages/{$page->slug}"));
+            ->setType('website')
+            ->setUrl($pageUrl)
+            ->setBreadcrumbs([
+                ['name' => __('messages.home'), 'url' => route('home')],
+                ['name' => $page->title, 'url' => $pageUrl],
+            ]);
+
+        if (in_array($page->slug, ['privacy', 'cookies', 'terms'], true)) {
+            $seo->setRobots('noindex,follow');
+        }
 
         return view('pages.show', compact('page', 'seo'));
     }

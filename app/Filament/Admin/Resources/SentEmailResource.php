@@ -73,14 +73,13 @@ class SentEmailResource extends Resource
                 ->label(__('filament.mailable_class')),
             TextEntry::make('status')
                 ->label(__('filament.status'))
-                ->badge()
-                ->color(fn ($state) => $state->color()),
+                ->badge(),
             TextEntry::make('body')
                 ->label(__('filament.body'))
                 ->html()
                 ->columnSpanFull()
                 ->formatStateUsing(fn ($state) => $state
-                    ? '<div style="background:#ffffff; color:#000000; padding:16px; border:1px solid #e5e7eb; border-radius:8px; max-height:600px; overflow:auto;">'.$state.'</div>'
+                    ? '<div class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-4 border border-gray-200 dark:border-white/10 rounded-lg max-h-[600px] overflow-auto">'.$state.'</div>'
                     : ''
                 ),
             TextEntry::make('error_message')
@@ -105,27 +104,30 @@ class SentEmailResource extends Resource
         return $table->columns([
             Tables\Columns\TextColumn::make('to')
                 ->label(__('filament.to'))
-                ->searchable(),
+                ->searchable()
+                ->limit(35),
             Tables\Columns\TextColumn::make('subject')
                 ->label(__('filament.subject'))
                 ->searchable()
-                ->limit(50),
+                ->limit(50)
+                ->toggleable(),
             Tables\Columns\TextColumn::make('mailable_class')
                 ->label(__('filament.mailable_class'))
-                ->limit(30),
+                ->limit(30)
+                ->toggleable(isToggledHiddenByDefault: true),
             Tables\Columns\TextColumn::make('status')
                 ->label(__('filament.status'))
-                ->badge()
-                ->color(fn ($state) => $state->color()),
+                ->badge(),
             Tables\Columns\TextColumn::make('created_at')
                 ->label(__('filament.created_at'))
                 ->dateTime('d/m/Y H:i')
-                ->sortable(),
+                ->sortable()
+                ->toggleable(),
         ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
                     ->label(__('filament.status'))
-                    ->options(collect(EmailStatus::cases())->mapWithKeys(fn ($s) => [$s->value => $s->label()])),
+                    ->options(EmailStatus::class),
             ])
             ->actions([ViewAction::make()])
             ->defaultSort('created_at', 'desc');

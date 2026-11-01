@@ -12,11 +12,11 @@ use Illuminate\Support\Str;
 trait HasSlug
 {
     /**
-     * Hook de arranque del trait, registra el listener del evento 'creating'.
+     * Hook de arranque del trait, registra el listener del evento 'saving'.
      */
     public static function bootHasSlug(): void
     {
-        static::creating(function ($model): void {
+        static::saving(function ($model): void {
             // Solo generar slug si no se proporcionó uno explícitamente
             if (empty($model->slug)) {
                 $source = $model->getSlugSource();
@@ -50,7 +50,7 @@ trait HasSlug
     }
 
     /**
-     * Genera un slug único asegurándose de que no existe en la BD.
+     * Genera un slug único asegurándose de que no existe entre los registros activos en la BD.
      * Si el slug ya existe, añade un sufijo numérico incremental (-1, -2, etc.).
      *
      * @param  string  $slug  El slug base generado a partir del título
@@ -61,10 +61,11 @@ trait HasSlug
         $original = $slug;
         $count = 1;
 
-        // Incluir registros soft-deleted en la verificación de unicidad
-        $query = method_exists(static::class, 'withTrashed')
-            ? static::withTrashed()
-            : static::query();
+        $query = static::query();
+
+        if ($this->exists) {
+            $query->whereKeyNot($this->getKey());
+        }
 
         while ((clone $query)->where('slug', $slug)->exists()) {
             $slug = $original.'-'.$count++;

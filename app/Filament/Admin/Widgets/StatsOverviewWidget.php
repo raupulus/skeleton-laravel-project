@@ -20,6 +20,28 @@ class StatsOverviewWidget extends BaseWidget
     protected static ?int $sort = 1;
 
     /**
+     * Solo los administradores pueden ver este widget.
+     */
+    public static function canView(): bool
+    {
+        return auth()->user()?->isAdmin() ?? false;
+    }
+
+    /**
+     * Columnas responsivas para las 4 tarjetas de estadísticas.
+     *
+     * @return int | array<string, int>
+     */
+    protected function getColumns(): int|array
+    {
+        return [
+            'default' => 1,
+            'sm' => 2,
+            'xl' => 4,
+        ];
+    }
+
+    /**
      * Define las tarjetas de estadísticas a mostrar.
      *
      * @return array<Stat> Array de tarjetas con métricas

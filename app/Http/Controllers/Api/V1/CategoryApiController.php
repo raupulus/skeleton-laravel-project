@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
 
@@ -26,7 +27,7 @@ class CategoryApiController extends Controller
     {
         $categories = Category::active()->ordered()->get();
 
-        return response()->json($categories);
+        return response()->json(CategoryResource::collection($categories));
     }
 
     /**
@@ -42,6 +43,6 @@ class CategoryApiController extends Controller
     {
         $category = Category::where('slug', $slug)->active()->firstOrFail();
 
-        return response()->json($category);
+        return response()->json(new CategoryResource($category));
     }
 }

@@ -1,12 +1,10 @@
 <x-filament-panels::page>
-    <form wire:submit="save" class="space-y-6">
-        {{-- Formulario con espaciado --}}
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+    <form wire:submit="save" style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <x-filament::section>
             {{ $this->form }}
-        </div>
+        </x-filament::section>
 
-        {{-- Botón guardar con espaciado correcto --}}
-        <div class="flex justify-end pt-4">
+        <div style="display: flex; justify-content: flex-end; padding-top: 0.5rem;">
             <x-filament::button type="submit" size="lg">
                 {{ __('messages.save') }}
             </x-filament::button>

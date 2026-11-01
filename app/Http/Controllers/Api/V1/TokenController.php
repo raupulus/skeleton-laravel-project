@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\TokenCreateRequest;
+use App\Http\Resources\TokenResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,11 @@ use Illuminate\Http\Request;
 class TokenController extends Controller
 {
     /**
+     * Número máximo de tokens activos permitidos por usuario.
+     */
+    public const MAX_TOKENS_PER_USER = 20;
+
+    /**
      * Lista todos los tokens de API del usuario autenticado.
      * Los tokens se ordenan del más reciente al más antiguo.
      *
@@ -28,7 +34,7 @@ class TokenController extends Controller
     {
         $tokens = $request->user()->tokens()->orderByDesc('created_at')->get();
 
-        return response()->json($tokens);
+        return response()->json(TokenResource::collection($tokens));
     }
 
     /**
@@ -40,11 +46,17 @@ class TokenController extends Controller
      */
     public function store(TokenCreateRequest $request): JsonResponse
     {
+        if ($request->user()->tokens()->count() >= self::MAX_TOKENS_PER_USER) {
+            return response()->json([
+                'message' => __('messages.api_token_limit_reached', ['max' => self::MAX_TOKENS_PER_USER]),
+            ], 422);
+        }
+
         // Crear el token y obtener el valor en texto plano (solo visible en este momento)
         $token = $request->user()->createToken($request->name);
 
         return response()->json([
-            'message' => 'Token creado correctamente. Guárdalo ahora, no se mostrará de nuevo.',
+            'message' => __('messages.api_token_created'),
             'token' => $token->plainTextToken,
             'name' => $request->name,
         ], 201);
@@ -64,11 +76,11 @@ class TokenController extends Controller
         $token = $request->user()->tokens()->find($tokenId);
 
         if (! $token) {
-            return response()->json(['message' => 'Token no encontrado.'], 404);
+            return response()->json(['message' => __('messages.api_token_not_found')], 404);
         }
 
         $token->delete();
 
-        return response()->json(['message' => 'Token eliminado correctamente.']);
+        return response()->json(['message' => __('messages.api_token_deleted')]);
     }
 }

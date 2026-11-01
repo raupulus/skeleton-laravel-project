@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Auth\Login;
+use App\Http\Middleware\EnsureUserIsActive;
 use App\Http\Middleware\SetLocale;
 use Filament\Actions\Action;
 use Filament\Http\Middleware\Authenticate;
@@ -29,7 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login(Login::class)
             ->colors([
                 'primary' => Color::Indigo,
             ])
@@ -61,11 +63,22 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
                 SetLocale::class,
+                EnsureUserIsActive::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
             ])
             ->userMenuItems([
+                Action::make('go_website')
+                    ->label(fn () => __('filament.go_to_website'))
+                    ->icon('heroicon-o-globe-alt')
+                    ->url(fn () => url('/'))
+                    ->sort(PHP_INT_MAX - 5),
+                Action::make('go_user_panel')
+                    ->label(fn () => __('filament.user_panel'))
+                    ->icon('heroicon-o-user-circle')
+                    ->url(fn () => url('/panel'))
+                    ->sort(PHP_INT_MAX - 4),
                 Action::make('lang_es')
                     ->label('Español')
                     ->icon('heroicon-o-check-circle')

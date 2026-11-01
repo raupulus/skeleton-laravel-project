@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\SettingService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,6 +32,19 @@ class Setting extends Model
 
     /** @var array<string> Campos asignables en masa */
     protected $fillable = ['key', 'display_name', 'value', 'details', 'type', 'order', 'group'];
+
+    /**
+     * Eventos del modelo para invalidar automáticamente la caché de settings al guardar o eliminar.
+     */
+    protected static function booted(): void
+    {
+        $clearCache = function (): void {
+            app(SettingService::class)->clearCache();
+        };
+
+        static::saved($clearCache);
+        static::deleted($clearCache);
+    }
 
     /**
      * Definición de casts de atributos.

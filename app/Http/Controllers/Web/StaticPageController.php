@@ -27,7 +27,13 @@ class StaticPageController extends Controller
         $sectionIds = Cache::remember('sections_about_ids', 3600, fn () => Section::forZone('about')->pluck('id')->all());
         $sections = Section::whereIn('id', $sectionIds)->orderBy('order')->get();
 
-        $seo->setTitle(__('messages.about').' - '.setting('site_title'));
+        $seo->setTitle(__('messages.about').' - '.setting('site_title', config('app.name')))
+            ->setDescription(__('messages.about_seo_description'))
+            ->setUrl(route('about'))
+            ->setBreadcrumbs([
+                ['name' => __('messages.home'), 'url' => route('home')],
+                ['name' => __('messages.about'), 'url' => route('about')],
+            ]);
 
         return view('about', compact('sections', 'seo'));
     }
@@ -44,8 +50,14 @@ class StaticPageController extends Controller
         $sectionIds = Cache::remember('sections_privacy_ids', 3600, fn () => Section::forZone('privacy')->pluck('id')->all());
         $sections = Section::whereIn('id', $sectionIds)->orderBy('order')->get();
 
-        $seo->setTitle(__('messages.privacy').' - '.setting('site_title'))
-            ->setRobots('noindex,follow');
+        $seo->setTitle(__('messages.privacy').' - '.setting('site_title', config('app.name')))
+            ->setDescription(__('messages.privacy_seo_description'))
+            ->setUrl(route('privacy'))
+            ->setRobots('noindex,follow')
+            ->setBreadcrumbs([
+                ['name' => __('messages.home'), 'url' => route('home')],
+                ['name' => __('messages.privacy'), 'url' => route('privacy')],
+            ]);
 
         return view('privacy', compact('sections', 'seo'));
     }
@@ -62,8 +74,14 @@ class StaticPageController extends Controller
         $sectionIds = Cache::remember('sections_cookies_ids', 3600, fn () => Section::forZone('cookies')->pluck('id')->all());
         $sections = Section::whereIn('id', $sectionIds)->orderBy('order')->get();
 
-        $seo->setTitle(__('messages.cookies').' - '.setting('site_title'))
-            ->setRobots('noindex,follow');
+        $seo->setTitle(__('messages.cookies').' - '.setting('site_title', config('app.name')))
+            ->setDescription(__('messages.cookies_seo_description'))
+            ->setUrl(route('cookies'))
+            ->setRobots('noindex,follow')
+            ->setBreadcrumbs([
+                ['name' => __('messages.home'), 'url' => route('home')],
+                ['name' => __('messages.cookies'), 'url' => route('cookies')],
+            ]);
 
         return view('cookies', compact('sections', 'seo'));
     }

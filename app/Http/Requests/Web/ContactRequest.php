@@ -28,7 +28,7 @@ class ContactRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
             'subject' => ['required', 'string', 'max:255'],
             'message' => ['required', 'string', 'max:5000'],
             'privacy' => ['required', 'accepted'],
@@ -37,7 +37,7 @@ class ContactRequest extends FormRequest
     }
 
     /**
-     * Mensajes de error personalizados en español para el formulario de contacto.
+     * Mensajes de error personalizados traducibles para el formulario de contacto.
      *
      * @return array<string, string>
      */
@@ -48,7 +48,9 @@ class ContactRequest extends FormRequest
             'name.max' => __('messages.validation_name_max'),
             'email.required' => __('messages.validation_email_required'),
             'email.email' => __('messages.validation_email_email'),
+            'email.max' => __('messages.validation_email_max'),
             'subject.required' => __('messages.validation_subject_required'),
+            'subject.max' => __('messages.validation_subject_max'),
             'message.required' => __('messages.validation_message_required'),
             'message.max' => __('messages.validation_message_max'),
             'privacy.required' => __('messages.validation_privacy_required'),

@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Services\EmailService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
@@ -37,21 +38,25 @@ class AuthController extends Controller
      */
     public function register(RegisterRequest $request, EmailService $emailService): JsonResponse
     {
-        // Crear el usuario — el cast 'hashed' en el modelo User se encarga de hashear la contraseña
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-        ]);
+        [$user, $token] = DB::transaction(function () use ($request) {
+            // Crear el usuario — el cast 'hashed' en el modelo User se encarga de hashear la contraseña
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => $request->password,
+            ]);
 
-        // Generar token de acceso personal para el nuevo usuario
-        $token = $user->createToken('api-token')->plainTextToken;
+            // Generar token de acceso personal para el nuevo usuario
+            $token = $user->createToken('api-token')->plainTextToken;
 
-        // Enviar email de bienvenida y registrarlo en sent_emails
-        $emailService->send(new WelcomeMail($user), $user->email, 'Bienvenido');
+            return [$user, $token];
+        });
+
+        // Enviar email de bienvenida y registrarlo en sent_emails fuera de la transacción de BD
+        $emailService->send(new WelcomeMail($user), $user->email, __('messages.welcome_subject'));
 
         return response()->json([
-            'message' => 'Usuario registrado correctamente.',
+            'message' => __('messages.api_registered'),
             'user' => new UserResource($user),
             'token' => $token,
         ], 201);
@@ -70,8 +75,8 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request): JsonResponse
     {
-        // Buscar usuario por email
-        $user = User::where('email', $request->email)->first();
+        // Buscar usuario por email normalizado
+        $user = User::where('email', mb_strtolower(trim($request->email)))->first();
 
         // Verificar existencia del usuario y validez de la contraseña
         if (! $user || ! Hash::check($request->password, $user->password)) {
@@ -82,11 +87,11 @@ class AuthController extends Controller
 
         // Verificar que el usuario está activo en la plataforma
         if (! $user->is_active) {
-            return response()->json(['message' => 'Tu cuenta está desactivada. Contacta con el administrador.'], 403);
+            return response()->json(['message' => __('messages.account_deactivated')], 403);
         }
 
         return response()->json([
-            'message' => 'Inicio de sesión exitoso.',
+            'message' => __('messages.api_logged_in'),
             'user' => new UserResource($user),
             'token' => $user->createToken('api-token')->plainTextToken,
         ]);
@@ -103,9 +108,9 @@ class AuthController extends Controller
     public function logout(Request $request): JsonResponse
     {
         // Revocar únicamente el token actual (no todos los tokens del usuario)
-        $request->user()->currentAccessToken()->delete();
+        $request->user()->currentAccessToken()?->delete();
 
-        return response()->json(['message' => 'Sesión cerrada correctamente.']);
+        return response()->json(['message' => __('messages.api_logged_out')]);
     }
 
     /**
@@ -123,24 +128,21 @@ class AuthController extends Controller
 
     /**
      * Envía un enlace de restablecimiento de contraseña al email especificado.
+     * Devuelve siempre una respuesta genérica 200 para evitar enumeración de usuarios (OWASP).
      *
      * @unauthenticated
      *
      * @param  ForgotPasswordRequest  $request  Email validado del usuario
-     * @return JsonResponse Confirmación de envío o error
-     *
-     * @throws ValidationException Si el email no existe o hay un error al enviar
+     * @return JsonResponse Confirmación genérica de envío
      */
     public function forgotPassword(ForgotPasswordRequest $request): JsonResponse
     {
-        // Enviar el enlace de restablecimiento usando el broker de passwords de Laravel
-        $status = Password::sendResetLink($request->only('email'));
+        // Enviar el enlace de restablecimiento si el usuario existe
+        Password::sendResetLink($request->only('email'));
 
-        if ($status === Password::RESET_LINK_SENT) {
-            return response()->json(['message' => __($status)]);
-        }
-
-        throw ValidationException::withMessages(['email' => [__($status)]]);
+        return response()->json([
+            'message' => __(Password::RESET_LINK_SENT),
+        ]);
     }
 
     /**

@@ -94,4 +94,28 @@ class SettingPolicy
     {
         return $user->isSuperAdmin();
     }
+
+    /**
+     * Determina si el usuario puede eliminar múltiples settings en lote.
+     */
+    public function deleteAny(User $user): bool
+    {
+        return $user->isSuperAdmin();
+    }
+
+    /**
+     * Determina si el usuario puede restaurar múltiples settings en lote.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->isAdmin();
+    }
+
+    /**
+     * Determina si el usuario puede eliminar permanentemente múltiples settings en lote.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->isSuperAdmin();
+    }
 }

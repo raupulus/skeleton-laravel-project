@@ -15,6 +15,17 @@ class PostsChartWidget extends ChartWidget
     /** @var int Orden del widget en el dashboard */
     protected static ?int $sort = 2;
 
+    /** @var int|string|array Ancho completo del widget para evitar colapso en móvil/tablet */
+    protected int|string|array $columnSpan = 'full';
+
+    /**
+     * Solo los administradores pueden ver este widget.
+     */
+    public static function canView(): bool
+    {
+        return auth()->user()?->isAdmin() ?? false;
+    }
+
     /**
      * Devuelve el heading traducido del gráfico.
      */
@@ -24,12 +35,19 @@ class PostsChartWidget extends ChartWidget
     }
 
     /**
-     * Devuelve los datos para el gráfico de barras.
+     * Devuelve los datos para el gráfico de barras usando una única consulta indexada por rango.
      *
      * @return array<string, mixed> Datasets y labels del gráfico
      */
     protected function getData(): array
     {
+        $startDate = Carbon::now()->subMonths(5)->startOfMonth();
+
+        // Una sola consulta compatible con el índice idx_posts_created_at y con PostgreSQL/SQLite
+        $postsByMonth = Post::where('created_at', '>=', $startDate)
+            ->pluck('created_at')
+            ->countBy(fn ($date) => Carbon::parse($date)->format('Y-m'));
+
         $months = collect();
         $counts = collect();
 
@@ -37,11 +55,7 @@ class PostsChartWidget extends ChartWidget
         for ($i = 5; $i >= 0; $i--) {
             $date = Carbon::now()->subMonths($i);
             $months->push($date->translatedFormat('M Y'));
-            $counts->push(
-                Post::whereYear('created_at', $date->year)
-                    ->whereMonth('created_at', $date->month)
-                    ->count()
-            );
+            $counts->push($postsByMonth->get($date->format('Y-m'), 0));
         }
 
         return [

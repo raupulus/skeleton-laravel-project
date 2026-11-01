@@ -26,7 +26,19 @@ class PostController extends Controller
             ->orderByDesc('published_at')
             ->paginate(12);
 
-        $seo->setTitle(__('messages.blog').' - '.setting('site_title'));
+        $currentPage = $posts->currentPage();
+        $baseTitle = __('messages.blog').' - '.setting('site_title', config('app.name'));
+        $title = $currentPage > 1
+            ? __('messages.blog').' ('.__('messages.page_number', ['page' => $currentPage]).') - '.setting('site_title', config('app.name'))
+            : $baseTitle;
+
+        $seo->setTitle($title)
+            ->setDescription(__('messages.blog_seo_description'))
+            ->setUrl($currentPage > 1 ? $posts->url($currentPage) : route('blog.index'))
+            ->setBreadcrumbs([
+                ['name' => __('messages.home'), 'url' => route('home')],
+                ['name' => __('messages.blog'), 'url' => route('blog.index')],
+            ]);
 
         return view('posts.index', compact('posts', 'seo'));
     }
@@ -50,7 +62,12 @@ class PostController extends Controller
         // Configurar SEO dinámico a partir de los campos del post
         $seo->fromModel($post)
             ->setType('article')
-            ->setUrl(route('blog.show', $post->slug));
+            ->setUrl(route('blog.show', $post->slug))
+            ->setBreadcrumbs([
+                ['name' => __('messages.home'), 'url' => route('home')],
+                ['name' => __('messages.blog'), 'url' => route('blog.index')],
+                ['name' => $post->title, 'url' => route('blog.show', $post->slug)],
+            ]);
 
         return view('posts.show', compact('post', 'seo'));
     }

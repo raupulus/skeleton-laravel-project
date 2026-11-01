@@ -26,22 +26,22 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
             'password' => ['required', 'string'],
         ];
     }
 
     /**
-     * Mensajes de error personalizados en español.
+     * Mensajes de error personalizados traducibles.
      *
      * @return array<string, string>
      */
     public function messages(): array
     {
         return [
-            'email.required' => 'El correo electrónico es obligatorio.',
-            'email.email' => 'El correo electrónico no es válido.',
-            'password.required' => 'La contraseña es obligatoria.',
+            'email.required' => __('messages.validation_email_required'),
+            'email.email' => __('messages.validation_email_email'),
+            'password.required' => __('messages.validation_password_required'),
         ];
     }
 }

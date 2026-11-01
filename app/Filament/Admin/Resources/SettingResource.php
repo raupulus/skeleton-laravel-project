@@ -2,11 +2,15 @@
 
 namespace App\Filament\Admin\Resources;
 
+use App\Filament\Components\ImageCropField;
 use App\Models\Setting;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms;
 use Filament\Resources\Pages\PageRegistration;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -47,7 +51,7 @@ class SettingResource extends Resource
     }
 
     /**
-     * Define el formulario del recurso Configuración.
+     * Define el formulario del recurso Configuración con campo de valor dinámico según type ([BPANEL-03]).
      */
     public static function form(Schema $form): Schema
     {
@@ -56,15 +60,14 @@ class SettingResource extends Resource
             Forms\Components\TextInput::make('display_name')
                 ->label(__('filament.display_name'))
                 ->required()
+                ->maxLength(255)
                 ->columnSpanFull(),
-            // 2. Value — segundo campo, ancho completo
-            Forms\Components\Textarea::make('value')
-                ->label(__('filament.value'))
-                ->columnSpanFull(),
-            // 3. Key y Type juntos (50%-50%)
+
+            // 2. Key y Type juntos (50%-50%)
             Forms\Components\TextInput::make('key')
                 ->label(__('filament.key'))
                 ->required()
+                ->maxLength(255)
                 ->unique(ignoreRecord: true),
             Forms\Components\Select::make('type')
                 ->label(__('filament.type'))
@@ -74,10 +77,37 @@ class SettingResource extends Resource
                     'image' => __('filament.type_image'),
                     'number' => __('filament.type_number'),
                 ])
-                ->default('text'),
+                ->required()
+                ->default('text')
+                ->live(),
+
+            // 3. Value dinámico según el tipo seleccionado
+            Forms\Components\TextInput::make('value')
+                ->label(__('filament.value'))
+                ->visible(fn (Get $get): bool => ($get('type') ?? 'text') === 'text')
+                ->dehydrated(fn (Get $get): bool => ($get('type') ?? 'text') === 'text')
+                ->columnSpanFull(),
+            Forms\Components\Textarea::make('value')
+                ->label(__('filament.value'))
+                ->rows(4)
+                ->visible(fn (Get $get): bool => $get('type') === 'textarea')
+                ->dehydrated(fn (Get $get): bool => $get('type') === 'textarea')
+                ->columnSpanFull(),
+            Forms\Components\TextInput::make('value')
+                ->label(__('filament.value'))
+                ->numeric()
+                ->visible(fn (Get $get): bool => $get('type') === 'number')
+                ->dehydrated(fn (Get $get): bool => $get('type') === 'number')
+                ->columnSpanFull(),
+            ImageCropField::make16x9('value', 'settings', label: __('filament.value'))
+                ->visible(fn (Get $get): bool => $get('type') === 'image')
+                ->dehydrated(fn (Get $get): bool => $get('type') === 'image'),
+
             // 4. Group y Order juntos (50%-50%)
             Forms\Components\TextInput::make('group')
                 ->label(__('filament.group'))
+                ->required()
+                ->maxLength(100)
                 ->datalist(fn () => Setting::query()
                     ->select('group')
                     ->distinct()
@@ -89,6 +119,7 @@ class SettingResource extends Resource
             Forms\Components\TextInput::make('order')
                 ->label(__('filament.order'))
                 ->numeric()
+                ->required()
                 ->default(0),
 
             // 5. Details
@@ -107,17 +138,27 @@ class SettingResource extends Resource
             Tables\Columns\TextColumn::make('key')
                 ->label(__('filament.key'))
                 ->searchable()
-                ->sortable(),
+                ->sortable()
+                ->limit(35),
             Tables\Columns\TextColumn::make('display_name')
-                ->label(__('filament.display_name')),
+                ->label(__('filament.display_name'))
+                ->searchable()
+                ->limit(40),
             Tables\Columns\TextColumn::make('value')
                 ->label(__('filament.value'))
-                ->limit(50),
+                ->limit(50)
+                ->toggleable(),
             Tables\Columns\TextColumn::make('group')
                 ->label(__('filament.group'))
-                ->sortable(),
+                ->sortable()
+                ->toggleable(),
         ])
-            ->actions([EditAction::make()])
+            ->actions([
+                ActionGroup::make([
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ]),
+            ])
             ->defaultSort('group');
     }
 

@@ -94,4 +94,28 @@ class SentEmailPolicy
     {
         return $user->isSuperAdmin();
     }
+
+    /**
+     * Determina si el usuario puede eliminar múltiples emails en lote.
+     */
+    public function deleteAny(User $user): bool
+    {
+        return $user->isSuperAdmin();
+    }
+
+    /**
+     * Determina si el usuario puede restaurar múltiples emails en lote.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->isAdmin();
+    }
+
+    /**
+     * Determina si el usuario puede eliminar permanentemente múltiples emails en lote.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->isSuperAdmin();
+    }
 }

@@ -46,7 +46,7 @@ class SettingService
     public function all(): array
     {
         return Cache::remember(self::CACHE_KEY, self::CACHE_TTL, function (): array {
-            return Setting::all()->pluck('value', 'key')->toArray();
+            return Setting::query()->pluck('value', 'key')->all();
         });
     }
 

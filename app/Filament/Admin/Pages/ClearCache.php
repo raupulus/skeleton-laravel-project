@@ -19,6 +19,14 @@ class ClearCache extends Page
     protected string $view = 'filament.admin.pages.clear-cache';
 
     /**
+     * Solo los administradores pueden acceder a esta acción del sistema.
+     */
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->isAdmin() ?? false;
+    }
+
+    /**
      * Devuelve el grupo de navegación traducido.
      */
     public static function getNavigationGroup(): ?string
@@ -57,13 +65,22 @@ class ClearCache extends Page
                 ->modalDescription(__('filament.clear_cache_confirm'))
                 ->modalSubmitActionLabel(__('filament.confirm'))
                 ->action(function () {
-                    Artisan::call('optimize:clear');
-                    Artisan::call('cache:clear');
-                    Notification::make()
-                        ->title(__('filament.clear_cache_success'))
-                        ->body(__('filament.clear_cache_success_body'))
-                        ->success()
-                        ->send();
+                    try {
+                        Artisan::call('optimize:clear');
+                        Artisan::call('cache:clear');
+                        Notification::make()
+                            ->title(__('filament.clear_cache_success'))
+                            ->body(__('filament.clear_cache_success_body'))
+                            ->success()
+                            ->send();
+                    } catch (\Throwable $e) {
+                        report($e);
+                        Notification::make()
+                            ->title(__('filament.action_failed'))
+                            ->body($e->getMessage())
+                            ->danger()
+                            ->send();
+                    }
                 }),
         ];
     }

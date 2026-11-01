@@ -44,4 +44,18 @@ class PublicRoutesTest extends TestCase
         Post::factory()->create(['slug' => 'draft-post', 'status' => 'draft', 'user_id' => $user->id]);
         $this->get('/blog/draft-post')->assertStatus(404);
     }
+
+    public function test_privacy_and_cookies_pages_are_accessible(): void
+    {
+        $this->get('/privacy')->assertStatus(200);
+        $this->get('/cookies')->assertStatus(200);
+    }
+
+    public function test_public_routes_render_seo_metadata_and_json_ld(): void
+    {
+        $response = $this->get('/about');
+        $response->assertStatus(200)
+            ->assertSee('<link rel="canonical"', false)
+            ->assertSee('application/ld+json', false);
+    }
 }

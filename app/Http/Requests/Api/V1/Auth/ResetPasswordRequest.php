@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\V1\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 /**
  * FormRequest para restablecer la contraseña del usuario.
@@ -27,25 +28,25 @@ class ResetPasswordRequest extends FormRequest
     {
         return [
             'token' => ['required', 'string'],
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
+            'password' => ['required', 'string', Password::defaults(), 'confirmed'],
         ];
     }
 
     /**
-     * Mensajes de error personalizados en español.
+     * Mensajes de error personalizados traducibles.
      *
      * @return array<string, string>
      */
     public function messages(): array
     {
         return [
-            'token.required' => 'El token de restablecimiento es obligatorio.',
-            'email.required' => 'El correo electrónico es obligatorio.',
-            'email.email' => 'El correo electrónico no es válido.',
-            'password.required' => 'La contraseña es obligatoria.',
-            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
-            'password.confirmed' => 'La confirmación de contraseña no coincide.',
+            'token.required' => __('messages.validation_token_required'),
+            'email.required' => __('messages.validation_email_required'),
+            'email.email' => __('messages.validation_email_email'),
+            'password.required' => __('messages.validation_password_required'),
+            'password.min' => __('messages.validation_password_min'),
+            'password.confirmed' => __('messages.validation_password_confirmed'),
         ];
     }
 }

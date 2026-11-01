@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -15,19 +16,22 @@ return new class extends Migration
             $table->comment('Tabla de usuarios registrados en la plataforma');
             $table->id()->comment('Identificador único del usuario');
             $table->string('name', 255)->comment('Nombre completo del usuario');
-            $table->string('email', 255)->unique()->comment('Correo electrónico único del usuario');
+            $table->string('email', 255)->comment('Correo electrónico único del usuario');
             $table->timestamp('email_verified_at')->nullable()->comment('Fecha y hora de verificación del email');
             $table->string('password')->comment('Contraseña del usuario (hash bcrypt)');
             $table->string('role', 20)->default('user')->comment('Rol del usuario: superadmin, admin, user');
             $table->string('avatar', 512)->nullable()->comment('Ruta de la imagen de avatar del usuario');
             $table->boolean('is_active')->default(true)->comment('Indica si el usuario está activo en la plataforma');
             $table->rememberToken()->comment('Token para recordar la sesión del usuario');
-            $table->timestamps();
+            $table->timestamp('created_at')->nullable()->comment('Fecha y hora de creación del usuario');
+            $table->timestamp('updated_at')->nullable()->comment('Fecha y hora de última actualización del usuario');
             $table->softDeletes()->comment('Fecha de eliminación lógica del usuario');
 
             $table->index('role', 'idx_users_role');
             $table->index('is_active', 'idx_users_is_active');
         });
+
+        DB::statement('CREATE UNIQUE INDEX users_email_unique ON users (email) WHERE deleted_at IS NULL');
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->comment('Tokens para el restablecimiento de contraseñas de usuarios');

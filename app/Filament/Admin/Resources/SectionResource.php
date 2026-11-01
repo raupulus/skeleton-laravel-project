@@ -4,10 +4,14 @@ namespace App\Filament\Admin\Resources;
 
 use App\Filament\Components\ImageCropField;
 use App\Models\Section;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
 use Filament\Forms;
 use Filament\Resources\Pages\PageRegistration;
 use Filament\Resources\Resource;
@@ -16,6 +20,9 @@ use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Validation\Rules\Unique;
 
 /**
  * Recurso Filament para gestionar las secciones dinámicas del frontend.
@@ -52,6 +59,17 @@ class SectionResource extends Resource
         return __('filament.nav_frontend');
     }
 
+    /**
+     * Permite acceder y restaurar registros con borrado lógico.
+     */
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
+    }
+
     public static function form(Schema $form): Schema
     {
         return $form->schema([
@@ -61,13 +79,13 @@ class SectionResource extends Resource
             // Traducciones con labels correctos
             Tabs::make(__('filament.translations'))->tabs([
                 Tab::make(__('filament.tab_spanish'))->schema([
-                    Forms\Components\TextInput::make('title.es')->label(__('filament.title').' (ES)')->required(),
-                    Forms\Components\Textarea::make('description.es')->label(__('filament.description').' (ES)'),
+                    Forms\Components\TextInput::make('title.es')->label(__('filament.title').' (ES)')->required()->maxLength(255),
+                    Forms\Components\Textarea::make('description.es')->label(__('filament.description').' (ES)')->maxLength(1000),
                     Forms\Components\RichEditor::make('content.es')->label(__('filament.content').' (ES)'),
                 ]),
                 Tab::make(__('filament.tab_english'))->schema([
-                    Forms\Components\TextInput::make('title.en')->label(__('filament.title').' (EN)'),
-                    Forms\Components\Textarea::make('description.en')->label(__('filament.description').' (EN)'),
+                    Forms\Components\TextInput::make('title.en')->label(__('filament.title').' (EN)')->maxLength(255),
+                    Forms\Components\Textarea::make('description.en')->label(__('filament.description').' (EN)')->maxLength(1000),
                     Forms\Components\RichEditor::make('content.en')->label(__('filament.content').' (EN)'),
                 ]),
             ])->columnSpanFull(),
@@ -75,13 +93,15 @@ class SectionResource extends Resource
             // Slug debajo del título, ancho completo
             Forms\Components\TextInput::make('slug')
                 ->label(__('filament.slug'))
-                ->unique(ignoreRecord: true)
+                ->maxLength(255)
+                ->unique(ignoreRecord: true, modifyRuleUsing: fn (Unique $rule) => $rule->whereNull('deleted_at'))
                 ->columnSpanFull(),
 
             // Zone y Order con labels traducidos
             Forms\Components\TextInput::make('zone')
                 ->label(__('filament.zone'))
                 ->required()
+                ->maxLength(100)
                 ->datalist(fn () => Section::query()
                     ->select('zone')
                     ->distinct()
@@ -92,6 +112,7 @@ class SectionResource extends Resource
             Forms\Components\TextInput::make('order')
                 ->label(__('filament.order'))
                 ->numeric()
+                ->required()
                 ->default(0),
         ]);
     }
@@ -99,10 +120,24 @@ class SectionResource extends Resource
     public static function table(Table $table): Table
     {
         return $table->columns([
-            Tables\Columns\TextColumn::make('slug')->label(__('filament.slug'))->sortable(),
-            Tables\Columns\TextColumn::make('zone')->label(__('filament.zone'))->sortable(),
-            Tables\Columns\TextColumn::make('title')->label(__('filament.title')),
-            Tables\Columns\TextColumn::make('order')->label(__('filament.order'))->sortable(),
+            Tables\Columns\TextColumn::make('slug')
+                ->label(__('filament.slug'))
+                ->searchable()
+                ->sortable()
+                ->limit(35)
+                ->toggleable(),
+            Tables\Columns\TextColumn::make('zone')
+                ->label(__('filament.zone'))
+                ->sortable()
+                ->toggleable(),
+            Tables\Columns\TextColumn::make('title')
+                ->label(__('filament.title'))
+                ->searchable()
+                ->limit(45),
+            Tables\Columns\TextColumn::make('order')
+                ->label(__('filament.order'))
+                ->sortable()
+                ->toggleable(),
         ])
             ->filters([
                 Tables\Filters\SelectFilter::make('zone')
@@ -111,10 +146,17 @@ class SectionResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                EditAction::make(),
-                DeleteAction::make(),
-                RestoreAction::make(),
-                ForceDeleteAction::make(),
+                ActionGroup::make([
+                    EditAction::make(),
+                    DeleteAction::make(),
+                    RestoreAction::make(),
+                    ForceDeleteAction::make(),
+                ]),
+            ])
+            ->bulkActions([
+                DeleteBulkAction::make(),
+                RestoreBulkAction::make(),
+                ForceDeleteBulkAction::make(),
             ])
             ->defaultSort('zone');
     }

@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('type', 50)->default('text')->comment('Tipo de campo: text, textarea, image, select, checkbox, radio, number');
             $table->integer('order')->default(0)->comment('Orden de visualización');
             $table->string('group', 100)->default('general')->comment('Grupo al que pertenece: general, seo, social, contact');
-            $table->timestamps();
+            $table->timestamp('created_at')->nullable()->comment('Fecha y hora de creación del setting');
+            $table->timestamp('updated_at')->nullable()->comment('Fecha y hora de última actualización del setting');
             $table->index('group', 'idx_settings_group');
             $table->index('order', 'idx_settings_order');
         });

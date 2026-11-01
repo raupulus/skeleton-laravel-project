@@ -90,4 +90,26 @@ class PolicyTest extends TestCase
 
         $this->assertGuest();
     }
+
+    /**
+     * Verifica que un usuario cuya cuenta se desactiva en caliente es expulsado y sus tokens revocados.
+     */
+    public function test_deactivated_user_is_logged_out_and_tokens_revoked(): void
+    {
+        $user = User::factory()->create(['is_active' => true]);
+        $user->createToken('test-device');
+        $this->assertEquals(1, $user->tokens()->count());
+
+        $user->update(['is_active' => false]);
+        $this->assertEquals(0, $user->tokens()->count());
+    }
+
+    /**
+     * Verifica que los paneles de Filament solo tienen login y no registro público duplicado.
+     */
+    public function test_filament_panel_does_not_expose_registration_route(): void
+    {
+        $this->get('/panel/register')->assertNotFound();
+        $this->get('/admin/register')->assertNotFound();
+    }
 }

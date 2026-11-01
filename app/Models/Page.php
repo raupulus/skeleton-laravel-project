@@ -4,9 +4,11 @@ namespace App\Models;
 
 use App\Enums\ContentStatus;
 use App\Traits\BelongsToUser;
+use App\Traits\CleansUpStorageFiles;
 use App\Traits\HasSeo;
 use App\Traits\HasSlug;
 use App\Traits\HasStatus;
+use App\Traits\SanitizesHtmlContent;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -33,7 +35,7 @@ use Spatie\Translatable\HasTranslations;
  * @property ContentStatus $status Estado (draft, published)
  * @property bool $is_active Si la página está activa
  * @property bool $featured Si la página está destacada
- * @property int $user_id ID del usuario autor
+ * @property int|null $user_id ID del usuario autor
  * @property Carbon|null $published_at Fecha de publicación
  * @property Carbon $created_at Fecha de creación
  * @property Carbon $updated_at Fecha de modificación
@@ -47,7 +49,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class Page extends Model
 {
-    use BelongsToUser, HasFactory, HasSeo, HasSlug, HasStatus, HasTranslations, SoftDeletes;
+    use BelongsToUser, CleansUpStorageFiles, HasFactory, HasSeo, HasSlug, HasStatus, HasTranslations, SanitizesHtmlContent, SoftDeletes;
 
     /** @var array<string> Campos traducibles usando spatie/laravel-translatable */
     public array $translatable = ['title', 'content', 'excerpt', 'seo_title', 'seo_description', 'seo_keywords'];

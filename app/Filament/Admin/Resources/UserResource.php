@@ -5,14 +5,24 @@ namespace App\Filament\Admin\Resources;
 use App\Enums\Role;
 use App\Filament\Components\ImageCropField;
 use App\Models\User;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
 use Filament\Forms;
 use Filament\Resources\Pages\PageRegistration;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\Rules\Unique;
 
 /**
  * Recurso Filament para gestionar los usuarios en el panel admin.
@@ -52,6 +62,17 @@ class UserResource extends Resource
         return __('filament.nav_system');
     }
 
+    /**
+     * Permite filtrar y restaurar usuarios con borrado lógico ([BPANEL-04]).
+     */
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
+    }
+
     public static function form(Schema $form): Schema
     {
         return $form->schema([
@@ -65,12 +86,14 @@ class UserResource extends Resource
                 ->label(__('filament.email'))
                 ->email()
                 ->required()
-                ->unique(ignoreRecord: true),
+                ->maxLength(255)
+                ->unique(ignoreRecord: true, modifyRuleUsing: fn (Unique $rule) => $rule->whereNull('deleted_at')),
             Forms\Components\TextInput::make('password')
                 ->label(__('filament.password'))
                 ->password()
+                ->revealable()
                 ->required(fn ($record) => ! $record)
-                ->minLength(8)
+                ->rule(Password::defaults())
                 ->dehydrated(fn ($state) => filled($state)),
             Forms\Components\Select::make('role')
                 ->label(__('filament.role'))
@@ -89,30 +112,45 @@ class UserResource extends Resource
         return $table->columns([
             Tables\Columns\TextColumn::make('name')
                 ->label(__('filament.name'))
-                ->searchable()->sortable(),
+                ->searchable()
+                ->sortable()
+                ->limit(35),
             Tables\Columns\TextColumn::make('email')
                 ->label(__('filament.email'))
-                ->searchable()->sortable(),
+                ->searchable()
+                ->sortable()
+                ->limit(40)
+                ->toggleable(),
             Tables\Columns\TextColumn::make('role')
                 ->label(__('filament.role'))
-                ->badge()
-                ->formatStateUsing(fn ($state) => $state->label())
-                ->color(fn ($state) => $state->isAdmin() ? 'primary' : 'gray'),
+                ->badge(),
             Tables\Columns\IconColumn::make('is_active')
                 ->label(__('filament.is_active'))
                 ->boolean(),
             Tables\Columns\TextColumn::make('created_at')
                 ->label(__('filament.created_at'))
                 ->dateTime('d/m/Y')
-                ->sortable(),
+                ->sortable()
+                ->toggleable(),
         ])->filters([
             Tables\Filters\SelectFilter::make('role')
                 ->label(__('filament.role'))
-                ->options(collect(Role::cases())->mapWithKeys(fn ($r) => [$r->value => $r->label()])),
+                ->options(Role::class),
             Tables\Filters\TernaryFilter::make('is_active')
                 ->label(__('filament.is_active')),
-        ])->actions([EditAction::make()])
-            ->bulkActions([DeleteBulkAction::make()]);
+            Tables\Filters\TrashedFilter::make(),
+        ])->actions([
+            ActionGroup::make([
+                EditAction::make(),
+                DeleteAction::make(),
+                RestoreAction::make(),
+                ForceDeleteAction::make(),
+            ]),
+        ])->bulkActions([
+            DeleteBulkAction::make(),
+            RestoreBulkAction::make(),
+            ForceDeleteBulkAction::make(),
+        ]);
     }
 
     /**

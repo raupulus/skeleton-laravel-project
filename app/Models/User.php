@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Role;
+use App\Traits\CleansUpStorageFiles;
 use Carbon\Carbon;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
@@ -43,7 +44,10 @@ use Laravel\Sanctum\HasApiTokens;
  */
 class User extends Authenticatable implements FilamentUser
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use CleansUpStorageFiles, HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+
+    /** @var array<int, string> Atributos de archivo gestionados en storage público */
+    protected array $storageAttributes = ['avatar'];
 
     /** @var array<string> Campos asignables en masa */
     protected $fillable = [
@@ -54,6 +58,38 @@ class User extends Authenticatable implements FilamentUser
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Eventos del ciclo de vida del modelo para seguridad, normalización y limpieza.
+     */
+    protected static function booted(): void
+    {
+        static::saving(function (self $user): void {
+            if (! empty($user->email)) {
+                $user->email = mb_strtolower(trim($user->email));
+            }
+
+            // Bloquear escalada vertical a SuperAdmin por parte de un Admin no-SuperAdmin
+            if (
+                $user->isDirty('role')
+                && $user->role === Role::SuperAdmin
+                && auth()->check()
+                && ! auth()->user()?->isSuperAdmin()
+            ) {
+                abort(403);
+            }
+        });
+
+        static::updated(function (self $user): void {
+            if ($user->wasChanged('is_active') && ! $user->is_active) {
+                $user->tokens()->delete();
+            }
+        });
+
+        static::deleted(function (self $user): void {
+            $user->tokens()->delete();
+        });
+    }
 
     /**
      * Definición de los casts de atributos del modelo.

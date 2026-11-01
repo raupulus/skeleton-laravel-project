@@ -25,6 +25,14 @@ class ViewLogs extends Page
     public ?string $logContent = null;
 
     /**
+     * Solo los administradores pueden acceder a la página de logs.
+     */
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->isAdmin() ?? false;
+    }
+
+    /**
      * Devuelve el grupo de navegación traducido.
      */
     public static function getNavigationGroup(): ?string
@@ -72,24 +80,39 @@ class ViewLogs extends Page
     }
 
     /**
-     * Carga el contenido de un archivo de log para mostrarlo en el modal.
+     * Carga las últimas 500 líneas de un archivo de log de forma eficiente en memoria.
      */
     public function viewLog(string $filename): void
     {
         $path = storage_path('logs/'.basename($filename));
+        $realPath = realpath($path);
+        $logsDir = realpath(storage_path('logs'));
 
-        if (! File::exists($path)) {
+        if (! $realPath || ! $logsDir || ! str_starts_with($realPath, $logsDir) || ! File::exists($realPath)) {
             Notification::make()->title(__('filament.view_logs_not_found'))->danger()->send();
 
             return;
         }
 
-        $this->selectedLog = $filename;
+        $this->selectedLog = basename($filename);
 
-        // Limitar a las últimas 500 líneas para evitar problemas de memoria
-        $lines = file($path);
-        $lastLines = array_slice($lines, -500);
-        $this->logContent = implode('', $lastLines);
+        try {
+            $file = new \SplFileObject($realPath, 'r');
+            $file->seek(PHP_INT_MAX);
+            $totalLines = $file->key();
+            $startLine = max(0, $totalLines - 500);
+
+            $lines = [];
+            $file->seek($startLine);
+            while (! $file->eof()) {
+                $lines[] = $file->fgets();
+            }
+
+            $this->logContent = implode('', $lines);
+        } catch (\Throwable $e) {
+            report($e);
+            Notification::make()->title(__('filament.action_failed'))->body($e->getMessage())->danger()->send();
+        }
     }
 
     /**
@@ -98,23 +121,22 @@ class ViewLogs extends Page
     public function downloadLog(string $filename): ?StreamedResponse
     {
         $path = storage_path('logs/'.basename($filename));
+        $realPath = realpath($path);
+        $logsDir = realpath(storage_path('logs'));
 
-        if (! File::exists($path)) {
+        if (! $realPath || ! $logsDir || ! str_starts_with($realPath, $logsDir) || ! File::exists($realPath)) {
             Notification::make()->title(__('filament.view_logs_not_found'))->danger()->send();
 
             return null;
         }
 
-        // Seguridad: verificar que el archivo está dentro del directorio de logs
-        $realPath = realpath($path);
-        $logsDir = realpath(storage_path('logs'));
-        if (! $realPath || ! str_starts_with($realPath, $logsDir)) {
-            abort(403);
-        }
-
         return response()->streamDownload(function () use ($realPath) {
-            echo file_get_contents($realPath);
-        }, $filename);
+            $stream = fopen($realPath, 'rb');
+            if ($stream) {
+                fpassthru($stream);
+                fclose($stream);
+            }
+        }, basename($filename));
     }
 
     /**

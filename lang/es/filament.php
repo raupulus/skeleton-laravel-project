@@ -153,4 +153,16 @@ return [
     'status_published' => 'Publicado',
     'email_status_sent' => 'Enviado',
     'email_status_failed' => 'Fallido',
+
+    // Navegación cruzada y utilidades adicionales
+    'go_to_website' => 'Ir a la web pública',
+    'go_to_user_panel' => 'Mi Panel de Usuario',
+    'go_to_admin_panel' => 'Panel de Administración',
+    'author' => 'Autor',
+    'password_confirmation' => 'Confirmar contraseña',
+    'current_password' => 'Contraseña actual',
+    'action_failed' => 'Error al ejecutar la acción',
+    'view_logs_truncated_notice' => 'Mostrando las últimas 500 líneas del archivo de log para optimizar el rendimiento.',
+    'image_crop_invalid' => 'El formato de la imagen recortada no es válido.',
+    'image_crop_too_large' => 'La imagen recortada supera el tamaño máximo permitido (5 MB).',
 ];

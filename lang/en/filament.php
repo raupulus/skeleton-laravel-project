@@ -153,4 +153,16 @@ return [
     'status_published' => 'Published',
     'email_status_sent' => 'Sent',
     'email_status_failed' => 'Failed',
+
+    // Cross-navigation & utility keys
+    'go_to_website' => 'Go to public website',
+    'go_to_user_panel' => 'My User Panel',
+    'go_to_admin_panel' => 'Administration Panel',
+    'author' => 'Author',
+    'password_confirmation' => 'Confirm password',
+    'current_password' => 'Current password',
+    'action_failed' => 'Action execution failed',
+    'view_logs_truncated_notice' => 'Showing the last 500 lines of the log file to optimize performance.',
+    'image_crop_invalid' => 'The cropped image format is invalid.',
+    'image_crop_too_large' => 'The cropped image exceeds the maximum allowed size (5 MB).',
 ];

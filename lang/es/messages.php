@@ -169,4 +169,36 @@ return [
     'profile_email_helper' => 'Si necesitas modificar tu email, contacta con el administrador.',
     'profile_password_helper' => 'Déjalo en blanco si no deseas cambiar la contraseña.',
     'profile_updated' => 'Perfil actualizado correctamente.',
+
+    // Navegación, Accesibilidad y Footer adicionales
+    'terms' => 'Términos y condiciones',
+    'footer_links' => 'Enlaces',
+    'footer_social' => 'Redes sociales',
+    'skip_to_content' => 'Saltar al contenido principal',
+    'nav_primary' => 'Navegación principal',
+    'menu_open' => 'Abrir menú de navegación',
+    'menu_close' => 'Cerrar menú de navegación',
+    'close' => 'Cerrar',
+    'language_switcher' => 'Selector de idioma',
+    'carousel_label' => 'Carrusel destacado',
+    'slide_pause' => 'Pausar carrusel',
+    'slide_play' => 'Reproducir carrusel',
+
+    // Errores HTTP
+    'error_404_title' => 'Página no encontrada',
+    'error_500_title' => 'Error interno del servidor',
+    'back_home' => 'Volver al inicio',
+
+    // Seguridad / Estado de cuenta / Tokens
+    'account_deactivated' => 'Tu cuenta ha sido desactivada. Contacta con el administrador.',
+    'api_tokens_limit_reached' => 'Has alcanzado el límite máximo de 20 tokens activos.',
+    'password_reset_link_sent_if_exists' => 'Si el correo electrónico existe en nuestro sistema, recibirás un enlace para restablecer tu contraseña.',
+
+    // Emails
+    'mail_welcome_subject' => 'Bienvenido a :site',
+    'mail_welcome_greeting' => '¡Bienvenido, :name!',
+    'mail_welcome_thanks' => 'Gracias por registrarte en :site.',
+    'mail_welcome_body' => 'Tu cuenta ha sido creada correctamente. Puedes acceder al panel de usuario desde nuestra web.',
+    'mail_contact_subject' => 'Nuevo mensaje de contacto: :subject',
+    'mail_contact_heading' => 'Nuevo mensaje de contacto',
 ];

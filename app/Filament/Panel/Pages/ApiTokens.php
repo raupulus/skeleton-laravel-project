@@ -48,6 +48,15 @@ class ApiTokens extends Page
             'tokenName.max' => __('messages.validation_token_name_max'),
         ]);
 
+        if (auth()->user()->tokens()->count() >= 20) {
+            Notification::make()
+                ->title(__('messages.api_token_limit_reached', ['max' => 20]))
+                ->danger()
+                ->send();
+
+            return;
+        }
+
         $token = auth()->user()->createToken($this->tokenName);
         $this->plainTextToken = $token->plainTextToken;
         $this->tokenName = '';

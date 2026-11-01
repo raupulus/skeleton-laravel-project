@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class PostApiController extends Controller
 {
     /**
      * Devuelve un listado paginado de posts publicados y activos.
-     * Soporta paginación con parámetro per_page (máximo 50 por página).
+     * Soporta paginación con parámetro per_page (entre 1 y 50 por página).
      *
      * @unauthenticated
      *
@@ -26,13 +27,14 @@ class PostApiController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        // Limitar el número máximo de resultados por página a 50
-        $perPage = min((int) $request->get('per_page', 12), 50);
+        // Acotar el número de resultados por página entre 1 y 50
+        $perPage = max(1, min($request->integer('per_page', 12), 50));
 
         $posts = Post::publishedAndActive()
             ->with('categories:id,slug,name')
             ->orderByDesc('published_at')
-            ->paginate($perPage);
+            ->paginate($perPage)
+            ->through(fn (Post $post) => (new PostResource($post))->resolve());
 
         return response()->json($posts);
     }
@@ -53,6 +55,6 @@ class PostApiController extends Controller
             ->with('categories:id,slug,name', 'user:id,name')
             ->firstOrFail();
 
-        return response()->json($post);
+        return response()->json(new PostResource($post));
     }
 }

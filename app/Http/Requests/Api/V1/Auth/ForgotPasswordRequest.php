@@ -19,28 +19,27 @@ class ForgotPasswordRequest extends FormRequest
     }
 
     /**
-     * Reglas de validación: el email debe existir en la tabla users.
+     * Reglas de validación: formato de email válido (sin exists para prevenir enumeración OWASP).
      *
      * @return array<string, mixed>
      */
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email', 'exists:users,email'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
         ];
     }
 
     /**
-     * Mensajes de error personalizados en español.
+     * Mensajes de error personalizados traducibles.
      *
      * @return array<string, string>
      */
     public function messages(): array
     {
         return [
-            'email.required' => 'El correo electrónico es obligatorio.',
-            'email.email' => 'El correo electrónico no es válido.',
-            'email.exists' => 'No existe ninguna cuenta con ese correo electrónico.',
+            'email.required' => __('messages.validation_email_required'),
+            'email.email' => __('messages.validation_email_email'),
         ];
     }
 }

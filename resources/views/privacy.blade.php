@@ -5,7 +5,7 @@
     <h1 class="text-3xl font-bold text-gray-900 mb-8">{{ __('messages.privacy') }}</h1>
 
     @forelse ($sections as $section)
-        <x-section-block :section="$section" />
+        <x-section-block :block="$section" />
     @empty
         <div class="prose max-w-none text-gray-600">
             <p>{{ __('messages.privacy_default_text') }}</p>

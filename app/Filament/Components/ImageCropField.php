@@ -11,6 +11,17 @@ use Filament\Forms\Components\FileUpload;
 class ImageCropField
 {
     /**
+     * Tipos MIME seguros permitidos para subida de imágenes (bloquea SVG para evitar Stored XSS).
+     *
+     * @var array<int, string>
+     */
+    public const ACCEPTED_MIME_TYPES = [
+        'image/jpeg',
+        'image/png',
+        'image/webp',
+    ];
+
+    /**
      * Crea un campo de imagen con cropper 16:9 (landscape).
      * Uso principal: posts, pages, secciones, slides (imagen principal).
      *
@@ -18,30 +29,16 @@ class ImageCropField
      * @param  string  $directory  Directorio de almacenamiento (ej: 'posts')
      * @param  bool  $required  Indica si el campo es obligatorio
      * @param  string|null  $label  Label personalizado (si null, usa filament.$field)
+     * @param  int|string|array<string, int>|null  $columnSpan  Ancho de columna en el grid
      */
     public static function make16x9(
         string $field = 'image',
         string $directory = 'images',
         bool $required = false,
-        ?string $label = null
+        ?string $label = null,
+        int|string|array|null $columnSpan = 'full'
     ): FileUpload {
-        $upload = FileUpload::make($field)
-            ->label($label ?? __('filament.'.$field))
-            ->image()
-            ->maxSize(2048)
-            ->directory($directory)
-            ->imageEditor()
-            ->imageAspectRatio('16:9')
-            ->automaticallyCropImagesToAspectRatio()
-            ->imageEditorAspectRatioOptions([null, '16:9'])
-            ->imageEditorMode(2)
-            ->columnSpanFull();
-
-        if ($required) {
-            $upload->required();
-        }
-
-        return $upload;
+        return self::configureBaseUpload($field, $directory, '16:9', $required, $label, $columnSpan);
     }
 
     /**
@@ -52,30 +49,16 @@ class ImageCropField
      * @param  string  $directory  Directorio de almacenamiento (ej: 'avatars')
      * @param  bool  $required  Indica si el campo es obligatorio
      * @param  string|null  $label  Label personalizado (si null, usa filament.$field)
+     * @param  int|string|array<string, int>|null  $columnSpan  Ancho de columna en el grid
      */
     public static function make4x3(
         string $field = 'avatar',
         string $directory = 'avatars',
         bool $required = false,
-        ?string $label = null
+        ?string $label = null,
+        int|string|array|null $columnSpan = 'full'
     ): FileUpload {
-        $upload = FileUpload::make($field)
-            ->label($label ?? __('filament.'.$field))
-            ->image()
-            ->maxSize(2048)
-            ->directory($directory)
-            ->imageEditor()
-            ->imageAspectRatio('4:3')
-            ->automaticallyCropImagesToAspectRatio()
-            ->imageEditorAspectRatioOptions([null, '4:3'])
-            ->imageEditorMode(2)
-            ->columnSpanFull();
-
-        if ($required) {
-            $upload->required();
-        }
-
-        return $upload;
+        return self::configureBaseUpload($field, $directory, '4:3', $required, $label, $columnSpan);
     }
 
     /**
@@ -86,30 +69,16 @@ class ImageCropField
      * @param  string  $directory  Directorio de almacenamiento (ej: 'slides')
      * @param  bool  $required  Indica si el campo es obligatorio
      * @param  string|null  $label  Label personalizado (si null, usa filament.$field)
+     * @param  int|string|array<string, int>|null  $columnSpan  Ancho de columna en el grid
      */
     public static function make9x16(
         string $field = 'image_vertical',
         string $directory = 'images',
         bool $required = false,
-        ?string $label = null
+        ?string $label = null,
+        int|string|array|null $columnSpan = 'full'
     ): FileUpload {
-        $upload = FileUpload::make($field)
-            ->label($label ?? __('filament.'.$field))
-            ->image()
-            ->maxSize(2048)
-            ->directory($directory)
-            ->imageEditor()
-            ->imageAspectRatio('9:16')
-            ->automaticallyCropImagesToAspectRatio()
-            ->imageEditorAspectRatioOptions([null, '9:16'])
-            ->imageEditorMode(2)
-            ->columnSpanFull();
-
-        if ($required) {
-            $upload->required();
-        }
-
-        return $upload;
+        return self::configureBaseUpload($field, $directory, '9:16', $required, $label, $columnSpan);
     }
 
     /**
@@ -120,24 +89,50 @@ class ImageCropField
      * @param  string  $directory  Directorio de almacenamiento (ej: 'slides')
      * @param  bool  $required  Indica si el campo es obligatorio
      * @param  string|null  $label  Label personalizado (si null, usa filament.$field)
+     * @param  int|string|array<string, int>|null  $columnSpan  Ancho de columna en el grid
      */
     public static function make8x12(
         string $field = 'image_vertical',
         string $directory = 'images',
         bool $required = false,
-        ?string $label = null
+        ?string $label = null,
+        int|string|array|null $columnSpan = 'full'
+    ): FileUpload {
+        return self::configureBaseUpload($field, $directory, '8:12', $required, $label, $columnSpan);
+    }
+
+    /**
+     * Configura una instancia base de FileUpload con validación estricta de MIME, disco público y cropper.
+     *
+     * @param  int|string|array<string, int>|null  $columnSpan
+     */
+    protected static function configureBaseUpload(
+        string $field,
+        string $directory,
+        string $aspectRatio,
+        bool $required,
+        ?string $label,
+        int|string|array|null $columnSpan
     ): FileUpload {
         $upload = FileUpload::make($field)
             ->label($label ?? __('filament.'.$field))
+            ->disk('public')
+            ->visibility('public')
             ->image()
+            ->acceptedFileTypes(self::ACCEPTED_MIME_TYPES)
             ->maxSize(2048)
             ->directory($directory)
             ->imageEditor()
-            ->imageAspectRatio('8:12')
+            ->imageAspectRatio($aspectRatio)
             ->automaticallyCropImagesToAspectRatio()
-            ->imageEditorAspectRatioOptions([null, '8:12'])
-            ->imageEditorMode(2)
-            ->columnSpanFull();
+            ->imageEditorAspectRatioOptions([null, $aspectRatio])
+            ->imageEditorMode(2);
+
+        if ($columnSpan === 'full') {
+            $upload->columnSpanFull();
+        } elseif ($columnSpan !== null) {
+            $upload->columnSpan($columnSpan);
+        }
 
         if ($required) {
             $upload->required();

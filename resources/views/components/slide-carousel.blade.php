@@ -1,12 +1,19 @@
-@props(['zone'])
-@php $slides = \App\Models\Slide::forZone($zone)->get(); @endphp
+@props(['zone', 'slides' => null])
+@php
+    $slides = $slides ?? \App\Models\Slide::forZone($zone)->get();
+@endphp
 @if($slides->count())
-<div
+<section
+    role="region"
+    aria-roledescription="carousel"
+    aria-label="{{ __('messages.carousel_label') }}"
     x-data="{
         active: 0,
         count: {{ $slides->count() }},
         tid: null,
+        paused: false,
         play() {
+            if (this.paused || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
             this.stop();
             this.tid = setInterval(() => { this.active = (this.active + 1) % this.count; }, 5000);
         },
@@ -14,40 +21,72 @@
             clearInterval(this.tid);
             this.tid = null;
         },
-        next() { this.active = (this.active + 1) % this.count; this.play(); },
-        prev() { this.active = (this.active - 1 + this.count) % this.count; this.play(); },
-        go(n)  { this.active = n; this.play(); }
+        togglePause() {
+            this.paused = !this.paused;
+            if (this.paused) {
+                this.stop();
+            } else {
+                this.play();
+            }
+        },
+        next() { this.active = (this.active + 1) % this.count; if (!this.paused) this.play(); },
+        prev() { this.active = (this.active - 1 + this.count) % this.count; if (!this.paused) this.play(); },
+        go(n)  { this.active = n; if (!this.paused) this.play(); }
     }"
     x-init="play()"
     @mouseenter="stop()"
     @mouseleave="play()"
-    style="position:relative; width:100%; height:24rem; border-radius:0.75rem; overflow:hidden;"
+    @focusin="stop()"
+    @focusout="play()"
+    @keydown.arrow-left.prevent="prev()"
+    @keydown.arrow-right.prevent="next()"
+    class="relative w-full h-96 rounded-xl overflow-hidden"
 >
     {{-- Diapositivas --}}
     @foreach($slides as $i => $slide)
     <div
+        role="group"
+        aria-roledescription="slide"
+        aria-label="{{ $i + 1 }} / {{ $slides->count() }}"
         x-show="active === {{ $i }}"
+        @if($i !== 0) x-cloak @endif
         x-transition:enter="transition-opacity ease-in-out duration-500"
         x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100"
         x-transition:leave="transition-opacity ease-in-out duration-500"
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
-        style="position:absolute; inset:0;"
-        @if($i === 0) x-show.initial @endif
+        class="absolute inset-0"
     >
-        <img
-            src="{{ Storage::disk('public')->url($slide->image) }}"
-            alt="{{ $slide->getTranslation('title', app()->getLocale()) ?: '' }}"
-            style="width:100%; height:100%; object-fit:cover; display:block;"
-        />
+        @if($slide->image_vertical)
+            <picture>
+                <source media="(max-width: 767px)" srcset="{{ Storage::disk('public')->url($slide->image_vertical) }}">
+                <img
+                    src="{{ Storage::disk('public')->url($slide->image) }}"
+                    alt="{{ $slide->getTranslation('title', app()->getLocale()) ?: '' }}"
+                    width="1200"
+                    height="675"
+                    @if($i === 0) fetchpriority="high" decoding="async" @else loading="lazy" decoding="async" @endif
+                    class="w-full h-full object-cover block"
+                />
+            </picture>
+        @else
+            <img
+                src="{{ Storage::disk('public')->url($slide->image) }}"
+                alt="{{ $slide->getTranslation('title', app()->getLocale()) ?: '' }}"
+                width="1200"
+                height="675"
+                @if($i === 0) fetchpriority="high" decoding="async" @else loading="lazy" decoding="async" @endif
+                class="w-full h-full object-cover block"
+            />
+        @endif
         @if($slide->getTranslation('title', app()->getLocale()))
-        <div style="position:absolute; bottom:0; left:0; right:0; background:linear-gradient(to top,rgba(0,0,0,.6),transparent); padding:1.5rem;">
-            <h2 style="color:#fff; font-size:1.5rem; font-weight:700; margin:0;">
+        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/75 via-black/40 to-transparent p-6 pb-12">
+            <h2 class="text-white text-2xl font-bold m-0">
                 {{ $slide->getTranslation('title', app()->getLocale()) }}
             </h2>
             @if($slide->getTranslation('content', app()->getLocale()))
-            <p style="color:rgba(255,255,255,.9); font-size:.875rem; margin:.25rem 0 0;">
+            <p class="text-white/90 text-sm mt-1 mb-0">
                 {{ $slide->getTranslation('content', app()->getLocale()) }}
             </p>
             @endif
@@ -56,17 +95,33 @@
     </div>
     @endforeach
 
+    @if($slides->count() > 1)
+    {{-- Botón pausa / reproducir (WCAG 2.2.2) --}}
+    <button
+        type="button"
+        @click.prevent="togglePause()"
+        :aria-label="paused ? '{{ __('messages.slide_play') }}' : '{{ __('messages.slide_pause') }}'"
+        :aria-pressed="paused.toString()"
+        class="absolute top-3 right-3 z-30 bg-white/90 hover:bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center shadow focus:outline-none focus:ring-2 focus:ring-indigo-500"
+    >
+        <svg x-show="!paused" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+            <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+        </svg>
+        <svg x-cloak x-show="paused" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+    </button>
+
     {{-- Botón anterior --}}
     <button
         type="button"
         @click.prevent="prev()"
-        style="position:absolute; left:0.75rem; top:50%; transform:translateY(-50%); z-index:30;
-               background:rgba(255,255,255,.85); border:none; border-radius:50%; width:2.5rem; height:2.5rem;
-               display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,.3);"
+        class="absolute left-3 top-1/2 -translate-y-1/2 z-30 bg-white/90 hover:bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center shadow focus:outline-none focus:ring-2 focus:ring-indigo-500"
         aria-label="{{ __('messages.slide_prev') }}"
     >
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"
-             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
     </button>
@@ -75,35 +130,29 @@
     <button
         type="button"
         @click.prevent="next()"
-        style="position:absolute; right:0.75rem; top:50%; transform:translateY(-50%); z-index:30;
-               background:rgba(255,255,255,.85); border:none; border-radius:50%; width:2.5rem; height:2.5rem;
-               display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,.3);"
+        class="absolute right-3 top-1/2 -translate-y-1/2 z-30 bg-white/90 hover:bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center shadow focus:outline-none focus:ring-2 focus:ring-indigo-500"
         aria-label="{{ __('messages.slide_next') }}"
     >
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"
-             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <polyline points="9 18 15 12 9 6"></polyline>
         </svg>
     </button>
 
     {{-- Indicadores de posición --}}
-    @if($slides->count() > 1)
-    <div style="position:absolute; bottom:0.75rem; left:0; right:0; z-index:30;
-                display:flex; justify-content:center; gap:0.4rem; pointer-events:none;">
+    <div class="absolute bottom-3 left-0 right-0 z-30 flex justify-center gap-2 pointer-events-none">
         @foreach($slides as $i => $slide)
         <button
             type="button"
             @click.prevent="go({{ $i }})"
-            :style="active === {{ $i }}
-                ? 'background:#fff; width:1rem;'
-                : 'background:rgba(255,255,255,.5); width:0.5rem;'"
-            style="height:0.5rem; border:none; border-radius:9999px; cursor:pointer;
-                   transition:all .3s; pointer-events:auto;"
+            :aria-current="active === {{ $i }} ? 'true' : 'false'"
+            :class="active === {{ $i }} ? 'bg-white w-5' : 'bg-white/60 w-2.5'"
+            class="h-2.5 rounded-full transition-all duration-300 pointer-events-auto focus:outline-none focus:ring-2 focus:ring-indigo-500"
             aria-label="{{ __('messages.slide_go_to', ['n' => $i + 1]) }}"
         ></button>
         @endforeach
     </div>
     @endif
-</div>
+</section>
 @endif
 

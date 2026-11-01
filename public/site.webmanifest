@@ -1,0 +1,20 @@
+{
+    "name": "Skeleton Laravel Project",
+    "short_name": "Skeleton",
+    "icons": [
+        {
+            "src": "/images/logos/logo-180x180.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/logos/logo-64x64.png",
+            "sizes": "64x64",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#4f46e5",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "start_url": "/"
+}

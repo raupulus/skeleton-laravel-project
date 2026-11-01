@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\CleansUpStorageFiles;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,7 +36,10 @@ use Spatie\Translatable\HasTranslations;
  */
 class Slide extends Model
 {
-    use HasFactory, HasTranslations, SoftDeletes;
+    use CleansUpStorageFiles, HasFactory, HasTranslations, SoftDeletes;
+
+    /** @var array<int, string> Atributos de archivo gestionados en storage público */
+    protected array $storageAttributes = ['image', 'image_vertical'];
 
     /** @var array<string> Campos traducibles usando spatie/laravel-translatable */
     public array $translatable = ['title', 'content'];
@@ -47,12 +51,19 @@ class Slide extends Model
     ];
 
     /**
-     * Eventos del modelo para invalidar caché de zona al guardar o eliminar.
+     * Eventos del modelo para invalidar caché de zona (actual y original) al guardar o eliminar.
      */
     protected static function booted(): void
     {
         $clearCache = function (self $model): void {
             Cache::forget("slides_{$model->zone}_ids");
+            Cache::forget("slides_{$model->zone}");
+
+            $originalZone = $model->getOriginal('zone');
+            if (! empty($originalZone) && $originalZone !== $model->zone) {
+                Cache::forget("slides_{$originalZone}_ids");
+                Cache::forget("slides_{$originalZone}");
+            }
         };
         static::saved($clearCache);
         static::deleted($clearCache);

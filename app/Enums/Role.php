@@ -2,10 +2,13 @@
 
 namespace App\Enums;
 
+use Filament\Support\Contracts\HasColor;
+use Filament\Support\Contracts\HasLabel;
+
 /**
  * Enum que define los roles de usuario disponibles en la plataforma.
  */
-enum Role: string
+enum Role: string implements HasColor, HasLabel
 {
     case SuperAdmin = 'superadmin';
     case Admin = 'admin';
@@ -20,6 +23,20 @@ enum Role: string
             self::SuperAdmin => __('filament.role_superadmin'),
             self::Admin => __('filament.role_admin'),
             self::User => __('filament.role_user'),
+        };
+    }
+
+    public function getLabel(): ?string
+    {
+        return $this->label();
+    }
+
+    public function getColor(): string|array|null
+    {
+        return match ($this) {
+            self::SuperAdmin => 'danger',
+            self::Admin => 'warning',
+            self::User => 'info',
         };
     }
 

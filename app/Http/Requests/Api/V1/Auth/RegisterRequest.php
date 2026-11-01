@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Api\V1\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 /**
  * FormRequest para el registro de nuevos usuarios a través de la API.
@@ -28,27 +30,27 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique('users', 'email')->whereNull('deleted_at')],
+            'password' => ['required', 'string', Password::defaults(), 'confirmed'],
         ];
     }
 
     /**
-     * Mensajes de error personalizados en español para cada regla de validación.
+     * Mensajes de error personalizados traducibles para cada regla de validación.
      *
      * @return array<string, string>
      */
     public function messages(): array
     {
         return [
-            'name.required' => 'El nombre es obligatorio.',
-            'name.max' => 'El nombre no puede superar 255 caracteres.',
-            'email.required' => 'El correo electrónico es obligatorio.',
-            'email.email' => 'El correo electrónico no es válido.',
-            'email.unique' => 'Este correo electrónico ya está registrado.',
-            'password.required' => 'La contraseña es obligatoria.',
-            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
-            'password.confirmed' => 'La confirmación de contraseña no coincide.',
+            'name.required' => __('messages.validation_name_required'),
+            'name.max' => __('messages.validation_name_max'),
+            'email.required' => __('messages.validation_email_required'),
+            'email.email' => __('messages.validation_email_email'),
+            'email.unique' => __('messages.validation_email_unique'),
+            'password.required' => __('messages.validation_password_required'),
+            'password.min' => __('messages.validation_password_min'),
+            'password.confirmed' => __('messages.validation_password_confirmed'),
         ];
     }
 }

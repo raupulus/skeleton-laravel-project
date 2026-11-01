@@ -18,6 +18,14 @@ class LogDownloadWidget extends Widget
     protected string $view = 'filament.admin.widgets.log-download';
 
     /**
+     * Solo los administradores pueden ver este widget.
+     */
+    public static function canView(): bool
+    {
+        return auth()->user()?->isAdmin() ?? false;
+    }
+
+    /**
      * Devuelve información sobre el último archivo de log.
      *
      * @return array{name: string|null, size: string|null, modified: string|null, exists: bool}
