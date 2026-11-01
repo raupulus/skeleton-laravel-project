@@ -19,8 +19,9 @@ class LogDownloadController extends Controller
      */
     public function download(string $filename): BinaryFileResponse
     {
-        // Verificar que el usuario es administrador
-        abort_unless(auth()->user()?->role->isAdmin(), 403);
+        // Verificar que el usuario está activo y es administrador
+        $user = auth()->user();
+        abort_unless($user && $user->is_active && $user->isAdmin(), 403);
 
         $path = storage_path('logs/'.basename($filename));
         $realPath = realpath($path);

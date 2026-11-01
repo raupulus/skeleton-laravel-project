@@ -74,7 +74,9 @@ class UserResource extends Resource
                 ->dehydrated(fn ($state) => filled($state)),
             Forms\Components\Select::make('role')
                 ->label(__('filament.role'))
-                ->options(collect(Role::cases())->mapWithKeys(fn ($r) => [$r->value => $r->label()]))
+                ->options(fn () => collect(Role::cases())
+                    ->reject(fn (Role $r) => $r === Role::SuperAdmin && ! auth()->user()?->isSuperAdmin())
+                    ->mapWithKeys(fn (Role $r) => [$r->value => $r->label()]))
                 ->required(),
             Forms\Components\Toggle::make('is_active')
                 ->label(__('filament.is_active'))

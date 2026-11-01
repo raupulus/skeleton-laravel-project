@@ -116,4 +116,22 @@ class RecaptchaTest extends TestCase
 
         $this->assertTrue($failed, 'La regla debería fallar si la acción no coincide.');
     }
+
+    /**
+     * Comprueba que el validador de Laravel rechaza una petición cuando falta el campo
+     * g-recaptcha-response y las claves están configuradas (regla implícita).
+     */
+    public function test_validator_rejects_missing_field_when_keys_are_configured(): void
+    {
+        config([
+            'services.recaptcha.site_key' => 'test-site-key',
+            'services.recaptcha.secret_key' => 'test-secret-key',
+        ]);
+
+        $validator = validator([], [
+            'g-recaptcha-response' => [new Recaptcha('contact')],
+        ]);
+
+        $this->assertTrue($validator->fails(), 'Omitir el campo g-recaptcha-response no debe saltarse la validación.');
+    }
 }

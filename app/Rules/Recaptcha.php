@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Http;
 class Recaptcha implements ValidationRule
 {
     /**
+     * Indica que la regla debe evaluarse aunque el atributo no esté presente o esté vacío.
+     */
+    public bool $implicit = true;
+
+    /**
      * Acción esperada para la validación de reCAPTCHA v3 (opcional).
      */
     protected ?string $action;

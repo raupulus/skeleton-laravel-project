@@ -54,6 +54,10 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
+        if ($model->isSuperAdmin()) {
+            return $user->isSuperAdmin();
+        }
+
         return $user->isAdmin();
     }
 
@@ -62,12 +66,12 @@ class UserPolicy
      *
      * @param  User  $user  El usuario que realiza la acción
      * @param  User  $model  El registro a eliminar
-     * @return bool True si el usuario es superadministrador
+     * @return bool True si el usuario es superadministrador y no se elimina a sí mismo
      */
     public function delete(User $user, User $model): bool
     {
-        // Solo el superadmin puede eliminar registros permanentemente
-        return $user->isSuperAdmin();
+        // Solo el superadmin puede eliminar registros y nunca su propia cuenta
+        return $user->isSuperAdmin() && $user->id !== $model->id;
     }
 
     /**
@@ -75,10 +79,14 @@ class UserPolicy
      *
      * @param  User  $user  El usuario que realiza la acción
      * @param  User  $model  El registro a restaurar
-     * @return bool True si el usuario es administrador
+     * @return bool True si el usuario es administrador (o superadmin para cuentas superadmin)
      */
     public function restore(User $user, User $model): bool
     {
+        if ($model->isSuperAdmin()) {
+            return $user->isSuperAdmin();
+        }
+
         return $user->isAdmin();
     }
 

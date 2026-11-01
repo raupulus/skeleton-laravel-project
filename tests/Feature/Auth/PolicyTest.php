@@ -59,4 +59,35 @@ class PolicyTest extends TestCase
         $user = User::factory()->create(['role' => Role::User]);
         $this->actingAs($user)->get('/panel')->assertSuccessful();
     }
+
+    /**
+     * Verifica que un admin normal no puede editar ni eliminar a un superadmin.
+     */
+    public function test_admin_cannot_modify_or_delete_superadmin(): void
+    {
+        $admin = User::factory()->create(['role' => Role::Admin]);
+        $superadmin = User::factory()->create(['role' => Role::SuperAdmin]);
+
+        $this->assertFalse($admin->can('update', $superadmin));
+        $this->assertFalse($admin->can('delete', $superadmin));
+        $this->assertTrue($superadmin->can('update', $superadmin));
+        $this->assertFalse($superadmin->can('delete', $superadmin));
+    }
+
+    /**
+     * Verifica que un usuario inactivo no puede iniciar sesión en la web.
+     */
+    public function test_inactive_user_cannot_login_via_web(): void
+    {
+        $user = User::factory()->inactive()->create([
+            'password' => bcrypt('password123'),
+        ]);
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password123',
+        ])->assertSessionHasErrors('email');
+
+        $this->assertGuest();
+    }
 }
