@@ -1,5 +1,7 @@
 # Módulo: SettingService
 
+*Última actualización: 2026-08-26*
+
 > Servicio para acceso cacheado a la configuración del sistema. Interfaz principal para leer settings desde cualquier parte de la aplicación.
 
 ---

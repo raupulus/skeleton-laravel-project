@@ -1,5 +1,7 @@
 # Acciones Admin
 
+*Última actualización: 2026-08-26*
+
 Sección del panel admin con acciones de mantenimiento del sistema. Accesible solo para usuarios con rol admin o superadmin. Aparece como último grupo en el menú lateral ("Acciones", después de "Sistema").
 
 ## Archivos principales

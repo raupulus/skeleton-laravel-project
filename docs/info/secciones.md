@@ -1,5 +1,7 @@
 # Módulo: Secciones
 
+*Última actualización: 2026-08-26*
+
 > Bloques de contenido dinámico del frontend, agrupados por zona, con título, descripción y contenido enriquecido traducibles (es/en). Editables desde el backend sin tocar código.
 
 ---

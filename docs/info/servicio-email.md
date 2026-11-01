@@ -1,5 +1,7 @@
 # Módulo: EmailService
 
+*Última actualización: 2026-08-26*
+
 > Servicio centralizado para el envío de emails que registra automáticamente cada intento en la tabla `sent_emails` para auditoría.
 
 ---

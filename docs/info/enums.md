@@ -1,5 +1,7 @@
 # Módulo: Enums
 
+*Última actualización: 2026-08-26*
+
 > Enumeraciones PHP backed que definen los valores constantes del sistema: roles de usuario, estados de contenido y estados de email.
 
 ---

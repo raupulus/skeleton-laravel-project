@@ -1,5 +1,7 @@
 # Módulo: Páginas
 
+*Última actualización: 2026-08-26*
+
 > Páginas de contenido estático/dinámico traducibles (es/en) con campos SEO, categorías opcionales y estados de publicación.
 
 ---

@@ -1,5 +1,7 @@
 # Módulo: Autenticación y Autorización
 
+*Última actualización: 2026-08-26*
+
 > Autenticación web con Laravel Breeze, autenticación API con Laravel Sanctum, policies de autorización por modelo, middleware de idioma y guards de Filament.
 
 ---

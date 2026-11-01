@@ -1,5 +1,7 @@
 # Módulo: Categorías
 
+*Última actualización: 2026-08-26*
+
 > Taxonomía compartida entre posts y páginas, con nombres traducibles (es/en), slug único y ordenación personalizada.
 
 ---

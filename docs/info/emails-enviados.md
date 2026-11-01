@@ -1,5 +1,7 @@
 # Módulo: Emails Enviados
 
+*Última actualización: 2026-08-26*
+
 > Registro automático de auditoría de todos los emails enviados por la plataforma, con estados y visualización completa desde el backend.
 
 ---

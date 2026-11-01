@@ -1,5 +1,7 @@
 # Módulo: Traits
 
+*Última actualización: 2026-08-26*
+
 > Traits reutilizables que encapsulan comportamiento compartido entre modelos: generación de slug, estados de contenido, campos SEO y asignación de autor.
 
 ---

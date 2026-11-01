@@ -1,5 +1,7 @@
 # Módulo: Slides
 
+*Última actualización: 2026-08-26*
+
 > Carruseles de imágenes agrupados por zona, con texto traducible (es/en), editor de recorte integrado y soporte para imágenes horizontales (16:9) y verticales (8:12).
 
 ---

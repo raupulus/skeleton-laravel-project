@@ -1,5 +1,7 @@
 # Módulo: Panel Usuario (Filament)
 
+*Última actualización: 2026-08-26*
+
 > Panel de usuario en `/panel` con edición de perfil personal y gestión de tokens API propios.
 
 ---

@@ -1,5 +1,7 @@
 # Módulo: SeoService
 
+*Última actualización: 2026-08-26*
+
 > Servicio para la gestión dinámica de meta tags SEO (title, description, OG, Twitter Cards, JSON-LD) con soporte para carga automática desde modelos.
 
 ---

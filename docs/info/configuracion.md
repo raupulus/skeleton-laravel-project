@@ -1,5 +1,7 @@
 # Módulo: Configuración (Settings)
 
+*Última actualización: 2026-08-26*
+
 > Ajustes globales de la plataforma en formato clave-valor, agrupados por categoría, cacheados durante 1 hora y accesibles mediante el helper global `setting()`.
 
 ---

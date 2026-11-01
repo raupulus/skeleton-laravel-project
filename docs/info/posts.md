@@ -1,5 +1,7 @@
 # Módulo: Posts (Blog)
 
+*Última actualización: 2026-08-26*
+
 > Sistema de blog con artículos traducibles (es/en), categorías, campos SEO, estados de publicación y asignación automática de autor.
 
 ---

@@ -1,5 +1,7 @@
 # Módulo: Panel Admin (Filament)
 
+*Última actualización: 2026-08-26*
+
 > Panel de administración completo en `/admin` con CRUD de todos los modelos, dashboard con widgets y navegación organizada por grupos.
 
 ---

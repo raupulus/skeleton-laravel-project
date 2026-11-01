@@ -1,5 +1,7 @@
 # Módulo: Usuarios
 
+*Última actualización: 2026-08-26*
+
 > Gestión de cuentas de usuario con sistema de roles, autenticación web y API, y control de acceso a los paneles Filament.
 
 ---

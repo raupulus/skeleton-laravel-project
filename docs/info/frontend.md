@@ -1,5 +1,7 @@
 # Módulo: Frontend público
 
+*Última actualización: 2026-08-26*
+
 > Layout principal, barra de navegación, pie de página, componentes Blade reutilizables y páginas públicas del sitio web con Tailwind CSS y Alpine.js.
 
 ---

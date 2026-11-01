@@ -1,5 +1,7 @@
 # Módulo: Traducciones (i18n)
 
+*Última actualización: 2026-08-26*
+
 > Sistema de internacionalización bilingüe (español/inglés) para textos de la interfaz y contenido de modelos, con cambio de idioma persistido en sesión.
 
 ---

@@ -1,5 +1,7 @@
 # Módulo: API REST
 
+*Última actualización: 2026-08-26*
+
 > API RESTful versionada en `/api/v1` con endpoints públicos para contenido, autenticación vía Sanctum, gestión de tokens y documentación automática con Scribe.
 
 ---

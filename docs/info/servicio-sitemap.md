@@ -1,5 +1,7 @@
 # Módulo: SitemapService
 
+*Última actualización: 2026-08-26*
+
 > Generación automática del sitemap XML con todas las URLs públicas del sitio (estáticas, posts y páginas), con soporte de alternates hreflang para multi-idioma (es/en).
 
 ---
