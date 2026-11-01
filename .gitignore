@@ -62,6 +62,9 @@ coverage/
 .docker/
 docker-compose.override.yml
 
+# Sitemap generado (se regenera con sitemap:generate)
+/public/sitemap.xml
+
 # Documentación API generada (se regenera con scribe:generate)
 public/docs/api/
 .scribe/endpoints.cache/
