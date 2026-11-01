@@ -1,446 +1,252 @@
 # Skeleton Laravel Project
 
-Plantilla base para proyectos Laravel con arquitectura completa lista para producción.
-Incluye autenticación, panel admin (Filament), API REST, blog, páginas, traducciones, SEO y más.
+*Última actualización: 2026-08-26*
+
+Plantilla base profesional para aplicaciones Laravel con arquitectura modular, robusta y lista para producción.
+Incluye autenticación web y API, panel de administración Filament, sistema de contenidos bilingüe (posts, páginas, slides, secciones), configuraciones dinámicas, registro de auditoría de emails, SEO automatizado, Docker y suite de tests.
 
 ---
 
 ## Stack tecnológico
 
-| Tecnología | Versión | Uso |
-|-----------|---------|-----|
-| PHP | 8.4 | Lenguaje del servidor |
-| Laravel | 13.x | Framework PHP |
-| Filament | 5.x | Panel de administración |
-| Vue 3 | 3.x | Componentes frontend (preparado) |
-| Tailwind CSS | 4.x | Estilos frontend |
-| Alpine.js | 3.x | Interactividad ligera |
-| Sanctum | 4.x | Autenticación API |
-| spatie/laravel-translatable | 6.x | Traducciones de modelos |
-| spatie/laravel-sitemap | 7.x | Generación de sitemap |
-| knuckleswtf/scribe | 4.x | Documentación API |
+| Tecnología | Versión | Propósito en el proyecto |
+|-----------|---------|--------------------------|
+| **PHP** | 8.4 | Lenguaje base con tipado estricto, backed enums y readonly properties |
+| **Laravel** | 13.x | Framework principal |
+| **PostgreSQL** | 16.x | **Motor de base de datos obligatorio** (`DB_CONNECTION=pgsql`) |
+| **Filament** | 5.x | Panel de administración (`/admin`) y panel de usuario (`/panel`) |
+| **Tailwind CSS** | 4.x | Estilos frontend utilitarios configurados con `@theme` |
+| **Alpine.js** | 3.x | Interactividad ligera, dropdowns y modales |
+| **Vue 3** | 3.x | Preparado en el frontend para componentes enriquecidos |
+| **Laravel Sanctum** | 4.x | Autenticación API con Bearer tokens personales |
+| **spatie/laravel-translatable** | 6.x | Traducciones directas en campos de modelos |
+| **spatie/laravel-sitemap** | 7.x | Generación automática del sitemap XML multi-idioma |
+| **knuckleswtf/scribe** | 4.x | Documentación interactiva de la API REST (`/docs`) |
 
 ---
 
-## Instalación y desarrollo local
+## Requisitos previos
 
-### Requisitos previos
-- PHP 8.4+
-- Composer 2+
-- Node.js 20+
-- npm 10+
+- **PHP 8.4** o superior con extensiones: `pdo_pgsql`, `pgsql`, `mbstring`, `openssl`, `curl`, `gd` / `imagick`, `fileinfo`, `xml`.
+- **PostgreSQL 16** instalado y corriendo localmente o mediante Docker.
+- **Composer 2.7+**
+- **Node.js 20+** y **npm 10+**
 
-### Inicio rápido
+---
+
+## Instalación en Desarrollo Local
+
+### Opción 1: Inicio Rápido Automatizado
 
 ```bash
 # 1. Clonar el repositorio
 git clone https://github.com/tuusuario/skeleton-laravel-project.git
 cd skeleton-laravel-project
 
-# 2. Instalar el proyecto completo con un comando
-php artisan project:install
-
-# 3. Iniciar servidor de desarrollo
-php artisan serve
-# En otra terminal:
-npm run dev
-```
-
-### Instalación manual paso a paso
-
-```bash
-# 1. Copiar variables de entorno
+# 2. Configurar entorno inicial
 cp .env.example .env
 
-# 2. Instalar dependencias PHP
-composer install
+# 3. Ajustar credenciales de PostgreSQL en .env:
+# DB_CONNECTION=pgsql
+# DB_HOST=127.0.0.1
+# DB_PORT=5432
+# DB_DATABASE=skeleton_laravel
+# DB_USERNAME=postgres
+# DB_PASSWORD=tu_password
 
-# 3. Instalar dependencias JS
+# 4. Instalar dependencias, generar clave, migrar y enlazar storage
+php artisan project:install
+
+# 5. Poblar con contenido corporativo de muestra
+php artisan project:dummy
+
+# 6. Iniciar entorno de desarrollo concurrente (servidor, vite, colas, logs)
+composer run dev
+```
+
+### Opción 2: Instalación Manual Paso a Paso
+
+```bash
+# 1. Variables de entorno
+cp .env.example .env
+
+# 2. Dependencias PHP y JS
+composer install
 npm install
 
-# 4. Generar clave de aplicación
+# 3. Clave y Storage
 php artisan key:generate
-
-# 5. Crear enlace simbólico de storage
 php artisan storage:link
 
-# 6. Ejecutar migraciones y seeders
+# 4. Base de datos (PostgreSQL)
 php artisan migrate
-php artisan db:seed
 
-# 7. Compilar assets
+# 5. Cargar datos corporativos de prueba
+php artisan project:dummy
+
+# 6. Compilar assets frontend
 npm run build
-# O en modo desarrollo:
+# o para desarrollo interactivo:
 npm run dev
 ```
 
-### Con Docker
+---
 
-El proyecto incluye una configuración Docker completa con los siguientes servicios:
+## Despliegue con Docker
 
-| Servicio | Descripción |
-|----------|-------------|
-| **app** | PHP 8.4-FPM con la aplicación Laravel |
-| **nginx** | Servidor web Nginx como reverse proxy |
-| **db** | PostgreSQL 16 para la base de datos |
-| **redis** | Redis para caché y colas (opcional) |
+El proyecto incluye configuración Docker lista para desarrollo y pruebas de despliegue:
+
+| Servicio | Imagen | Puerto | Descripción |
+|----------|--------|--------|-------------|
+| **app** | PHP 8.4-FPM personalizada | - | Aplicación Laravel |
+| **nginx** | Alpine Nginx | 8000 | Servidor web y reverse proxy |
+| **db** | `postgres:16-alpine` | 5432 | Base de datos PostgreSQL |
+| **redis** | `redis:7-alpine` | 6379 | Caché y colas en segundo plano |
 
 ```bash
-# 1. Copiar variables de entorno
+# 1. Iniciar los contenedores
 cp .env.example .env
-
-# 2. Iniciar contenedores
 docker compose up -d
 
-# 3. Ejecutar instalación dentro del contenedor
+# 2. Ejecutar la instalación desatendida dentro del contenedor app
 docker compose exec app php artisan project:install --force
 
-# 4. Acceder al contenedor (para comandos adicionales)
-docker compose exec app bash
-```
+# 3. Poblar datos corporativos
+docker compose exec app php artisan project:dummy
 
-Variables de entorno configurables para Docker:
-- `STORAGE_PATH` — Ruta del storage persistente (default: `./storage`)
-- `DB_DATABASE` — Nombre de la base de datos (default: `skeleton_laravel`)
-- `DB_USERNAME` / `DB_PASSWORD` — Credenciales PostgreSQL
-
-Para producción existe un `.env.example.production` preconfigurado.
-
----
-
-## Acceso a los paneles
-
-| Panel | URL | Credenciales por defecto |
-|-------|-----|-------------------------|
-| Panel Admin | http://localhost:8000/admin | admin@example.com / password |
-| Panel Usuario | http://localhost:8000/panel | maria@example.com / password |
-| Sitio web | http://localhost:8000 | — |
-| Docs API | http://localhost:8000/docs | — |
-
----
-
-## Roles de usuario
-
-| Role | Panel Admin | Panel Usuario | API | Frontend |
-|------|------------|---------------|-----|----------|
-| superadmin | ✅ Acceso total | ✅ | ✅ | ✅ |
-| admin | ✅ Acceso total | ✅ | ✅ | ✅ |
-| user | ❌ | ✅ (perfil + tokens) | ✅ | ✅ |
-
-Los roles se definen como un enum PHP (`App\Enums\Role`) con valores: `superadmin`, `admin`, `user`.
-
----
-
-## Modelos y relaciones
-
-| Modelo | Tabla | Traducible | Relaciones principales |
-|--------|-------|-----------|----------------------|
-| User | users | No | hasMany(Page, Post), HasApiTokens, SoftDeletes |
-| Post | posts | Sí (title, content, excerpt, seo_*) | belongsTo(User), belongsToMany(Category), SoftDeletes |
-| Page | pages | Sí (title, content, excerpt, seo_*) | belongsTo(User), belongsToMany(Category), SoftDeletes |
-| Category | categories | Sí (name, description) | belongsToMany(Post, Page), SoftDeletes |
-| Slide | slides | Sí (title, content) | SoftDeletes |
-| Section | sections | Sí (title, description, content) | SoftDeletes |
-| Setting | settings | No | — |
-| SentEmail | sent_emails | No | — |
-
-**Traits compartidos:** `HasSlug` (slug auto desde title), `HasStatus` (scopes draft/published), `HasSeo` (accessors meta tags), `BelongsToUser` (auto-asigna user_id al crear).
-
----
-
-## Estructura del proyecto
-
-```
-skeleton-laravel-project/
-├── app/
-│   ├── Console/Commands/     # project:install, project:clear, sitemap:generate, manual:generate-pdf
-│   ├── Enums/                # Role, ContentStatus, EmailStatus
-│   ├── Filament/
-│   │   ├── Admin/            # Panel Admin: Resources, Pages, Widgets
-│   │   └── Panel/            # Panel Usuario: Pages (perfil, tokens), Widgets
-│   ├── Http/
-│   │   ├── Controllers/
-│   │   │   ├── Api/V1/       # Controladores REST API
-│   │   │   └── Web/          # Controladores frontend
-│   │   ├── Middleware/       # SetLocale, SecurityHeaders
-│   │   ├── Resources/        # API Resources (UserResource)
-│   │   └── Requests/         # FormRequests con validación
-│   ├── Mail/                  # Mailables: WelcomeMail, ContactMail, GenericMail
-│   ├── Models/                # User, Post, Page, Category, Slide, Section, Setting, SentEmail
-│   ├── Policies/              # Autorización por modelo
-│   ├── Services/              # EmailService, SeoService, SettingService, SitemapService
-│   └── Traits/                # HasSlug, HasStatus, HasSeo, BelongsToUser
-├── database/
-│   ├── factories/            # Factories para tests
-│   ├── migrations/           # Migraciones con comentarios en español
-│   └── seeders/              # Seeders idempotentes con datos de ejemplo
-├── docs/
-│   ├── deploys/              # nginx.conf, apache.conf, deploy.sh
-│   ├── info/                 # Documentación técnica de cada módulo
-│   ├── manual/               # Manuales de usuario (admin, user_backend, user)
-│   └── planning/             # Planificación completa del proyecto
-├── docker/                   # Configuración de contenedores
-├── resources/
-│   ├── js/
-│   │   ├── app.js            # Entry point con Vue 3
-│   │   └── components/       # Componentes Vue
-│   └── views/
-│       ├── components/       # Componentes Blade reutilizables
-│       ├── layouts/          # Layout principal y parciales
-│       ├── mail/             # Templates de email
-│       └── (pages, posts, errors...)
-├── routes/
-│   ├── api.php               # Rutas API v1
-│   └── web.php               # Rutas web públicas
-└── tests/
-    ├── Feature/              # Tests de integración
-    └── Unit/                 # Tests unitarios
+# 4. Acceso web
+# Aplicación: http://localhost:8000
+# Panel Admin: http://localhost:8000/admin
 ```
 
 ---
 
-## API REST
+## Despliegue en Servidor de Producción
 
-La API está versionada en `/api/v1` y documentada con Scribe. Todos los endpoints públicos tienen rate limiting de 60 requests/minuto. Los de autenticación tienen límites más estrictos (5-10/minuto).
+Consulte las configuraciones de servidor en `docs/deploys/` (`nginx.conf`, `apache.conf`, `deploy.sh`).
 
-### Generar documentación
+### Guía de Despliegue Paso a Paso:
 
 ```bash
-php artisan scribe:generate
-# Accesible en: http://localhost:8000/docs
-```
+# 1. Clonar el código en el directorio del servidor
+git clone https://github.com/tuusuario/skeleton-laravel-project.git /var/www/mi-proyecto
+cd /var/www/mi-proyecto
 
-### Endpoints principales
+# 2. Preparar el entorno de producción
+cp .env.example.production .env
 
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| POST | /api/v1/auth/register | Registro de usuario |
-| POST | /api/v1/auth/login | Inicio de sesión |
-| POST | /api/v1/auth/logout | Cierre de sesión |
-| POST | /api/v1/auth/forgot-password | Solicitar reset de contraseña |
-| POST | /api/v1/auth/reset-password | Resetear contraseña |
-| GET | /api/v1/auth/user | Datos del usuario autenticado |
-| GET | /api/v1/posts | Listado de posts (público) |
-| GET | /api/v1/posts/{slug} | Detalle de post (público) |
-| GET | /api/v1/pages | Listado de páginas (público) |
-| GET | /api/v1/pages/{slug} | Detalle de página (público) |
-| GET | /api/v1/categories | Listado de categorías (público) |
-| GET | /api/v1/categories/{slug} | Detalle de categoría (público) |
-| GET | /api/v1/user/tokens | Mis tokens API |
-| POST | /api/v1/user/tokens | Crear token |
-| DELETE | /api/v1/user/tokens/{id} | Eliminar token |
+# 3. Configurar en .env los valores reales:
+# APP_ENV=production
+# APP_DEBUG=false
+# APP_URL=https://tudominio.com
+# DB_CONNECTION=pgsql
+# DB_HOST=127.0.0.1
+# DB_DATABASE=nombre_bd_prod
+# DB_USERNAME=usuario_bd_prod
+# DB_PASSWORD=contrasena_fuerte
+# RECAPTCHA_SITE_KEY=clave_publica_google
+# RECAPTCHA_SECRET_KEY=clave_secreta_google
 
----
+# 4. Instalar dependencias optimizadas
+composer install --no-dev --optimize-autoloader
+npm ci
+npm run build
 
-## Servicios
+# 5. Clave de cifrado y Storage
+php artisan key:generate --force
+php artisan storage:link
 
-### EmailService
-```php
-// Enviar email y registrarlo automáticamente en sent_emails
-$emailService->send(new WelcomeMail($user), $user->email, 'Bienvenido');
-```
+# 6. Migraciones de base de datos
+php artisan migrate --force
 
-### SettingService
-```php
-// Obtener un setting (con caché de 1 hora)
-app(SettingService::class)->get('site_title', 'Default');
-// O usar el helper global:
-setting('site_title', 'Default');
-```
+# 7. Caché y optimización de Laravel
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php artisan event:cache
+php artisan optimize
 
-### SeoService
-```php
-// Configurar SEO desde un controlador
-$seo->setTitle('Título')->setDescription('Descripción')->setType('article');
-// O cargar desde un modelo:
-$seo->fromModel($post);
-```
-
-### SitemapService
-```php
-// Generar sitemap desde línea de comandos
-php artisan sitemap:generate
-// Resultado en: public/sitemap.xml
-```
-
----
-
-## Comandos Artisan personalizados
-
-```bash
-# Instalar el proyecto completo (con confirmaciones)
-php artisan project:install
-
-# Limpiar toda la caché
-php artisan project:clear
-
-# Generar sitemap.xml
+# 8. Generar sitemap inicial
 php artisan sitemap:generate
 
-# Generar PDFs de manuales de usuario
-php artisan manual:generate-pdf
+# 9. Configurar permisos de almacenamiento
+sudo chown -R www-data:www-data storage bootstrap/cache
+sudo chmod -R 775 storage bootstrap/cache
 ```
 
----
+### Automatización con `deploy.sh`:
 
-## Internacionalización (i18n)
-
-El proyecto soporta español (por defecto) e inglés.
-
-- Los archivos de traducción se encuentran en `lang/es/` y `lang/en/`
-- Los modelos de contenido (Post, Page, Slide, Section, Category) usan `spatie/laravel-translatable`
-- El idioma se puede cambiar desde el selector en el frontend: `/lang/es` o `/lang/en`
-- Los formularios de Filament muestran tabs por idioma para editar traducciones
-- El middleware `SetLocale` persiste el idioma seleccionado en sesión
-
-### Uso en vistas Blade
-
-```blade
-{{-- Textos estáticos de la UI — archivos de idioma --}}
-<h2>{{ __('messages.home_features_title') }}</h2>
-
-{{-- Contenido de modelos traducibles (Spatie) --}}
-<h3>{{ $post->getTranslation('title', app()->getLocale()) }}</h3>
-```
-
-### Cambio de idioma
-
-El componente `<x-language-switcher />` genera los botones de cambio de idioma (ES/EN) en la barra de navegación.
-
----
-
-## Vue 3 — Integración
-
-Vue 3 está preparado en el proyecto. Para añadir nuevos componentes:
-
-```javascript
-// resources/js/app.js — el componente se auto-registra si está en la carpeta components/
-// Ejemplo de componente: resources/js/components/MiComponente.vue
-```
-
-```blade
-{{-- Usar en Blade --}}
-<div id="app">
-    <mi-componente></mi-componente>
-</div>
-```
-
----
-
-## Tests
-
+Para despliegues continuos posteriores, puede utilizar el script incluido:
 ```bash
-# Ejecutar todos los tests
-php artisan test
-
-# Ejecutar un grupo específico
-php artisan test --filter=AuthApiTest
-
-# Con cobertura (requiere Xdebug)
-php artisan test --coverage
-```
-
----
-
-## Seeders y datos de ejemplo
-
-Los seeders son **idempotentes** (usan `firstOrCreate`, se pueden ejecutar varias veces sin duplicar datos).
-
-```bash
-php artisan db:seed
-```
-
-| Seeder | Datos creados |
-|--------|--------------|
-| UserSeeder | admin@example.com (superadmin) + editor@example.com (admin) + 10 usuarios |
-| CategorySeeder | 5 categorías con traducciones es/en |
-| SettingSeeder | 12 configuraciones (general, contact, social, seo) |
-| PageSeeder | 10 páginas con traducciones (8 published, 2 draft) |
-| PostSeeder | 10 posts con traducciones (8 published, 2 draft) |
-| SlideSeeder | 10 slides en 3 zonas (home, about, services) |
-| SectionSeeder | 7 secciones en 3 zonas (home, about, contact) |
-
-> ⚠️ Los seeders **no deben ejecutarse en producción** ya que contienen credenciales por defecto. Existe una guarda automática que lo impide.
-
----
-
-## Documentación técnica de módulos
-
-El directorio `docs/info/` contiene documentación técnica detallada de cada módulo implementado en la plataforma. Cada archivo describe el objetivo, la arquitectura, los archivos involucrados, los campos, las relaciones y el comportamiento de un módulo concreto.
-
-**→ [Índice completo de módulos](docs/info/README.md)**
-
-### Modelos y datos
-
-| Módulo | Descripción |
-|--------|-------------|
-| [Usuarios](docs/info/usuarios.md) | Gestión de usuarios, roles y autenticación |
-| [Posts](docs/info/posts.md) | Sistema de blog con artículos traducibles |
-| [Páginas](docs/info/paginas.md) | Páginas de contenido estático/dinámico traducibles |
-| [Categorías](docs/info/categorias.md) | Taxonomía compartida entre posts y páginas |
-| [Slides](docs/info/slides.md) | Carruseles de imágenes agrupados por zona |
-| [Secciones](docs/info/secciones.md) | Bloques de contenido dinámico del frontend |
-| [Configuración](docs/info/configuracion.md) | Ajustes globales del sistema (key-value) |
-| [Emails enviados](docs/info/emails-enviados.md) | Registro de auditoría de emails |
-
-### Servicios e infraestructura
-
-| Módulo | Descripción |
-|--------|-------------|
-| [EmailService](docs/info/servicio-email.md) | Envío centralizado de emails con registro automático |
-| [SeoService](docs/info/servicio-seo.md) | Gestión dinámica de meta tags SEO |
-| [SettingService](docs/info/servicio-settings.md) | Acceso cacheado a la configuración del sistema |
-| [SitemapService](docs/info/servicio-sitemap.md) | Generación automática del sitemap XML |
-| [Autenticación](docs/info/autenticacion.md) | Auth web (Breeze), API (Sanctum), policies y guards |
-| [Traducciones](docs/info/traducciones.md) | Sistema i18n: archivos de idioma, modelos traducibles |
-| [Panel Admin](docs/info/panel-admin.md) | Panel de administración Filament |
-| [Panel Usuario](docs/info/panel-usuario.md) | Panel de usuario con perfil y tokens API |
-| [API REST](docs/info/api-rest.md) | Endpoints públicos y autenticados |
-| [Frontend](docs/info/frontend.md) | Vistas Blade, layout, componentes y páginas |
-| [Traits](docs/info/traits.md) | HasSlug, HasStatus, HasSeo, BelongsToUser |
-| [Enums](docs/info/enums.md) | Role, ContentStatus, EmailStatus |
-| [Comandos](docs/info/comandos.md) | project:install, project:clear, sitemap:generate, manual:generate-pdf |
-
----
-
-## Documentación de usuario (Manuales)
-
-El proyecto incluye manuales de uso completos en formato Markdown y PDF dentro de `docs/manual/`, organizados por rol:
-
-| Directorio | PDF generado | Descripción |
-|-----------|-------------|-------------|
-| `docs/manual/admin/` | `docs/manual/admin.pdf` | Manual del administrador — gestión completa del backoffice |
-| `docs/manual/user_backend/` | `docs/manual/user_backend.pdf` | Manual del panel de usuario — perfil y tokens API |
-| `docs/manual/user/` | `docs/manual/user.pdf` | Manual del usuario — navegación por el frontend público |
-
-Cada directorio contiene un archivo Markdown por módulo/funcionalidad con explicaciones detalladas de cada apartado, campos de formularios, flujos de trabajo y preguntas frecuentes.
-
-### Generar los PDFs
-
-```bash
-php artisan manual:generate-pdf
-```
-
-Este comando lee los archivos `.md` de cada subdirectorio en `docs/manual/` y genera un PDF por cada rol con portada, secciones separadas y estilos profesionales.
-
----
-
-## Despliegue en producción
-
-Ver la guía completa en `docs/deploys/`:
-
-```bash
-# Con nginx
-sudo cp docs/deploys/nginx.conf /etc/nginx/sites-available/mi-proyecto
-sudo ln -s /etc/nginx/sites-available/mi-proyecto /etc/nginx/sites-enabled/
-sudo nginx -t && sudo systemctl reload nginx
-
-# Script de despliegue
 bash docs/deploys/deploy.sh
 ```
 
 ---
 
+## Scripts de Calidad y Formateo (Composer)
+
+El archivo `composer.json` provee atajos estandarizados para validación de código:
+
+```bash
+# Formatear el código con Laravel Pint
+composer run pint
+
+# Comprobar si el código cumple los estándares PSR-12 sin modificarlo
+composer run pint:test
+
+# Verificación completa (formato + tests automatizados compactos)
+composer run check
+```
+
+---
+
+## Catálogo de Comandos Artisan Propios
+
+| Comando | Descripción |
+|---------|-------------|
+| `php artisan project:install {--force}` | Instalación paso a paso o desatendida del proyecto |
+| `php artisan project:clear {--force}` | Limpieza integral de cachés, colas, rotación segura de `APP_KEY` y recomposición de autoload |
+| `php artisan project:dummy {--fresh}` | Inserción de datos corporativos de muestra en todos los módulos (Users, Settings, Categories, Pages, Posts, Slides, Sections, SentEmails) |
+| `php artisan sitemap:generate` | Genera `public/sitemap.xml` con alternates hreflang para todas las páginas y artículos publicados |
+| `php artisan manual:generate-pdf` | Compila los manuales de usuario Markdown a PDFs corporativos |
+
+Especificación detallada de cada comando en [docs/info/commands.md](docs/info/commands.md).
+
+---
+
+## Seguridad y Formularios Públicos
+
+- **Rate Limiting**: Todos los formularios públicos (`/contact`, `/login`, `/register`, `/forgot-password`, `/reset-password`) tienen activado rate limiting estricto (`throttle:10,1`).
+- **Google reCAPTCHA v3**: Integrado en formularios públicos mediante la regla `App\Rules\Recaptcha`.
+  - **Comprobación condicional**: Si las variables `RECAPTCHA_SITE_KEY` o `RECAPTCHA_SECRET_KEY` no están definidas en `.env`, la validación se ignora automáticamente para permitir desarrollo local y tests sin bloqueos.
+  - Sin campos honeypot innecesarios.
+
+---
+
+## Paneles Filament
+
+- **Panel Administrador (`/admin`)**:
+  - Acceso restringido a usuarios con rol `admin` o `superadmin` e `is_active = true`.
+  - Gestión integral de usuarios, categorías, páginas, artículos de blog, carruseles de diapositivas, secciones dinámicas, configuraciones y auditoría de emails enviados.
+  - Acciones de mantenimiento integradas: regenerar sitemap, limpiar caché y visualizador de logs.
+- **Panel de Usuario (`/panel`)**:
+  - Acceso para usuarios con rol `user` e `is_active = true`.
+  - Gestión de perfil de usuario y generación/revocación de tokens personales de API (Sanctum).
+
+---
+
+## Documentación Técnica y Manuales
+
+Toda la documentación técnica del proyecto se mantiene viva y actualizada bajo `docs/`:
+
+- **[Índice de Módulos Técnicos](docs/info/README.md)**: Explicación de modelos, servicios, controladores y paneles.
+- **[Catálogo de Componentes UI](docs/info/COMPONENTS.md)**: Componentes Blade normalizados (`<x-primary-button>`, `<x-text-input>`, `<x-modal>`, etc.).
+- **[Guía de Diseño Visual](docs/info/DESIGN.md)**: Esquema de colores, tipografía Figtree y Tailwind CSS v4.
+- **[Comandos Artisan](docs/info/commands.md)**: Documentación exhaustiva de comandos propios y su ejecución periódica.
+- **[Manuales de Usuario](docs/manual/)**: Documentación orientada al cliente final con PDFs descargables (`admin.pdf`, `user_backend.pdf`, `user.pdf`).
+
+---
+
 ## Licencia
 
-MIT
+Este proyecto es software de código abierto bajo la licencia [MIT](LICENSE).
