@@ -47,7 +47,7 @@ class PostsChartWidget extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Posts',
+                    'label' => __('filament.posts'),
                     'data' => $counts->toArray(),
                     'backgroundColor' => 'rgba(99, 102, 241, 0.5)',
                     'borderColor' => 'rgb(99, 102, 241)',
