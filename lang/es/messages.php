@@ -84,7 +84,7 @@ return [
     'home_feat_settings_desc' => 'Configuración del sitio gestionable desde el panel: título, descripción, redes sociales, contacto y SEO. Accesibles en cualquier parte con setting(\'key\').',
 
     'home_feat_docker_title' => 'Docker incluido',
-    'home_feat_docker_desc' => 'Dockerización completa lista para usar: PHP 8.4, Nginx, PostgreSQL. Entorno de desarrollo y producción configurados en docker-compose.yml.',
+    'home_feat_docker_desc' => 'Dockerización completa lista para usar: PHP 8.5, Nginx, PostgreSQL. Entorno de desarrollo y producción configurados en docker-compose.yml.',
 
     'home_feat_tests_title' => 'Tests incluidos',
     'home_feat_tests_desc' => 'Feature tests para autenticación web y API, acceso a paneles, formulario de contacto y tests unitarios de servicios clave con PHPUnit.',

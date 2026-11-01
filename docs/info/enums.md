@@ -8,7 +8,7 @@
 
 ## Resumen
 
-La plataforma usa tres enums PHP 8.4 (`string`-backed) para tipado fuerte y consistencia. Cada enum incluye un método `label(): string` traducible mediante `__('filament.*')` (con claves en `lang/es/filament.php` y `lang/en/filament.php`) y métodos adicionales según su propósito.
+La plataforma usa tres enums PHP 8.5 (`string`-backed) para tipado fuerte y consistencia. Cada enum incluye un método `label(): string` traducible mediante `__('filament.*')` (con claves en `lang/es/filament.php` y `lang/en/filament.php`) y métodos adicionales según su propósito.
 
 ---
 

@@ -11,7 +11,7 @@ Incluye autenticación web y API, panel de administración Filament, sistema de 
 
 | Tecnología | Versión | Propósito en el proyecto |
 |-----------|---------|--------------------------|
-| **PHP** | 8.4 | Lenguaje base con tipado estricto, backed enums y readonly properties |
+| **PHP** | 8.5 | Lenguaje base con tipado estricto, backed enums y readonly properties |
 | **Laravel** | 13.x | Framework principal |
 | **PostgreSQL** | 16.x | **Motor de base de datos obligatorio** (`DB_CONNECTION=pgsql`) |
 | **Filament** | 5.x | Panel de administración (`/admin`) y panel de usuario (`/panel`) |
@@ -28,7 +28,7 @@ Incluye autenticación web y API, panel de administración Filament, sistema de 
 
 ## Requisitos previos
 
-- **PHP 8.4** o superior con extensiones: `pdo_pgsql`, `pgsql`, `mbstring`, `openssl`, `curl`, `gd` / `imagick`, `fileinfo`, `xml`, `intl`, `zip`.
+- **PHP 8.5** o superior con extensiones: `pdo_pgsql`, `pgsql`, `mbstring`, `openssl`, `curl`, `gd` / `imagick`, `fileinfo`, `xml`, `intl`, `zip`.
 - **PostgreSQL 16** instalado y corriendo localmente o mediante Docker.
 - **Composer 2.7+**
 - **Node.js 20.19+ / 22.12+** y **pnpm 10+**
@@ -41,7 +41,7 @@ Incluye autenticación web y API, panel de administración Filament, sistema de 
 
 ```bash
 # 1. Clonar el repositorio
-git clone https://github.com/tuusuario/skeleton-laravel-project.git
+git clone https://gitlab.com/raupulus/skeleton-laravel-project.git
 cd skeleton-laravel-project
 
 # 2. Configurar entorno inicial
@@ -99,7 +99,7 @@ El proyecto incluye configuración Docker lista para desarrollo y pruebas de des
 
 | Servicio | Imagen | Puerto | Descripción |
 |----------|--------|--------|-------------|
-| **app** | PHP 8.4-FPM personalizada | - | Aplicación Laravel |
+| **app** | PHP 8.5-FPM personalizada | - | Aplicación Laravel |
 | **nginx** | Alpine Nginx | 8000 | Servidor web y reverse proxy |
 | **db** | `postgres:16-alpine` | 5432 | Base de datos PostgreSQL |
 | **redis** | `redis:7-alpine` | 6379 | Caché y colas en segundo plano |
@@ -130,7 +130,7 @@ Consulte las configuraciones de servidor en `docs/deploys/` (`nginx.conf`, `apac
 
 ```bash
 # 1. Clonar el código en el directorio del servidor
-git clone https://github.com/tuusuario/skeleton-laravel-project.git /var/www/mi-proyecto
+git clone https://gitlab.com/raupulus/skeleton-laravel-project.git /var/www/mi-proyecto
 cd /var/www/mi-proyecto
 
 # 2. Preparar el entorno de producción
@@ -245,6 +245,22 @@ Toda la documentación técnica del proyecto se mantiene viva y actualizada bajo
 - **[Guía de Diseño Visual](docs/info/DESIGN.md)**: Esquema de colores, tipografía Figtree y Tailwind CSS v4.
 - **[Comandos Artisan](docs/info/commands.md)**: Documentación exhaustiva de comandos propios y su ejecución periódica.
 - **[Manuales de Usuario](docs/manual/)**: Documentación orientada al cliente final con PDFs descargables (`admin.pdf`, `user_backend.pdf`, `user.pdf`).
+
+---
+
+## Autor
+
+**Raúl Caro Pastorino** (`@raupulus`)
+
+Desarrollador Full Stack Senior con más de 15 años de experiencia creando soluciones tecnológicas robustas y escalables, especializado en arquitectura Backend (PHP / Laravel, Python), PostgreSQL, Inteligencia Artificial aplicada en producción, administración de sistemas GNU/Linux y proyectos Open Source / IoT.
+
+- 🌐 **Web y Portfolio**: [https://raupulus.dev](https://raupulus.dev)
+- 📄 **CV Online**: [https://curriculum.raupulus.dev](https://curriculum.raupulus.dev)
+- ✉️ **Contacto**: [public@raupulus.dev](mailto:public@raupulus.dev)
+- 🦊 **GitLab**: [gitlab.com/raupulus](https://gitlab.com/raupulus)
+- 🐙 **GitHub**: [github.com/raupulus](https://github.com/raupulus)
+- 💼 **LinkedIn**: [linkedin.com/in/raulcaropastorino](https://www.linkedin.com/in/raulcaropastorino/)
+- 🔗 **Redes y Comunidad**: [raupulus.dev/social](https://raupulus.dev/social/)
 
 ---
 

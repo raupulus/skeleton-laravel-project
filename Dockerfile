@@ -1,5 +1,5 @@
-# Imagen base de PHP 8.4 con FPM para desarrollo y producción
-FROM php:8.4-fpm-alpine
+# Imagen base de PHP 8.5 con FPM para desarrollo y producción
+FROM php:8.5-fpm-alpine
 
 # Instalar dependencias del sistema, Node.js/pnpm y extensiones PHP requeridas por Laravel
 RUN apk add --no-cache \

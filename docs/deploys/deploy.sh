@@ -1,7 +1,7 @@
 #!/bin/bash
 # Script de despliegue en producción para Skeleton Laravel Project
 # Uso: bash docs/deploys/deploy.sh
-# Requiere: git, composer, pnpm, php 8.4
+# Requiere: git, composer, pnpm, php 8.5
 
 set -e
 

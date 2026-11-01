@@ -45,8 +45,8 @@ class SectionSeeder extends Seeder
                     'en' => 'Architecture ready to scale',
                 ],
                 'description' => [
-                    'es' => 'La estructura del proyecto separa claramente controladores web, API, servicios, traits y enums. Los modelos usan traducción con Spatie, estados con enums PHP 8.4 y asignación automática de usuario al crear.',
-                    'en' => 'The project structure clearly separates web controllers, API, services, traits and enums. Models use Spatie translations, PHP 8.4 enum states and automatic user assignment on creation.',
+                    'es' => 'La estructura del proyecto separa claramente controladores web, API, servicios, traits y enums. Los modelos usan traducción con Spatie, estados con enums PHP 8.5 y asignación automática de usuario al crear.',
+                    'en' => 'The project structure clearly separates web controllers, API, services, traits and enums. Models use Spatie translations, PHP 8.5 enum states and automatic user assignment on creation.',
                 ],
                 'order' => 2,
             ],

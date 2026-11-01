@@ -43,9 +43,9 @@
         <p class="text-gray-400 text-sm font-semibold uppercase tracking-wider mb-3">{{ __('messages.home_quickstart_title') }}</p>
         <div class="bg-gray-800 rounded-xl p-5 font-mono text-sm overflow-x-auto">
             <span class="text-green-400">$</span> git clone https://github.com/raupulus/skeleton-laravel-project.git &amp;&amp; cd skeleton-laravel-project<br>
-            <span class="text-green-400">$</span> cp .env.example .env &amp;&amp; composer install &amp;&amp; npm install<br>
+            <span class="text-green-400">$</span> cp .env.example .env &amp;&amp; composer install &amp;&amp; pnpm install<br>
             <span class="text-green-400">$</span> php artisan project:install<br>
-            <span class="text-green-400">$</span> php artisan serve &amp;&amp; npm run dev
+            <span class="text-green-400">$</span> php artisan serve &amp;&amp; pnpm run dev
         </div>
     </div>
 </div>
@@ -97,7 +97,7 @@
         <p class="text-center text-gray-500 text-sm font-semibold uppercase tracking-widest mb-8">{{ __('messages.home_stack_title') }}</p>
         <div class="flex flex-wrap justify-center gap-3">
             @foreach([
-                ['PHP 8.4', 'bg-violet-100 text-violet-800'],
+                ['PHP 8.5', 'bg-violet-100 text-violet-800'],
                 ['Laravel 13', 'bg-red-100 text-red-800'],
                 ['Filament 5', 'bg-orange-100 text-orange-800'],
                 ['Livewire 4', 'bg-pink-100 text-pink-800'],

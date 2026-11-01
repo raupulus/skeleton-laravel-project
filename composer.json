@@ -1,12 +1,21 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "fryntiz/skeleton-laravel-project",
+    "name": "raupulus/skeleton-laravel-project",
     "type": "project",
     "description": "Plantilla base profesional para aplicaciones Laravel con Filament, Sanctum, traducciones y SEO.",
     "keywords": ["laravel", "filament", "skeleton", "postgresql", "sanctum"],
+    "homepage": "https://raupulus.dev",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Raúl Caro Pastorino",
+            "email": "public@raupulus.dev",
+            "homepage": "https://raupulus.dev",
+            "role": "Developer"
+        }
+    ],
     "require": {
-        "php": "^8.4",
+        "php": "^8.5",
         "barryvdh/laravel-dompdf": "^3.1",
         "filament/filament": "^5.5",
         "knuckleswtf/scribe": "^5.9",

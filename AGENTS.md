@@ -15,7 +15,7 @@ puedan trabajar de forma autónoma, consistente y precisa. Léelo completamente 
 
 ## 2. Stack tecnológico
 
-- **PHP 8.4** — Tipado estricto en parámetros y retornos, backed enums, readonly properties, typed properties.
+- **PHP 8.5** — Tipado estricto en parámetros y retornos, backed enums, readonly properties, typed properties.
 - **Laravel 13** — Framework principal.
 - **Base de datos — PostgreSQL** — **OBLIGATORIO**: La base de datos que se usará es SIEMPRE PostgreSQL (`DB_CONNECTION=pgsql`). No utilizar MySQL ni SQLite salvo en tests en memoria si aplica.
 - **Filament 5** — Panel admin (`/admin`) y panel de usuario (`/panel`). Completamente traducido al español.
