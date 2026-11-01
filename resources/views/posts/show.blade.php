@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <article class="max-w-4xl mx-auto px-4 py-12">
-    @if($post->image)<img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->getTranslation('title', app()->getLocale()) }}" class="w-full h-64 md:h-96 object-cover rounded-xl mb-8" />@endif
+    @if($post->image)<img src="{{ Storage::disk('public')->url($post->image) }}" alt="{{ $post->getTranslation('title', app()->getLocale()) }}" class="w-full h-64 md:h-96 object-cover rounded-xl mb-8" />@endif
     <h1 class="text-4xl font-bold text-gray-800 mb-4">{{ $post->getTranslation('title', app()->getLocale()) }}</h1>
     <div class="flex items-center text-sm text-gray-500 mb-8 space-x-4">
         <span>{{ $post->user?->name }}</span>

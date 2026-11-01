@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Traits\HasSlug;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -15,14 +17,20 @@ use Spatie\Translatable\HasTranslations;
  * Las secciones se usan para rellenar contenido en zonas específicas del sitio
  * (home, about, contact...) sin necesidad de editar el código fuente.
  *
- * @property int $id
+ * @property int $id Identificador único
  * @property string $slug Slug único de la sección
  * @property string $zone Zona del frontend donde aparece (home, about...)
- * @property array|null $title Título opcional traducible (es, en)
- * @property array|null $description Descripción corta traducible (es, en)
- * @property array|null $content Contenido HTML rico traducible (es, en)
+ * @property array<string, string>|null $title Título opcional traducible (es, en)
+ * @property array<string, string>|null $description Descripción corta traducible (es, en)
+ * @property array<string, string>|null $content Contenido HTML rico traducible (es, en)
  * @property string|null $image Imagen asociada a la sección
  * @property int $order Orden de aparición dentro de la zona
+ * @property Carbon $created_at Fecha de creación
+ * @property Carbon $updated_at Fecha de modificación
+ * @property Carbon|null $deleted_at Fecha de eliminación lógica
+ * @property-read string|null $image_url URL pública dinámica de la imagen
+ *
+ * @method static Builder<Section> forZone(string $zone) Obtiene secciones ordenadas para una zona
  */
 class Section extends Model
 {
@@ -57,17 +65,29 @@ class Section extends Model
     }
 
     // =========================================================
+    // ACCESSORS
+    // =========================================================
+
+    /**
+     * Devuelve la URL dinámica y pública de la imagen de la sección.
+     */
+    public function getImageUrlAttribute(): ?string
+    {
+        return $this->image ? Storage::disk('public')->url($this->image) : null;
+    }
+
+    // =========================================================
     // SCOPES
     // =========================================================
 
     /**
      * Scope para obtener secciones de una zona específica, ordenadas por el campo order.
      *
-     * @param  Builder  $query
+     * @param  Builder<Section>  $query
      * @param  string  $zone  La zona del frontend
-     * @return Builder
+     * @return Builder<Section>
      */
-    public function scopeForZone($query, string $zone)
+    public function scopeForZone(Builder $query, string $zone): Builder
     {
         return $query->where('zone', $zone)->orderBy('order');
     }

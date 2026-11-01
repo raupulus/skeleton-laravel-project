@@ -1,6 +1,6 @@
 @props(['post'])
 <article class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition">
-    @if($post->image)<img src="{{ asset('storage/' . $post->image) }}" alt="" class="w-full h-48 object-cover" />@endif
+    @if($post->image)<img src="{{ Storage::disk('public')->url($post->image) }}" alt="{{ $post->getTranslation('title', app()->getLocale()) }}" class="w-full h-48 object-cover" />@endif
     <div class="p-6">
         <div class="flex flex-wrap gap-2 mb-2">
             @foreach($post->categories as $cat)<span class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded">{{ $cat->getTranslation('name', app()->getLocale()) }}</span>@endforeach

@@ -37,7 +37,7 @@
         @if($i === 0) x-show.initial @endif
     >
         <img
-            src="{{ asset('storage/' . $slide->image) }}"
+            src="{{ Storage::disk('public')->url($slide->image) }}"
             alt="{{ $slide->getTranslation('title', app()->getLocale()) ?: '' }}"
             style="width:100%; height:100%; object-fit:cover; display:block;"
         />

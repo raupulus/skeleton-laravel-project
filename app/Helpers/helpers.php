@@ -6,6 +6,9 @@
  */
 
 use App\Services\SettingService;
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
+use Illuminate\Support\Facades\Storage;
 
 if (! function_exists('setting')) {
     /**
@@ -23,6 +26,63 @@ if (! function_exists('setting')) {
             return app(SettingService::class)->get($key, $default);
         } catch (Throwable) {
             return $default;
+        }
+    }
+}
+
+if (! function_exists('media_url')) {
+    /**
+     * Resuelve la URL pública y dinámica de un asset o imagen almacenada en el disco público.
+     *
+     * @param  string|null  $path  Ruta relativa en storage/app/public
+     * @return string|null URL pública completa o null si la ruta es vacía
+     */
+    function media_url(?string $path): ?string
+    {
+        if (empty($path)) {
+            return null;
+        }
+
+        return Storage::disk('public')->url($path);
+    }
+}
+
+if (! function_exists('storage_image')) {
+    /**
+     * Resuelve de forma segura y dinámica la URL pública de una imagen en el disco público.
+     * Alias corporativo de media_url().
+     *
+     * @param  string|null  $path  Ruta relativa de la imagen en storage/app/public
+     * @return string|null URL pública completa o null si la ruta es vacía
+     */
+    function storage_image(?string $path): ?string
+    {
+        return media_url($path);
+    }
+}
+
+if (! function_exists('format_date')) {
+    /**
+     * Formatea de forma segura una fecha al formato peninsular estándar (d/m/Y).
+     *
+     * @param  mixed  $date  Instancia Carbon, string de fecha o timestamp
+     * @param  string  $format  Formato de salida (por defecto 'd/m/Y')
+     * @return string Fecha formateada o cadena vacía si es nula
+     */
+    function format_date(mixed $date, string $format = 'd/m/Y'): string
+    {
+        if (empty($date)) {
+            return '';
+        }
+
+        try {
+            if ($date instanceof CarbonInterface) {
+                return $date->format($format);
+            }
+
+            return Carbon::parse($date)->format($format);
+        } catch (Throwable) {
+            return (string) $date;
         }
     }
 }

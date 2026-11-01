@@ -8,10 +8,12 @@ use App\Traits\HasSeo;
 use App\Traits\HasSlug;
 use App\Traits\HasStatus;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -19,20 +21,29 @@ use Spatie\Translatable\HasTranslations;
  * Similar a los posts pero orientada a páginas de contenido más permanente.
  * Soporta traducciones (es/en), estados, SEO y categorías opcionales.
  *
- * @property int $id
- * @property string $slug
- * @property array $title Traducible (es, en)
- * @property array $content Traducible (es, en)
- * @property array $excerpt Traducible (es, en)
- * @property array $seo_title Traducible (es, en)
- * @property array $seo_description Traducible (es, en)
- * @property array $seo_keywords Traducible (es, en)
- * @property string|null $image
- * @property string $status draft|published
- * @property bool $is_active
- * @property bool $featured
- * @property int $user_id Asignado automáticamente al crear
- * @property Carbon|null $published_at
+ * @property int $id Identificador único de la página
+ * @property string $slug Slug único para URLs
+ * @property array<string, string> $title Título traducible (es, en)
+ * @property array<string, string>|null $content Contenido traducible (es, en)
+ * @property array<string, string>|null $excerpt Extracto traducible (es, en)
+ * @property array<string, string>|null $seo_title Título SEO traducible (es, en)
+ * @property array<string, string>|null $seo_description Descripción SEO traducible (es, en)
+ * @property array<string, string>|null $seo_keywords Palabras clave SEO traducibles (es, en)
+ * @property string|null $image Ruta de la imagen principal
+ * @property ContentStatus $status Estado (draft, published)
+ * @property bool $is_active Si la página está activa
+ * @property bool $featured Si la página está destacada
+ * @property int $user_id ID del usuario autor
+ * @property Carbon|null $published_at Fecha de publicación
+ * @property Carbon $created_at Fecha de creación
+ * @property Carbon $updated_at Fecha de modificación
+ * @property Carbon|null $deleted_at Fecha de eliminación lógica
+ * @property-read string|null $image_url URL pública dinámica de la imagen
+ * @property-read User|null $user Usuario autor
+ * @property-read Collection<int, Category> $categories Categorías asignadas
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<Page> published() Filtra páginas publicadas y activas
+ * @method static \Illuminate\Database\Eloquent\Builder<Page> draft() Filtra páginas en borrador
  */
 class Page extends Model
 {
@@ -61,6 +72,18 @@ class Page extends Model
             'published_at' => 'datetime',
             'status' => ContentStatus::class,
         ];
+    }
+
+    // =========================================================
+    // ACCESSORS
+    // =========================================================
+
+    /**
+     * Devuelve la URL dinámica y pública de la imagen de la página.
+     */
+    public function getImageUrlAttribute(): ?string
+    {
+        return $this->image ? Storage::disk('public')->url($this->image) : null;
     }
 
     // =========================================================

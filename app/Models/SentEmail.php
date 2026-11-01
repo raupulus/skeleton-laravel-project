@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\EmailStatus;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * Cada email enviado a través del EmailService se registra automáticamente
  * en esta tabla para auditoría y consulta desde el backend.
  *
- * @property int $id
+ * @property int $id Identificador único
  * @property string $to Dirección email del destinatario
  * @property string|null $from Dirección email del remitente
  * @property string $subject Asunto del email
@@ -20,7 +21,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $mailable_class Clase PHP del Mailable utilizado
  * @property EmailStatus $status Estado: sent o failed
  * @property string|null $error_message Mensaje de error si el envío falló
- * @property array|null $metadata Datos adicionales en formato JSON
+ * @property array<string, mixed>|null $metadata Datos adicionales en formato JSON
+ * @property Carbon $created_at Fecha de registro/envío
+ * @property Carbon $updated_at Fecha de actualización
+ *
+ * @method static Builder<SentEmail> sent() Filtra solo emails enviados con éxito
+ * @method static Builder<SentEmail> failed() Filtra solo emails que fallaron
  */
 class SentEmail extends Model
 {
@@ -52,10 +58,10 @@ class SentEmail extends Model
     /**
      * Scope para filtrar solo los emails enviados exitosamente.
      *
-     * @param  Builder  $query
-     * @return Builder
+     * @param  Builder<SentEmail>  $query
+     * @return Builder<SentEmail>
      */
-    public function scopeSent($query)
+    public function scopeSent(Builder $query): Builder
     {
         return $query->where('status', EmailStatus::Sent);
     }
@@ -63,10 +69,10 @@ class SentEmail extends Model
     /**
      * Scope para filtrar solo los emails que fallaron al enviarse.
      *
-     * @param  Builder  $query
-     * @return Builder
+     * @param  Builder<SentEmail>  $query
+     * @return Builder<SentEmail>
      */
-    public function scopeFailed($query)
+    public function scopeFailed(Builder $query): Builder
     {
         return $query->where('status', EmailStatus::Failed);
     }
