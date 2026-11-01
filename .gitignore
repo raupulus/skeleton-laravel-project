@@ -5,6 +5,8 @@
 /public/storage
 /storage/*.key
 /vendor
+/template
+template/
 
 # Variables de entorno (NUNCA commitear el .env real)
 .env
@@ -13,7 +15,6 @@
 .env.staging
 !.env.example
 !.env.example.production
-
 
 # Logs
 /storage/logs/*.log
@@ -44,11 +45,13 @@ Thumbs.db
 _ide_helper.php
 _ide_helper_models.php
 
-# Node
+# Node y paquetes
 npm-debug.log
 yarn-error.log
 .npm
 .yarn
+pnpm-store/
+.pnpm-store/
 
 # PHP
 *.phpunit.result.cache
@@ -63,8 +66,10 @@ docker-compose.override.yml
 public/docs/api/
 .scribe/endpoints.cache/
 
-# Archivos temporales
+# Archivos temporales e internos
 *.tmp
 *.bak
-docs/planning/*
-!docs/planning/.gitkeep
+.junie/
+docs/planning/
+docs/auditorias/
+
