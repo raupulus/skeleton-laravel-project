@@ -1,5 +1,7 @@
 # Manual del Usuario — Contacto
 
+*Última actualización: 2026-08-26*
+
 ## Descripción
 
 La página de **Contacto** te permite enviar un mensaje directamente a la empresa o a los responsables de la plataforma a través de un formulario web. No necesitas estar registrado ni haber iniciado sesión para enviar un mensaje.

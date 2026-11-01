@@ -1,5 +1,7 @@
 # Manual del Administrador — Gestión de Posts (Blog)
 
+*Última actualización: 2026-08-26*
+
 ## Objetivo
 
 El módulo de **Posts** permite crear, editar y gestionar las publicaciones del blog de la plataforma. Los posts son contenido de tipo artículo o noticia, organizados cronológicamente y agrupables por categorías. Este módulo se encuentra en el grupo **Contenido** del menú lateral.

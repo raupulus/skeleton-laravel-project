@@ -1,5 +1,7 @@
 # Manual del Administrador — Gestión de Categorías
 
+*Última actualización: 2026-08-26*
+
 ## Objetivo
 
 El módulo de **Categorías** permite crear y gestionar las categorías que organizan el contenido del sitio web (posts y páginas). Las categorías ayudan a los visitantes a encontrar contenido relacionado y mejoran la estructura de navegación. Este módulo se encuentra en el grupo **Contenido** del menú lateral.

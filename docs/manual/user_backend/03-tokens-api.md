@@ -1,5 +1,7 @@
 # Manual del Panel de Usuario — Tokens API
 
+*Última actualización: 2026-08-26*
+
 ## Objetivo
 
 La página de **Tokens API** permite crear, visualizar y eliminar tokens de acceso personal para la API REST de la plataforma. Los tokens API son necesarios para que aplicaciones externas, scripts o integraciones puedan comunicarse con la plataforma en tu nombre de forma segura y autenticada.

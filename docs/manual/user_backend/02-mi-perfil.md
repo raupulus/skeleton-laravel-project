@@ -1,5 +1,7 @@
 # Manual del Panel de Usuario — Mi Perfil
 
+*Última actualización: 2026-08-26*
+
 ## Objetivo
 
 La página **Mi Perfil** permite editar tus datos personales: nombre, avatar (foto de perfil) y contraseña. Es la herramienta que usarás para mantener tu información actualizada en la plataforma.

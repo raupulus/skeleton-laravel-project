@@ -1,5 +1,7 @@
 # Manual del Administrador — Gestión de Slides
 
+*Última actualización: 2026-08-26*
+
 ## Objetivo
 
 El módulo de **Slides** permite gestionar las imágenes y contenido de los carruseles (sliders) que se muestran en las diferentes secciones del sitio web. Los slides son elementos visuales destacados que se utilizan por ejemplo como banner principal en la página de inicio, o como galerías de imágenes en otras secciones. Este módulo se encuentra en el grupo **Media** del menú lateral.

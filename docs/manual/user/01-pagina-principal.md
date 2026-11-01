@@ -1,5 +1,7 @@
 # Manual del Usuario — Página Principal
 
+*Última actualización: 2026-08-26*
+
 ## Descripción
 
 La **página principal** (Home) es la primera página que verás al visitar el sitio web. Está diseñada para ofrecer una visión general de todo lo que la plataforma ofrece, con contenido visual atractivo y acceso rápido a las secciones más importantes.

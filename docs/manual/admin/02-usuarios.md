@@ -1,5 +1,7 @@
 # Manual del Administrador — Gestión de Usuarios
 
+*Última actualización: 2026-08-26*
+
 ## Objetivo
 
 El módulo de **Usuarios** permite gestionar todas las cuentas de la plataforma. Desde aquí puedes crear nuevos usuarios, editar sus datos, asignar roles, activar o desactivar cuentas y eliminar usuarios. Este módulo se encuentra en el grupo **Sistema** del menú lateral.

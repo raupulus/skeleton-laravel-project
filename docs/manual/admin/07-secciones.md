@@ -1,5 +1,7 @@
 # Manual del Administrador — Gestión de Secciones
 
+*Última actualización: 2026-08-26*
+
 ## Objetivo
 
 El módulo de **Secciones** permite gestionar bloques de contenido dinámico que se muestran en las distintas páginas del frontend. Las secciones son piezas de contenido reutilizables que pueden incluir un título, descripción, contenido enriquecido e imagen, y se agrupan por zonas. Son la principal herramienta para editar textos del frontend sin necesidad de modificar código. Este módulo se encuentra en el grupo **Frontend** del menú lateral.

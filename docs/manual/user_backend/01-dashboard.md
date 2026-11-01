@@ -1,5 +1,7 @@
 # Manual del Panel de Usuario — Dashboard
 
+*Última actualización: 2026-08-26*
+
 ## Objetivo
 
 El **Dashboard** es la primera pantalla que verás al acceder al Panel de Usuario. Te da la bienvenida y ofrece un resumen rápido de tu cuenta junto con accesos directos a las funcionalidades disponibles.

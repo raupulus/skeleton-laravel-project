@@ -1,5 +1,7 @@
 # Manual del Panel de Usuario — Introducción
 
+*Última actualización: 2026-08-26*
+
 ## ¿Qué es el Panel de Usuario?
 
 El **Panel de Usuario** es una zona privada de la plataforma donde cualquier usuario registrado puede gestionar su perfil personal y sus tokens de acceso a la API. Se accede desde la ruta `/panel`.

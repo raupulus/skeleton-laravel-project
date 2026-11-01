@@ -1,5 +1,7 @@
 # Manual del Administrador — Gestión de Páginas
 
+*Última actualización: 2026-08-26*
+
 ## Objetivo
 
 El módulo de **Páginas** permite crear, editar y gestionar páginas de contenido estático o dinámico del sitio web. Las páginas son ideales para contenido que no cambia con frecuencia, como «Sobre nosotros», «Servicios», «Términos y condiciones», etc. Este módulo se encuentra en el grupo **Contenido** del menú lateral.

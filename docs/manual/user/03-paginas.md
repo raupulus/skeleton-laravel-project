@@ -1,5 +1,7 @@
 # Manual del Usuario — Páginas de Contenido
 
+*Última actualización: 2026-08-26*
+
 ## Descripción
 
 Las **páginas de contenido** son secciones del sitio web con información estática o semi-estática, como servicios ofrecidos, información corporativa, términos y condiciones, guías, etc. A diferencia de los artículos del blog (que son cronológicos), las páginas son atemporales y suelen contener información permanente.

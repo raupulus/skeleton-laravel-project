@@ -1,5 +1,7 @@
 # Manual del Administrador — Configuración del Sistema
 
+*Última actualización: 2026-08-26*
+
 ## Objetivo
 
 El módulo de **Configuración** permite gestionar los ajustes globales de la plataforma mediante un sistema de pares clave-valor. Desde aquí se controlan datos como el nombre del sitio, la descripción SEO por defecto, las URLs de redes sociales, la dirección de contacto y muchas otras opciones que afectan al comportamiento y aspecto de toda la web. Este módulo se encuentra en el grupo **Sistema** del menú lateral.

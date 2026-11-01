@@ -1,5 +1,7 @@
 # Manual del Usuario — Páginas Legales
 
+*Última actualización: 2026-08-26*
+
 ## Descripción
 
 La plataforma incluye páginas legales obligatorias que informan sobre el tratamiento de datos personales y el uso de cookies. Estas páginas están accesibles desde el **pie de página** (footer) del sitio web.

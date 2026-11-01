@@ -1,5 +1,7 @@
 # Manual del Usuario — Blog
 
+*Última actualización: 2026-08-26*
+
 ## Descripción
 
 El **Blog** es la sección del sitio web donde se publican artículos, noticias y contenido de interés. Los artículos están organizados por categorías y se muestran en orden cronológico (más recientes primero).

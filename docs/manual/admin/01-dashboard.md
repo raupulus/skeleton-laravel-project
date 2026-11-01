@@ -1,5 +1,7 @@
 # Manual del Administrador — Dashboard
 
+*Última actualización: 2026-08-26*
+
 ## Objetivo
 
 El **Dashboard** es la primera pantalla que verás al acceder al panel de administración. Proporciona una visión general rápida del estado de la plataforma mediante tarjetas de estadísticas, gráficos y tablas resumidas. Su propósito es que, de un solo vistazo, puedas conocer la actividad reciente y los datos más relevantes del sistema.

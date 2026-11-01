@@ -1,5 +1,7 @@
 # Manual del Usuario — Cambio de Idioma
 
+*Última actualización: 2026-08-26*
+
 ## Descripción
 
 La plataforma está disponible en dos idiomas: **español** (por defecto) e **inglés**. Puedes cambiar el idioma en cualquier momento y tu preferencia se recordará durante toda la sesión de navegación.

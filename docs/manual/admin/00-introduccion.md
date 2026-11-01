@@ -1,5 +1,7 @@
 # Manual del Administrador — Introducción
 
+*Última actualización: 2026-08-26*
+
 ## ¿Qué es el Panel de Administración?
 
 El **Panel de Administración** es la herramienta central desde la que se gestiona todo el contenido, los usuarios, la configuración y los elementos visuales de la plataforma. Está construido sobre Filament y se accede desde la ruta `/admin`.

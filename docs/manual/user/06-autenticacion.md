@@ -1,5 +1,7 @@
 # Manual del Usuario — Registro e Inicio de Sesión
 
+*Última actualización: 2026-08-26*
+
 ## Descripción
 
 La plataforma permite crear una cuenta de usuario para acceder a funcionalidades adicionales como el Panel de Usuario, la gestión de perfil y la generación de tokens API.

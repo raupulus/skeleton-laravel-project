@@ -1,5 +1,7 @@
 # Manual del Administrador — Emails Enviados
 
+*Última actualización: 2026-08-26*
+
 ## Objetivo
 
 El módulo de **Emails Enviados** proporciona un registro completo de todos los correos electrónicos que la plataforma ha enviado. Funciona como un **log de auditoría** de emails que permite verificar qué se envió, a quién, cuándo y si el envío fue exitoso o falló. Este módulo se encuentra en el grupo **Sistema** del menú lateral.

@@ -1,5 +1,7 @@
 # Manual del Usuario — Sobre Nosotros
 
+*Última actualización: 2026-08-26*
+
 ## Descripción
 
 La página **Sobre nosotros** presenta información sobre la empresa, su historia, equipo, misión y valores. Es una página estática complementada con secciones dinámicas editables por los administradores.

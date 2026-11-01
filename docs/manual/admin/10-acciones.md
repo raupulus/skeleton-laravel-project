@@ -1,5 +1,7 @@
 # Acciones del sistema
 
+*Última actualización: 2026-08-26*
+
 ## Objetivo
 
 La sección **Acciones** del panel de administración proporciona herramientas de mantenimiento del sistema. Permite regenerar el sitemap, limpiar la caché y consultar los logs del servidor.

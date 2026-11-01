@@ -1,5 +1,7 @@
 # Manual del Usuario — API REST
 
+*Última actualización: 2026-08-26*
+
 ## Descripción
 
 La plataforma ofrece una **API REST** (interfaz de programación) que permite a aplicaciones externas acceder al contenido y funcionalidades del sitio de forma programática. Esto es útil si quieres integrar el contenido de la plataforma en una aplicación móvil, otro sitio web o cualquier herramienta automatizada.

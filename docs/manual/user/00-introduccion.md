@@ -1,5 +1,7 @@
 # Manual del Usuario — Introducción
 
+*Última actualización: 2026-08-26*
+
 ## Bienvenido a la plataforma
 
 Este manual te guiará por todas las funcionalidades disponibles como usuario de la plataforma web. Aquí encontrarás cómo navegar por el sitio, leer contenido, contactar con la empresa, cambiar el idioma y gestionar tu cuenta.
