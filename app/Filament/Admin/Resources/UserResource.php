@@ -5,9 +5,12 @@ namespace App\Filament\Admin\Resources;
 use App\Enums\Role;
 use App\Filament\Components\ImageCropField;
 use App\Models\User;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms;
-use Filament\Schemas\Schema;
+use Filament\Resources\Pages\PageRegistration;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -17,8 +20,11 @@ use Filament\Tables\Table;
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
+
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
+
     protected static ?int $navigationSort = 1;
+
     protected static ?string $recordTitleAttribute = 'name';
 
     /**
@@ -31,34 +37,21 @@ class UserResource extends Resource
         return ['name', 'email'];
     }
 
-    /**
-     * @return string
-     */
     public static function getModelLabel(): string
     {
         return __('filament.user');
     }
 
-    /**
-     * @return string
-     */
     public static function getPluralModelLabel(): string
     {
         return __('filament.users');
     }
 
-    /**
-     * @return string|null
-     */
     public static function getNavigationGroup(): ?string
     {
         return __('filament.nav_system');
     }
 
-    /**
-     * @param  Schema  $form
-     * @return Schema
-     */
     public static function form(Schema $form): Schema
     {
         return $form->schema([
@@ -76,7 +69,7 @@ class UserResource extends Resource
             Forms\Components\TextInput::make('password')
                 ->label(__('filament.password'))
                 ->password()
-                ->required(fn ($record) => !$record)
+                ->required(fn ($record) => ! $record)
                 ->minLength(8)
                 ->dehydrated(fn ($state) => filled($state)),
             Forms\Components\Select::make('role')
@@ -89,10 +82,6 @@ class UserResource extends Resource
         ]);
     }
 
-    /**
-     * @param  Table  $table
-     * @return Table
-     */
     public static function table(Table $table): Table
     {
         return $table->columns([
@@ -120,19 +109,19 @@ class UserResource extends Resource
                 ->options(collect(Role::cases())->mapWithKeys(fn ($r) => [$r->value => $r->label()])),
             Tables\Filters\TernaryFilter::make('is_active')
                 ->label(__('filament.is_active')),
-        ])->actions([\Filament\Actions\EditAction::make()])
-        ->bulkActions([\Filament\Actions\DeleteBulkAction::make()]);
+        ])->actions([EditAction::make()])
+            ->bulkActions([DeleteBulkAction::make()]);
     }
 
     /**
-     * @return array<string, \Filament\Resources\Pages\PageRegistration>
+     * @return array<string, PageRegistration>
      */
     public static function getPages(): array
     {
         return [
-            'index'  => UserResource\Pages\ListUsers::route('/'),
+            'index' => UserResource\Pages\ListUsers::route('/'),
             'create' => UserResource\Pages\CreateUser::route('/create'),
-            'edit'   => UserResource\Pages\EditUser::route('/{record}/edit'),
+            'edit' => UserResource\Pages\EditUser::route('/{record}/edit'),
         ];
     }
 }

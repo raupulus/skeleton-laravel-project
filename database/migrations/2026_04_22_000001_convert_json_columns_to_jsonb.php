@@ -17,11 +17,11 @@ return new class extends Migration
      */
     protected array $tables = [
         'categories' => ['name', 'description'],
-        'pages'      => ['title', 'content', 'excerpt', 'seo_title', 'seo_description', 'seo_keywords'],
-        'posts'      => ['title', 'content', 'excerpt', 'seo_title', 'seo_description', 'seo_keywords'],
-        'slides'     => ['title', 'content'],
-        'sections'   => ['title', 'description', 'content'],
-        'sent_emails'=> ['metadata'],
+        'pages' => ['title', 'content', 'excerpt', 'seo_title', 'seo_description', 'seo_keywords'],
+        'posts' => ['title', 'content', 'excerpt', 'seo_title', 'seo_description', 'seo_keywords'],
+        'slides' => ['title', 'content'],
+        'sections' => ['title', 'description', 'content'],
+        'sent_emails' => ['metadata'],
     ];
 
     /**

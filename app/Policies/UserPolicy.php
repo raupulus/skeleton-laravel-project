@@ -15,7 +15,7 @@ class UserPolicy
      * Determina si el usuario puede ver el listado de users.
      *
      * @param  User  $user  El usuario que realiza la acción
-     * @return bool         True si el usuario es administrador
+     * @return bool True si el usuario es administrador
      */
     public function viewAny(User $user): bool
     {
@@ -25,9 +25,9 @@ class UserPolicy
     /**
      * Determina si el usuario puede ver un user específico.
      *
-     * @param  User       $user    El usuario que realiza la acción
+     * @param  User  $user  El usuario que realiza la acción
      * @param  User  $model  El registro a visualizar
-     * @return bool                True si el usuario es administrador
+     * @return bool True si el usuario es administrador
      */
     public function view(User $user, User $model): bool
     {
@@ -38,7 +38,7 @@ class UserPolicy
      * Determina si el usuario puede crear un nuevo user.
      *
      * @param  User  $user  El usuario que realiza la acción
-     * @return bool         True si el usuario es administrador
+     * @return bool True si el usuario es administrador
      */
     public function create(User $user): bool
     {
@@ -48,9 +48,9 @@ class UserPolicy
     /**
      * Determina si el usuario puede actualizar un user existente.
      *
-     * @param  User       $user    El usuario que realiza la acción
+     * @param  User  $user  El usuario que realiza la acción
      * @param  User  $model  El registro a actualizar
-     * @return bool                True si el usuario es administrador
+     * @return bool True si el usuario es administrador
      */
     public function update(User $user, User $model): bool
     {
@@ -60,9 +60,9 @@ class UserPolicy
     /**
      * Determina si el usuario puede eliminar un user.
      *
-     * @param  User       $user    El usuario que realiza la acción
+     * @param  User  $user  El usuario que realiza la acción
      * @param  User  $model  El registro a eliminar
-     * @return bool                True si el usuario es superadministrador
+     * @return bool True si el usuario es superadministrador
      */
     public function delete(User $user, User $model): bool
     {
@@ -73,9 +73,9 @@ class UserPolicy
     /**
      * Determina si el usuario puede restaurar un user eliminado.
      *
-     * @param  User       $user    El usuario que realiza la acción
+     * @param  User  $user  El usuario que realiza la acción
      * @param  User  $model  El registro a restaurar
-     * @return bool                True si el usuario es administrador
+     * @return bool True si el usuario es administrador
      */
     public function restore(User $user, User $model): bool
     {
@@ -85,9 +85,9 @@ class UserPolicy
     /**
      * Determina si el usuario puede eliminar permanentemente un user.
      *
-     * @param  User       $user    El usuario que realiza la acción
+     * @param  User  $user  El usuario que realiza la acción
      * @param  User  $model  El registro a eliminar definitivamente
-     * @return bool                True si el usuario es superadministrador
+     * @return bool True si el usuario es superadministrador
      */
     public function forceDelete(User $user, User $model): bool
     {

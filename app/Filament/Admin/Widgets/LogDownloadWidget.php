@@ -26,7 +26,7 @@ class LogDownloadWidget extends Widget
     {
         $logPath = storage_path('logs');
 
-        if (!File::isDirectory($logPath)) {
+        if (! File::isDirectory($logPath)) {
             return ['name' => null, 'size' => null, 'modified' => null, 'exists' => false];
         }
 
@@ -41,10 +41,10 @@ class LogDownloadWidget extends Widget
         $latest = $files->first();
 
         return [
-            'name'     => $latest->getFilename(),
-            'size'     => number_format($latest->getSize() / 1048576, 2) . ' MB',
+            'name' => $latest->getFilename(),
+            'size' => number_format($latest->getSize() / 1048576, 2).' MB',
             'modified' => date('d/m/Y H:i', $latest->getMTime()),
-            'exists'   => true,
+            'exists' => true,
         ];
     }
 }

@@ -13,7 +13,7 @@ trait HasSeo
      * Obtiene el título SEO optimizado para el idioma actual.
      * Prioridad: seo_title → title → string vacío.
      *
-     * @return string  El título SEO o el título del modelo como fallback
+     * @return string El título SEO o el título del modelo como fallback
      */
     public function getSeoTitleText(): string
     {
@@ -25,7 +25,7 @@ trait HasSeo
         }
 
         // Si el seo_title está vacío, usar el título del modelo
-        if (!empty($seoTitle)) {
+        if (! empty($seoTitle)) {
             return $seoTitle;
         }
 
@@ -41,7 +41,7 @@ trait HasSeo
      * Obtiene la descripción SEO optimizada para el idioma actual.
      * Prioridad: seo_description → excerpt → string vacío.
      *
-     * @return string  La descripción SEO o el extracto del modelo como fallback
+     * @return string La descripción SEO o el extracto del modelo como fallback
      */
     public function getSeoDescriptionText(): string
     {
@@ -51,7 +51,7 @@ trait HasSeo
             $seoDesc = $seoDesc[app()->getLocale()] ?? $seoDesc[config('app.fallback_locale')] ?? '';
         }
 
-        if (!empty($seoDesc)) {
+        if (! empty($seoDesc)) {
             return $seoDesc;
         }
 
@@ -61,6 +61,7 @@ trait HasSeo
             if (is_array($excerpt)) {
                 return $excerpt[app()->getLocale()] ?? $excerpt[config('app.fallback_locale')] ?? '';
             }
+
             return $excerpt ?? '';
         }
 
@@ -71,7 +72,7 @@ trait HasSeo
      * Obtiene las keywords SEO para el idioma actual.
      * Devuelve string vacío si no hay keywords definidas.
      *
-     * @return string  Las keywords SEO o string vacío
+     * @return string Las keywords SEO o string vacío
      */
     public function getSeoKeywordsText(): string
     {

@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Http\Middleware\SetLocale;
+use Filament\Actions\Action;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -9,7 +11,6 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
-use Filament\Actions\Action;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -40,7 +41,7 @@ class PanelUserProvider extends PanelProvider
                 EncryptCookies::class, AddQueuedCookiesToResponse::class, StartSession::class,
                 AuthenticateSession::class, ShareErrorsFromSession::class, PreventRequestForgery::class,
                 SubstituteBindings::class, DisableBladeIconComponents::class, DispatchServingFilamentEvent::class,
-                \App\Http\Middleware\SetLocale::class,
+                SetLocale::class,
             ])
             ->authMiddleware([Authenticate::class])
             ->userMenuItems([

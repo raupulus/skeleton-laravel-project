@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -12,15 +14,15 @@ use Spatie\Translatable\HasTranslations;
  * Los slides se agrupan por 'zone', permitiendo múltiples carruseles en el sitio.
  * Soporta imagen principal (16:9) e imagen vertical (8:12) con recorte desde el backend.
  *
- * @property int         $id
- * @property array|null  $title         Título opcional traducible (es, en)
- * @property array|null  $content       Texto descriptivo opcional traducible (es, en)
- * @property string      $image         Imagen principal obligatoria (recortada a 16:9)
+ * @property int $id
+ * @property array|null $title Título opcional traducible (es, en)
+ * @property array|null $content Texto descriptivo opcional traducible (es, en)
+ * @property string $image Imagen principal obligatoria (recortada a 16:9)
  * @property string|null $image_vertical Imagen vertical opcional (recortada a 8:12)
- * @property string|null $url           URL de destino al hacer clic en el slide
- * @property string      $zone          Agrupa slides del mismo carrusel
- * @property int         $order         Orden de aparición dentro de la zona
- * @property bool        $is_active     Si el slide está visible en el frontend
+ * @property string|null $url URL de destino al hacer clic en el slide
+ * @property string $zone Agrupa slides del mismo carrusel
+ * @property int $order Orden de aparición dentro de la zona
+ * @property bool $is_active Si el slide está visible en el frontend
  */
 class Slide extends Model
 {
@@ -37,13 +39,11 @@ class Slide extends Model
 
     /**
      * Eventos del modelo para invalidar caché de zona al guardar o eliminar.
-     *
-     * @return void
      */
     protected static function booted(): void
     {
         $clearCache = function (self $model): void {
-            \Illuminate\Support\Facades\Cache::forget("slides_{$model->zone}_ids");
+            Cache::forget("slides_{$model->zone}_ids");
         };
         static::saved($clearCache);
         static::deleted($clearCache);
@@ -58,7 +58,7 @@ class Slide extends Model
     {
         return [
             'is_active' => 'boolean',
-            'order'     => 'integer',
+            'order' => 'integer',
         ];
     }
 
@@ -69,9 +69,9 @@ class Slide extends Model
     /**
      * Scope para obtener slides de una zona específica, ordenados y solo activos.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string                                 $zone  La zona del carrusel
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  Builder  $query
+     * @param  string  $zone  La zona del carrusel
+     * @return Builder
      */
     public function scopeForZone($query, string $zone)
     {

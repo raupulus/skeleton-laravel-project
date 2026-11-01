@@ -16,8 +16,8 @@ class SetLocale
      * Maneja la petición entrante estableciendo el locale de la aplicación.
      *
      * @param  Request  $request  La petición HTTP entrante
-     * @param  Closure  $next     El siguiente middleware en la cadena
-     * @return Response           La respuesta HTTP
+     * @param  Closure  $next  El siguiente middleware en la cadena
+     * @return Response La respuesta HTTP
      */
     public function handle(Request $request, Closure $next): Response
     {
@@ -28,7 +28,7 @@ class SetLocale
         $locale = session('locale');
 
         // Si no hay idioma en sesión, detectar desde Accept-Language del navegador
-        if (!$locale && $request->hasHeader('Accept-Language')) {
+        if (! $locale && $request->hasHeader('Accept-Language')) {
             $preferred = substr($request->header('Accept-Language'), 0, 2);
             if (in_array($preferred, $available)) {
                 $locale = $preferred;

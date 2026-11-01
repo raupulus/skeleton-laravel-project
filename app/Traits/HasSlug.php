@@ -13,8 +13,6 @@ trait HasSlug
 {
     /**
      * Hook de arranque del trait, registra el listener del evento 'creating'.
-     *
-     * @return void
      */
     public static function bootHasSlug(): void
     {
@@ -44,7 +42,7 @@ trait HasSlug
      * Define el campo fuente para generar el slug.
      * Por defecto usa el campo 'title'. Sobreescribir en el modelo si es necesario.
      *
-     * @return mixed  El valor del campo o array de traducciones
+     * @return mixed El valor del campo o array de traducciones
      */
     protected function getSlugSource(): mixed
     {
@@ -56,7 +54,7 @@ trait HasSlug
      * Si el slug ya existe, añade un sufijo numérico incremental (-1, -2, etc.).
      *
      * @param  string  $slug  El slug base generado a partir del título
-     * @return string         El slug único garantizado
+     * @return string El slug único garantizado
      */
     protected function generateUniqueSlug(string $slug): string
     {
@@ -69,7 +67,7 @@ trait HasSlug
             : static::query();
 
         while ((clone $query)->where('slug', $slug)->exists()) {
-            $slug = $original . '-' . $count++;
+            $slug = $original.'-'.$count++;
         }
 
         return $slug;

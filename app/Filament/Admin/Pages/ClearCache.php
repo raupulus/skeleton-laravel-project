@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Artisan;
 class ClearCache extends Page
 {
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-trash';
+
     protected static ?int $navigationSort = 2;
+
     protected string $view = 'filament.admin.pages.clear-cache';
 
     /**
      * Devuelve el grupo de navegación traducido.
-     *
-     * @return string|null
      */
     public static function getNavigationGroup(): ?string
     {
@@ -28,8 +28,6 @@ class ClearCache extends Page
 
     /**
      * Devuelve el label de navegación traducido.
-     *
-     * @return string
      */
     public static function getNavigationLabel(): string
     {
@@ -38,8 +36,6 @@ class ClearCache extends Page
 
     /**
      * Devuelve el título de la página traducido.
-     *
-     * @return string
      */
     public function getTitle(): string
     {
@@ -48,8 +44,6 @@ class ClearCache extends Page
 
     /**
      * Acción principal con modal de confirmación y advertencias.
-     *
-     * @return array
      */
     protected function getHeaderActions(): array
     {

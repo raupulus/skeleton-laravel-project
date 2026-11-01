@@ -15,15 +15,14 @@ class LogDownloadController extends Controller
     /**
      * Descarga un archivo de log de forma segura.
      *
-     * @param string $filename Nombre del archivo de log
-     * @return BinaryFileResponse
+     * @param  string  $filename  Nombre del archivo de log
      */
     public function download(string $filename): BinaryFileResponse
     {
         // Verificar que el usuario es administrador
         abort_unless(auth()->user()?->role->isAdmin(), 403);
 
-        $path = storage_path('logs/' . basename($filename));
+        $path = storage_path('logs/'.basename($filename));
         $realPath = realpath($path);
         $logsDir = realpath(storage_path('logs'));
 

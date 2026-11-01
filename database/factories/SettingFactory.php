@@ -23,13 +23,13 @@ class SettingFactory extends Factory
     public function definition(): array
     {
         return [
-            'key'          => fake()->unique()->slug(2),
+            'key' => fake()->unique()->slug(2),
             'display_name' => fake()->words(3, true),
-            'value'        => fake()->sentence(),
-            'details'      => null,
-            'type'         => 'text',
-            'order'        => fake()->numberBetween(0, 10),
-            'group'        => fake()->randomElement(['general', 'seo', 'social', 'contact']),
+            'value' => fake()->sentence(),
+            'details' => null,
+            'type' => 'text',
+            'order' => fake()->numberBetween(0, 10),
+            'group' => fake()->randomElement(['general', 'seo', 'social', 'contact']),
         ];
     }
 }

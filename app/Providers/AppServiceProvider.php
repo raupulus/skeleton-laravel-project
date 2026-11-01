@@ -2,6 +2,22 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
+use App\Models\Page;
+use App\Models\Post;
+use App\Models\Section;
+use App\Models\SentEmail;
+use App\Models\Setting;
+use App\Models\Slide;
+use App\Models\User;
+use App\Policies\CategoryPolicy;
+use App\Policies\PagePolicy;
+use App\Policies\PostPolicy;
+use App\Policies\SectionPolicy;
+use App\Policies\SentEmailPolicy;
+use App\Policies\SettingPolicy;
+use App\Policies\SlidePolicy;
+use App\Policies\UserPolicy;
 use App\Services\SeoService;
 use App\Services\SettingService;
 use Illuminate\Support\Facades\Gate;
@@ -23,13 +39,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::policy(\App\Models\User::class, \App\Policies\UserPolicy::class);
-        Gate::policy(\App\Models\Page::class, \App\Policies\PagePolicy::class);
-        Gate::policy(\App\Models\Post::class, \App\Policies\PostPolicy::class);
-        Gate::policy(\App\Models\Category::class, \App\Policies\CategoryPolicy::class);
-        Gate::policy(\App\Models\Slide::class, \App\Policies\SlidePolicy::class);
-        Gate::policy(\App\Models\Section::class, \App\Policies\SectionPolicy::class);
-        Gate::policy(\App\Models\Setting::class, \App\Policies\SettingPolicy::class);
-        Gate::policy(\App\Models\SentEmail::class, \App\Policies\SentEmailPolicy::class);
+        Gate::policy(User::class, UserPolicy::class);
+        Gate::policy(Page::class, PagePolicy::class);
+        Gate::policy(Post::class, PostPolicy::class);
+        Gate::policy(Category::class, CategoryPolicy::class);
+        Gate::policy(Slide::class, SlidePolicy::class);
+        Gate::policy(Section::class, SectionPolicy::class);
+        Gate::policy(Setting::class, SettingPolicy::class);
+        Gate::policy(SentEmail::class, SentEmailPolicy::class);
     }
 }

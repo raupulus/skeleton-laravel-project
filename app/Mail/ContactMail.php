@@ -16,7 +16,7 @@ class ContactMail extends Mailable
 
     public function envelope(): Envelope
     {
-        return new Envelope(subject: 'Nuevo mensaje de contacto: ' . ($this->data['subject'] ?? ''));
+        return new Envelope(subject: 'Nuevo mensaje de contacto: '.($this->data['subject'] ?? ''));
     }
 
     public function content(): Content

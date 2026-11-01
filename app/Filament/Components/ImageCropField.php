@@ -14,11 +14,10 @@ class ImageCropField
      * Crea un campo de imagen con cropper 16:9 (landscape).
      * Uso principal: posts, pages, secciones, slides (imagen principal).
      *
-     * @param string      $field     Nombre del campo en el modelo (ej: 'image')
-     * @param string      $directory Directorio de almacenamiento (ej: 'posts')
-     * @param bool        $required  Indica si el campo es obligatorio
-     * @param string|null $label     Label personalizado (si null, usa filament.$field)
-     * @return FileUpload
+     * @param  string  $field  Nombre del campo en el modelo (ej: 'image')
+     * @param  string  $directory  Directorio de almacenamiento (ej: 'posts')
+     * @param  bool  $required  Indica si el campo es obligatorio
+     * @param  string|null  $label  Label personalizado (si null, usa filament.$field)
      */
     public static function make16x9(
         string $field = 'image',
@@ -27,7 +26,7 @@ class ImageCropField
         ?string $label = null
     ): FileUpload {
         $upload = FileUpload::make($field)
-            ->label($label ?? __('filament.' . $field))
+            ->label($label ?? __('filament.'.$field))
             ->image()
             ->maxSize(2048)
             ->directory($directory)
@@ -49,11 +48,10 @@ class ImageCropField
      * Crea un campo de imagen con cropper 4:3 (retrato ligero).
      * Uso principal: avatares de usuarios.
      *
-     * @param string      $field     Nombre del campo en el modelo (ej: 'avatar')
-     * @param string      $directory Directorio de almacenamiento (ej: 'avatars')
-     * @param bool        $required  Indica si el campo es obligatorio
-     * @param string|null $label     Label personalizado (si null, usa filament.$field)
-     * @return FileUpload
+     * @param  string  $field  Nombre del campo en el modelo (ej: 'avatar')
+     * @param  string  $directory  Directorio de almacenamiento (ej: 'avatars')
+     * @param  bool  $required  Indica si el campo es obligatorio
+     * @param  string|null  $label  Label personalizado (si null, usa filament.$field)
      */
     public static function make4x3(
         string $field = 'avatar',
@@ -62,7 +60,7 @@ class ImageCropField
         ?string $label = null
     ): FileUpload {
         $upload = FileUpload::make($field)
-            ->label($label ?? __('filament.' . $field))
+            ->label($label ?? __('filament.'.$field))
             ->image()
             ->maxSize(2048)
             ->directory($directory)
@@ -84,11 +82,10 @@ class ImageCropField
      * Crea un campo de imagen con cropper 9:16 (vertical/portrait).
      * Uso principal: slides verticales.
      *
-     * @param string      $field     Nombre del campo en el modelo (ej: 'image_vertical')
-     * @param string      $directory Directorio de almacenamiento (ej: 'slides')
-     * @param bool        $required  Indica si el campo es obligatorio
-     * @param string|null $label     Label personalizado (si null, usa filament.$field)
-     * @return FileUpload
+     * @param  string  $field  Nombre del campo en el modelo (ej: 'image_vertical')
+     * @param  string  $directory  Directorio de almacenamiento (ej: 'slides')
+     * @param  bool  $required  Indica si el campo es obligatorio
+     * @param  string|null  $label  Label personalizado (si null, usa filament.$field)
      */
     public static function make9x16(
         string $field = 'image_vertical',
@@ -97,7 +94,7 @@ class ImageCropField
         ?string $label = null
     ): FileUpload {
         $upload = FileUpload::make($field)
-            ->label($label ?? __('filament.' . $field))
+            ->label($label ?? __('filament.'.$field))
             ->image()
             ->maxSize(2048)
             ->directory($directory)
@@ -119,11 +116,10 @@ class ImageCropField
      * Crea un campo de imagen con cropper 8:12 (vertical/portrait).
      * Uso principal: slides verticales.
      *
-     * @param string      $field     Nombre del campo en el modelo (ej: 'image_vertical')
-     * @param string      $directory Directorio de almacenamiento (ej: 'slides')
-     * @param bool        $required  Indica si el campo es obligatorio
-     * @param string|null $label     Label personalizado (si null, usa filament.$field)
-     * @return FileUpload
+     * @param  string  $field  Nombre del campo en el modelo (ej: 'image_vertical')
+     * @param  string  $directory  Directorio de almacenamiento (ej: 'slides')
+     * @param  bool  $required  Indica si el campo es obligatorio
+     * @param  string|null  $label  Label personalizado (si null, usa filament.$field)
      */
     public static function make8x12(
         string $field = 'image_vertical',
@@ -132,7 +128,7 @@ class ImageCropField
         ?string $label = null
     ): FileUpload {
         $upload = FileUpload::make($field)
-            ->label($label ?? __('filament.' . $field))
+            ->label($label ?? __('filament.'.$field))
             ->image()
             ->maxSize(2048)
             ->directory($directory)

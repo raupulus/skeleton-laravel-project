@@ -1,15 +1,24 @@
 <?php
+
 namespace App\Filament\Admin\Resources;
+
 use App\Enums\ContentStatus;
 use App\Filament\Components\ImageCropField;
+use App\Models\Category;
 use App\Models\Page;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\RestoreAction;
 use Filament\Forms;
+use Filament\Resources\Pages\PageRegistration;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 /**
  * Recurso Filament para gestionar las páginas de contenido en el panel admin.
@@ -17,8 +26,11 @@ use Filament\Tables\Table;
 class PageResource extends Resource
 {
     protected static ?string $model = Page::class;
+
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
+
     protected static ?int $navigationSort = 3;
+
     protected static ?string $recordTitleAttribute = 'slug';
 
     /**
@@ -33,8 +45,6 @@ class PageResource extends Resource
 
     /**
      * Devuelve el label del modelo traducido.
-     *
-     * @return string
      */
     public static function getModelLabel(): string
     {
@@ -43,8 +53,6 @@ class PageResource extends Resource
 
     /**
      * Devuelve el label plural del modelo traducido.
-     *
-     * @return string
      */
     public static function getPluralModelLabel(): string
     {
@@ -53,8 +61,6 @@ class PageResource extends Resource
 
     /**
      * Devuelve el grupo de navegación traducido.
-     *
-     * @return string|null
      */
     public static function getNavigationGroup(): ?string
     {
@@ -63,9 +69,6 @@ class PageResource extends Resource
 
     /**
      * Define el formulario del recurso Página.
-     *
-     * @param  Schema  $form
-     * @return Schema
      */
     public static function form(Schema $form): Schema
     {
@@ -76,20 +79,20 @@ class PageResource extends Resource
             // 2. Traducciones con labels correctos (incluidos SEO)
             Tabs::make(__('filament.translations'))->tabs([
                 Tab::make(__('filament.tab_spanish'))->schema([
-                    Forms\Components\TextInput::make('title.es')->label(__('filament.title') . ' (ES)')->required(),
-                    Forms\Components\RichEditor::make('content.es')->label(__('filament.content') . ' (ES)'),
-                    Forms\Components\Textarea::make('excerpt.es')->label(__('filament.excerpt') . ' (ES)'),
-                    Forms\Components\TextInput::make('seo_title.es')->label(__('filament.seo_title') . ' (ES)'),
-                    Forms\Components\Textarea::make('seo_description.es')->label(__('filament.seo_description') . ' (ES)'),
-                    Forms\Components\TextInput::make('seo_keywords.es')->label(__('filament.seo_keywords') . ' (ES)'),
+                    Forms\Components\TextInput::make('title.es')->label(__('filament.title').' (ES)')->required(),
+                    Forms\Components\RichEditor::make('content.es')->label(__('filament.content').' (ES)'),
+                    Forms\Components\Textarea::make('excerpt.es')->label(__('filament.excerpt').' (ES)'),
+                    Forms\Components\TextInput::make('seo_title.es')->label(__('filament.seo_title').' (ES)'),
+                    Forms\Components\Textarea::make('seo_description.es')->label(__('filament.seo_description').' (ES)'),
+                    Forms\Components\TextInput::make('seo_keywords.es')->label(__('filament.seo_keywords').' (ES)'),
                 ]),
                 Tab::make(__('filament.tab_english'))->schema([
-                    Forms\Components\TextInput::make('title.en')->label(__('filament.title') . ' (EN)'),
-                    Forms\Components\RichEditor::make('content.en')->label(__('filament.content') . ' (EN)'),
-                    Forms\Components\Textarea::make('excerpt.en')->label(__('filament.excerpt') . ' (EN)'),
-                    Forms\Components\TextInput::make('seo_title.en')->label(__('filament.seo_title') . ' (EN)'),
-                    Forms\Components\Textarea::make('seo_description.en')->label(__('filament.seo_description') . ' (EN)'),
-                    Forms\Components\TextInput::make('seo_keywords.en')->label(__('filament.seo_keywords') . ' (EN)'),
+                    Forms\Components\TextInput::make('title.en')->label(__('filament.title').' (EN)'),
+                    Forms\Components\RichEditor::make('content.en')->label(__('filament.content').' (EN)'),
+                    Forms\Components\Textarea::make('excerpt.en')->label(__('filament.excerpt').' (EN)'),
+                    Forms\Components\TextInput::make('seo_title.en')->label(__('filament.seo_title').' (EN)'),
+                    Forms\Components\Textarea::make('seo_description.en')->label(__('filament.seo_description').' (EN)'),
+                    Forms\Components\TextInput::make('seo_keywords.en')->label(__('filament.seo_keywords').' (EN)'),
                 ]),
             ])->columnSpanFull(),
 
@@ -118,16 +121,16 @@ class PageResource extends Resource
                     Tabs::make(__('filament.translations'))->tabs([
                         Tab::make(__('filament.tab_spanish'))->schema([
                             Forms\Components\TextInput::make('name.es')
-                                ->label(__('filament.name') . ' (ES)')
+                                ->label(__('filament.name').' (ES)')
                                 ->required(),
                             Forms\Components\Textarea::make('description.es')
-                                ->label(__('filament.description') . ' (ES)'),
+                                ->label(__('filament.description').' (ES)'),
                         ]),
                         Tab::make(__('filament.tab_english'))->schema([
                             Forms\Components\TextInput::make('name.en')
-                                ->label(__('filament.name') . ' (EN)'),
+                                ->label(__('filament.name').' (EN)'),
                             Forms\Components\Textarea::make('description.en')
-                                ->label(__('filament.description') . ' (EN)'),
+                                ->label(__('filament.description').' (EN)'),
                         ]),
                     ])->columnSpanFull(),
                     Forms\Components\TextInput::make('slug')
@@ -139,7 +142,7 @@ class PageResource extends Resource
                 ])
                 ->createOptionUsing(function (array $data): int {
                     // Construir los campos traducibles como arrays para spatie/translatable
-                    $category = \App\Models\Category::create([
+                    $category = Category::create([
                         'name' => array_filter([
                             'es' => $data['name']['es'] ?? null,
                             'en' => $data['name']['en'] ?? null,
@@ -148,11 +151,12 @@ class PageResource extends Resource
                             'es' => $data['description']['es'] ?? null,
                             'en' => $data['description']['en'] ?? null,
                         ]),
-                        'slug' => $data['slug'] ?? \Illuminate\Support\Str::slug(
+                        'slug' => $data['slug'] ?? Str::slug(
                             $data['name']['es'] ?? $data['name']['en'] ?? ''
                         ),
                         'is_active' => $data['is_active'] ?? true,
                     ]);
+
                     return $category->id;
                 }),
 
@@ -171,9 +175,6 @@ class PageResource extends Resource
 
     /**
      * Define la tabla del recurso Página.
-     *
-     * @param  Table  $table
-     * @return Table
      */
     public static function table(Table $table): Table
     {
@@ -189,24 +190,24 @@ class PageResource extends Resource
                 ->options(collect(ContentStatus::cases())->mapWithKeys(fn ($s) => [$s->value => $s->label()])),
             Tables\Filters\TrashedFilter::make(),
         ])->actions([
-            \Filament\Actions\EditAction::make(),
-            \Filament\Actions\DeleteAction::make(),
-            \Filament\Actions\RestoreAction::make(),
-            \Filament\Actions\ForceDeleteAction::make(),
+            EditAction::make(),
+            DeleteAction::make(),
+            RestoreAction::make(),
+            ForceDeleteAction::make(),
         ]);
     }
 
     /**
      * Define las páginas del recurso Página.
      *
-     * @return array<string, \Filament\Resources\Pages\PageRegistration>
+     * @return array<string, PageRegistration>
      */
     public static function getPages(): array
     {
         return [
-            'index'  => PageResource\Pages\ListPages::route('/'),
+            'index' => PageResource\Pages\ListPages::route('/'),
             'create' => PageResource\Pages\CreatePage::route('/create'),
-            'edit'   => PageResource\Pages\EditPage::route('/{record}/edit'),
+            'edit' => PageResource\Pages\EditPage::route('/{record}/edit'),
         ];
     }
 }

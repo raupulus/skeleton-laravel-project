@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         // Guarda de seguridad: no ejecutar seeders en producción
         if (app()->isProduction()) {
             $this->command?->error('⛔ Los seeders no deben ejecutarse en producción (contienen credenciales por defecto).');
+
             return;
         }
 

@@ -27,8 +27,8 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'     => ['required', 'string', 'max:255'],
-            'email'    => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
@@ -41,13 +41,13 @@ class RegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required'      => 'El nombre es obligatorio.',
-            'name.max'           => 'El nombre no puede superar 255 caracteres.',
-            'email.required'     => 'El correo electrónico es obligatorio.',
-            'email.email'        => 'El correo electrónico no es válido.',
-            'email.unique'       => 'Este correo electrónico ya está registrado.',
-            'password.required'  => 'La contraseña es obligatoria.',
-            'password.min'       => 'La contraseña debe tener al menos 8 caracteres.',
+            'name.required' => 'El nombre es obligatorio.',
+            'name.max' => 'El nombre no puede superar 255 caracteres.',
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.email' => 'El correo electrónico no es válido.',
+            'email.unique' => 'Este correo electrónico ya está registrado.',
+            'password.required' => 'La contraseña es obligatoria.',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
             'password.confirmed' => 'La confirmación de contraseña no coincide.',
         ];
     }

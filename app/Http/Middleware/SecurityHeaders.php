@@ -16,8 +16,8 @@ class SecurityHeaders
      * Añade los headers de seguridad a la respuesta HTTP.
      *
      * @param  Request  $request  La petición HTTP entrante
-     * @param  Closure  $next     El siguiente middleware a ejecutar
-     * @return Response           La respuesta HTTP con headers de seguridad
+     * @param  Closure  $next  El siguiente middleware a ejecutar
+     * @return Response La respuesta HTTP con headers de seguridad
      */
     public function handle(Request $request, Closure $next): Response
     {

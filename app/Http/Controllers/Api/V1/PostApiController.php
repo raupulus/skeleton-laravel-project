@@ -20,8 +20,9 @@ class PostApiController extends Controller
      * Soporta paginación con parámetro per_page (máximo 50 por página).
      *
      * @unauthenticated
+     *
      * @param  Request  $request  La petición HTTP con parámetros de paginación
-     * @return JsonResponse       Listado paginado de posts con sus categorías
+     * @return JsonResponse Listado paginado de posts con sus categorías
      */
     public function index(Request $request): JsonResponse
     {
@@ -41,8 +42,9 @@ class PostApiController extends Controller
      * Devuelve 404 si el post no existe, no está publicado o no está activo.
      *
      * @unauthenticated
+     *
      * @param  string  $slug  El slug único del post
-     * @return JsonResponse   Datos completos del post con sus relaciones
+     * @return JsonResponse Datos completos del post con sus relaciones
      */
     public function show(string $slug): JsonResponse
     {

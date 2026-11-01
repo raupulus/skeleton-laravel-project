@@ -15,7 +15,7 @@ trait HasStatus
      * Scope para obtener únicamente contenido con estado 'published'.
      *
      * @param  Builder  $query  El constructor de consultas Eloquent
-     * @return Builder          Consulta filtrada por estado publicado
+     * @return Builder Consulta filtrada por estado publicado
      */
     public function scopePublished(Builder $query): Builder
     {
@@ -26,7 +26,7 @@ trait HasStatus
      * Scope para obtener únicamente contenido con estado 'draft' (borrador).
      *
      * @param  Builder  $query  El constructor de consultas Eloquent
-     * @return Builder          Consulta filtrada por estado borrador
+     * @return Builder Consulta filtrada por estado borrador
      */
     public function scopeDraft(Builder $query): Builder
     {
@@ -38,7 +38,7 @@ trait HasStatus
      * Usado en el frontend para mostrar solo contenido visible.
      *
      * @param  Builder  $query  El constructor de consultas Eloquent
-     * @return Builder          Consulta filtrada por publicado y activo
+     * @return Builder Consulta filtrada por publicado y activo
      */
     public function scopePublishedAndActive(Builder $query): Builder
     {
@@ -50,7 +50,7 @@ trait HasStatus
     /**
      * Comprueba si el contenido tiene estado publicado.
      *
-     * @return bool  True si el estado es Published
+     * @return bool True si el estado es Published
      */
     public function isPublished(): bool
     {
@@ -60,7 +60,7 @@ trait HasStatus
     /**
      * Comprueba si el contenido tiene estado borrador.
      *
-     * @return bool  True si el estado es Draft
+     * @return bool True si el estado es Draft
      */
     public function isDraft(): bool
     {

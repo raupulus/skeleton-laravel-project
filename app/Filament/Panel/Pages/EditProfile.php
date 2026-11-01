@@ -4,9 +4,9 @@ namespace App\Filament\Panel\Pages;
 
 use App\Filament\Components\ImageCropField;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Schema;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -15,14 +15,13 @@ use Illuminate\Support\Facades\Hash;
 class EditProfile extends Page
 {
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user';
+
     protected string $view = 'filament.panel.pages.edit-profile';
 
     public ?array $data = [];
 
     /**
      * Devuelve el label de navegación traducido.
-     *
-     * @return string
      */
     public static function getNavigationLabel(): string
     {
@@ -31,8 +30,6 @@ class EditProfile extends Page
 
     /**
      * Devuelve el título de la página traducido.
-     *
-     * @return string
      */
     public function getTitle(): string
     {
@@ -41,8 +38,6 @@ class EditProfile extends Page
 
     /**
      * Carga los datos del usuario autenticado al montar la página.
-     *
-     * @return void
      */
     public function mount(): void
     {
@@ -51,9 +46,6 @@ class EditProfile extends Page
 
     /**
      * Define el formulario del perfil de usuario.
-     *
-     * @param  Schema  $form
-     * @return Schema
      */
     public function form(Schema $form): Schema
     {
@@ -85,8 +77,6 @@ class EditProfile extends Page
 
     /**
      * Guarda los cambios del perfil del usuario autenticado.
-     *
-     * @return void
      */
     public function save(): void
     {
@@ -95,7 +85,7 @@ class EditProfile extends Page
         $user->name = $data['name'];
         // Asignar avatar siempre (permite eliminar o mantener el existente)
         $user->avatar = $data['avatar'] ?? $user->avatar;
-        if (!empty($data['password'])) {
+        if (! empty($data['password'])) {
             $user->password = Hash::make($data['password']);
         }
         $user->save();

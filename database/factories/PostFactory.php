@@ -16,7 +16,7 @@ class PostFactory extends Factory
         return [
             'slug' => fake()->unique()->slug(),
             'title' => ['es' => fake()->sentence(), 'en' => fake()->sentence()],
-            'content' => ['es' => '<p>' . fake()->paragraphs(3, true) . '</p>', 'en' => '<p>' . fake()->paragraphs(3, true) . '</p>'],
+            'content' => ['es' => '<p>'.fake()->paragraphs(3, true).'</p>', 'en' => '<p>'.fake()->paragraphs(3, true).'</p>'],
             'excerpt' => ['es' => fake()->sentence(), 'en' => fake()->sentence()],
             'status' => ContentStatus::Published,
             'is_active' => true,

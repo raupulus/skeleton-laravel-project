@@ -5,9 +5,9 @@ namespace App\Console\Commands;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\MarkdownConverter;
 
 /**
@@ -45,14 +45,12 @@ class GenerateManualPdf extends Command
 
     /**
      * Ejecutar el comando.
-     *
-     * @return int
      */
     public function handle(): int
     {
         $manualBasePath = base_path('docs/manual');
 
-        if (!File::isDirectory($manualBasePath)) {
+        if (! File::isDirectory($manualBasePath)) {
             $this->error('No se encontró el directorio docs/manual/');
 
             return Command::FAILURE;
@@ -92,6 +90,7 @@ class GenerateManualPdf extends Command
 
             if ($markdownFiles->isEmpty()) {
                 $this->warn("   ⚠ No se encontraron archivos .md en {$dirName}/");
+
                 continue;
             }
 
@@ -113,7 +112,7 @@ class GenerateManualPdf extends Command
             $fullHtml = $this->buildDocumentHtml($title, $sectionsHtml);
 
             // Generar el PDF
-            $pdfPath = $manualBasePath . '/' . $dirName . '.pdf';
+            $pdfPath = $manualBasePath.'/'.$dirName.'.pdf';
 
             $pdf = Pdf::loadHTML($fullHtml)
                 ->setPaper('a4', 'portrait')
@@ -136,7 +135,7 @@ class GenerateManualPdf extends Command
         $this->info("✅ {$count} PDF(s) generado(s) correctamente:");
 
         foreach ($generatedFiles as $file) {
-            $this->line("   📁 " . str_replace(base_path() . '/', '', $file));
+            $this->line('   📁 '.str_replace(base_path().'/', '', $file));
         }
 
         $this->info('');
@@ -146,8 +145,6 @@ class GenerateManualPdf extends Command
 
     /**
      * Crear el conversor de Markdown con extensiones.
-     *
-     * @return MarkdownConverter
      */
     private function createMarkdownConverter(): MarkdownConverter
     {
@@ -157,8 +154,8 @@ class GenerateManualPdf extends Command
         ];
 
         $environment = new Environment($config);
-        $environment->addExtension(new \League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension());
-        $environment->addExtension(new TableExtension());
+        $environment->addExtension(new CommonMarkCoreExtension);
+        $environment->addExtension(new TableExtension);
 
         return new MarkdownConverter($environment);
     }
@@ -166,9 +163,8 @@ class GenerateManualPdf extends Command
     /**
      * Construir el HTML completo del documento PDF.
      *
-     * @param string $title Título del documento
-     * @param array<int, string> $sectionsHtml Secciones HTML convertidas desde markdown
-     * @return string
+     * @param  string  $title  Título del documento
+     * @param  array<int, string>  $sectionsHtml  Secciones HTML convertidas desde markdown
      */
     private function buildDocumentHtml(string $title, array $sectionsHtml): string
     {

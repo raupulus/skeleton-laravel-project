@@ -22,7 +22,7 @@ class StatsOverviewWidget extends BaseWidget
     /**
      * Define las tarjetas de estadísticas a mostrar.
      *
-     * @return array<Stat>  Array de tarjetas con métricas
+     * @return array<Stat> Array de tarjetas con métricas
      */
     protected function getStats(): array
     {

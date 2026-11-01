@@ -27,8 +27,6 @@ class SitemapService
      * Genera el archivo sitemap.xml con todas las URLs públicas del sitio.
      * Incluye rutas estáticas, posts publicados y páginas publicadas.
      * Cada URL incluye alternates hreflang para todos los idiomas soportados.
-     *
-     * @return void
      */
     public function generate(): void
     {
@@ -51,15 +49,15 @@ class SitemapService
      * Añade alternates hreflang multi-idioma a una URL.
      * Genera URLs con el parámetro `?lang=XX` para cada idioma soportado.
      *
-     * @param  Url     $url      El objeto URL al que añadir los alternates
+     * @param  Url  $url  El objeto URL al que añadir los alternates
      * @param  string  $baseUrl  La URL base sin parámetros de idioma
-     * @return Url               El objeto URL con los alternates añadidos
+     * @return Url El objeto URL con los alternates añadidos
      */
     private function addHreflangAlternates(Url $url, string $baseUrl): Url
     {
         foreach ($this->locales as $locale) {
             $url->addAlternate(
-                url: $baseUrl . '?lang=' . $locale,
+                url: $baseUrl.'?lang='.$locale,
                 locale: $locale
             );
         }
@@ -72,7 +70,6 @@ class SitemapService
      * Incluye: home, blog, about, contact.
      *
      * @param  Sitemap  $sitemap  El objeto sitemap en construcción
-     * @return void
      */
     private function addStaticUrls(Sitemap $sitemap): void
     {
@@ -123,7 +120,6 @@ class SitemapService
      * Usa la fecha de actualización para lastmod y prioridad 0.7 por defecto.
      *
      * @param  Sitemap  $sitemap  El objeto sitemap en construcción
-     * @return void
      */
     private function addPosts(Sitemap $sitemap): void
     {
@@ -148,7 +144,6 @@ class SitemapService
      * Las páginas tienen prioridad 0.6 por ser contenido más estático.
      *
      * @param  Sitemap  $sitemap  El objeto sitemap en construcción
-     * @return void
      */
     private function addPages(Sitemap $sitemap): void
     {

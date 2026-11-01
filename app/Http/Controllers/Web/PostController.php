@@ -16,7 +16,7 @@ class PostController extends Controller
      * Muestra el listado paginado de posts publicados.
      *
      * @param  SeoService  $seo  Servicio para gestión de meta tags SEO
-     * @return View              Vista del listado de posts
+     * @return View Vista del listado de posts
      */
     public function index(SeoService $seo): View
     {
@@ -26,7 +26,7 @@ class PostController extends Controller
             ->orderByDesc('published_at')
             ->paginate(12);
 
-        $seo->setTitle(__('messages.blog') . ' - ' . setting('site_title'));
+        $seo->setTitle(__('messages.blog').' - '.setting('site_title'));
 
         return view('posts.index', compact('posts', 'seo'));
     }
@@ -35,9 +35,9 @@ class PostController extends Controller
      * Muestra el detalle de un post específico por su slug.
      * Devuelve 404 si el post no existe, no está publicado o no está activo.
      *
-     * @param  string      $slug  El slug del post
-     * @param  SeoService  $seo   Servicio para gestión de meta tags SEO
-     * @return View               Vista del detalle del post
+     * @param  string  $slug  El slug del post
+     * @param  SeoService  $seo  Servicio para gestión de meta tags SEO
+     * @return View Vista del detalle del post
      */
     public function show(string $slug, SeoService $seo): View
     {

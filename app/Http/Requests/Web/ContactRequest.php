@@ -26,8 +26,8 @@ class ContactRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'    => ['required', 'string', 'max:255'],
-            'email'   => ['required', 'string', 'email', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
             'subject' => ['required', 'string', 'max:255'],
             'message' => ['required', 'string', 'max:5000'],
             'privacy' => ['required', 'accepted'],
@@ -42,13 +42,13 @@ class ContactRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required'    => __('messages.validation_name_required'),
-            'name.max'         => __('messages.validation_name_max'),
-            'email.required'   => __('messages.validation_email_required'),
-            'email.email'      => __('messages.validation_email_email'),
+            'name.required' => __('messages.validation_name_required'),
+            'name.max' => __('messages.validation_name_max'),
+            'email.required' => __('messages.validation_email_required'),
+            'email.email' => __('messages.validation_email_email'),
             'subject.required' => __('messages.validation_subject_required'),
             'message.required' => __('messages.validation_message_required'),
-            'message.max'      => __('messages.validation_message_max'),
+            'message.max' => __('messages.validation_message_max'),
             'privacy.required' => __('messages.validation_privacy_required'),
             'privacy.accepted' => __('messages.validation_privacy_accepted'),
         ];

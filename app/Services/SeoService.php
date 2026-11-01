@@ -44,11 +44,12 @@ class SeoService
      * Establece el título de la página.
      *
      * @param  string  $title  El título a mostrar en la etiqueta <title> y meta OG
-     * @return static          Instancia actual para encadenamiento de métodos
+     * @return static Instancia actual para encadenamiento de métodos
      */
     public function setTitle(string $title): static
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -56,11 +57,12 @@ class SeoService
      * Establece la descripción meta de la página.
      *
      * @param  string  $description  La descripción para meta description y OG description
-     * @return static                Instancia actual para encadenamiento
+     * @return static Instancia actual para encadenamiento
      */
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -68,11 +70,12 @@ class SeoService
      * Establece las palabras clave meta de la página.
      *
      * @param  string  $keywords  Las keywords separadas por comas
-     * @return static             Instancia actual para encadenamiento
+     * @return static Instancia actual para encadenamiento
      */
     public function setKeywords(string $keywords): static
     {
         $this->keywords = $keywords;
+
         return $this;
     }
 
@@ -80,11 +83,12 @@ class SeoService
      * Establece la URL canónica de la página.
      *
      * @param  string  $url  La URL canónica completa
-     * @return static        Instancia actual para encadenamiento
+     * @return static Instancia actual para encadenamiento
      */
     public function setUrl(string $url): static
     {
         $this->url = $url;
+
         return $this;
     }
 
@@ -92,11 +96,12 @@ class SeoService
      * Establece el tipo de contenido Open Graph (website, article, product...).
      *
      * @param  string  $type  El tipo de contenido OG
-     * @return static         Instancia actual para encadenamiento
+     * @return static Instancia actual para encadenamiento
      */
     public function setType(string $type): static
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -104,11 +109,12 @@ class SeoService
      * Establece la imagen para Open Graph y Twitter Cards.
      *
      * @param  string  $image  URL completa de la imagen
-     * @return static          Instancia actual para encadenamiento
+     * @return static Instancia actual para encadenamiento
      */
     public function setImage(string $image): static
     {
         $this->image = $image;
+
         return $this;
     }
 
@@ -116,11 +122,12 @@ class SeoService
      * Establece la directiva meta robots para la página.
      *
      * @param  string  $robots  La directiva (ej: 'noindex,follow', 'noindex,nofollow')
-     * @return static           Instancia actual para encadenamiento
+     * @return static Instancia actual para encadenamiento
      */
     public function setRobots(string $robots): static
     {
         $this->robots = $robots;
+
         return $this;
     }
 
@@ -129,7 +136,7 @@ class SeoService
      * Útil para páginas de detalle de posts y páginas dinámicas.
      *
      * @param  object  $model  El modelo con el trait HasSeo
-     * @return static          Instancia actual para encadenamiento
+     * @return static Instancia actual para encadenamiento
      */
     public function fromModel(object $model): static
     {
@@ -143,27 +150,28 @@ class SeoService
             $this->keywords = $model->getSeoKeywordsText() ?: $this->keywords;
         }
         if (isset($model->image) && $model->image) {
-            $this->image = asset('storage/' . $model->image);
+            $this->image = asset('storage/'.$model->image);
         }
+
         return $this;
     }
 
     /**
      * Convierte los datos SEO a un array para pasar a la vista.
      *
-     * @return array<string, string|null>  Array con todos los datos SEO
+     * @return array<string, string|null> Array con todos los datos SEO
      */
     public function toArray(): array
     {
         return [
-            'title'       => $this->title ?: setting('site_title', config('app.name')),
+            'title' => $this->title ?: setting('site_title', config('app.name')),
             'description' => $this->description ?: setting('site_description', ''),
-            'keywords'    => $this->keywords ?: setting('default_meta_keywords', ''),
-            'url'         => $this->url ?: url()->current(),
-            'type'        => $this->type,
-            'image'       => $this->image ?: asset('images/redes-sociales/social-network-1200x1200.webp'),
-            'robots'      => $this->robots,
-            'author'      => $this->author,
+            'keywords' => $this->keywords ?: setting('default_meta_keywords', ''),
+            'url' => $this->url ?: url()->current(),
+            'type' => $this->type,
+            'image' => $this->image ?: asset('images/redes-sociales/social-network-1200x1200.webp'),
+            'robots' => $this->robots,
+            'author' => $this->author,
             'publishedAt' => $this->publishedAt,
         ];
     }

@@ -24,14 +24,14 @@ class SentEmailFactory extends Factory
     public function definition(): array
     {
         return [
-            'to'             => fake()->safeEmail(),
-            'from'           => config('mail.from.address', 'noreply@example.com'),
-            'subject'        => fake()->sentence(),
-            'body'           => fake()->paragraphs(3, true),
+            'to' => fake()->safeEmail(),
+            'from' => config('mail.from.address', 'noreply@example.com'),
+            'subject' => fake()->sentence(),
+            'body' => fake()->paragraphs(3, true),
             'mailable_class' => 'App\\Mail\\GenericMail',
-            'status'         => fake()->randomElement(EmailStatus::cases()),
-            'error_message'  => null,
-            'metadata'       => null,
+            'status' => fake()->randomElement(EmailStatus::cases()),
+            'error_message' => null,
+            'metadata' => null,
         ];
     }
 }

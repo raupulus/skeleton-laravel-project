@@ -26,13 +26,14 @@ class SettingService
      * Si el setting no existe, devuelve el valor por defecto.
      * Los settings se cargan desde caché para evitar consultas repetidas a la BD.
      *
-     * @param  string  $key      La clave del setting a buscar
-     * @param  mixed   $default  Valor a devolver si el setting no existe
-     * @return mixed             El valor del setting o el valor por defecto
+     * @param  string  $key  La clave del setting a buscar
+     * @param  mixed  $default  Valor a devolver si el setting no existe
+     * @return mixed El valor del setting o el valor por defecto
      */
     public function get(string $key, mixed $default = null): mixed
     {
         $settings = $this->all();
+
         return $settings[$key] ?? $default;
     }
 
@@ -40,7 +41,7 @@ class SettingService
      * Devuelve todos los settings en formato array asociativo clave => valor.
      * Los datos se cargan desde la caché o desde la BD si la caché no existe.
      *
-     * @return array<string, string|null>  Array con todos los settings
+     * @return array<string, string|null> Array con todos los settings
      */
     public function all(): array
     {
@@ -52,8 +53,6 @@ class SettingService
     /**
      * Limpia la caché de settings, forzando que se recarguen desde la BD.
      * Se llama automáticamente desde los Resources de Filament al guardar cambios.
-     *
-     * @return void
      */
     public function clearCache(): void
     {

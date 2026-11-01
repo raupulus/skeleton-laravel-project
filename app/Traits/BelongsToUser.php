@@ -15,8 +15,6 @@ trait BelongsToUser
 {
     /**
      * Hook de arranque del trait, registra el listener del evento 'creating'.
-     *
-     * @return void
      */
     public static function bootBelongsToUser(): void
     {
@@ -42,9 +40,9 @@ trait BelongsToUser
     /**
      * Scope para filtrar registros creados por un usuario específico.
      *
-     * @param  Builder  $query   El constructor de consultas Eloquent
-     * @param  int      $userId  El ID del usuario propietario
-     * @return Builder           Consulta filtrada por usuario
+     * @param  Builder  $query  El constructor de consultas Eloquent
+     * @param  int  $userId  El ID del usuario propietario
+     * @return Builder Consulta filtrada por usuario
      */
     public function scopeByUser(Builder $query, int $userId): Builder
     {

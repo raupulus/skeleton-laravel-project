@@ -26,8 +26,8 @@ class ResetPasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'token'    => ['required', 'string'],
-            'email'    => ['required', 'string', 'email'],
+            'token' => ['required', 'string'],
+            'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
@@ -40,11 +40,11 @@ class ResetPasswordRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'token.required'     => 'El token de restablecimiento es obligatorio.',
-            'email.required'     => 'El correo electrónico es obligatorio.',
-            'email.email'        => 'El correo electrónico no es válido.',
-            'password.required'  => 'La contraseña es obligatoria.',
-            'password.min'       => 'La contraseña debe tener al menos 8 caracteres.',
+            'token.required' => 'El token de restablecimiento es obligatorio.',
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.email' => 'El correo electrónico no es válido.',
+            'password.required' => 'La contraseña es obligatoria.',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
             'password.confirmed' => 'La confirmación de contraseña no coincide.',
         ];
     }

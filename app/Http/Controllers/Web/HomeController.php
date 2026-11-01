@@ -20,7 +20,7 @@ class HomeController extends Controller
      * Muestra la página principal del sitio.
      *
      * @param  SeoService  $seo  Servicio para gestión de meta tags SEO
-     * @return View              Vista de la página de inicio
+     * @return View Vista de la página de inicio
      */
     public function index(SeoService $seo): View
     {

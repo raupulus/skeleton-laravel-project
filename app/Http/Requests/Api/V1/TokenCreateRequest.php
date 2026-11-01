@@ -39,7 +39,7 @@ class TokenCreateRequest extends FormRequest
     {
         return [
             'name.required' => 'El nombre del token es obligatorio.',
-            'name.max'      => 'El nombre del token no puede superar 255 caracteres.',
+            'name.max' => 'El nombre del token no puede superar 255 caracteres.',
         ];
     }
 }

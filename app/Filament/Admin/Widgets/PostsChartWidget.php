@@ -17,8 +17,6 @@ class PostsChartWidget extends ChartWidget
 
     /**
      * Devuelve el heading traducido del gráfico.
-     *
-     * @return string|null
      */
     public function getHeading(): ?string
     {
@@ -28,7 +26,7 @@ class PostsChartWidget extends ChartWidget
     /**
      * Devuelve los datos para el gráfico de barras.
      *
-     * @return array<string, mixed>  Datasets y labels del gráfico
+     * @return array<string, mixed> Datasets y labels del gráfico
      */
     protected function getData(): array
     {
@@ -62,7 +60,7 @@ class PostsChartWidget extends ChartWidget
     /**
      * Tipo de gráfico a renderizar.
      *
-     * @return string  Tipo de gráfico (bar, line, pie, etc.)
+     * @return string Tipo de gráfico (bar, line, pie, etc.)
      */
     protected function getType(): string
     {

@@ -19,14 +19,14 @@ class WelcomeWidget extends Widget
     /**
      * Datos que se pasan a la vista del widget.
      *
-     * @return array<string, mixed>  Nombre del usuario y conteo de tokens
+     * @return array<string, mixed> Nombre del usuario y conteo de tokens
      */
     protected function getViewData(): array
     {
         $user = auth()->user();
 
         return [
-            'userName'   => $user->name,
+            'userName' => $user->name,
             'tokenCount' => $user->tokens()->count(),
         ];
     }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasSlug;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -13,13 +14,13 @@ use Spatie\Translatable\HasTranslations;
  * Modelo de categoría, compartida entre posts y páginas.
  * Los campos name y description son traducibles (es/en) mediante spatie/laravel-translatable.
  *
- * @property int         $id
- * @property string      $slug      Slug único para URLs
- * @property array       $name      Nombre traducible (es, en)
- * @property array       $description Descripción traducible (es, en)
- * @property string|null $image     Ruta de la imagen de la categoría
- * @property bool        $is_active Si la categoría está activa
- * @property int         $order     Orden de visualización
+ * @property int $id
+ * @property string $slug Slug único para URLs
+ * @property array $name Nombre traducible (es, en)
+ * @property array $description Descripción traducible (es, en)
+ * @property string|null $image Ruta de la imagen de la categoría
+ * @property bool $is_active Si la categoría está activa
+ * @property int $order Orden de visualización
  */
 class Category extends Model
 {
@@ -40,15 +41,13 @@ class Category extends Model
     {
         return [
             'is_active' => 'boolean',
-            'order'     => 'integer',
+            'order' => 'integer',
         ];
     }
 
     /**
      * Define el campo fuente para generar el slug.
      * Las categorías usan 'name' en lugar de 'title'.
-     *
-     * @return mixed
      */
     protected function getSlugSource(): mixed
     {
@@ -62,8 +61,8 @@ class Category extends Model
     /**
      * Scope para filtrar solo categorías activas.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  Builder  $query
+     * @return Builder
      */
     public function scopeActive($query)
     {
@@ -73,8 +72,8 @@ class Category extends Model
     /**
      * Scope para ordenar categorías por el campo order ascendente.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  Builder  $query
+     * @return Builder
      */
     public function scopeOrdered($query)
     {

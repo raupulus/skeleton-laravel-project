@@ -39,8 +39,8 @@ class ForgotPasswordRequest extends FormRequest
     {
         return [
             'email.required' => 'El correo electrónico es obligatorio.',
-            'email.email'    => 'El correo electrónico no es válido.',
-            'email.exists'   => 'No existe ninguna cuenta con ese correo electrónico.',
+            'email.email' => 'El correo electrónico no es válido.',
+            'email.exists' => 'No existe ninguna cuenta con ese correo electrónico.',
         ];
     }
 }

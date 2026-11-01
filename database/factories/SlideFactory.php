@@ -23,14 +23,14 @@ class SlideFactory extends Factory
     public function definition(): array
     {
         return [
-            'title'          => ['es' => fake()->sentence(3), 'en' => fake()->sentence(3)],
-            'content'        => ['es' => fake()->paragraph(), 'en' => fake()->paragraph()],
-            'image'          => 'images/default/default_800x600.png',
+            'title' => ['es' => fake()->sentence(3), 'en' => fake()->sentence(3)],
+            'content' => ['es' => fake()->paragraph(), 'en' => fake()->paragraph()],
+            'image' => 'images/default/default_800x600.png',
             'image_vertical' => null,
-            'url'            => fake()->optional()->url(),
-            'zone'           => fake()->randomElement(['home', 'about', 'services']),
-            'order'          => fake()->numberBetween(0, 10),
-            'is_active'      => true,
+            'url' => fake()->optional()->url(),
+            'zone' => fake()->randomElement(['home', 'about', 'services']),
+            'order' => fake()->numberBetween(0, 10),
+            'is_active' => true,
         ];
     }
 }

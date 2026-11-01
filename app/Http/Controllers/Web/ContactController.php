@@ -20,11 +20,12 @@ class ContactController extends Controller
      * Muestra el formulario de contacto.
      *
      * @param  SeoService  $seo  Servicio para gestión de meta tags SEO
-     * @return View              Vista del formulario de contacto
+     * @return View Vista del formulario de contacto
      */
     public function show(SeoService $seo): View
     {
-        $seo->setTitle(__('messages.contact') . ' - ' . setting('site_title'));
+        $seo->setTitle(__('messages.contact').' - '.setting('site_title'));
+
         return view('contact', compact('seo'));
     }
 
@@ -32,9 +33,9 @@ class ContactController extends Controller
      * Procesa el envío del formulario de contacto.
      * Valida los datos, envía el email (registrándolo en sent_emails) y redirige con confirmación.
      *
-     * @param  ContactRequest  $request       La petición validada del formulario
-     * @param  EmailService    $emailService  Servicio de envío de emails
-     * @return RedirectResponse              Redirección con mensaje de éxito
+     * @param  ContactRequest  $request  La petición validada del formulario
+     * @param  EmailService  $emailService  Servicio de envío de emails
+     * @return RedirectResponse Redirección con mensaje de éxito
      */
     public function send(ContactRequest $request, EmailService $emailService): RedirectResponse
     {
@@ -44,7 +45,7 @@ class ContactController extends Controller
         $emailService->send(
             new ContactMail($data),
             setting('contact_email', config('mail.from.address')),
-            'Contacto: ' . $data['subject']
+            'Contacto: '.$data['subject']
         );
 
         return redirect()->route('contact')->with('success', __('messages.contact_success'));

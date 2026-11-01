@@ -20,8 +20,8 @@ class ContactMailTest extends TestCase
     public function test_contact_email_can_be_rendered(): void
     {
         $data = [
-            'name'    => 'Juan García',
-            'email'   => 'juan@example.com',
+            'name' => 'Juan García',
+            'email' => 'juan@example.com',
             'subject' => 'Consulta sobre precios',
             'message' => 'Me gustaría saber más sobre vuestros servicios.',
         ];

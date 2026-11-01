@@ -26,12 +26,12 @@ class CategoryFactory extends Factory
         $nameEs = fake()->unique()->words(2, true);
 
         return [
-            'slug'        => Str::slug($nameEs),
-            'name'        => ['es' => $nameEs, 'en' => fake()->unique()->words(2, true)],
+            'slug' => Str::slug($nameEs),
+            'name' => ['es' => $nameEs, 'en' => fake()->unique()->words(2, true)],
             'description' => ['es' => fake()->sentence(), 'en' => fake()->sentence()],
-            'image'       => null,
-            'is_active'   => true,
-            'order'       => fake()->numberBetween(0, 10),
+            'image' => null,
+            'is_active' => true,
+            'order' => fake()->numberBetween(0, 10),
         ];
     }
 }

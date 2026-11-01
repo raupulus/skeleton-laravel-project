@@ -17,7 +17,7 @@ class WelcomeMail extends Mailable
 
     public function envelope(): Envelope
     {
-        return new Envelope(subject: 'Bienvenido a ' . setting('site_title', config('app.name')));
+        return new Envelope(subject: 'Bienvenido a '.setting('site_title', config('app.name')));
     }
 
     public function content(): Content

@@ -1,12 +1,19 @@
 <?php
+
 namespace App\Filament\Admin\Resources;
+
 use App\Filament\Components\ImageCropField;
 use App\Models\Slide;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\RestoreAction;
 use Filament\Forms;
-use Filament\Schemas\Schema;
+use Filament\Resources\Pages\PageRegistration;
+use Filament\Resources\Resource;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -16,13 +23,13 @@ use Filament\Tables\Table;
 class SlideResource extends Resource
 {
     protected static ?string $model = Slide::class;
+
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-photo';
+
     protected static ?int $navigationSort = 5;
 
     /**
      * Devuelve el label del modelo traducido.
-     *
-     * @return string
      */
     public static function getModelLabel(): string
     {
@@ -31,8 +38,6 @@ class SlideResource extends Resource
 
     /**
      * Devuelve el label plural del modelo traducido.
-     *
-     * @return string
      */
     public static function getPluralModelLabel(): string
     {
@@ -41,18 +46,12 @@ class SlideResource extends Resource
 
     /**
      * Devuelve el grupo de navegación traducido.
-     *
-     * @return string|null
      */
     public static function getNavigationGroup(): ?string
     {
         return __('filament.nav_media');
     }
 
-    /**
-     * @param  Schema  $form
-     * @return Schema
-     */
     public static function form(Schema $form): Schema
     {
         return $form->schema([
@@ -65,12 +64,12 @@ class SlideResource extends Resource
             // 3. Traducciones con labels correctos
             Tabs::make(__('filament.translations'))->tabs([
                 Tab::make(__('filament.tab_spanish'))->schema([
-                    Forms\Components\TextInput::make('title.es')->label(__('filament.title') . ' (ES)'),
-                    Forms\Components\Textarea::make('content.es')->label(__('filament.content') . ' (ES)'),
+                    Forms\Components\TextInput::make('title.es')->label(__('filament.title').' (ES)'),
+                    Forms\Components\Textarea::make('content.es')->label(__('filament.content').' (ES)'),
                 ]),
                 Tab::make(__('filament.tab_english'))->schema([
-                    Forms\Components\TextInput::make('title.en')->label(__('filament.title') . ' (EN)'),
-                    Forms\Components\Textarea::make('content.en')->label(__('filament.content') . ' (EN)'),
+                    Forms\Components\TextInput::make('title.en')->label(__('filament.title').' (EN)'),
+                    Forms\Components\Textarea::make('content.en')->label(__('filament.content').' (EN)'),
                 ]),
             ])->columnSpanFull(),
 
@@ -91,10 +90,6 @@ class SlideResource extends Resource
         ]);
     }
 
-    /**
-     * @param  Table  $table
-     * @return Table
-     */
     public static function table(Table $table): Table
     {
         return $table->columns([
@@ -104,30 +99,30 @@ class SlideResource extends Resource
             Tables\Columns\TextColumn::make('order')->label(__('filament.order'))->sortable(),
             Tables\Columns\IconColumn::make('is_active')->label(__('filament.is_active'))->boolean(),
         ])
-        ->filters([
-            Tables\Filters\SelectFilter::make('zone')
-                ->label(__('filament.zone'))
-                ->options(fn () => Slide::query()->select('zone')->distinct()->pluck('zone', 'zone')->toArray()),
-            Tables\Filters\TernaryFilter::make('is_active')
-                ->label(__('filament.is_active')),
-            Tables\Filters\TrashedFilter::make(),
-        ])
-        ->actions([
-            \Filament\Actions\EditAction::make(),
-            \Filament\Actions\DeleteAction::make(),
-            \Filament\Actions\RestoreAction::make(),
-            \Filament\Actions\ForceDeleteAction::make(),
-        ])
-        ->defaultSort('zone');
+            ->filters([
+                Tables\Filters\SelectFilter::make('zone')
+                    ->label(__('filament.zone'))
+                    ->options(fn () => Slide::query()->select('zone')->distinct()->pluck('zone', 'zone')->toArray()),
+                Tables\Filters\TernaryFilter::make('is_active')
+                    ->label(__('filament.is_active')),
+                Tables\Filters\TrashedFilter::make(),
+            ])
+            ->actions([
+                EditAction::make(),
+                DeleteAction::make(),
+                RestoreAction::make(),
+                ForceDeleteAction::make(),
+            ])
+            ->defaultSort('zone');
     }
 
-    /** @return array<string, \Filament\Resources\Pages\PageRegistration> */
+    /** @return array<string, PageRegistration> */
     public static function getPages(): array
     {
         return [
-            'index'  => SlideResource\Pages\ListSlides::route('/'),
+            'index' => SlideResource\Pages\ListSlides::route('/'),
             'create' => SlideResource\Pages\CreateSlide::route('/create'),
-            'edit'   => SlideResource\Pages\EditSlide::route('/{record}/edit'),
+            'edit' => SlideResource\Pages\EditSlide::route('/{record}/edit'),
         ];
     }
 }

@@ -17,9 +17,9 @@ class PageController extends Controller
      * Muestra el detalle de una página dinámica por su slug.
      * Devuelve 404 si la página no existe, no está publicada o no está activa.
      *
-     * @param  string      $slug  El slug de la página
-     * @param  SeoService  $seo   Servicio para gestión de meta tags SEO
-     * @return View               Vista del detalle de la página
+     * @param  string  $slug  El slug de la página
+     * @param  SeoService  $seo  Servicio para gestión de meta tags SEO
+     * @return View Vista del detalle de la página
      */
     public function show(string $slug, SeoService $seo): View
     {

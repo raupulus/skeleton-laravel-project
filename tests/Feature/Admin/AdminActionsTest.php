@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Models\User;
 use App\Enums\Role;
-use Tests\TestCase;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 /**
  * Tests para las páginas de acciones del panel admin (Sitemap, Caché, Logs).

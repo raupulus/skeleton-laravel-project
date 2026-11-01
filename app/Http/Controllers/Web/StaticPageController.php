@@ -19,7 +19,7 @@ class StaticPageController extends Controller
      * Las secciones se obtienen desde la base de datos filtradas por zone='about'.
      *
      * @param  SeoService  $seo  Servicio para gestión de meta tags SEO
-     * @return View              Vista de la página about
+     * @return View Vista de la página about
      */
     public function about(SeoService $seo): View
     {
@@ -27,7 +27,8 @@ class StaticPageController extends Controller
         $sectionIds = Cache::remember('sections_about_ids', 3600, fn () => Section::forZone('about')->pluck('id')->all());
         $sections = Section::whereIn('id', $sectionIds)->orderBy('order')->get();
 
-        $seo->setTitle(__('messages.about') . ' - ' . setting('site_title'));
+        $seo->setTitle(__('messages.about').' - '.setting('site_title'));
+
         return view('about', compact('sections', 'seo'));
     }
 
@@ -36,14 +37,14 @@ class StaticPageController extends Controller
      * El contenido se obtiene desde secciones de la zona 'privacy'.
      *
      * @param  SeoService  $seo  Servicio para gestión de meta tags SEO
-     * @return View              Vista de la página de privacidad
+     * @return View Vista de la página de privacidad
      */
     public function privacy(SeoService $seo): View
     {
         $sectionIds = Cache::remember('sections_privacy_ids', 3600, fn () => Section::forZone('privacy')->pluck('id')->all());
         $sections = Section::whereIn('id', $sectionIds)->orderBy('order')->get();
 
-        $seo->setTitle(__('messages.privacy') . ' - ' . setting('site_title'))
+        $seo->setTitle(__('messages.privacy').' - '.setting('site_title'))
             ->setRobots('noindex,follow');
 
         return view('privacy', compact('sections', 'seo'));
@@ -54,14 +55,14 @@ class StaticPageController extends Controller
      * El contenido se obtiene desde secciones de la zona 'cookies'.
      *
      * @param  SeoService  $seo  Servicio para gestión de meta tags SEO
-     * @return View              Vista de la página de cookies
+     * @return View Vista de la página de cookies
      */
     public function cookies(SeoService $seo): View
     {
         $sectionIds = Cache::remember('sections_cookies_ids', 3600, fn () => Section::forZone('cookies')->pluck('id')->all());
         $sections = Section::whereIn('id', $sectionIds)->orderBy('order')->get();
 
-        $seo->setTitle(__('messages.cookies') . ' - ' . setting('site_title'))
+        $seo->setTitle(__('messages.cookies').' - '.setting('site_title'))
             ->setRobots('noindex,follow');
 
         return view('cookies', compact('sections', 'seo'));

@@ -26,13 +26,13 @@ class SectionFactory extends Factory
         $titleEs = fake()->unique()->words(3, true);
 
         return [
-            'slug'        => Str::slug($titleEs),
-            'zone'        => fake()->randomElement(['home', 'about', 'contact']),
-            'title'       => ['es' => $titleEs, 'en' => fake()->unique()->words(3, true)],
+            'slug' => Str::slug($titleEs),
+            'zone' => fake()->randomElement(['home', 'about', 'contact']),
+            'title' => ['es' => $titleEs, 'en' => fake()->unique()->words(3, true)],
             'description' => ['es' => fake()->sentence(), 'en' => fake()->sentence()],
-            'content'     => ['es' => fake()->paragraphs(2, true), 'en' => fake()->paragraphs(2, true)],
-            'image'       => null,
-            'order'       => fake()->numberBetween(0, 10),
+            'content' => ['es' => fake()->paragraphs(2, true), 'en' => fake()->paragraphs(2, true)],
+            'image' => null,
+            'order' => fake()->numberBetween(0, 10),
         ];
     }
 }

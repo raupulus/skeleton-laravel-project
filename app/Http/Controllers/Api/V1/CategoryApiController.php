@@ -19,11 +19,13 @@ class CategoryApiController extends Controller
      * Las categorías no se paginan ya que su número suele ser reducido.
      *
      * @unauthenticated
-     * @return JsonResponse  Listado de categorías activas
+     *
+     * @return JsonResponse Listado de categorías activas
      */
     public function index(): JsonResponse
     {
         $categories = Category::active()->ordered()->get();
+
         return response()->json($categories);
     }
 
@@ -32,12 +34,14 @@ class CategoryApiController extends Controller
      * Devuelve 404 si la categoría no existe o no está activa.
      *
      * @unauthenticated
+     *
      * @param  string  $slug  El slug único de la categoría
-     * @return JsonResponse   Datos de la categoría
+     * @return JsonResponse Datos de la categoría
      */
     public function show(string $slug): JsonResponse
     {
         $category = Category::where('slug', $slug)->active()->firstOrFail();
+
         return response()->json($category);
     }
 }

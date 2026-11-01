@@ -1,4 +1,5 @@
 <?php
+
 return [
     'reset' => 'Tu contraseña ha sido restablecida.',
     'sent' => 'Te hemos enviado un enlace para restablecer tu contraseña.',

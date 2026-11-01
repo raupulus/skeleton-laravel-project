@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\Role;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,13 +18,13 @@ use Laravel\Sanctum\HasApiTokens;
  * Soporta roles (superadmin, admin, user), autenticación API con Sanctum
  * y acceso a los paneles Filament según el rol asignado.
  *
- * @property int         $id
- * @property string      $name
- * @property string      $email
- * @property string      $password
- * @property Role        $role
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property Role $role
  * @property string|null $avatar
- * @property bool        $is_active
+ * @property bool $is_active
  */
 class User extends Authenticatable implements FilamentUser
 {
@@ -49,9 +50,9 @@ class User extends Authenticatable implements FilamentUser
     {
         return [
             'email_verified_at' => 'datetime',
-            'password'          => 'hashed',
-            'role'              => Role::class,
-            'is_active'         => 'boolean',
+            'password' => 'hashed',
+            'role' => Role::class,
+            'is_active' => 'boolean',
         ];
     }
 
@@ -60,13 +61,14 @@ class User extends Authenticatable implements FilamentUser
      * El panel admin requiere rol admin o superadmin; el panel usuario requiere estar activo.
      *
      * @param  Panel  $panel  El panel Filament al que se intenta acceder
-     * @return bool           True si el usuario tiene acceso al panel
+     * @return bool True si el usuario tiene acceso al panel
      */
     public function canAccessPanel(Panel $panel): bool
     {
         if ($panel->getId() === 'admin') {
             return $this->role->isAdmin() && $this->is_active;
         }
+
         // El panel de usuario (/panel) es accesible por cualquier usuario activo
         return $this->is_active;
     }
@@ -78,8 +80,8 @@ class User extends Authenticatable implements FilamentUser
     /**
      * Scope para filtrar solo usuarios activos.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  Builder  $query
+     * @return Builder
      */
     public function scopeActive($query)
     {
@@ -89,9 +91,9 @@ class User extends Authenticatable implements FilamentUser
     /**
      * Scope para filtrar usuarios por rol específico.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  Role                                   $role   El rol a filtrar
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  Builder  $query
+     * @param  Role  $role  El rol a filtrar
+     * @return Builder
      */
     public function scopeByRole($query, Role $role)
     {
@@ -101,8 +103,8 @@ class User extends Authenticatable implements FilamentUser
     /**
      * Scope para obtener solo usuarios con rol admin o superadmin.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  Builder  $query
+     * @return Builder
      */
     public function scopeAdmins($query)
     {
@@ -139,8 +141,6 @@ class User extends Authenticatable implements FilamentUser
 
     /**
      * Comprueba si el usuario tiene el rol de super administrador.
-     *
-     * @return bool
      */
     public function isSuperAdmin(): bool
     {
@@ -149,8 +149,6 @@ class User extends Authenticatable implements FilamentUser
 
     /**
      * Comprueba si el usuario tiene rol de administrador (admin o superadmin).
-     *
-     * @return bool
      */
     public function isAdmin(): bool
     {

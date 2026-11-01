@@ -30,16 +30,17 @@ class AuthController extends Controller
      * Envía un email de bienvenida tras el registro exitoso.
      *
      * @unauthenticated
-     * @param  RegisterRequest  $request       Datos validados del registro
-     * @param  EmailService     $emailService  Servicio para envío de emails
-     * @return JsonResponse                    Usuario creado y token de acceso
+     *
+     * @param  RegisterRequest  $request  Datos validados del registro
+     * @param  EmailService  $emailService  Servicio para envío de emails
+     * @return JsonResponse Usuario creado y token de acceso
      */
     public function register(RegisterRequest $request, EmailService $emailService): JsonResponse
     {
         // Crear el usuario — el cast 'hashed' en el modelo User se encarga de hashear la contraseña
         $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
+            'name' => $request->name,
+            'email' => $request->email,
             'password' => $request->password,
         ]);
 
@@ -51,8 +52,8 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Usuario registrado correctamente.',
-            'user'    => new UserResource($user),
-            'token'   => $token,
+            'user' => new UserResource($user),
+            'token' => $token,
         ], 201);
     }
 
@@ -61,8 +62,9 @@ class AuthController extends Controller
      * Verifica también que el usuario esté activo en la plataforma.
      *
      * @unauthenticated
+     *
      * @param  LoginRequest  $request  Credenciales de acceso validadas
-     * @return JsonResponse            Token de acceso o error de autenticación
+     * @return JsonResponse Token de acceso o error de autenticación
      *
      * @throws ValidationException Si las credenciales son incorrectas
      */
@@ -72,21 +74,21 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         // Verificar existencia del usuario y validez de la contraseña
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'email' => [__('auth.failed')],
             ]);
         }
 
         // Verificar que el usuario está activo en la plataforma
-        if (!$user->is_active) {
+        if (! $user->is_active) {
             return response()->json(['message' => 'Tu cuenta está desactivada. Contacta con el administrador.'], 403);
         }
 
         return response()->json([
             'message' => 'Inicio de sesión exitoso.',
-            'user'    => new UserResource($user),
-            'token'   => $user->createToken('api-token')->plainTextToken,
+            'user' => new UserResource($user),
+            'token' => $user->createToken('api-token')->plainTextToken,
         ]);
     }
 
@@ -94,8 +96,9 @@ class AuthController extends Controller
      * Revoca el token de acceso actual del usuario autenticado.
      *
      * @authenticated
+     *
      * @param  Request  $request  La petición HTTP con el usuario autenticado
-     * @return JsonResponse       Confirmación de cierre de sesión
+     * @return JsonResponse Confirmación de cierre de sesión
      */
     public function logout(Request $request): JsonResponse
     {
@@ -109,8 +112,9 @@ class AuthController extends Controller
      * Devuelve los datos del usuario autenticado actualmente.
      *
      * @authenticated
+     *
      * @param  Request  $request  La petición HTTP con el usuario autenticado
-     * @return JsonResponse       Datos del usuario autenticado
+     * @return JsonResponse Datos del usuario autenticado
      */
     public function user(Request $request): JsonResponse
     {
@@ -121,8 +125,9 @@ class AuthController extends Controller
      * Envía un enlace de restablecimiento de contraseña al email especificado.
      *
      * @unauthenticated
+     *
      * @param  ForgotPasswordRequest  $request  Email validado del usuario
-     * @return JsonResponse                     Confirmación de envío o error
+     * @return JsonResponse Confirmación de envío o error
      *
      * @throws ValidationException Si el email no existe o hay un error al enviar
      */
@@ -142,8 +147,9 @@ class AuthController extends Controller
      * Restablece la contraseña del usuario usando el token de restablecimiento.
      *
      * @unauthenticated
+     *
      * @param  ResetPasswordRequest  $request  Datos validados del restablecimiento
-     * @return JsonResponse                    Confirmación del restablecimiento o error
+     * @return JsonResponse Confirmación del restablecimiento o error
      *
      * @throws ValidationException Si el token es inválido o ha expirado
      */

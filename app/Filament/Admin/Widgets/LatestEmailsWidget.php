@@ -21,8 +21,6 @@ class LatestEmailsWidget extends BaseWidget
 
     /**
      * Devuelve el heading traducido del widget.
-     *
-     * @return string|null
      */
     public function getHeading(): ?string
     {
@@ -33,7 +31,7 @@ class LatestEmailsWidget extends BaseWidget
      * Configura la tabla del widget con los últimos emails.
      *
      * @param  Table  $table  Instancia de la tabla de Filament
-     * @return Table          Tabla configurada
+     * @return Table Tabla configurada
      */
     public function table(Table $table): Table
     {

@@ -30,10 +30,10 @@ class EmailServiceTest extends TestCase
         $sentEmail = $service->send(new WelcomeMail($user), $user->email, 'Bienvenido');
 
         $this->assertDatabaseHas('sent_emails', [
-            'to'             => $user->email,
-            'subject'        => 'Bienvenido',
+            'to' => $user->email,
+            'subject' => 'Bienvenido',
             'mailable_class' => WelcomeMail::class,
-            'status'         => 'sent',
+            'status' => 'sent',
         ]);
         $this->assertInstanceOf(SentEmail::class, $sentEmail);
     }
@@ -48,7 +48,8 @@ class EmailServiceTest extends TestCase
         config(['mail.mailer' => 'array']);
 
         // Crear un mailable que lanze excepción al renderizar
-        $failingMailable = new class(User::factory()->make()) extends \App\Mail\WelcomeMail {
+        $failingMailable = new class(User::factory()->make()) extends WelcomeMail
+        {
             public function render(): string
             {
                 throw new \Exception('Error de renderizado forzado para test');

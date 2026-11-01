@@ -19,8 +19,9 @@ class PageApiController extends Controller
      * Devuelve un listado paginado de páginas publicadas y activas.
      *
      * @unauthenticated
+     *
      * @param  Request  $request  La petición HTTP con parámetros de paginación
-     * @return JsonResponse       Listado paginado de páginas con sus categorías
+     * @return JsonResponse Listado paginado de páginas con sus categorías
      */
     public function index(Request $request): JsonResponse
     {
@@ -39,8 +40,9 @@ class PageApiController extends Controller
      * Devuelve 404 si la página no existe, no está publicada o no está activa.
      *
      * @unauthenticated
+     *
      * @param  string  $slug  El slug único de la página
-     * @return JsonResponse   Datos completos de la página con sus relaciones
+     * @return JsonResponse Datos completos de la página con sus relaciones
      */
     public function show(string $slug): JsonResponse
     {
