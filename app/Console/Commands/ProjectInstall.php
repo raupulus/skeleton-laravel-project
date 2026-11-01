@@ -5,38 +5,68 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
+/**
+ * Comando Artisan para instalar y configurar inicialmente el proyecto
+ * (entorno, dependencias, clave, enlace de storage, migraciones, seeders y assets).
+ */
 class ProjectInstall extends Command
 {
+    /**
+     * La firma del comando en consola.
+     *
+     * @var string
+     */
     protected $signature = 'project:install {--force : Ejecutar sin confirmación}';
 
+    /**
+     * La descripción del comando.
+     *
+     * @var string
+     */
     protected $description = 'Instala y configura el proyecto';
 
+    /**
+     * Ejecuta la instalación guiada o desatendida del proyecto.
+     */
     public function handle(): int
     {
         $this->info('=== Instalación del proyecto ===');
+
         if (! file_exists(base_path('.env'))) {
             copy(base_path('.env.example'), base_path('.env'));
             $this->info('✓ .env creado');
         }
+
         if ($this->option('force') || $this->confirm('¿Ejecutar composer install?', true)) {
             passthru('composer install');
         }
-        if ($this->option('force') || $this->confirm('¿Ejecutar npm install?', true)) {
-            passthru('npm install');
+
+        if ($this->option('force') || $this->confirm('¿Ejecutar pnpm install?', true)) {
+            passthru('pnpm install');
         }
+
         if ($this->option('force') || $this->confirm('¿Generar key?', true)) {
             $this->call('key:generate');
         }
+
         if (! file_exists(public_path('storage'))) {
             $this->call('storage:link');
         }
+
         if ($this->option('force') || $this->confirm('¿Ejecutar migraciones?', true)) {
             $this->call('migrate', ['--force' => $this->option('force')]);
         }
+
+        $this->copySeedImages();
+
         if ($this->option('force') || $this->confirm('¿Ejecutar seeders?', true)) {
             $this->call('db:seed', ['--force' => $this->option('force')]);
         }
-        $this->copySeedImages();
+
+        if ($this->option('force') || $this->confirm('¿Compilar assets frontend (pnpm run build)?', true)) {
+            passthru('pnpm run build');
+        }
+
         $this->info('=== Instalación completada ===');
 
         return Command::SUCCESS;
@@ -48,7 +78,6 @@ class ProjectInstall extends Command
      */
     protected function copySeedImages(): void
     {
-        // Copiar imágenes de slides al storage público
         $sourceSlidesDir = public_path('images/default/slides');
         $destSlidesDir = storage_path('app/public/slides');
 

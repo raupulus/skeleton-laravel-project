@@ -57,7 +57,8 @@ class ClearCache extends Page
                 ->modalDescription(__('filament.clear_cache_confirm'))
                 ->modalSubmitActionLabel(__('filament.confirm'))
                 ->action(function () {
-                    Artisan::call('project:clear');
+                    Artisan::call('optimize:clear');
+                    Artisan::call('cache:clear');
                     Notification::make()
                         ->title(__('filament.clear_cache_success'))
                         ->body(__('filament.clear_cache_success_body'))

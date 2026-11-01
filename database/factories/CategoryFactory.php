@@ -34,4 +34,24 @@ class CategoryFactory extends Factory
             'order' => fake()->numberBetween(0, 10),
         ];
     }
+
+    /**
+     * Estado activo.
+     */
+    public function active(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'is_active' => true,
+        ]);
+    }
+
+    /**
+     * Estado inactivo.
+     */
+    public function inactive(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'is_active' => false,
+        ]);
+    }
 }

@@ -25,4 +25,47 @@ class PostFactory extends Factory
             'published_at' => now(),
         ];
     }
+
+    /**
+     * Estado publicado y activo.
+     */
+    public function published(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => ContentStatus::Published,
+            'is_active' => true,
+            'published_at' => now(),
+        ]);
+    }
+
+    /**
+     * Estado en borrador sin publicar.
+     */
+    public function draft(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => ContentStatus::Draft,
+            'published_at' => null,
+        ]);
+    }
+
+    /**
+     * Estado destacado.
+     */
+    public function featured(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'featured' => true,
+        ]);
+    }
+
+    /**
+     * Estado inactivo.
+     */
+    public function inactive(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'is_active' => false,
+        ]);
+    }
 }
