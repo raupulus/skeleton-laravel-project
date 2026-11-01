@@ -140,6 +140,8 @@ return [
     'validation_message_max' => 'Message cannot exceed 5,000 characters.',
     'validation_privacy_required' => 'You must accept the privacy policy.',
     'validation_privacy_accepted' => 'You must accept the privacy policy.',
+    'validation_recaptcha_required' => 'Security verification is required. Reload the page and try again.',
+    'validation_recaptcha_failed' => 'We could not verify that you are not a robot. Please try again.',
 
     // User panel — API Tokens
     'api_tokens_description' => 'API tokens allow you to securely connect external applications to your account. Each token acts as a "temporary password" that you can revoke at any time without affecting your main password.',

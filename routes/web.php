@@ -22,7 +22,7 @@ Route::get('/pages/{slug}', [PageController::class, 'show'])->name('pages.show')
 // --- Contacto ---
 Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 Route::post('/contact', [ContactController::class, 'send'])
-    ->middleware('throttle:3,1')
+    ->middleware('throttle:10,1')
     ->name('contact.send');
 
 // --- Páginas estáticas ---

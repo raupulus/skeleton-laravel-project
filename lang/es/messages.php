@@ -140,6 +140,8 @@ return [
     'validation_message_max' => 'El mensaje no puede superar 5.000 caracteres.',
     'validation_privacy_required' => 'Debes aceptar la política de privacidad.',
     'validation_privacy_accepted' => 'Debes aceptar la política de privacidad.',
+    'validation_recaptcha_required' => 'La verificación de seguridad es obligatoria. Recarga la página e inténtalo de nuevo.',
+    'validation_recaptcha_failed' => 'No se ha podido verificar que no eres un robot. Inténtalo de nuevo.',
 
     // Panel usuario — Tokens API
     'api_tokens_description' => 'Los tokens de API te permiten conectar aplicaciones externas con tu cuenta de forma segura. Cada token actúa como una "contraseña temporal" que puedes revocar en cualquier momento sin afectar a tu contraseña principal.',

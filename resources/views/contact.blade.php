@@ -29,6 +29,8 @@
             <label for="privacy" class="ml-2 text-sm text-gray-600">{{ __('messages.contact_privacy_accept') }} <a href="{{ route('pages.show', 'politica-privacidad') }}" class="text-indigo-600 underline">{{ __('messages.contact_privacy_link') }}</a></label>
         </div>
         @error('privacy')<p class="text-sm text-red-600">{{ $message }}</p>@enderror
+        <x-recaptcha-script action="contact" />
+        @error('g-recaptcha-response')<p class="text-sm text-red-600">{{ $message }}</p>@enderror
         <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition font-medium">{{ __('messages.contact_send') }}</button>
     </form>
 </div>
